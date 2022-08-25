@@ -40,9 +40,9 @@ func ShowKategoriUang(c *gin.Context) {
 
 	var master []Tbl_kategori_uangs
 
-	sql := " SELECT a.* FROM `tbl_group_kategoris` as a "
-	sql = " inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  "
-	sql = " where a.flag_aktif=0 and b.flag_aktif=0  "
+	sql := " SELECT a.* FROM tbl_kategori_uangs as a  " +
+		" INNER JOIN tbl_group_kategoris b on a.kd_group=b.kd_group " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 "
 
 	if s := c.Query("search"); s != "" {
 
@@ -58,6 +58,10 @@ func ShowKategoriUang(c *gin.Context) {
 			sql = fmt.Sprintf("%s and a.nm_kategori LIKE '%%%s%%' ", sql, s)
 		}
 
+	}
+
+	if filter_nm_group := c.Query("filter_nm_group"); filter_nm_group != "" {
+		sql = fmt.Sprintf("%s and b.nm_group = '%s'", sql, filter_nm_group)
 	}
 
 	if sort := c.Query("sort"); sort != "" {

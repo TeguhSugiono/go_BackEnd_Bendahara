@@ -470,7 +470,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=10&search=gaji&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=10&search=Terang&sort=asc&filter_nm_group=Biaya Pembayaran Daftar Ulang",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -496,11 +496,15 @@
 								},
 								{
 									"key": "search",
-									"value": "gaji"
+									"value": "Terang"
 								},
 								{
 									"key": "sort",
 									"value": "asc"
+								},
+								{
+									"key": "filter_nm_group",
+									"value": "Biaya Pembayaran Daftar Ulang"
 								}
 							]
 						}
