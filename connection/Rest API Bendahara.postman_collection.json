@@ -83,49 +83,6 @@
 			"name": "Master Jenis Transaksi",
 			"item": [
 				{
-					"name": "Tampil Data Old",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/showjenistrans",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"masterjenistrans",
-								"showjenistrans"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Tampil Data",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -328,7 +285,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/showgroupkategori",
+							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/showgroupkategori?page=1&perpage=10&search=gaji&sort=asc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -342,6 +299,24 @@
 								"v1",
 								"mastergroupkategori",
 								"showgroupkategori"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "gaji"
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								}
 							]
 						}
 					},
@@ -489,7 +464,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=10&search=gaji&sort=asc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -503,6 +478,24 @@
 								"v1",
 								"masterkategoriuang",
 								"showkategoriuang"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "gaji"
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								}
 							]
 						}
 					},
@@ -521,7 +514,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 6,\r\n    \"nm_kategori\" : \"dfgdfgd\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"nm_kategori\" : \"Eta Terangkanlah\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
