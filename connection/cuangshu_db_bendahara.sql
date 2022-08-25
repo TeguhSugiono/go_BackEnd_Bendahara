@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50531
 File Encoding         : 65001
 
-Date: 2022-08-08 13:14:40
+Date: 2022-08-25 14:04:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `tbl_group_kategoris` (
 -- Records of tbl_group_kategoris
 -- ----------------------------
 INSERT INTO `tbl_group_kategoris` VALUES ('1', '1', 'Biaya Pembayaran PPDB', null, null, '0', '2022-08-06 05:03:00', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('1', '2', 'Biaya Pembayaran Daftar Ulang', null, null, '0', '2022-08-06 05:03:21', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('1', '2', 'Biaya Pembayaran Daftar Ulang', 'Semester,Eta Terangkanlah', null, '0', '2022-08-06 05:03:21', 'teguh', null, null);
 INSERT INTO `tbl_group_kategoris` VALUES ('2', '3', 'Biaya Gaji Pegawai', null, null, '0', '2022-08-06 05:03:36', 'teguh', null, null);
 INSERT INTO `tbl_group_kategoris` VALUES ('2', '4', 'Biaya Kegiatan Siswa', null, null, '0', '2022-08-06 05:03:48', 'teguh', '2022-08-06 05:16:23', 'teguh');
 INSERT INTO `tbl_group_kategoris` VALUES ('2', '5', 'aaaaaaaaaaaaaa', null, null, '9', '2022-08-06 05:16:42', 'teguh', '2022-08-06 05:20:40', 'teguh');
@@ -97,14 +97,38 @@ CREATE TABLE `tbl_kategori_uangs` (
   `edited_on` datetime DEFAULT NULL,
   `edited_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`kd_kategori`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_kategori_uangs
 -- ----------------------------
 INSERT INTO `tbl_kategori_uangs` VALUES ('1', '1', 'PPDB', '0', '2022-08-07 22:30:20', 'teguh', '2022-08-07 22:47:49', 'teguh');
 INSERT INTO `tbl_kategori_uangs` VALUES ('1', '2', 'Daftar Ulang', '0', '2022-08-07 22:32:00', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('6', '3', 'dfgdfgd', '9', '2022-08-07 22:48:22', 'teguh', '2022-08-07 22:53:05', 'teguh');
+INSERT INTO `tbl_kategori_uangs` VALUES ('2', '4', 'Semester', '0', '2022-08-09 00:52:14', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('1', '5', 'Semester', '0', '2022-08-09 01:23:43', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('3', '6', 'Semester', '0', '2022-08-09 01:24:14', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('1', '7', 'Semesterx', '0', '2022-08-09 01:39:27', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('2', '17', 'Eta Terangkanlah', '0', '2022-08-13 00:13:19', 'teguh', null, null);
+
+-- ----------------------------
+-- Table structure for `tbl_sub_kategori_uangs`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_sub_kategori_uangs`;
+CREATE TABLE `tbl_sub_kategori_uangs` (
+  `kd_kategori` int(11) DEFAULT NULL,
+  `kd_sub_kategori` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_kategori` varchar(200) DEFAULT NULL,
+  `flag_aktif` int(11) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `edited_on` datetime DEFAULT NULL,
+  `edited_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`kd_sub_kategori`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tbl_sub_kategori_uangs
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tbl_users`

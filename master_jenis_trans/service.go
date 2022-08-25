@@ -55,20 +55,27 @@ func ShowJenisTrans(c *gin.Context) {
 	}
 
 	if sort := c.Query("sort"); sort != "" {
-		sql = fmt.Sprintf("%s ORDER BY proses_uang %s", sql, sort)
+		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, sort)
+	} else {
+		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, "desc")
 	}
 
 	page := c.Query("page")
 	perPage := c.Query("perpage")
 
-	intpage, _ := strconv.Atoi(page)
-	intperPage, _ := strconv.Atoi(perPage)
+	intpage, err := strconv.Atoi(page)
+	if err != nil {
+		response := helper.APIResponse("Format Page Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
 
-	//strconv.ParseInt(s, 10, 64)
-	//sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
-
-	// page, _ := strconv.Atoi(c.Query("page"), "1")
-	// perPage := 9
+	intperPage, err := strconv.Atoi(perPage)
+	if err != nil {
+		response := helper.APIResponse("Format Perpage Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
 
 	var total int64
 
@@ -101,7 +108,7 @@ func InsertJenisTrans(c *gin.Context) {
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validation ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -112,8 +119,8 @@ func InsertJenisTrans(c *gin.Context) {
 	datenowx, err := time.Parse(date, datenows)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors, "date": datenowx}
-		response := helper.APIResponse("Wrong Date Format ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -133,12 +140,12 @@ func InsertJenisTrans(c *gin.Context) {
 	//err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
 	err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
 	if err != nil {
-		response := helper.APIResponse("Save Data Failed ...", http.StatusBadRequest, "error", err)
+		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Save Data Successfully ...", http.StatusOK, "success", data)
+	response := helper.APIResponse("Simpan Data Sukses ...", http.StatusOK, "success", data)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -147,8 +154,8 @@ func UpdateJenisTrans(c *gin.Context) {
 
 	var dataMaster Tbl_jenis_trans
 	if err := db.Where("kd_jenis = ? and flag_aktif=? ", c.Param("kdjenis"), 0).First(&dataMaster).Error; err != nil {
-		errorMessage := gin.H{"errors": "Data Not Found ..."}
-		response := helper.APIResponse("Update Data Failed ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -158,7 +165,7 @@ func UpdateJenisTrans(c *gin.Context) {
 	if err := c.ShouldBindJSON(&input); err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validation ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -168,8 +175,8 @@ func UpdateJenisTrans(c *gin.Context) {
 	datenowx, err := time.Parse(date, datenows)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors, "date": datenowx}
-		response := helper.APIResponse("Wrong Date Format ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -192,12 +199,12 @@ func UpdateJenisTrans(c *gin.Context) {
 	//err = db.Model(&dataMaster).Omit("Created_on", "Created_by").Updates(&data).Error
 	//err = db.Model(&dataMaster).Omit("Created_on").Updates(data)
 	if err != nil {
-		response := helper.APIResponse("Update Data Failed ...", http.StatusBadRequest, "error", err)
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Update Data Successfully ...", http.StatusOK, "success", dataMaster)
+	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataMaster)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -206,8 +213,8 @@ func DeleteJenisTrans(c *gin.Context) {
 
 	var dataMaster Tbl_jenis_trans
 	if err := db.Where("kd_jenis = ? and flag_aktif=?", c.Param("kdjenis"), 0).First(&dataMaster).Error; err != nil {
-		errorMessage := gin.H{"errors": "Data Not Found ..."}
-		response := helper.APIResponse("Delete Data Failed ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -217,8 +224,8 @@ func DeleteJenisTrans(c *gin.Context) {
 	datenowx, err := time.Parse(date, datenows)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors, "date": datenowx}
-		response := helper.APIResponse("Wrong Date Format ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -240,11 +247,11 @@ func DeleteJenisTrans(c *gin.Context) {
 	//err = db.Model(&dataMaster).Omit("Created_on", "Created_by").Updates(&data).Error
 	//err = db.Model(&dataMaster).Omit("Created_on").Updates(data)
 	if err != nil {
-		response := helper.APIResponse("Delete Data Failed ...", http.StatusBadRequest, "error", err)
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Delete Data Successfully ...", http.StatusOK, "success", dataMaster)
+	response := helper.APIResponse("Delete Data Sukses ...", http.StatusOK, "success", dataMaster)
 	c.JSON(http.StatusOK, response)
 }

@@ -12,3 +12,9 @@ type Tbl_kategori_uangs struct {
 	Edited_on   time.Time
 	Edited_by   string
 }
+
+type TableData struct {
+	Total     int64 `json:"total"`
+	Page      int   `json:"page"`
+	Last_page int   `json:"last_page"`
+}

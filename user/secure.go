@@ -2,6 +2,7 @@ package user
 
 import (
 	"errors"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -12,6 +13,9 @@ func GenerateToken(input DataTokenInput) (string, error) {
 	claim := jwt.MapClaims{}
 	claim["Id_user"] = input.Id_user
 	claim["Username"] = input.Username
+
+	ttl := 60 * time.Second
+	claim["exp"] = time.Now().UTC().Add(ttl).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 

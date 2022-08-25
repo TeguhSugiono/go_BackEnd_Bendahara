@@ -11,3 +11,9 @@ type GroupKategoriInput struct {
 	Edited_on  string `json:"edited_on" form:"edited_on"`
 	Edited_by  string `json:"edited_by" form:"edited_by"`
 }
+
+type TableData struct {
+	Total     int64 `json:"total"`
+	Page      int   `json:"page"`
+	Last_page int   `json:"last_page"`
+}

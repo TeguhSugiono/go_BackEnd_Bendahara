@@ -17,7 +17,7 @@ func SignUp(c *gin.Context) {
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validation ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -26,8 +26,8 @@ func SignUp(c *gin.Context) {
 	checkUser := db.Select("*").Where("username = ?", dataInput.Username).Find(&datauser)
 	if checkUser.RowsAffected > 0 {
 
-		errorMessage := gin.H{"errors": "Username Already Exists ..."}
-		response := helper.APIResponse("Checking Username ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Username Sudah Ada ..."}
+		response := helper.APIResponse("Cek Username ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -38,8 +38,8 @@ func SignUp(c *gin.Context) {
 	datenowx, err := time.Parse(date, datenows)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors, "date": datenowx}
-		response := helper.APIResponse("Wrong Date Format ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -54,7 +54,7 @@ func SignUp(c *gin.Context) {
 
 	err = db.Create(&data).Error
 	if err != nil {
-		response := helper.APIResponse("Save Data Failed ...", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -64,13 +64,13 @@ func SignUp(c *gin.Context) {
 
 	token, err := GenerateToken(result)
 	if err != nil {
-		response := helper.APIResponse("Generate Token Failed ...", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Generate Token Gagal ...", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	formatter := FormatUser(data, token)
-	response := helper.APIResponse("Save Data Successfully ...", http.StatusOK, "success", formatter)
+	response := helper.APIResponse("Simpan Data Sukses ...", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 
 }
@@ -96,7 +96,7 @@ func Login(c *gin.Context) {
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validation ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -105,8 +105,8 @@ func Login(c *gin.Context) {
 	var datauser Tbl_user
 	checkUser := db.Select("*").Where("username = ?", dataInput.Username).Find(&datauser)
 	if checkUser.RowsAffected == 0 {
-		errorMessage := gin.H{"errors": "Username Not Found ..."}
-		response := helper.APIResponse("Login Failed ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Username Tidak Ada ..."}
+		response := helper.APIResponse("Login Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -119,22 +119,22 @@ func Login(c *gin.Context) {
 
 	err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(dataInput.Password))
 	if err != nil {
-		errorMessage := gin.H{"errors": "Wrong Password ..."}
-		response := helper.APIResponse("Login Failed ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Password Salah ..."}
+		response := helper.APIResponse("Login Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
 	token, err := GenerateToken(result)
 	if err != nil {
-		response := helper.APIResponse("Generate Token Failed ...", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Generate Token Gagal ...", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	formatter := FormatUser(datauser, token)
 	//response := helper.APIResponse("Login Berhasil ... "+result.Password+" -- "+dataInput.Password, http.StatusOK, "success", formatter)
-	response := helper.APIResponse("Login Successfully ...", http.StatusOK, "success", formatter)
+	response := helper.APIResponse("Login Sukses ...", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -143,7 +143,7 @@ func FetchUser(c *gin.Context) {
 	currentUser := c.MustGet("currentUser").(Tbl_user)
 	formatter := FormatUser(currentUser, "")
 
-	response := helper.APIResponse("Successfuly Fetch User Data", http.StatusOK, "success", formatter)
+	response := helper.APIResponse("Ambil Data User Berhasil ...", http.StatusOK, "success", formatter)
 
 	c.JSON(http.StatusOK, response)
 }
