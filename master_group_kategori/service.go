@@ -99,10 +99,15 @@ func ShowGroupKategori(c *gin.Context) {
 
 	var master []Tbl_group_kategoris
 
-	sql := "SELECT * FROM tbl_group_kategoris where flag_aktif=0 "
+	sql := "  SELECT a.* FROM tbl_group_kategoris as a " +
+		" inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  " +
+		" where a.flag_aktif=0 and b.flag_aktif=0  "
+	//sql = fmt.Sprintf("%s inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis ", sql)
+	//sql = fmt.Sprintf("%s where a.flag_aktif=0 and b.flag_aktif=0 ", sql)
+	//sql = sql + " inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis "
+	//sql = sql + " where a.flag_aktif=0 and b.flag_aktif=0  "
 
 	if s := c.Query("search"); s != "" {
-
 		if len(c.Query("search")) >= 3 {
 			// CompTableData := TableData{
 			// 	Total:     0,
@@ -112,15 +117,18 @@ func ShowGroupKategori(c *gin.Context) {
 			// response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, FormatJenisTrans(master))
 			// c.JSON(http.StatusOK, response)
 			// return
-			sql = fmt.Sprintf("%s and nm_group LIKE '%%%s%%' ", sql, s)
+			sql = fmt.Sprintf("%s and a.nm_group LIKE '%%%s%%' ", sql, s)
 		}
+	}
 
+	if filter_proses_uang := c.Query("filter_proses_uang"); filter_proses_uang != "" {
+		sql = fmt.Sprintf("%s and b.proses_uang = '%s'", sql, filter_proses_uang)
 	}
 
 	if sort := c.Query("sort"); sort != "" {
-		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, sort)
+		sql = fmt.Sprintf("%s ORDER BY a.created_on %s", sql, sort)
 	} else {
-		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, "desc")
+		sql = fmt.Sprintf("%s ORDER BY a.created_on %s", sql, "desc")
 	}
 
 	page := c.Query("page")

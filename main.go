@@ -63,6 +63,12 @@ func main() {
 	api.PUT("/masterkategoriuang/updatekategoriuang/:kdkategori", authMiddleware(), master_kategori_uang.UpdateKategoriUang)
 	api.PUT("/masterkategoriuang/deletekategoriuang/:kdkategori", authMiddleware(), master_kategori_uang.DeleteKategoriUang)
 
+	/*
+		api.GET("/masterkategoriuang/showsubkategoriuang", authMiddleware(), master_sub_kategori_uang.ShowsubKategoriUang)
+		api.POST("/masterkategoriuang/insertsubkategoriuang", authMiddleware(), master_sub_kategori_uang.InsertsubKategoriUang)
+		api.PUT("/masterkategoriuang/updatesubkategoriuang/:kdkategori", authMiddleware(), master_sub_kategori_uang.UpdatesubKategoriUang)
+		api.PUT("/masterkategoriuang/deletesubkategoriuang/:kdkategori", authMiddleware(), master_sub_kategori_uang.DeletesubKategoriUang)
+	*/
 	r.Run(":2022")
 }
 

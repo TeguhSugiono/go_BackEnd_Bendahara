@@ -285,7 +285,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/showgroupkategori?page=1&perpage=10&search=gaji&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/showgroupkategori?page=1&perpage=10&sort=asc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -311,11 +311,17 @@
 								},
 								{
 									"key": "search",
-									"value": "gaji"
+									"value": "gaji",
+									"disabled": true
 								},
 								{
 									"key": "sort",
 									"value": "asc"
+								},
+								{
+									"key": "filter_proses_uang",
+									"value": "Uang Masuk",
+									"disabled": true
 								}
 							]
 						}

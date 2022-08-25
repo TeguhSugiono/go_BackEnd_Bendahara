@@ -40,7 +40,9 @@ func ShowKategoriUang(c *gin.Context) {
 
 	var master []Tbl_kategori_uangs
 
-	sql := "SELECT * FROM tbl_kategori_uangs where flag_aktif=0 "
+	sql := " SELECT a.* FROM `tbl_group_kategoris` as a "
+	sql = " inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  "
+	sql = " where a.flag_aktif=0 and b.flag_aktif=0  "
 
 	if s := c.Query("search"); s != "" {
 
@@ -53,15 +55,15 @@ func ShowKategoriUang(c *gin.Context) {
 			// response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, FormatJenisTrans(master))
 			// c.JSON(http.StatusOK, response)
 			// return
-			sql = fmt.Sprintf("%s and nm_kategori LIKE '%%%s%%' ", sql, s)
+			sql = fmt.Sprintf("%s and a.nm_kategori LIKE '%%%s%%' ", sql, s)
 		}
 
 	}
 
 	if sort := c.Query("sort"); sort != "" {
-		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, sort)
+		sql = fmt.Sprintf("%s ORDER BY a.created_on %s", sql, sort)
 	} else {
-		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, "desc")
+		sql = fmt.Sprintf("%s ORDER BY a.created_on %s", sql, "desc")
 	}
 
 	page := c.Query("page")
