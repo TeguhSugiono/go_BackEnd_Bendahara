@@ -144,6 +144,49 @@
 					"response": []
 				},
 				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/listjenistrans",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterjenistrans",
+								"listjenistrans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Data",
 					"request": {
 						"method": "POST",
@@ -156,7 +199,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"proses_uang\" : \"Uang Parkir\"\r\n}",
+							"raw": "{\r\n    \"proses_uang\" : \"Uang Makan\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,7 +239,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Proses_uang\" : \"Uang Keluar\"\r\n}",
+							"raw": "{\r\n    \"Proses_uang\" : \"Uang Panas\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +247,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/updatejenistrans/2",
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/updatejenistrans/3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -218,7 +261,7 @@
 								"v1",
 								"masterjenistrans",
 								"updatejenistrans",
-								"2"
+								"3"
 							]
 						}
 					},
@@ -236,7 +279,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/deletejenistrans/3",
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/deletejenistrans/2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -250,7 +293,7 @@
 								"v1",
 								"masterjenistrans",
 								"deletejenistrans",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -285,7 +328,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/showgroupkategori?page=1&perpage=10&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/showgroupkategori?page=1&perpage=10",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -316,13 +359,57 @@
 								},
 								{
 									"key": "sort",
-									"value": "asc"
+									"value": "asc",
+									"disabled": true
 								},
 								{
-									"key": "filter_proses_uang",
+									"key": "filter",
 									"value": "Uang Masuk",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/listgroupkategori",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"mastergroupkategori",
+								"listgroupkategori"
 							]
 						}
 					},
@@ -341,7 +428,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_jenis\" : 2,\r\n    \"nm_group\" : \"aaaaaaaaaaaaaa\"\r\n}",
+							"raw": "{\r\n    \"kd_jenis\" : 2,\r\n    \"nm_group\" : \"Biaya Suap Anggota DPR\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -381,7 +468,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nm_group\" : \"Biaya Kegiatan Siswa\" ,\r\n    \"Kd_jenis\" : 2 \r\n}",
+							"raw": "{\r\n    \"nm_group\" : \"Biaya Makan Anak Buaya\" ,\r\n    \"Kd_jenis\" : 1 \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -389,7 +476,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/updategroupkategori/4",
+							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/updategroupkategori/10",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -403,7 +490,7 @@
 								"v1",
 								"mastergroupkategori",
 								"updategroupkategori",
-								"4"
+								"10"
 							]
 						}
 					},
@@ -421,7 +508,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/deletegroupkategori/5",
+							"raw": "http://127.0.0.1:2022/api/v1/mastergroupkategori/deletegroupkategori/10",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -435,7 +522,7 @@
 								"v1",
 								"mastergroupkategori",
 								"deletegroupkategori",
-								"5"
+								"10"
 							]
 						}
 					},
@@ -470,7 +557,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=10&search=Terang&sort=asc&filter_nm_group=Biaya Pembayaran Daftar Ulang",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=10",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -496,16 +583,62 @@
 								},
 								{
 									"key": "search",
-									"value": "Terang"
+									"value": "Terang",
+									"disabled": true
 								},
 								{
 									"key": "sort",
-									"value": "asc"
+									"value": "asc",
+									"disabled": true
 								},
 								{
-									"key": "filter_nm_group",
-									"value": "Biaya Pembayaran Daftar Ulang"
+									"key": "filter",
+									"value": "Biaya Pembayaran Daftar Ulang",
+									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/listkategoriuang",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"listkategoriuang"
 							]
 						}
 					},
@@ -524,7 +657,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"nm_kategori\" : \"Eta Terangkanlah\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"nm_kategori\" : \"Beli Anak Kambing\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -564,7 +697,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1 ,\r\n    \"nm_kategori\" :  \"PPDB\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1 ,\r\n    \"nm_kategori\" :  \"Daftar Ulang\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -572,7 +705,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatekategoriuang/1",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatekategoriuang/2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -586,7 +719,7 @@
 								"v1",
 								"masterkategoriuang",
 								"updatekategoriuang",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -604,7 +737,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/deletekategoriuang/3",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/deletekategoriuang/7",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -618,7 +751,236 @@
 								"v1",
 								"masterkategoriuang",
 								"deletekategoriuang",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Master Kategori Sub Uang",
+			"item": [
+				{
+					"name": "Tampil Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showsubkategoriuang?page=1&perpage=10",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"showsubkategoriuang"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "Terang",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "PPDB",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/listsubkategoriuang",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"listsubkategoriuang"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kd_kategori\" : 1,\r\n    \"Nm_sub_kategori\" : \"Biaya Formulir Pendaftaran xxx\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/insertsubkategoriuang",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"insertsubkategoriuang"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_kategori\" : 1 ,\r\n    \"nm_sub_kategori\" :  \"Biaya Formulir Pendaftaran\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatesubkategoriuang/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"updatesubkategoriuang",
 								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/deletesubkategoriuang/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"deletesubkategoriuang",
+								"4"
 							]
 						}
 					},

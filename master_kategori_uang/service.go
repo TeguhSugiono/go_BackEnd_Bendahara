@@ -9,24 +9,28 @@ import (
 	"time"
 
 	"rest_api_bendahara/helper"
-	"rest_api_bendahara/master_group_kategori"
+	"rest_api_bendahara/table_data"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 )
 
-/*
-func ShowKategoriUang(c *gin.Context) {
+func ListKategoriUang(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []Tbl_kategori_uangs
+	var master []ListData
 	//db.Find(&master)
-	db.Where("flag_aktif = ?", 0).Find(&master)
+	//db.Where("flag_aktif = ?", 0).Find(&master)
+	sql := " SELECT a.*,b.nm_group FROM tbl_kategori_uangs as a  " +
+		" INNER JOIN tbl_group_kategoris b on a.kd_group=b.kd_group " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 "
+
+	db.Raw(sql).Scan(&master)
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", FormatShowData(master))
 	c.JSON(http.StatusOK, response)
-}*/
+}
 
 func ShowKategoriUang(c *gin.Context) {
 
@@ -38,9 +42,9 @@ func ShowKategoriUang(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []Tbl_kategori_uangs
+	var master []ListData
 
-	sql := " SELECT a.* FROM tbl_kategori_uangs as a  " +
+	sql := " SELECT a.*,b.nm_group FROM tbl_kategori_uangs as a  " +
 		" INNER JOIN tbl_group_kategoris b on a.kd_group=b.kd_group " +
 		" where a.flag_aktif=0 and b.flag_aktif=0 "
 
@@ -94,7 +98,7 @@ func ShowKategoriUang(c *gin.Context) {
 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
 	db.Raw(sql).Scan(&master)
 
-	CompTableData := TableData{
+	CompTableData := table_data.TableData{
 		Total:     total,
 		Page:      intpage,
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
@@ -133,6 +137,14 @@ func InsertKategoriUang(c *gin.Context) {
 		return
 	}
 
+	var dataMaster table_data.Tbl_group_kategoris
+	if err := db.Where("kd_group = ? and flag_aktif=? ", dataInput.Kd_group, 0).First(&dataMaster).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
 	//time.Now().Format("2006-01-02 15:04:05")
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
@@ -146,7 +158,7 @@ func InsertKategoriUang(c *gin.Context) {
 	}
 
 	currentUser := c.MustGet("currentUser")
-	data := Tbl_kategori_uangs{
+	data := table_data.Tbl_kategori_uangs{
 		Kd_group:    dataInput.Kd_group,
 		Nm_kategori: dataInput.Nm_kategori,
 		Created_by:  currentUser.(string),
@@ -189,7 +201,7 @@ func InsertKategoriUang(c *gin.Context) {
 		nomor++
 	}
 
-	var dataMasterKategoris master_group_kategori.Tbl_group_kategoris
+	var dataMasterKategoris table_data.Tbl_group_kategoris
 
 	err = db.Raw("UPDATE tbl_group_kategoris SET nm_header = ? WHERE kd_group = ? ", str_nm_kategori, dataInput.Kd_group).Scan(&dataMasterKategoris).Error
 	if err != nil {
@@ -204,14 +216,6 @@ func InsertKategoriUang(c *gin.Context) {
 
 func UpdateKategoriUang(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
-
-	var dataMaster Tbl_kategori_uangs
-	if err := db.Where("kd_kategori = ? and flag_aktif=? ", c.Param("kdkategori"), 0).First(&dataMaster).Error; err != nil {
-		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
-		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
 
 	// Validate input
 	var input KategoriUangInput
@@ -232,6 +236,22 @@ func UpdateKategoriUang(c *gin.Context) {
 		return
 	}
 
+	var dataUtama table_data.Tbl_kategori_uangs
+	if err := db.Where("kd_kategori = ? and flag_aktif=? ", c.Param("kdkategori"), 0).First(&dataUtama).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataMaster table_data.Tbl_group_kategoris
+	if err := db.Where("kd_group = ? and flag_aktif=? ", input.Kd_group, 0).First(&dataMaster).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
 	datenowx, err := time.Parse(date, datenows)
@@ -245,7 +265,7 @@ func UpdateKategoriUang(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser")
 
-	data := Tbl_kategori_uangs{
+	data := table_data.Tbl_kategori_uangs{
 		Kd_group:    input.Kd_group,
 		Nm_kategori: input.Nm_kategori,
 		Edited_by:   currentUser.(string),
@@ -258,7 +278,7 @@ func UpdateKategoriUang(c *gin.Context) {
 	// data.Edited_by = currentUser.(string)
 	// data.Flag_aktif = 0
 
-	err = db.Model(&dataMaster).Updates(data).Error
+	err = db.Model(&dataUtama).Updates(data).Error
 	//err = db.Model(&dataMaster).Omit("Created_on", "Created_by").Updates(&data).Error
 	//err = db.Model(&dataMaster).Omit("Created_on").Updates(data)
 	if err != nil {
@@ -267,20 +287,59 @@ func UpdateKategoriUang(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataMaster)
+	// Raw SQL
+	var nm_kategori string
+	var str_nm_kategori string
+
+	str_nm_kategori = ""
+	nomor := 0
+	rows, _ := db.Raw("select nm_kategori from tbl_kategori_uangs where flag_aktif = ? and kd_group=?", 0, input.Kd_group).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&nm_kategori)
+		if nomor == 0 {
+			str_nm_kategori = nm_kategori
+		} else {
+			str_nm_kategori = str_nm_kategori + "," + nm_kategori
+		}
+		nomor++
+	}
+
+	var dataMasterKategoris table_data.Tbl_group_kategoris
+
+	err = db.Raw("UPDATE tbl_group_kategoris SET nm_header = ? WHERE kd_group = ? ", str_nm_kategori, input.Kd_group).Scan(&dataMasterKategoris).Error
+	if err != nil {
+		response := helper.APIResponse("Update Data Ke Tbl_group_kategoris Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataUtama)
 	c.JSON(http.StatusOK, response)
 }
 
 func DeleteKategoriUang(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataMaster Tbl_kategori_uangs
+	var dataMaster table_data.Tbl_kategori_uangs
 	if err := db.Where("kd_kategori = ? and flag_aktif=?", c.Param("kdkategori"), 0).First(&dataMaster).Error; err != nil {
 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
 		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
+
+	//========= Cek Data
+	//tbl_group_kategoris
+	var dataCek table_data.Tbl_sub_kategori_uangs
+	result := db.Where("kd_kategori = ? and flag_aktif=? ", dataMaster.Kd_kategori, 0).First(&dataCek)
+	if result.RowsAffected > 0 {
+		errorMessage := gin.H{"errors": "Data Sudah Terpakai Di Master Sub Kategori Uang ..."}
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	//========= Cek Data
 
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
@@ -295,7 +354,7 @@ func DeleteKategoriUang(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser")
 
-	data := Tbl_kategori_uangs{
+	data := table_data.Tbl_kategori_uangs{
 		Edited_by:  currentUser.(string),
 		Edited_on:  datenowx,
 		Flag_aktif: 9,
@@ -311,6 +370,38 @@ func DeleteKategoriUang(c *gin.Context) {
 	//err = db.Model(&dataMaster).Omit("Created_on").Updates(data)
 	if err != nil {
 		response := helper.APIResponse("Delete Data Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	// Raw SQL
+	var nm_kategori string
+	var str_nm_kategori string
+
+	str_nm_kategori = ""
+
+	//str_nm_kategori := ""
+	//var jmldata int
+	//db.Raw("select COUNT(*) as 'jmldata'  from tbl_kategori_uangs where flag_aktif = ?", 0).Scan(&jmldata)
+
+	nomor := 0
+	rows, _ := db.Raw("select nm_kategori from tbl_kategori_uangs where flag_aktif = ? and kd_group=?", 0, dataMaster.Kd_group).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&nm_kategori)
+		if nomor == 0 {
+			str_nm_kategori = nm_kategori
+		} else {
+			str_nm_kategori = str_nm_kategori + "," + nm_kategori
+		}
+		nomor++
+	}
+
+	var dataMasterKategoris table_data.Tbl_group_kategoris
+
+	err = db.Raw("UPDATE tbl_group_kategoris SET nm_header = ? WHERE kd_group = ? ", str_nm_kategori, dataMaster.Kd_group).Scan(&dataMasterKategoris).Error
+	if err != nil {
+		response := helper.APIResponse("Update Data Ke Tbl_group_kategoris Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}

@@ -8,21 +8,22 @@ import (
 	"time"
 
 	"rest_api_bendahara/helper"
+	"rest_api_bendahara/table_data"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// func ShowJenisTrans(c *gin.Context) {
-// 	db := c.MustGet("db").(*gorm.DB)
+func ListJenisTrans(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
 
-// 	var master []Tbl_jenis_trans
-// 	//db.Find(&master)
-// 	db.Where("flag_aktif = ?", 0).Find(&master)
+	var master []table_data.Tbl_jenis_trans
+	//db.Find(&master)
+	db.Where("flag_aktif = ?", 0).Find(&master)
 
-// 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", FormatJenisTrans(master))
-// 	c.JSON(http.StatusOK, response)
-// }
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", FormatJenisTrans(master))
+	c.JSON(http.StatusOK, response)
+}
 
 func ShowJenisTrans(c *gin.Context) {
 
@@ -34,7 +35,7 @@ func ShowJenisTrans(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []Tbl_jenis_trans
+	var master []table_data.Tbl_jenis_trans
 
 	sql := "SELECT * FROM tbl_jenis_trans where flag_aktif=0 "
 
@@ -126,7 +127,7 @@ func InsertJenisTrans(c *gin.Context) {
 	}
 
 	currentUser := c.MustGet("currentUser")
-	data := Tbl_jenis_trans{
+	data := table_data.Tbl_jenis_trans{
 		Proses_uang: dataInput.Proses_uang,
 		Created_by:  currentUser.(string),
 		Created_on:  datenowx,
@@ -152,7 +153,7 @@ func InsertJenisTrans(c *gin.Context) {
 func UpdateJenisTrans(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataMaster Tbl_jenis_trans
+	var dataMaster table_data.Tbl_jenis_trans
 	if err := db.Where("kd_jenis = ? and flag_aktif=? ", c.Param("kdjenis"), 0).First(&dataMaster).Error; err != nil {
 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
 		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
@@ -183,7 +184,7 @@ func UpdateJenisTrans(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser")
 
-	data := Tbl_jenis_trans{
+	data := table_data.Tbl_jenis_trans{
 		Proses_uang: input.Proses_uang,
 		Edited_by:   currentUser.(string),
 		Edited_on:   datenowx,
@@ -211,13 +212,25 @@ func UpdateJenisTrans(c *gin.Context) {
 func DeleteJenisTrans(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataMaster Tbl_jenis_trans
+	var dataMaster table_data.Tbl_jenis_trans
 	if err := db.Where("kd_jenis = ? and flag_aktif=?", c.Param("kdjenis"), 0).First(&dataMaster).Error; err != nil {
 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
 		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
+
+	//========= Cek Data
+	//tbl_group_kategoris
+	var dataMasterKategoris table_data.Tbl_group_kategoris
+	result := db.Where("kd_jenis = ?", dataMaster.Kd_jenis).First(&dataMasterKategoris)
+	if result.RowsAffected > 0 {
+		errorMessage := gin.H{"errors": "Data Sudah Terpakai Di Master Group Kategori ..."}
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	//========= Cek Data
 
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
@@ -232,7 +245,7 @@ func DeleteJenisTrans(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser")
 
-	data := Tbl_jenis_trans{
+	data := table_data.Tbl_jenis_trans{
 		Edited_by:  currentUser.(string),
 		Edited_on:  datenowx,
 		Flag_aktif: 9,

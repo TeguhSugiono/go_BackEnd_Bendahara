@@ -1,11 +1,13 @@
 package master_jenis_trans
 
+import "rest_api_bendahara/table_data"
+
 type JenisTransFormatter struct {
 	Kd_Jenis    int    `json:"kd_jenis"`
 	Proses_Uang string `json:"proses_uang"`
 }
 
-func FormatJenisTranss(table Tbl_jenis_trans) JenisTransFormatter {
+func FormatJenisTranss(table table_data.Tbl_jenis_trans) JenisTransFormatter {
 
 	arraydata := JenisTransFormatter{}
 	arraydata.Kd_Jenis = table.Kd_jenis
@@ -14,7 +16,7 @@ func FormatJenisTranss(table Tbl_jenis_trans) JenisTransFormatter {
 	return arraydata
 }
 
-func FormatJenisTrans(table []Tbl_jenis_trans) []JenisTransFormatter {
+func FormatJenisTrans(table []table_data.Tbl_jenis_trans) []JenisTransFormatter {
 	arraydata := []JenisTransFormatter{}
 	for _, resultdata := range table {
 		arraytemporary := FormatJenisTranss(resultdata)

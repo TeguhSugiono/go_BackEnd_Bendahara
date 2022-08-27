@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"rest_api_bendahara/helper"
-	"rest_api_bendahara/master_jenis_trans"
+	"rest_api_bendahara/table_data"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -38,10 +38,10 @@ func InsertGroupKategori(c *gin.Context) {
 		return
 	}
 
-	var dataMaster master_jenis_trans.Tbl_jenis_trans
+	var dataMaster table_data.Tbl_jenis_trans
 	if err := db.Where("kd_jenis = ? and flag_aktif=? ", dataInput.Kd_jenis, 0).First(&dataMaster).Error; err != nil {
 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
-		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -58,7 +58,7 @@ func InsertGroupKategori(c *gin.Context) {
 	}
 
 	currentUser := c.MustGet("currentUser")
-	data := Tbl_group_kategoris{
+	data := table_data.Tbl_group_kategoris{
 		Kd_jenis:   dataInput.Kd_jenis,
 		Nm_group:   dataInput.Nm_group,
 		Created_by: currentUser.(string),
@@ -77,16 +77,21 @@ func InsertGroupKategori(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-/*
-func ShowGroupKategori(c *gin.Context) {
+func ListGroupKategori(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []Tbl_group_kategoris
-	db.Where("flag_aktif = ?", 0).Find(&master)
+	var master []ListData
+	//db.Where("flag_aktif = ?", 0).Find(&master)
+
+	sql := "  SELECT a.*,b.proses_uang FROM tbl_group_kategoris as a " +
+		" inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  " +
+		" where a.flag_aktif=0 and b.flag_aktif=0  "
+
+	db.Raw(sql).Scan(&master)
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", FormatGroupKategori(master))
 	c.JSON(http.StatusOK, response)
-}*/
+}
 
 func ShowGroupKategori(c *gin.Context) {
 	//pagination terdiri dari
@@ -97,9 +102,9 @@ func ShowGroupKategori(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []Tbl_group_kategoris
+	var master []ListData
 
-	sql := "  SELECT a.* FROM tbl_group_kategoris as a " +
+	sql := "  SELECT a.*,b.proses_uang FROM tbl_group_kategoris as a " +
 		" inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  " +
 		" where a.flag_aktif=0 and b.flag_aktif=0  "
 	//sql = fmt.Sprintf("%s inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis ", sql)
@@ -175,14 +180,6 @@ func ShowGroupKategori(c *gin.Context) {
 func UpdateGroupKategori(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataMaster Tbl_group_kategoris
-	if err := db.Where("kd_group = ? and flag_aktif=? ", c.Param("kdgroup"), 0).First(&dataMaster).Error; err != nil {
-		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
-		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-
 	var input GroupKategoriInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		var ve validator.ValidationErrors
@@ -201,6 +198,22 @@ func UpdateGroupKategori(c *gin.Context) {
 		return
 	}
 
+	var dataUtama table_data.Tbl_group_kategoris
+	if err := db.Where("kd_group = ? and flag_aktif=? ", c.Param("kdgroup"), 0).First(&dataUtama).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataMaster table_data.Tbl_jenis_trans
+	if err := db.Where("kd_jenis = ? and flag_aktif=? ", input.Kd_jenis, 0).First(&dataMaster).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
 	datenowx, err := time.Parse(date, datenows)
@@ -214,7 +227,7 @@ func UpdateGroupKategori(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser")
 
-	data := Tbl_group_kategoris{
+	data := table_data.Tbl_group_kategoris{
 		Kd_jenis:   input.Kd_jenis,
 		Nm_group:   input.Nm_group,
 		Edited_by:  currentUser.(string),
@@ -222,27 +235,39 @@ func UpdateGroupKategori(c *gin.Context) {
 		Flag_aktif: 0,
 	}
 
-	err = db.Model(&dataMaster).Updates(data).Error
+	err = db.Model(&dataUtama).Updates(data).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataMaster)
+	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataUtama)
 	c.JSON(http.StatusOK, response)
 }
 
 func DeleteGroupKategori(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataMaster Tbl_group_kategoris
+	var dataMaster table_data.Tbl_group_kategoris
 	if err := db.Where("kd_group = ? and flag_aktif=? ", c.Param("kdgroup"), 0).First(&dataMaster).Error; err != nil {
 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
 		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
+
+	//========= Cek Data
+	//tbl_group_kategoris
+	var dataCek table_data.Tbl_kategori_uangs
+	result := db.Where("kd_group = ? and flag_aktif=? ", dataMaster.Kd_group, 0).First(&dataCek)
+	if result.RowsAffected > 0 {
+		errorMessage := gin.H{"errors": "Data Sudah Terpakai Di Master Kategori Uang ..."}
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	//========= Cek Data
 
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
@@ -257,7 +282,7 @@ func DeleteGroupKategori(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser")
 
-	data := Tbl_group_kategoris{
+	data := table_data.Tbl_group_kategoris{
 		Edited_by:  currentUser.(string),
 		Edited_on:  datenowx,
 		Flag_aktif: 9,
