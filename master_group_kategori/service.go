@@ -126,8 +126,8 @@ func ShowGroupKategori(c *gin.Context) {
 		}
 	}
 
-	if filter_proses_uang := c.Query("filter_proses_uang"); filter_proses_uang != "" {
-		sql = fmt.Sprintf("%s and b.proses_uang = '%s'", sql, filter_proses_uang)
+	if filter := c.Query("filter"); filter != "" {
+		sql = fmt.Sprintf("%s and b.proses_uang = '%s'", sql, filter)
 	}
 
 	if sort := c.Query("sort"); sort != "" {

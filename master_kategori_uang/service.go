@@ -64,8 +64,8 @@ func ShowKategoriUang(c *gin.Context) {
 
 	}
 
-	if filter_nm_group := c.Query("filter_nm_group"); filter_nm_group != "" {
-		sql = fmt.Sprintf("%s and b.nm_group = '%s'", sql, filter_nm_group)
+	if filter := c.Query("filter"); filter != "" {
+		sql = fmt.Sprintf("%s and b.nm_group = '%s'", sql, filter)
 	}
 
 	if sort := c.Query("sort"); sort != "" {
