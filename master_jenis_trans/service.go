@@ -85,7 +85,7 @@ func ShowJenisTrans(c *gin.Context) {
 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
 	db.Raw(sql).Scan(&master)
 
-	CompTableData := TableData{
+	CompTableData := table_data.TableData{
 		Total:     total,
 		Page:      intpage,
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),

@@ -74,6 +74,8 @@ func main() {
 	api.PUT("/masterkategoriuang/deletesubkategoriuang/:kdsubkategori", authMiddleware(), master_sub_kategori_uang.DeleteSubKategoriUang)
 
 	api.GET("/settingperiode/listconfperiode", authMiddleware(), master_sett_periode.ListConfPeriode)
+	api.GET("/settingperiode/showconfperiode", authMiddleware(), master_sett_periode.ShowConfPeriode)
+	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
 
 	r.Run(":2022")
 }

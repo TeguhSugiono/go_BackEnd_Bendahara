@@ -8,9 +8,3 @@ type JenisTransInput struct {
 	Edited_on   string `form:"edited_on"`
 	Edited_by   string `form:"edited_by"`
 }
-
-type TableData struct {
-	Total     int64 `json:"total"`
-	Page      int   `json:"page"`
-	Last_page int   `json:"last_page"`
-}
