@@ -3,23 +3,23 @@ package main
 import (
 	"fmt"
 	"net/http"
-
 	"rest_api_bendahara/connection"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_jenis_trans"
 	"rest_api_bendahara/master_kategori_uang"
+	"rest_api_bendahara/master_sett_periode"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/user"
 	"strings"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-
-	"github.com/dgrijalva/jwt-go"
 )
 
 func main() {
+
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
@@ -72,6 +72,8 @@ func main() {
 	api.POST("/masterkategoriuang/insertsubkategoriuang", authMiddleware(), master_sub_kategori_uang.InsertSubKategoriUang)
 	api.PUT("/masterkategoriuang/updatesubkategoriuang/:kdsubkategori", authMiddleware(), master_sub_kategori_uang.UpdateSubKategoriUang)
 	api.PUT("/masterkategoriuang/deletesubkategoriuang/:kdsubkategori", authMiddleware(), master_sub_kategori_uang.DeleteSubKategoriUang)
+
+	api.GET("/settingperiode/listconfperiode", authMiddleware(), master_sett_periode.ListConfPeriode)
 
 	r.Run(":2022")
 }

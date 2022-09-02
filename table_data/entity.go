@@ -52,3 +52,16 @@ type Tbl_sub_kategori_uangs struct {
 	Edited_on       time.Time
 	Edited_by       string
 }
+
+type Tbl_conf_periode_spps struct {
+	Kd_periode_spp int
+	Seqno          int
+	Kd_bulan       string
+	Tahun          int
+	Nm_sett        string
+	Flag_aktif     int
+	Created_on     time.Time
+	Created_by     string
+	Edited_on      time.Time
+	Edited_by      string
+}
