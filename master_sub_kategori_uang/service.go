@@ -102,7 +102,7 @@ func ShowSubKategoriUang(c *gin.Context) {
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
 	}
 
-	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", sql, CompTableData, FormatShowData(master))
+	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, FormatShowData(master))
 	c.JSON(http.StatusOK, response)
 
 	// return c.JSON(http.StatusOK.Map{

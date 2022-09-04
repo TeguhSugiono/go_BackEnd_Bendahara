@@ -10,6 +10,7 @@ import (
 	"rest_api_bendahara/master_kategori_uang"
 	"rest_api_bendahara/master_sett_periode"
 	"rest_api_bendahara/master_sub_kategori_uang"
+	"rest_api_bendahara/master_tahun_akademik"
 	"rest_api_bendahara/user"
 	"strings"
 
@@ -77,6 +78,8 @@ func main() {
 	api.GET("/settingperiode/showconfperiode", authMiddleware(), master_sett_periode.ShowConfPeriode)
 	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
 
+	api.GET("/mastertahunakademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
+
 	r.Run(":2022")
 }
 
@@ -85,7 +88,7 @@ func authMiddleware() gin.HandlerFunc {
 		authHeader := c.GetHeader("Authorization")
 
 		if !strings.Contains(authHeader, "Bearer") {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error1) ...", http.StatusUnauthorized, "error", nil)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error1) ...", http.StatusUnauthorized, "error", "Token Bermasalah...")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 
 			return
@@ -98,7 +101,7 @@ func authMiddleware() gin.HandlerFunc {
 		}
 		token, err := user.ValidateToken(tokenString)
 		if err != nil {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error2) ...", http.StatusUnauthorized, "error", nil)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error2) ...", http.StatusUnauthorized, "error", "Token Bermasalah...")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 			fmt.Println("Error ", err)
 			return
@@ -107,7 +110,7 @@ func authMiddleware() gin.HandlerFunc {
 		claim, ok := token.Claims.(jwt.MapClaims)
 
 		if !ok || !token.Valid {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error3) ...", http.StatusUnauthorized, "error", nil)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error3) ...", http.StatusUnauthorized, "error", "Token Bermasalah...")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 
 			return

@@ -68,7 +68,7 @@ type Tbl_conf_periode_spps struct {
 
 //Baca Ketabel akademik di SiA
 // type Tbl_tahun_akademik struct {
-// 	id_tahun       int
-// 	tahun_akademik string
-// 	flag_tahun     int
+// 	Id_tahun       int
+// 	Tahun_akademik string
+// 	Flag_tahun     int
 // }
