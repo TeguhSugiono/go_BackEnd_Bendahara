@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50531
 File Encoding         : 65001
 
-Date: 2022-09-04 21:57:57
+Date: 2022-09-05 01:47:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,6 +25,7 @@ CREATE TABLE `tbl_conf_periode_spps` (
   `kd_bulan` char(2) DEFAULT NULL,
   `tahun` int(11) DEFAULT NULL,
   `nm_sett` varchar(200) DEFAULT NULL,
+  `tahun_akademik` int(11) DEFAULT NULL,
   `flag_aktif` int(1) DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL,
