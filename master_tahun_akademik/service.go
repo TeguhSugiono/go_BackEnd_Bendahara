@@ -13,7 +13,9 @@ func ListTahunAkademik(c *gin.Context) {
 
 	var master []ListData
 	//db.Find(&master)
-	db.Where("flag_tahun = ?", 0).Find(&master)
+	sql := " SELECT * FROM tbl_tahun_akademik where flag_tahun=0 "
+
+	db.Raw(sql).Scan(&master)
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", FormatShowData(master))
 	c.JSON(http.StatusOK, response)

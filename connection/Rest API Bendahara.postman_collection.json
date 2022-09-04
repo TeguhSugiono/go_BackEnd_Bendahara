@@ -1015,7 +1015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/showjenistrans?page=1&perpage=10&search=na&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=10",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1027,8 +1027,8 @@
 							"path": [
 								"api",
 								"v1",
-								"masterjenistrans",
-								"showjenistrans"
+								"settingperiode",
+								"showconfperiode"
 							],
 							"query": [
 								{
@@ -1041,11 +1041,13 @@
 								},
 								{
 									"key": "search",
-									"value": "na"
+									"value": "na",
+									"disabled": true
 								},
 								{
 									"key": "sort",
-									"value": "asc"
+									"value": "asc",
+									"disabled": true
 								}
 							]
 						}
@@ -1203,6 +1205,54 @@
 								"masterjenistrans",
 								"deletejenistrans",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7.Master Tahun Akademik",
+			"item": [
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMjczNzU3fQ.lkTLraCgEd2A3Una8Aq29l2oaYw3scnfmCsMVx7Ze1E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/mastertahunakademik/listtahunakademik",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"mastertahunakademik",
+								"listtahunakademik"
 							]
 						}
 					},

@@ -120,6 +120,10 @@ func InsertConfPeriode(c *gin.Context) {
 		Flag_aktif:     0,
 	}
 
+	for seqno := 1; seqno <= 12; seqno++ {
+
+	}
+
 	// err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
 	// if err != nil {
 	// 	response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)

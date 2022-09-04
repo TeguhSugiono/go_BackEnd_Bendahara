@@ -65,10 +65,3 @@ type Tbl_conf_periode_spps struct {
 	Edited_on      time.Time
 	Edited_by      string
 }
-
-//Baca Ketabel akademik di SiA
-// type Tbl_tahun_akademik struct {
-// 	Id_tahun       int
-// 	Tahun_akademik string
-// 	Flag_tahun     int
-// }
