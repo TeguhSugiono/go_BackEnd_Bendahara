@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Master User",
+			"name": "1.Master User",
 			"item": [
 				{
 					"name": "Daftar User",
@@ -80,7 +80,7 @@
 			]
 		},
 		{
-			"name": "Master Jenis Transaksi",
+			"name": "2.Master Jenis Transaksi",
 			"item": [
 				{
 					"name": "Tampil Data",
@@ -302,7 +302,7 @@
 			]
 		},
 		{
-			"name": "Master Group Kategori",
+			"name": "3.Master Group Kategori",
 			"item": [
 				{
 					"name": "Tampil Data",
@@ -531,7 +531,7 @@
 			]
 		},
 		{
-			"name": "Master Kategori Uang",
+			"name": "4.Master Kategori Uang",
 			"item": [
 				{
 					"name": "Tampil Data",
@@ -760,7 +760,7 @@
 			]
 		},
 		{
-			"name": "Master Kategori Sub Uang",
+			"name": "5.Master Kategori Sub Uang",
 			"item": [
 				{
 					"name": "Tampil Data",
@@ -981,6 +981,228 @@
 								"masterkategoriuang",
 								"deletesubkategoriuang",
 								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6.Master Configurasi Periode",
+			"item": [
+				{
+					"name": "Tampil Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/showjenistrans?page=1&perpage=10&search=na&sort=asc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterjenistrans",
+								"showjenistrans"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "na"
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMjY4NTM3fQ.5vnIXJXAwtfCp2jWYeFgowWulHs6kh03g2y0kb5NMfM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/listconfperiode",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"listconfperiode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"proses_uang\" : \"Uang Makan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/insertjenistrans",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterjenistrans",
+								"insertjenistrans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Proses_uang\" : \"Uang Panas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/updatejenistrans/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterjenistrans",
+								"updatejenistrans",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/deletejenistrans/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterjenistrans",
+								"deletejenistrans",
+								"2"
 							]
 						}
 					},

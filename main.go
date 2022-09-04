@@ -85,7 +85,7 @@ func authMiddleware() gin.HandlerFunc {
 		authHeader := c.GetHeader("Authorization")
 
 		if !strings.Contains(authHeader, "Bearer") {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan ...", http.StatusUnauthorized, "error", nil)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error1) ...", http.StatusUnauthorized, "error", nil)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 
 			return
@@ -98,7 +98,7 @@ func authMiddleware() gin.HandlerFunc {
 		}
 		token, err := user.ValidateToken(tokenString)
 		if err != nil {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan ...", http.StatusUnauthorized, "error", nil)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error2) ...", http.StatusUnauthorized, "error", nil)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 			fmt.Println("Error ", err)
 			return
@@ -107,7 +107,7 @@ func authMiddleware() gin.HandlerFunc {
 		claim, ok := token.Claims.(jwt.MapClaims)
 
 		if !ok || !token.Valid {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan ...", http.StatusUnauthorized, "error", nil)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error3) ...", http.StatusUnauthorized, "error", nil)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 
 			return
@@ -120,7 +120,7 @@ func authMiddleware() gin.HandlerFunc {
 		var datauser user.Tbl_user
 		checkUser := db.Find(&datauser, "id_user = ? and Username= ?", Id_user, Username)
 		if checkUser.RowsAffected == 0 {
-			response := helper.APIResponse("Hak Akses Tidak Ditemukan ...", http.StatusUnauthorized, "error", checkUser.Error)
+			response := helper.APIResponse("Hak Akses Tidak Ditemukan (Error4) ...", http.StatusUnauthorized, "error", checkUser.Error)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 
 			return
