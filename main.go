@@ -81,10 +81,14 @@ func main() {
 	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
 	api.POST("/settingperiode/deleteconfperiode", authMiddleware(), master_sett_periode.DeleteConfPeriode)
 
-	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
-
 	api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
+	api.GET("/settingperiode/showsettperiode", authMiddleware(), master_sett_spp.ShowSettPeriode)
+	api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
+	api.PUT("/settingperiode/updatesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.UpdateSettPeriode)
+	api.PUT("/settingperiode/deletesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.DeleteSettPeriode)
 
+	//AKADEMIK SIA
+	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
 	api.GET("/akademik/listkelasakademik", authMiddleware(), master_kelas_akademik.ListKelasAkademik)
 
 	r.Run(":2022")

@@ -199,6 +199,19 @@ func DeleteConfPeriode(c *gin.Context) {
 		return
 	}
 
+	var result CekDataSettPeriode
+	db.Raw("SELECT count(*) as 'jumlah' FROM tbl_conf_periode_spps a "+
+		" INNER JOIN tbl_sett_periode_spps b on a.kd_periode_spp = b.kd_periode_spp "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 "+
+		" and tahun_akademik = ? ", dataInput.Tahun_akademik).Scan(&result)
+
+	if result.Jumlah > 0 {
+		errorMessage := gin.H{"errors": "Data Configurasi Periode Sudah Terpakai Di Master Setting SPP ..."}
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
 	datenowx, err := time.Parse(date, datenows)

@@ -17,3 +17,7 @@ type ConfPeriodeInput struct {
 type InputTahunAkademik struct {
 	Tahun_akademik string `form:"tahun_akademik" json:"tahun_akademik" binding:"required"`
 }
+
+type CekDataSettPeriode struct {
+	Jumlah int
+}

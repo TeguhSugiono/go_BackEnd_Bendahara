@@ -1062,7 +1062,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMzQ4NTMwfQ.uvtxiKVwQ9u3Wl9_-KjAcK9iUZWipdptpD8bk8Cv_ag",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
 								"type": "text"
 							}
 						],
@@ -1190,7 +1190,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMjczNzU3fQ.lkTLraCgEd2A3Una8Aq29l2oaYw3scnfmCsMVx7Ze1E",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMzY4Mjk4fQ.ru0YaAgu76dGwSK0adwrcDwuIcBOgX6TJUbNFIhCz4A",
 								"type": "text"
 							}
 						],
@@ -1204,7 +1204,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/mastertahunakademik/listtahunakademik",
+							"raw": "http://127.0.0.1:2022/api/v1/akademik/listtahunakademik",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1216,8 +1216,279 @@
 							"path": [
 								"api",
 								"v1",
-								"mastertahunakademik",
+								"akademik",
 								"listtahunakademik"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "8.Master Setting Periode",
+			"item": [
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/listsettperiode",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"listsettperiode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tampil Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showsettperiode?page=1&perpage=10&sort=asc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"showsettperiode"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "2023",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_periode_spp\" : 1,\r\n    \"nm_kelas\" : \"XII\",\r\n    \"biaya_spp\" : 350000,\r\n    \"keterangan\" : \"Biaya SPP Tahun Akademik 2022-2023 Kelas Dua Belas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/insertsettperiode",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"insertsettperiode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_periode_spp\" : 1,\r\n    \"nm_kelas\" : \"X\",\r\n    \"biaya_spp\" : 300000,\r\n    \"keterangan\" : \"Biaya SPP Tahun Akademik 2022-2023 Kelas Sepuluh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/updatesettperiode/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"updatesettperiode",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/deletesettperiode/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"deletesettperiode",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "9.Master Kelas Akademik",
+			"item": [
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDU2Njc5fQ.2CprabrcbH9__i8IqLag_3qX4aeOkr7IbHmA-FOUT0Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/akademik/listkelasakademik",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"akademik",
+								"listkelasakademik"
 							]
 						}
 					},
