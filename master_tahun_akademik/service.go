@@ -13,7 +13,7 @@ func ListTahunAkademik(c *gin.Context) {
 
 	var master []ListData
 	//db.Find(&master)
-	sql := " SELECT * FROM tbl_tahun_akademik where flag_tahun=0 "
+	sql := " SELECT tahun_akademik as 'id_tahun',tahun_akademik FROM tbl_tahun_akademik where flag_tahun=0 "
 
 	db.Raw(sql).Scan(&master)
 

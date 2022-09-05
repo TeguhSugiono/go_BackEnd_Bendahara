@@ -11,12 +11,12 @@ func FormatShowData(table []ListData) []ReturnData {
 }
 
 type ReturnData struct {
-	Id_tahun       int    `json:"id_tahun"`
+	Id_tahun       string `json:"id_tahun"`
 	Tahun_akademik string `json:"tahun_akademik"`
 }
 
 type ListData struct {
-	Id_tahun       int
+	Id_tahun       string
 	Tahun_akademik string
 }
 
