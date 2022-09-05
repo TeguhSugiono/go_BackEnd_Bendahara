@@ -13,3 +13,7 @@ type ConfPeriodeInput struct {
 	Edited_on      string `form:"edited_on"`
 	Edited_by      string `form:"edited_by"`
 }
+
+type InputTahunAkademik struct {
+	Tahun_akademik string `form:"tahun_akademik" json:"tahun_akademik" binding:"required"`
+}

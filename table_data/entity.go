@@ -59,7 +59,7 @@ type Tbl_conf_periode_spps struct {
 	Kd_bulan       string
 	Tahun          int
 	Nm_sett        string
-	Tahun_akademik int
+	Tahun_akademik string
 	Flag_aktif     int
 	Created_on     time.Time
 	Created_by     string

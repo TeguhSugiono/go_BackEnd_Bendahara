@@ -1015,7 +1015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=10",
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=10&search=2023&sort=asc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1041,13 +1041,11 @@
 								},
 								{
 									"key": "search",
-									"value": "na",
-									"disabled": true
+									"value": "2023"
 								},
 								{
 									"key": "sort",
-									"value": "asc",
-									"disabled": true
+									"value": "asc"
 								}
 							]
 						}
@@ -1064,7 +1062,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMjY4NTM3fQ.5vnIXJXAwtfCp2jWYeFgowWulHs6kh03g2y0kb5NMfM",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyMzQ4NTMwfQ.uvtxiKVwQ9u3Wl9_-KjAcK9iUZWipdptpD8bk8Cv_ag",
 								"type": "text"
 							}
 						],
@@ -1110,7 +1108,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1138,9 +1136,9 @@
 					"response": []
 				},
 				{
-					"name": "Edit Data",
+					"name": "Delete Data",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
@@ -1150,7 +1148,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Proses_uang\" : \"Uang Panas\"\r\n}",
+							"raw": "{\r\n     \"tahun_akademik\" : \"2022-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1158,7 +1156,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/updatejenistrans/3",
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/deleteconfperiode",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1170,41 +1168,8 @@
 							"path": [
 								"api",
 								"v1",
-								"masterjenistrans",
-								"updatejenistrans",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Data",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/deletejenistrans/2",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"masterjenistrans",
-								"deletejenistrans",
-								"2"
+								"settingperiode",
+								"deleteconfperiode"
 							]
 						}
 					},
