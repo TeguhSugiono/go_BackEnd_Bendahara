@@ -1,6 +1,8 @@
 package table_data
 
-import "time"
+import (
+	"time"
+)
 
 type TableData struct {
 	Total     int64 `json:"total"`
@@ -60,6 +62,19 @@ type Tbl_conf_periode_spps struct {
 	Tahun          int
 	Nm_sett        string
 	Tahun_akademik string
+	Flag_aktif     int
+	Created_on     time.Time
+	Created_by     string
+	Edited_on      time.Time
+	Edited_by      string
+}
+
+type Tbl_sett_periode_spps struct {
+	Kd_periode_spp int
+	Kd_sett_spp    int `gorm:"primary_key;auto_increment;not_null" json:"kd_sett_spp"`
+	Nm_kelas       string
+	Biaya_spp      float64
+	Keterangan     string
 	Flag_aktif     int
 	Created_on     time.Time
 	Created_by     string

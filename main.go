@@ -8,7 +8,9 @@ import (
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_jenis_trans"
 	"rest_api_bendahara/master_kategori_uang"
+	"rest_api_bendahara/master_kelas_akademik"
 	"rest_api_bendahara/master_sett_periode"
+	"rest_api_bendahara/master_sett_spp"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
 	"rest_api_bendahara/user"
@@ -79,7 +81,11 @@ func main() {
 	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
 	api.POST("/settingperiode/deleteconfperiode", authMiddleware(), master_sett_periode.DeleteConfPeriode)
 
-	api.GET("/mastertahunakademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
+	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
+
+	api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
+
+	api.GET("/akademik/listkelasakademik", authMiddleware(), master_kelas_akademik.ListKelasAkademik)
 
 	r.Run(":2022")
 }
