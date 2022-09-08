@@ -13,6 +13,7 @@ import (
 	"rest_api_bendahara/master_sett_spp"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
+	"rest_api_bendahara/transaksi_uang_masuk_spp"
 	"rest_api_bendahara/user"
 	"strings"
 
@@ -86,6 +87,9 @@ func main() {
 	api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
 	api.PUT("/settingperiode/updatesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.UpdateSettPeriode)
 	api.PUT("/settingperiode/deletesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.DeleteSettPeriode)
+
+	api.GET("/transaksi/uangmasukspp/listgroupkategori", authMiddleware(), transaksi_uang_masuk_spp.ListGroupKategori)
+	api.GET("/transaksi/uangmasukspp/listkategoriuang", authMiddleware(), transaksi_uang_masuk_spp.ListKategoriUang)
 
 	//AKADEMIK SIA
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)

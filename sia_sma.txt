@@ -1,0 +1,5 @@
+table yang di ambil dari data sia
+- tbl_kelas
+- tbl_naik_kelas
+- tbl_siswa
+- tbl_tahun_akademik
