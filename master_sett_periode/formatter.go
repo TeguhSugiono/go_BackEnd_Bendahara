@@ -11,6 +11,7 @@ func FormatShowData(table []ListData) []ReturnData {
 }
 
 type ReturnData struct {
+	Id_conf        int    `json:"id_conf"`
 	Kd_periode_spp int    `json:"kd_periode_spp"`
 	Seqno          int    `json:"seqno"`
 	Kd_bulan       string `json:"kd_bulan"`
@@ -20,6 +21,7 @@ type ReturnData struct {
 }
 
 type ListData struct {
+	Id_conf        int
 	Kd_periode_spp int
 	Seqno          int
 	Kd_bulan       string
@@ -30,6 +32,7 @@ type ListData struct {
 
 func FormatTampungData(table ListData) ReturnData {
 	arraydata := ReturnData{}
+	arraydata.Id_conf = table.Id_conf
 	arraydata.Kd_periode_spp = table.Kd_periode_spp
 	arraydata.Seqno = table.Seqno
 	arraydata.Kd_bulan = table.Kd_bulan

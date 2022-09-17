@@ -19,7 +19,7 @@ func ListConfPeriode(c *gin.Context) {
 
 	var master []ListData
 
-	sql := " SELECT * from tbl_conf_periode_spps where flag_aktif = 0 "
+	sql := " SELECT * from tbl_conf_periode_spps where flag_aktif = 0 group by kd_periode_spp order by tahun_akademik "
 
 	db.Raw(sql).Scan(&master)
 
@@ -50,9 +50,9 @@ func ShowConfPeriode(c *gin.Context) {
 	}
 
 	if sort := c.Query("sort"); sort != "" {
-		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, sort)
+		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,seqno %s", sql, "asc", "asc")
 	} else {
-		sql = fmt.Sprintf("%s ORDER BY created_on %s", sql, "desc")
+		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,seqno %s", sql, "desc", "desc")
 	}
 
 	page := c.Query("page")
@@ -105,8 +105,8 @@ func InsertConfPeriode(c *gin.Context) {
 	var conf_periode_spps table_data.Tbl_conf_periode_spps
 	checkUser := db.Select("*").Where("flag_aktif = ? and tahun_akademik = ? ", 0, dataInput.Tahun_akademik).Find(&conf_periode_spps)
 	if checkUser.RowsAffected > 0 {
-		errorMessage := gin.H{"errors": "Data Setting Tahun Periode atau Tahun Akademik Sudah Ada ..."}
-		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Data Setting Tahun Periode atau Tahun Akademik Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -238,7 +238,35 @@ func DeleteConfPeriode(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps)
+	//var resultD ResultDelete
+	//db.Raw("SELECT id_conf,seqno,kd_bulan FROM tbl_conf_periode_spps where flag_aktif=? and edited_on=? and edited_by=?", 9, datenowx, currentUser.(string)).Scan(&resultD)
+	// ArrayResultDelete := []ResultDelete{}
+	// for seqno := 0; seqno < 12; seqno++ {
+	// 	arraydata := ResultDelete{}
+	// 	arraydata.Id_conf = Id_conf
+	// }
+
+	SetArrayData := []ResultDelete{}
+	var seqno int
+	var kd_bulan string
+	rows, _ := db.Raw("SELECT seqno,kd_bulan FROM tbl_conf_periode_spps where flag_aktif=? and edited_on=? and edited_by=? order by seqno", 9, datenowx, currentUser.(string)).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&seqno, &kd_bulan)
+		arraydata := ResultDelete{}
+		arraydata.Seqno = seqno
+		arraydata.Kd_bulan = kd_bulan
+
+		SetArrayData = append(SetArrayData, arraydata)
+	}
+
+	response := helper.APIResponseN("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Kd_periode_spp, conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, SetArrayData)
+	//response := helper.APIResponseNew("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Kd_periode_spp, conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, conf_periode_spps)
 	c.JSON(http.StatusOK, response)
 
+}
+
+type ResultDelete struct {
+	Seqno    int
+	Kd_bulan string
 }

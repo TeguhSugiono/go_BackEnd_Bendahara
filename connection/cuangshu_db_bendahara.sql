@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50531
 File Encoding         : 65001
 
-Date: 2022-09-09 05:39:08
+Date: 2022-09-17 15:33:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,6 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_conf_periode_spps`;
 CREATE TABLE `tbl_conf_periode_spps` (
+  `id_conf` int(11) NOT NULL AUTO_INCREMENT,
   `kd_periode_spp` int(11) DEFAULT NULL,
   `seqno` int(11) DEFAULT NULL,
   `kd_bulan` char(2) DEFAULT NULL,
@@ -30,24 +31,25 @@ CREATE TABLE `tbl_conf_periode_spps` (
   `created_on` datetime DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL,
   `edited_on` datetime DEFAULT NULL,
-  `edited_by` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `edited_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_conf`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_conf_periode_spps
 -- ----------------------------
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '1', '07', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '2', '08', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '3', '09', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '4', '10', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '5', '11', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '6', '12', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '7', '01', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '8', '02', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '9', '03', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '10', '04', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '11', '05', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
-INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '12', '06', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', null, null);
+INSERT INTO `tbl_conf_periode_spps` VALUES ('1', '1', '1', '07', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('2', '1', '2', '08', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('3', '1', '3', '09', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('4', '1', '4', '10', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('5', '1', '5', '11', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('6', '1', '6', '12', '2022', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('7', '1', '7', '01', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('8', '1', '8', '02', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('9', '1', '9', '03', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('10', '1', '10', '04', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('11', '1', '11', '05', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
+INSERT INTO `tbl_conf_periode_spps` VALUES ('12', '1', '12', '06', '2023', 'Tahun Akademik 2022 s/d 2023 ', '2022-2023', '0', '2022-09-09 03:44:43', 'teguh', '2022-09-17 15:31:23', 'teguh');
 
 -- ----------------------------
 -- Table structure for `tbl_group_kategoris`
@@ -663,9 +665,9 @@ CREATE TABLE `tbl_sett_periode_spps` (
 -- ----------------------------
 -- Records of tbl_sett_periode_spps
 -- ----------------------------
-INSERT INTO `tbl_sett_periode_spps` VALUES ('1', '1', 'X', '300000.00', 'Biaya SPP Tahun Akademik 2022-2023 Kelas Sepuluh', '0', '2022-09-09 03:51:12', 'teguh', null, null);
-INSERT INTO `tbl_sett_periode_spps` VALUES ('1', '2', 'XI', '325000.00', 'Biaya SPP Tahun Akademik 2022-2023 Kelas Sebelas', '0', '2022-09-09 03:51:34', 'teguh', null, null);
-INSERT INTO `tbl_sett_periode_spps` VALUES ('1', '3', 'XII', '350000.00', 'Biaya SPP Tahun Akademik 2022-2023 Kelas Dua Belas', '0', '2022-09-09 03:51:52', 'teguh', null, null);
+INSERT INTO `tbl_sett_periode_spps` VALUES ('1', '1', 'X', '300000.00', 'Biaya SPP Tahun Akademik 2022-2023 Kelas Sepuluh', '9', '2022-09-09 03:51:12', 'teguh', '2022-09-17 13:42:16', 'teguh');
+INSERT INTO `tbl_sett_periode_spps` VALUES ('1', '2', 'XI', '325000.00', 'Biaya SPP Tahun Akademik 2022-2023 Kelas Sebelas', '9', '2022-09-09 03:51:34', 'teguh', '2022-09-17 13:42:13', 'teguh');
+INSERT INTO `tbl_sett_periode_spps` VALUES ('1', '3', 'XII', '350000.00', 'Biaya SPP Tahun Akademik 2022-2023 Kelas Dua Belas', '9', '2022-09-09 03:51:52', 'teguh', '2022-09-17 13:42:09', 'teguh');
 
 -- ----------------------------
 -- Table structure for `tbl_siswa`
@@ -1264,7 +1266,6 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_headers` (
   `kd_kategori` int(11) DEFAULT NULL,
   `kd_trans_masuk` int(11) NOT NULL AUTO_INCREMENT,
   `nis_siswa` varchar(15) DEFAULT NULL,
-  `nm_siswa` varchar(255) DEFAULT NULL,
   `tgl_trans_masuk` date DEFAULT NULL,
   `total_biaya` double(19,2) DEFAULT NULL,
   `sisa_biaya` double(19,2) DEFAULT NULL,

@@ -68,3 +68,43 @@ func FormatValidationError(err error) []string {
 
 	return errors
 }
+
+type ResponseN struct {
+	Meta MetaN `json:"meta"`
+	Data DataN `json:"data"`
+}
+
+type MetaN struct {
+	Message string `json:"message"`
+	Code    int    `json:"code"`
+	Status  string `json:"status"`
+}
+
+type DataN struct {
+	Kd_periode_spp int         `json:"kd_periode_spp"`
+	Tahun          int         `json:"tahun"`
+	Tahun_akademik string      `json:"tahun_akademik"`
+	Detail         interface{} `json:"detail"`
+}
+
+func APIResponseN(message string, code int, status string, kd_periode_spp int, tahun int, tahun_akademik string, datax interface{}) ResponseN {
+	meta := MetaN{
+		Message: message,
+		Code:    code,
+		Status:  status,
+	}
+
+	data := DataN{
+		Kd_periode_spp: kd_periode_spp,
+		Tahun:          tahun,
+		Tahun_akademik: tahun_akademik,
+		Detail:         datax,
+	}
+
+	jsonResponse := ResponseN{
+		Meta: meta,
+		Data: data,
+	}
+
+	return jsonResponse
+}

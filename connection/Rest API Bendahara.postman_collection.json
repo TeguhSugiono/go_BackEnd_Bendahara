@@ -1015,7 +1015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=10&search=2023&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=2&perpage=5&sort=asc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1033,15 +1033,16 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "perpage",
-									"value": "10"
+									"value": "5"
 								},
 								{
 									"key": "search",
-									"value": "2023"
+									"value": "2023",
+									"disabled": true
 								},
 								{
 									"key": "sort",
@@ -1588,6 +1589,36 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYzNDgwODM4fQ.hPdhRNcNneOemhbsM4v-VHL4G73p6Ta3umjqzUChdfg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
