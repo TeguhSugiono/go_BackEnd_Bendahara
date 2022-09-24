@@ -171,7 +171,7 @@ func InsertKategoriUang(c *gin.Context) {
 	// data.Created_by = currentUser.(string)
 	// data.Flag_aktif = 0
 	//err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
-	err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
+	err = db.Omit("Edited_on", "Edited_by", "Nm_detail").Create(&data).Error
 	if err != nil {
 		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)

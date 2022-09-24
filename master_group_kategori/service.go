@@ -66,7 +66,7 @@ func InsertGroupKategori(c *gin.Context) {
 		Flag_aktif: 0,
 	}
 
-	err = db.Omit("Edited_on", "Edited_by", "Nm_header", "Nm_detail").Create(&data).Error
+	err = db.Omit("Edited_on", "Edited_by", "Nm_header").Create(&data).Error
 	if err != nil {
 		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)

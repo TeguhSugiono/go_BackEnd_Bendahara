@@ -557,7 +557,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=10",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=100",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -579,7 +579,7 @@
 								},
 								{
 									"key": "perpage",
-									"value": "10"
+									"value": "100"
 								},
 								{
 									"key": "search",
@@ -657,7 +657,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"nm_kategori\" : \"Alat Tulis\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"nm_kategori\" : \"TEST iNPUT\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -697,7 +697,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1 ,\r\n    \"nm_kategori\" :  \"Daftar Ulang\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1 ,\r\n    \"nm_kategori\" :  \"TEST INPUT DATA\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -705,7 +705,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatekategoriuang/2",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatekategoriuang/15",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -719,7 +719,7 @@
 								"v1",
 								"masterkategoriuang",
 								"updatekategoriuang",
-								"2"
+								"15"
 							]
 						}
 					},
@@ -737,7 +737,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/deletekategoriuang/7",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/deletekategoriuang/15",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -751,7 +751,7 @@
 								"v1",
 								"masterkategoriuang",
 								"deletekategoriuang",
-								"7"
+								"15"
 							]
 						}
 					},
@@ -886,7 +886,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Kd_kategori\" : 1,\r\n    \"Nm_sub_kategori\" : \"Biaya Formulir Pendaftaran\"\r\n}",
+							"raw": "{\r\n    \"Kd_kategori\" : 1,\r\n    \"Nm_sub_kategori\" : \"TEST Inputc\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -926,7 +926,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_kategori\" : 1 ,\r\n    \"nm_sub_kategori\" :  \"Biaya Formulir Pendaftaran\"\r\n}",
+							"raw": "{\r\n    \"kd_kategori\" : 1 ,\r\n    \"nm_sub_kategori\" :  \"TEST INPUT\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -934,7 +934,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatesubkategoriuang/3",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/updatesubkategoriuang/4",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -948,7 +948,7 @@
 								"v1",
 								"masterkategoriuang",
 								"updatesubkategoriuang",
-								"3"
+								"4"
 							]
 						}
 					},
@@ -1015,7 +1015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=2&perpage=5&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=10&sort=asc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1033,11 +1033,11 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "perpage",
-									"value": "5"
+									"value": "10"
 								},
 								{
 									"key": "search",
@@ -1596,7 +1596,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYzNDgwODM4fQ.hPdhRNcNneOemhbsM4v-VHL4G73p6Ta3umjqzUChdfg",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0MTIzNjg5fQ.YAJmkKMWgX3YVc3CXdnfeCzEo_KPwD0LJavvlM24VzM",
 				"type": "string"
 			}
 		]

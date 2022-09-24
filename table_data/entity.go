@@ -15,7 +15,6 @@ type Tbl_group_kategoris struct {
 	Kd_group   int `gorm:"primary_key;auto_increment;not_null" json:"kd_group"`
 	Nm_group   string
 	Nm_header  string
-	Nm_detail  string
 	Flag_aktif int
 	Created_on time.Time
 	Created_by string
@@ -37,6 +36,7 @@ type Tbl_kategori_uangs struct {
 	Kd_group    int
 	Kd_kategori int `gorm:"primary_key;auto_increment;not_null" json:"kd_kategori"`
 	Nm_kategori string
+	Nm_detail   string
 	Flag_aktif  int
 	Created_on  time.Time
 	Created_by  string

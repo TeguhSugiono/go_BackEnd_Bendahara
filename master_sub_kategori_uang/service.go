@@ -171,17 +171,6 @@ func InsertSubKategoriUang(c *gin.Context) {
 
 	//=========================================
 
-	var src_kd_group string
-	var str_kd_group string
-
-	str_kd_group = ""
-	rows, _ := db.Raw("select kd_group from tbl_kategori_uangs where flag_aktif = ? and kd_kategori=?", 0, dataInput.Kd_kategori).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		rows.Scan(&src_kd_group)
-		str_kd_group = src_kd_group
-	}
-
 	var nm_sub_kategori string
 	var str_nm_sub_kategori string
 
@@ -199,9 +188,7 @@ func InsertSubKategoriUang(c *gin.Context) {
 		nomor++
 	}
 
-	var dataMasterKategoris table_data.Tbl_group_kategoris
-
-	err = db.Raw("UPDATE tbl_group_kategoris SET nm_detail = ? WHERE kd_group = ? ", str_nm_sub_kategori, str_kd_group).Scan(&dataMasterKategoris).Error
+	err = db.Raw("UPDATE tbl_kategori_uangs SET nm_detail = ? WHERE kd_kategori = ? ", str_nm_sub_kategori, dataInput.Kd_kategori).Scan(&dataMaster).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_group_kategoris Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -281,17 +268,6 @@ func UpdateSubKategoriUang(c *gin.Context) {
 
 	//=========================================
 
-	var src_kd_group string
-	var str_kd_group string
-
-	str_kd_group = ""
-	rows, _ := db.Raw("select kd_group from tbl_kategori_uangs where flag_aktif = ? and kd_kategori=?", 0, input.Kd_kategori).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		rows.Scan(&src_kd_group)
-		str_kd_group = src_kd_group
-	}
-
 	var nm_sub_kategori string
 	var str_nm_sub_kategori string
 
@@ -309,9 +285,7 @@ func UpdateSubKategoriUang(c *gin.Context) {
 		nomor++
 	}
 
-	var dataMasterKategoris table_data.Tbl_group_kategoris
-
-	err = db.Raw("UPDATE tbl_group_kategoris SET nm_detail = ? WHERE kd_group = ? ", str_nm_sub_kategori, str_kd_group).Scan(&dataMasterKategoris).Error
+	err = db.Raw("UPDATE tbl_kategori_uangs SET nm_detail = ? WHERE kd_kategori = ? ", str_nm_sub_kategori, input.Kd_kategori).Scan(&dataMaster).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_group_kategoris Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -364,17 +338,6 @@ func DeleteSubKategoriUang(c *gin.Context) {
 
 	//=========================================
 
-	var src_kd_group string
-	var str_kd_group string
-
-	str_kd_group = ""
-	rows, _ := db.Raw("select kd_group from tbl_kategori_uangs where flag_aktif = ? and kd_kategori=?", 0, dataMaster.Kd_kategori).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		rows.Scan(&src_kd_group)
-		str_kd_group = src_kd_group
-	}
-
 	var nm_sub_kategori string
 	var str_nm_sub_kategori string
 
@@ -392,9 +355,8 @@ func DeleteSubKategoriUang(c *gin.Context) {
 		nomor++
 	}
 
-	var dataMasterKategoris table_data.Tbl_group_kategoris
-
-	err = db.Raw("UPDATE tbl_group_kategoris SET nm_detail = ? WHERE kd_group = ? ", str_nm_sub_kategori, str_kd_group).Scan(&dataMasterKategoris).Error
+	var dataMasterx table_data.Tbl_kategori_uangs
+	err = db.Raw("UPDATE tbl_kategori_uangs SET nm_detail = ? WHERE kd_kategori = ? ", str_nm_sub_kategori, dataMaster.Kd_kategori).Scan(&dataMasterx).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_group_kategoris Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)

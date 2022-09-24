@@ -6,7 +6,6 @@ type GroupKategoriFormatter struct {
 	Kd_group    int    `json:"kd_group"`
 	Nm_group    string `json:"nm_group"`
 	Nm_header   string `json:"nm_header"`
-	Nm_detail   string `json:"nm_detail"`
 }
 
 func FormatGroupKategoris(table ListData) GroupKategoriFormatter {
@@ -17,7 +16,6 @@ func FormatGroupKategoris(table ListData) GroupKategoriFormatter {
 	arraydata.Kd_group = table.Kd_group
 	arraydata.Nm_group = table.Nm_group
 	arraydata.Nm_header = table.Nm_header
-	arraydata.Nm_detail = table.Nm_detail
 
 	return arraydata
 }
@@ -38,5 +36,4 @@ type ListData struct {
 	Kd_group    int
 	Nm_group    string
 	Nm_header   string
-	Nm_detail   string
 }

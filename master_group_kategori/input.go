@@ -4,7 +4,6 @@ type GroupKategoriInput struct {
 	Kd_jenis   int    `json:"kd_jenis" form:"kd_jenis" binding:"required,number"`
 	Nm_group   string `json:"nm_group" form:"nm_group" binding:"required"`
 	Nm_header  string `json:"nm_header" form:"nm_header"`
-	Nm_detail  string `json:"nm_detail" form:"nm_detail"`
 	Flag_aktif int    `json:"flag_aktif" form:"flag_aktif"`
 	Created_on string `json:"created_on" form:"created_on"`
 	Created_by string `json:"created_by" form:"created_by"`

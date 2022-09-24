@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50531
 File Encoding         : 65001
 
-Date: 2022-09-17 15:33:27
+Date: 2022-09-25 05:20:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,7 +60,6 @@ CREATE TABLE `tbl_group_kategoris` (
   `kd_group` int(11) NOT NULL AUTO_INCREMENT,
   `nm_group` varchar(100) DEFAULT NULL,
   `nm_header` varchar(500) DEFAULT NULL,
-  `nm_detail` varchar(500) DEFAULT NULL,
   `flag_aktif` int(1) DEFAULT '0',
   `created_on` datetime DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL,
@@ -72,15 +71,15 @@ CREATE TABLE `tbl_group_kategoris` (
 -- ----------------------------
 -- Records of tbl_group_kategoris
 -- ----------------------------
-INSERT INTO `tbl_group_kategoris` VALUES ('1', '1', 'Biaya Pembayaran PPDB', 'PPDB', 'Biaya Seragam,Biaya Uang Gedung,Biaya Formulir Pendaftaran', '0', '2022-09-09 03:31:11', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('1', '2', 'Biaya Pembayaran Daftar Ulang', 'Daftar Ulang', null, '0', '2022-09-09 03:31:26', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('1', '3', 'Biaya Pembayaran SPP', 'SPP', null, '0', '2022-09-09 03:31:44', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('1', '4', 'Biaya Pembayaran Semester', 'Semester', null, '0', '2022-09-09 03:32:03', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('1', '5', 'Biaya Pembayaran Lain-Lain', null, null, '0', '2022-09-09 03:32:20', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('2', '6', 'Biaya Gaji Pegawai', 'Gaji', null, '0', '2022-09-09 03:32:34', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('2', '7', 'Biaya Kegiatan Siswa', 'Buka Puasa Bersama,Pesantren Kilat', null, '0', '2022-09-09 03:32:45', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('2', '8', 'Biaya Rutin Gedung Sekolah', 'Listrik,Air,Telp,Internet', null, '0', '2022-09-09 03:32:58', 'teguh', null, null);
-INSERT INTO `tbl_group_kategoris` VALUES ('2', '9', 'Biaya Perlengkapan Siswa', 'Buku Tulis,Buku Paket,Alat Tulis', null, '0', '2022-09-09 03:33:16', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('1', '1', 'Biaya Pembayaran PPDB', 'PPDB', '0', '2022-09-09 03:31:11', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('1', '2', 'Biaya Pembayaran Daftar Ulang', 'Daftar Ulang', '0', '2022-09-09 03:31:26', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('1', '3', 'Biaya Pembayaran SPP', 'SPP', '0', '2022-09-09 03:31:44', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('1', '4', 'Biaya Pembayaran Semester', 'Semester', '0', '2022-09-09 03:32:03', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('1', '5', 'Biaya Pembayaran Lain-Lain', null, '0', '2022-09-09 03:32:20', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('2', '6', 'Biaya Gaji Pegawai', 'Gaji', '0', '2022-09-09 03:32:34', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('2', '7', 'Biaya Kegiatan Siswa', 'Buka Puasa Bersama,Pesantren Kilat', '0', '2022-09-09 03:32:45', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('2', '8', 'Biaya Rutin Gedung Sekolah', 'Listrik,Air,Telp,Internet', '0', '2022-09-09 03:32:58', 'teguh', null, null);
+INSERT INTO `tbl_group_kategoris` VALUES ('2', '9', 'Biaya Perlengkapan Siswa', 'Buku Tulis,Buku Paket,Alat Tulis', '0', '2022-09-09 03:33:16', 'teguh', null, null);
 
 -- ----------------------------
 -- Table structure for `tbl_jenis_trans`
@@ -111,31 +110,33 @@ CREATE TABLE `tbl_kategori_uangs` (
   `kd_group` int(11) DEFAULT NULL,
   `kd_kategori` int(11) NOT NULL AUTO_INCREMENT,
   `nm_kategori` varchar(200) DEFAULT NULL,
+  `nm_detail` varchar(500) DEFAULT NULL,
   `flag_aktif` int(1) DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL,
   `edited_on` datetime DEFAULT NULL,
   `edited_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`kd_kategori`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_kategori_uangs
 -- ----------------------------
-INSERT INTO `tbl_kategori_uangs` VALUES ('1', '1', 'PPDB', '0', '2022-09-09 03:34:25', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('2', '2', 'Daftar Ulang', '0', '2022-09-09 03:35:16', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('3', '3', 'SPP', '0', '2022-09-09 03:35:45', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('4', '4', 'Semester', '0', '2022-09-09 03:36:10', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('6', '5', 'Gaji', '0', '2022-09-09 03:38:49', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('7', '6', 'Buka Puasa Bersama', '0', '2022-09-09 03:39:23', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('7', '7', 'Pesantren Kilat', '0', '2022-09-09 03:39:45', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('8', '8', 'Listrik', '0', '2022-09-09 03:40:41', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('8', '9', 'Air', '0', '2022-09-09 03:40:45', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('8', '10', 'Telp', '0', '2022-09-09 03:40:49', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('8', '11', 'Internet', '0', '2022-09-09 03:41:25', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('9', '12', 'Buku Tulis', '0', '2022-09-09 03:41:49', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('9', '13', 'Buku Paket', '0', '2022-09-09 03:41:53', 'teguh', null, null);
-INSERT INTO `tbl_kategori_uangs` VALUES ('9', '14', 'Alat Tulis', '0', '2022-09-09 03:42:15', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('1', '1', 'PPDB', 'Biaya Seragam,Biaya Uang Gedung,Biaya Formulir Pendaftaran', '0', '2022-09-09 03:34:25', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('2', '2', 'Daftar Ulang', null, '0', '2022-09-09 03:35:16', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('3', '3', 'SPP', null, '0', '2022-09-09 03:35:45', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('4', '4', 'Semester', null, '0', '2022-09-09 03:36:10', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('6', '5', 'Gaji', null, '0', '2022-09-09 03:38:49', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('7', '6', 'Buka Puasa Bersama', null, '0', '2022-09-09 03:39:23', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('7', '7', 'Pesantren Kilat', null, '0', '2022-09-09 03:39:45', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('8', '8', 'Listrik', null, '0', '2022-09-09 03:40:41', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('8', '9', 'Air', null, '0', '2022-09-09 03:40:45', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('8', '10', 'Telp', null, '0', '2022-09-09 03:40:49', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('8', '11', 'Internet', null, '0', '2022-09-09 03:41:25', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('9', '12', 'Buku Tulis', null, '0', '2022-09-09 03:41:49', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('9', '13', 'Buku Paket', null, '0', '2022-09-09 03:41:53', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('9', '14', 'Alat Tulis', null, '0', '2022-09-09 03:42:15', 'teguh', null, null);
+INSERT INTO `tbl_kategori_uangs` VALUES ('1', '15', 'TEST INPUT DATA', null, '9', '2022-09-24 23:35:21', 'teguh', '2022-09-24 23:36:59', 'teguh');
 
 -- ----------------------------
 -- Table structure for `tbl_kelas`
@@ -1200,7 +1201,7 @@ CREATE TABLE `tbl_sub_kategori_uangs` (
   `edited_on` datetime DEFAULT NULL,
   `edited_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`kd_sub_kategori`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_sub_kategori_uangs
@@ -1208,6 +1209,7 @@ CREATE TABLE `tbl_sub_kategori_uangs` (
 INSERT INTO `tbl_sub_kategori_uangs` VALUES ('1', '1', 'Biaya Seragam', '0', '2022-09-09 03:43:59', 'teguh', null, null);
 INSERT INTO `tbl_sub_kategori_uangs` VALUES ('1', '2', 'Biaya Uang Gedung', '0', '2022-09-09 03:44:10', 'teguh', null, null);
 INSERT INTO `tbl_sub_kategori_uangs` VALUES ('1', '3', 'Biaya Formulir Pendaftaran', '0', '2022-09-09 03:44:19', 'teguh', null, null);
+INSERT INTO `tbl_sub_kategori_uangs` VALUES ('1', '4', 'TEST INPUT', '9', '2022-09-24 23:39:12', 'teguh', '2022-09-24 23:40:36', 'teguh');
 
 -- ----------------------------
 -- Table structure for `tbl_tahun_akademik`
