@@ -1015,7 +1015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=10&sort=asc",
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/showconfperiode?page=1&perpage=100",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1037,7 +1037,7 @@
 								},
 								{
 									"key": "perpage",
-									"value": "10"
+									"value": "100"
 								},
 								{
 									"key": "search",
@@ -1046,7 +1046,8 @@
 								},
 								{
 									"key": "sort",
-									"value": "asc"
+									"value": "asc",
+									"disabled": true
 								}
 							]
 						}
@@ -1109,7 +1110,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2023-2024\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1596,7 +1597,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0MTIzNjg5fQ.YAJmkKMWgX3YVc3CXdnfeCzEo_KPwD0LJavvlM24VzM",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0MzM3OTIyfQ.n1R66enjaoUk35mkygMV7V6mRJgBZI9lAe5cghL6nA0",
 				"type": "string"
 			}
 		]

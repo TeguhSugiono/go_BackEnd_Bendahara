@@ -37,9 +37,9 @@ func ShowConfPeriode(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []ListData
+	//var master []ListData
 
-	sql := " SELECT * from tbl_conf_periode_spps  " +
+	sql := " SELECT kd_periode_spp,tahun,tahun_akademik from tbl_conf_periode_spps  " +
 		" where flag_aktif=0 "
 
 	if s := c.Query("search"); s != "" {
@@ -48,6 +48,8 @@ func ShowConfPeriode(c *gin.Context) {
 			sql = fmt.Sprintf("%s and (kd_bulan LIKE '%%%s%%' or tahun LIKE '%%%s%%' or nm_sett LIKE '%%%s%%'  or tahun_akademik LIKE '%%%s%%') ", sql, s, s, s, s)
 		}
 	}
+
+	sql = fmt.Sprintf("%s GROUP BY tahun,tahun_akademik ", sql)
 
 	if sort := c.Query("sort"); sort != "" {
 		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,seqno %s", sql, "asc", "asc")
@@ -77,7 +79,53 @@ func ShowConfPeriode(c *gin.Context) {
 	db.Raw(sql).Count(&total)
 
 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
-	db.Raw(sql).Scan(&master)
+	//db.Raw(sql).Scan(&master)
+
+	var kd_periode_spp int
+	var tahun int
+	var tahun_akademik string
+	var id_conf int
+	var seqno int
+	var kd_bulan string
+
+	// var kd_periode_spp_first int
+	// var tahun_first int
+	// var tahun_akademik_first string
+	// var id_conf_first int
+	// var seqno_first int
+	// var kd_bulan_first string
+	// var intLooping int = 0
+
+	SetArrayData := []ResponDataTable{}
+	rows, _ := db.Raw(sql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&kd_periode_spp, &tahun, &tahun_akademik)
+		arraydata := ResponDataTable{}
+		arraydata.Kd_periode_spp = kd_periode_spp
+		arraydata.Tahun = tahun
+		arraydata.Tahun_akademik = tahun_akademik
+
+		SetArrayDataDetail := []ResponDataTableDetail{}
+
+		rowsdet, _ := db.Raw("SELECT id_conf,seqno,kd_bulan "+
+			" from tbl_conf_periode_spps where flag_aktif=? and tahun=? and kd_periode_spp=? ", 0, tahun, kd_periode_spp).Rows()
+		defer rowsdet.Close()
+		for rowsdet.Next() {
+			arraydatadetail := ResponDataTableDetail{}
+
+			rowsdet.Scan(&id_conf, &seqno, &kd_bulan)
+			arraydatadetail.Id_conf = id_conf
+			arraydatadetail.Seqno = seqno
+			arraydatadetail.Kd_bulan = kd_bulan
+
+			SetArrayDataDetail = append(SetArrayDataDetail, arraydatadetail)
+		}
+
+		arraydata.Detail = SetArrayDataDetail
+		SetArrayData = append(SetArrayData, arraydata)
+
+	}
 
 	CompTableData := table_data.TableData{
 		Total:     total,
@@ -85,9 +133,59 @@ func ShowConfPeriode(c *gin.Context) {
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
 	}
 
-	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, FormatShowData(master))
+	response := APIResponseShowTable("List Data ...", http.StatusOK, "success", "", CompTableData, SetArrayData)
 	c.JSON(http.StatusOK, response)
 
+}
+
+type ResponDataTable struct {
+	Kd_periode_spp int         `json:"kd_periode_spp"`
+	Tahun          int         `json:"tahun"`
+	Tahun_akademik string      `json:"tahun_akademik"`
+	Detail         interface{} `json:"detail"`
+	// Id_conf        int    `json:"id_conf"`
+	// Seqno          int    `json:"seqno"`
+	// Kd_bulan       string `json:"kd_bulan"`
+}
+
+type ResponDataTableDetail struct {
+	Id_conf  int    `json:"id_conf"`
+	Seqno    int    `json:"seqno"`
+	Kd_bulan string `json:"kd_bulan"`
+	// Kd_periode_spp int    `json:"kd_periode_spp"`
+	// Tahun          int    `json:"tahun"`
+	// Tahun_akademik string `json:"tahun_akademik"`
+	// Detail         interface{} `json:"detail"`
+}
+
+type ResponseShowTable struct {
+	Meta      MetaShowTable `json:"meta"`
+	DataTable interface{}   `json:"datatable"`
+	Data      interface{}   `json:"data"`
+}
+
+type MetaShowTable struct {
+	Message string `json:"message"`
+	Code    int    `json:"code"`
+	Status  string `json:"status"`
+	Query   string `json:"query"`
+}
+
+func APIResponseShowTable(message string, code int, status string, query string, datatable interface{}, data interface{}) ResponseShowTable {
+	meta := MetaShowTable{
+		Message: message,
+		Code:    code,
+		Status:  status,
+		Query:   query,
+	}
+
+	jsonResponse := ResponseShowTable{
+		Meta:      meta,
+		DataTable: datatable,
+		Data:      data,
+	}
+
+	return jsonResponse
 }
 
 func InsertConfPeriode(c *gin.Context) {
@@ -224,11 +322,6 @@ func DeleteConfPeriode(c *gin.Context) {
 	}
 
 	currentUser := c.MustGet("currentUser")
-	// data := table_data.Tbl_conf_periode_spps{
-	// 	Edited_by:  currentUser.(string),
-	// 	Edited_on:  datenowx,
-	// 	Flag_aktif: 9,
-	// }
 
 	var tblupdate table_data.Tbl_conf_periode_spps
 	err = db.Raw("update tbl_conf_periode_spps SET Flag_aktif = ?, edited_by  = ? , edited_on = ?  WHERE tahun_akademik = ? ", 9, currentUser.(string), datenowx, dataInput.Tahun_akademik).Scan(&tblupdate).Error
@@ -237,14 +330,6 @@ func DeleteConfPeriode(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-
-	//var resultD ResultDelete
-	//db.Raw("SELECT id_conf,seqno,kd_bulan FROM tbl_conf_periode_spps where flag_aktif=? and edited_on=? and edited_by=?", 9, datenowx, currentUser.(string)).Scan(&resultD)
-	// ArrayResultDelete := []ResultDelete{}
-	// for seqno := 0; seqno < 12; seqno++ {
-	// 	arraydata := ResultDelete{}
-	// 	arraydata.Id_conf = Id_conf
-	// }
 
 	SetArrayData := []ResultDelete{}
 	var seqno int
@@ -260,8 +345,7 @@ func DeleteConfPeriode(c *gin.Context) {
 		SetArrayData = append(SetArrayData, arraydata)
 	}
 
-	response := helper.APIResponseN("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Kd_periode_spp, conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, SetArrayData)
-	//response := helper.APIResponseNew("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Kd_periode_spp, conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, conf_periode_spps)
+	response := APIResponseDelete("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Kd_periode_spp, conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, SetArrayData)
 	c.JSON(http.StatusOK, response)
 
 }
@@ -269,4 +353,44 @@ func DeleteConfPeriode(c *gin.Context) {
 type ResultDelete struct {
 	Seqno    int
 	Kd_bulan string
+}
+
+type ResponseDelete struct {
+	Meta MetaDelete `json:"meta"`
+	Data DataDelete `json:"data"`
+}
+
+type MetaDelete struct {
+	Message string `json:"message"`
+	Code    int    `json:"code"`
+	Status  string `json:"status"`
+}
+
+type DataDelete struct {
+	Kd_periode_spp int         `json:"kd_periode_spp"`
+	Tahun          int         `json:"tahun"`
+	Tahun_akademik string      `json:"tahun_akademik"`
+	Detail         interface{} `json:"detail"`
+}
+
+func APIResponseDelete(message string, code int, status string, kd_periode_spp int, tahun int, tahun_akademik string, datax interface{}) ResponseDelete {
+	meta := MetaDelete{
+		Message: message,
+		Code:    code,
+		Status:  status,
+	}
+
+	data := DataDelete{
+		Kd_periode_spp: kd_periode_spp,
+		Tahun:          tahun,
+		Tahun_akademik: tahun_akademik,
+		Detail:         datax,
+	}
+
+	jsonResponse := ResponseDelete{
+		Meta: meta,
+		Data: data,
+	}
+
+	return jsonResponse
 }
