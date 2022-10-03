@@ -10,6 +10,7 @@ import (
 	"rest_api_bendahara/master_kategori_uang"
 	"rest_api_bendahara/master_kelas_akademik"
 	"rest_api_bendahara/master_sett_periode"
+	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
 	"rest_api_bendahara/transaksi_uang_masuk_spp"
@@ -91,10 +92,12 @@ func main() {
 
 	api.GET("/transaksi/uangmasukspp/listgroupkategori", authMiddleware(), transaksi_uang_masuk_spp.ListGroupKategori)
 	api.GET("/transaksi/uangmasukspp/listkategoriuang", authMiddleware(), transaksi_uang_masuk_spp.ListKategoriUang)
+	api.POST("/transaksi/uangmasukspp/createuangmasukspp", authMiddleware(), transaksi_uang_masuk_spp.CreateUangMasukSpp)
 
 	//AKADEMIK SIA
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
 	api.GET("/akademik/listkelasakademik", authMiddleware(), master_kelas_akademik.ListKelasAkademik)
+	api.GET("/akademik/listsiswaakademik", authMiddleware(), master_siswa_akademik.ListSiswaAkademik)
 
 	r.Run(":2022")
 }

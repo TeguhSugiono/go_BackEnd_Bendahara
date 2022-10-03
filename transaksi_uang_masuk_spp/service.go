@@ -1,14 +1,18 @@
 package transaksi_uang_masuk_spp
 
 import (
+	"errors"
 	"net/http"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_kategori_uang"
+	"rest_api_bendahara/table_data"
+	"time"
 
 	//"rest_api_bendahara/master_kategori_uang"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 )
 
@@ -56,7 +60,115 @@ func ListKategoriUang(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func InsertTransSpp(c *gin.Context) {
+func CreateUangMasukSpp(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	var paramInputSPP ParamInputSPP
+	if err := c.ShouldBindJSON(&paramInputSPP); err != nil {
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		var error_binding []string
+		error_binding = append(error_binding, err.Error())
+		errorMessage := gin.H{"errors": error_binding}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var CekDataUangMasuk table_data.Tbl_trans_uang_masuk_spp_headers
+	checkUser := db.Select("*").Where("flag_aktif = 0 and kd_group= ? and kd_kategori= ? and nis_siswa=? and nm_kelas=? and tahun_akademik = ?", paramInputSPP.Kd_group, paramInputSPP.Kd_kategori, paramInputSPP.Nis_siswa, paramInputSPP.Nm_kelas, paramInputSPP.Tahun_akademik).Find(&CekDataUangMasuk)
+	if checkUser.RowsAffected > 0 {
+
+		//Jika data spp sudah pernah dibuat
+
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Data Setting Tahun Periode atau Tahun Akademik Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	} else {
+
+		//Jika data spp belum dibuat
+		var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+		date := "2006-01-02 15:04:05"
+		datenowx, err := time.Parse(date, datenows)
+		if err != nil {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+			response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+
+		var intKd_trans_masuk int
+		db.Raw("SELECT ifnull(max(kd_trans_masuk),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_spp_headers where flag_aktif=0").Scan(&intKd_trans_masuk)
+
+		var float_biaya_spp float64
+		db.Raw("SELECT sum(biaya_spp) 'biaya_spp' FROM tbl_conf_periode_spps where tahun_akademik=? and nm_kelas=? and flag_aktif=0", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas).Scan(&float_biaya_spp)
+
+		currentUser := c.MustGet("currentUser")
+		data := table_data.Tbl_trans_uang_masuk_spp_headers{
+			Kd_group:       paramInputSPP.Kd_group,
+			Kd_kategori:    paramInputSPP.Kd_kategori,
+			Kd_trans_masuk: intKd_trans_masuk,
+			Nis_siswa:      paramInputSPP.Nis_siswa,
+			Nm_kelas:       paramInputSPP.Nm_kelas,
+			Tahun_akademik: paramInputSPP.Tahun_akademik,
+			Total_biaya:    float_biaya_spp,
+			Sisa_biaya:     0,
+			Keterangan:     paramInputSPP.Keterangan,
+			Created_by:     currentUser.(string),
+			Created_on:     datenowx,
+			Flag_aktif:     0,
+		}
+
+		err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
+		if err != nil {
+			response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
+
+		var intKd_trans_masuk_detail int
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_spp_details where flag_aktif=0").Scan(&intKd_trans_masuk_detail)
+
+		var int_seqno int
+		var periodebayar string
+		var jmlbayar float64
+		rows, _ := db.Raw("SELECT seqno,CONCAT(kd_bulan,'-',tahun) 'periodebayar',biaya_spp FROM tbl_conf_periode_spps WHERE flag_aktif=0 and tahun_akademik=? and nm_kelas=? ORDER BY seqno", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas).Rows()
+		defer rows.Close()
+		for rows.Next() {
+			rows.Scan(&int_seqno, &periodebayar, &jmlbayar)
+
+			datadetail := table_data.Tbl_trans_uang_masuk_spp_details{
+				Kd_trans_masuk:        intKd_trans_masuk,
+				Kd_trans_masuk_detail: intKd_trans_masuk_detail,
+				Seqno:                 int_seqno,
+				Periode_bayar:         periodebayar,
+				Jml_bayar:             jmlbayar,
+				Keterangan:            "",
+				Created_by:            currentUser.(string),
+				Created_on:            datenowx,
+				Flag_aktif:            0,
+			}
+
+			err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+			if err != nil {
+				response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
+				c.JSON(http.StatusBadRequest, response)
+				return
+			}
+
+			intKd_trans_masuk_detail++
+		}
+
+		response := helper.APIResponse("Simpan Data Sukses ...", http.StatusOK, "success", CekDataUangMasuk)
+		c.JSON(http.StatusOK, response)
+	}
 
 }
 

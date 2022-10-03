@@ -1,4 +1,4 @@
-package master_tahun_akademik
+package master_siswa_akademik
 
 import (
 	"net/http"
@@ -8,12 +8,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func ListTahunAkademik(c *gin.Context) {
+func ListSiswaAkademik(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	var master []ListData
 	//db.Find(&master)
-	sql := " SELECT tahun_akademik as 'id_tahun',tahun_akademik FROM tbl_tahun_akademik where flag_tahun=0  order by status "
+	sql := " SELECT nis,nm_siswa FROM tbl_siswa " +
+		" WHERE flag_siswa = 0 AND status_siswa NOT IN ('Tidak Aktif') order by nm_siswa "
 
 	db.Raw(sql).Scan(&master)
 

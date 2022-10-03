@@ -1669,6 +1669,90 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "3. Create SPP Uang Masuk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5417\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"Tidak Wajib Isi ini\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/createuangmasukspp/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"createuangmasukspp",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "10.Master Siswa",
+			"item": [
+				{
+					"name": "List Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/akademik/listsiswaakademik",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"akademik",
+								"listsiswaakademik"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -1678,7 +1762,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0NzA1NjQ4fQ.1jZ0zwx_4m2EPKPplcEZn-Tlid5_0WHo-s22nD1Pg60",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0ODY2ODkyfQ.STyd1GRjv-f4IkxRQB6SuIAVHtMzREUKiBfn7YrCQyg",
 				"type": "string"
 			}
 		]

@@ -85,20 +85,20 @@ type Tbl_sett_periode_spps struct {
 }
 
 type Tbl_trans_uang_masuk_spp_headers struct {
-	Kd_group        int
-	Kd_kategori     int
-	Kd_trans_masuk  int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk"`
-	Nis_siswa       string
-	Nm_siswa        string
-	Tgl_trans_masuk time.Time
-	Total_biaya     float64
-	Sisa_biaya      float64
-	Keterangan      string
-	Flag_aktif      int
-	Created_on      time.Time
-	Created_by      string
-	Edited_on       time.Time
-	Edited_by       string
+	Kd_group       int
+	Kd_kategori    int
+	Kd_trans_masuk int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk"`
+	Nis_siswa      string
+	Nm_kelas       string
+	Tahun_akademik string
+	Total_biaya    float64
+	Sisa_biaya     float64
+	Keterangan     string
+	Flag_aktif     int
+	Created_on     time.Time
+	Created_by     string
+	Edited_on      time.Time
+	Edited_by      string
 }
 
 type Tbl_trans_uang_masuk_spp_details struct {
