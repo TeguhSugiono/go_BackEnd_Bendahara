@@ -1,6 +1,7 @@
 package master_sett_periode
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 )
 
@@ -37,7 +39,7 @@ func ShowConfPeriode(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
 
-	//var master []ListData
+	var master []ListData
 
 	sql := " SELECT kd_periode_spp,tahun,tahun_akademik from tbl_conf_periode_spps  " +
 		" where flag_aktif=0 "
@@ -79,53 +81,7 @@ func ShowConfPeriode(c *gin.Context) {
 	db.Raw(sql).Count(&total)
 
 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
-	//db.Raw(sql).Scan(&master)
-
-	var kd_periode_spp int
-	var tahun int
-	var tahun_akademik string
-	var id_conf int
-	var seqno int
-	var kd_bulan string
-
-	// var kd_periode_spp_first int
-	// var tahun_first int
-	// var tahun_akademik_first string
-	// var id_conf_first int
-	// var seqno_first int
-	// var kd_bulan_first string
-	// var intLooping int = 0
-
-	SetArrayData := []ResponDataTable{}
-	rows, _ := db.Raw(sql).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		rows.Scan(&kd_periode_spp, &tahun, &tahun_akademik)
-		arraydata := ResponDataTable{}
-		arraydata.Kd_periode_spp = kd_periode_spp
-		arraydata.Tahun = tahun
-		arraydata.Tahun_akademik = tahun_akademik
-
-		SetArrayDataDetail := []ResponDataTableDetail{}
-
-		rowsdet, _ := db.Raw("SELECT id_conf,seqno,kd_bulan "+
-			" from tbl_conf_periode_spps where flag_aktif=? and tahun=? and kd_periode_spp=? ", 0, tahun, kd_periode_spp).Rows()
-		defer rowsdet.Close()
-		for rowsdet.Next() {
-			arraydatadetail := ResponDataTableDetail{}
-
-			rowsdet.Scan(&id_conf, &seqno, &kd_bulan)
-			arraydatadetail.Id_conf = id_conf
-			arraydatadetail.Seqno = seqno
-			arraydatadetail.Kd_bulan = kd_bulan
-
-			SetArrayDataDetail = append(SetArrayDataDetail, arraydatadetail)
-		}
-
-		arraydata.Detail = SetArrayDataDetail
-		SetArrayData = append(SetArrayData, arraydata)
-
-	}
+	db.Raw(sql).Scan(&master)
 
 	CompTableData := table_data.TableData{
 		Total:     total,
@@ -133,78 +89,169 @@ func ShowConfPeriode(c *gin.Context) {
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
 	}
 
-	response := APIResponseShowTable("List Data ...", http.StatusOK, "success", "", CompTableData, SetArrayData)
+	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", sql, CompTableData, FormatShowData(master))
 	c.JSON(http.StatusOK, response)
 
 }
 
-type ResponDataTable struct {
-	Kd_periode_spp int         `json:"kd_periode_spp"`
-	Tahun          int         `json:"tahun"`
-	Tahun_akademik string      `json:"tahun_akademik"`
-	Detail         interface{} `json:"detail"`
-	// Id_conf        int    `json:"id_conf"`
-	// Seqno          int    `json:"seqno"`
-	// Kd_bulan       string `json:"kd_bulan"`
-}
+// var kd_periode_spp int
+// 	var tahun int
+// 	var tahun_akademik string
+// 	var id_conf int
+// 	var seqno int
+// 	var kd_bulan string
 
-type ResponDataTableDetail struct {
-	Id_conf  int    `json:"id_conf"`
-	Seqno    int    `json:"seqno"`
-	Kd_bulan string `json:"kd_bulan"`
-	// Kd_periode_spp int    `json:"kd_periode_spp"`
-	// Tahun          int    `json:"tahun"`
-	// Tahun_akademik string `json:"tahun_akademik"`
-	// Detail         interface{} `json:"detail"`
-}
+// 	// var kd_periode_spp_first int
+// 	// var tahun_first int
+// 	// var tahun_akademik_first string
+// 	// var id_conf_first int
+// 	// var seqno_first int
+// 	// var kd_bulan_first string
+// 	// var intLooping int = 0
 
-type ResponseShowTable struct {
-	Meta      MetaShowTable `json:"meta"`
-	DataTable interface{}   `json:"datatable"`
-	Data      interface{}   `json:"data"`
-}
+// SetArrayData := []ResponDataTable{}
+// rows, _ := db.Raw(sql).Rows()
+// defer rows.Close()
+// for rows.Next() {
+// 		rows.Scan(&kd_periode_spp, &tahun, &tahun_akademik)
+// 		arraydata := ResponDataTable{}
+// 		arraydata.Kd_periode_spp = kd_periode_spp
+// 		arraydata.Tahun = tahun
+// 		arraydata.Tahun_akademik = tahun_akademik
 
-type MetaShowTable struct {
-	Message string `json:"message"`
-	Code    int    `json:"code"`
-	Status  string `json:"status"`
-	Query   string `json:"query"`
-}
+// SetArrayDataDetail := []ResponDataTableDetail{}
 
-func APIResponseShowTable(message string, code int, status string, query string, datatable interface{}, data interface{}) ResponseShowTable {
-	meta := MetaShowTable{
-		Message: message,
-		Code:    code,
-		Status:  status,
-		Query:   query,
-	}
+// rowsdet, _ := db.Raw("SELECT id_conf,seqno,kd_bulan "+
+// 	" from tbl_conf_periode_spps where flag_aktif=? and tahun=? and kd_periode_spp=? ", 0, tahun, kd_periode_spp).Rows()
+// defer rowsdet.Close()
+// for rowsdet.Next() {
+// 	arraydatadetail := ResponDataTableDetail{}
 
-	jsonResponse := ResponseShowTable{
-		Meta:      meta,
-		DataTable: datatable,
-		Data:      data,
-	}
+// 	rowsdet.Scan(&id_conf, &seqno, &kd_bulan)
+// 			arraydatadetail.Id_conf = id_conf
+// 			arraydatadetail.Seqno = seqno
+// 			arraydatadetail.Kd_bulan = kd_bulan
 
-	return jsonResponse
-}
+// 			SetArrayDataDetail = append(SetArrayDataDetail, arraydatadetail)
+// 		}
+
+// 		arraydata.Detail = SetArrayDataDetail
+// 		SetArrayData = append(SetArrayData, arraydata)
+
+// 	}
+
+// type ResponDataTable struct {
+// 	Kd_periode_spp int         `json:"kd_periode_spp"`
+// 	Tahun          int         `json:"tahun"`
+// 	Tahun_akademik string      `json:"tahun_akademik"`
+// 	Detail         interface{} `json:"detail"`
+// 	// Id_conf        int    `json:"id_conf"`
+// 	// Seqno          int    `json:"seqno"`
+// 	// Kd_bulan       string `json:"kd_bulan"`
+// }
+
+// type ResponDataTableDetail struct {
+// Id_conf  int    `json:"id_conf"`
+// Seqno    int    `json:"seqno"`
+// Kd_bulan string `json:"kd_bulan"`
+// 	// Kd_periode_spp int    `json:"kd_periode_spp"`
+// 	// Tahun          int    `json:"tahun"`
+// 	// Tahun_akademik string `json:"tahun_akademik"`
+// 	// Detail         interface{} `json:"detail"`
+// }
+
+// type ResponseShowTable struct {
+// 	Meta      MetaShowTable `json:"meta"`
+// 	DataTable interface{}   `json:"datatable"`
+// 	Data      interface{}   `json:"data"`
+// }
+
+// type MetaShowTable struct {
+// 	Message string `json:"message"`
+// 	Code    int    `json:"code"`
+// 	Status  string `json:"status"`
+// 	Query   string `json:"query"`
+// }
+
+// func APIResponseShowTable(message string, code int, status string, query string, datatable interface{}, data interface{}) ResponseShowTable {
+// 	meta := MetaShowTable{
+// 		Message: message,
+// 		Code:    code,
+// 		Status:  status,
+// 		Query:   query,
+// 	}
+
+// 	jsonResponse := ResponseShowTable{
+// 		Meta:      meta,
+// 		DataTable: datatable,
+// 		Data:      data,
+// 	}
+
+// 	return jsonResponse
+// }
 
 func InsertConfPeriode(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	var dataInput InputTahunAkademik
+	// if err := c.ShouldBindJSON(&dataInput); err != nil {
+	// 	errors := helper.FormatValidationError(err)
+	// 	errorMessage := gin.H{"errors": errors}
+	// 	response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	// 	c.JSON(http.StatusUnprocessableEntity, response)
+	// 	return
+	// }
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors}
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		var error_binding []string
+		error_binding = append(error_binding, err.Error())
+		errorMessage := gin.H{"errors": error_binding}
 		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
 	var conf_periode_spps table_data.Tbl_conf_periode_spps
-	checkUser := db.Select("*").Where("flag_aktif = ? and tahun_akademik = ? ", 0, dataInput.Tahun_akademik).Find(&conf_periode_spps)
+	checkUser := db.Select("*").Where("flag_aktif = ? and tahun_akademik = ? and nm_kelas=?", 0, dataInput.Tahun_akademik, dataInput.Nm_kelas).Find(&conf_periode_spps)
 	if checkUser.RowsAffected > 0 {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
 		response := helper.APIResponse("Data Setting Tahun Periode atau Tahun Akademik Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var tahun_akademik_s string
+	row := db.Table("tbl_tahun_akademik").Where("flag_tahun = ? and tahun_akademik=?", 0, dataInput.Tahun_akademik).Select("tahun_akademik").Row()
+	row.Scan(&tahun_akademik_s)
+	if tahun_akademik_s == "" {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Tahun Akademik Tidak Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var nm_kelas_s string = ""
+
+	sqlkelas := " SELECT REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' FROM tbl_kelas "
+	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') = '%s'", sqlkelas, dataInput.Nm_kelas)
+	sqlkelas = fmt.Sprintf("%s GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') ", sqlkelas)
+
+	rowskelas, _ := db.Raw(sqlkelas).Rows()
+	defer rowskelas.Close()
+	for rowskelas.Next() {
+		rowskelas.Scan(&nm_kelas_s)
+	}
+
+	if nm_kelas_s == "" {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Tingkat Kelas (Nama Kelas) Tidak Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -218,16 +265,6 @@ func InsertConfPeriode(c *gin.Context) {
 		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
-	}
-
-	var kd_periode_spp string
-	var Int_kd_periode_spp int
-
-	rows, _ := db.Raw("SELECT ifnull(MAX(kd_periode_spp),0) + 1 as 'kd_periode_spp' FROM tbl_conf_periode_spps where flag_aktif = ?", 0).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		rows.Scan(&kd_periode_spp)
-		Int_kd_periode_spp, _ = strconv.Atoi(kd_periode_spp)
 	}
 
 	currentUser := c.MustGet("currentUser")
@@ -244,10 +281,10 @@ func InsertConfPeriode(c *gin.Context) {
 
 	var namabulan = [12]string{"07", "08", "09", "10", "11", "12", "01", "02", "03", "04", "05", "06"}
 
-	SetArrayData := []table_data.Tbl_conf_periode_spps{}
+	//SetArrayData := []table_data.Tbl_conf_periode_spps{}
 	for seqno := 0; seqno < 12; seqno++ {
 		arraydata := table_data.Tbl_conf_periode_spps{}
-		arraydata.Kd_periode_spp = Int_kd_periode_spp
+		// arraydata.Kd_periode_spp = Int_kd_periode_spp
 		arraydata.Seqno = seqno + 1
 		arraydata.Kd_bulan = namabulan[seqno]
 
@@ -262,7 +299,9 @@ func InsertConfPeriode(c *gin.Context) {
 		arraydata.Created_by = currentUser.(string)
 		arraydata.Created_on = datenowx
 		arraydata.Flag_aktif = 0
-		SetArrayData = append(SetArrayData, arraydata)
+		arraydata.Nm_kelas = dataInput.Nm_kelas
+		arraydata.Biaya_spp = dataInput.Biaya_spp
+		//SetArrayData = append(SetArrayData, arraydata)
 
 		err = db.Omit("Edited_on", "Edited_by").Create(&arraydata).Error
 		if err != nil {
@@ -272,8 +311,252 @@ func InsertConfPeriode(c *gin.Context) {
 		}
 	}
 
-	response := helper.APIResponse("Simpan Data Sukses ...", http.StatusOK, "success", SetArrayData)
+	var nm_sett string
+	var tahun_akademik string
+
+	SetArrayDataA := []Return_Up{}
+	rows, _ := db.Raw("select nm_sett,tahun_akademik from tbl_conf_periode_spps where flag_aktif=0 and tahun_akademik=? GROUP BY tahun_akademik", dataInput.Tahun_akademik).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&nm_sett, &tahun_akademik)
+		arraydata := Return_Up{}
+		arraydata.Nm_Sett = nm_sett
+		arraydata.Tahun_akademik = tahun_akademik
+
+		var id_conf int
+		var seqno int
+		var kd_bulan string
+		var tahun int
+		var nm_kelas string
+		var biaya_spp float64
+
+		SetArrayDataDetail := []Return_Down{}
+		rowsdet, _ := db.Raw("SELECT id_conf,seqno,kd_bulan,tahun,nm_kelas,biaya_spp "+
+			" from tbl_conf_periode_spps where flag_aktif=0 and tahun_akademik=? order by seqno", dataInput.Tahun_akademik).Rows()
+		defer rowsdet.Close()
+		for rowsdet.Next() {
+			arraydatadetail := Return_Down{}
+			rowsdet.Scan(&id_conf, &seqno, &kd_bulan, &tahun, &nm_kelas, &biaya_spp)
+			arraydatadetail.Id_conf = id_conf
+			arraydatadetail.Seqno = seqno
+			arraydatadetail.Kd_bulan = kd_bulan
+			arraydatadetail.Tahun = tahun
+			arraydatadetail.Nm_kelas = nm_kelas
+			arraydatadetail.Biaya_spp = biaya_spp
+			SetArrayDataDetail = append(SetArrayDataDetail, arraydatadetail)
+		}
+
+		arraydata.Detail = SetArrayDataDetail
+
+		SetArrayDataA = append(SetArrayDataA, arraydata)
+	}
+
+	response := helper.APIResponse("Simpan Data Sukses ...", http.StatusOK, "success", SetArrayDataA)
 	c.JSON(http.StatusOK, response)
+}
+
+type Return_Up struct {
+	Nm_Sett        string      `json:"nm_sett"`
+	Tahun_akademik string      `json:"tahun_akademik"`
+	Detail         interface{} `json:"detail"`
+}
+
+type Return_Down struct {
+	Id_conf   int     `json:"id_conf"`
+	Seqno     int     `json:"seqno"`
+	Kd_bulan  string  `json:"kd_bulan"`
+	Tahun     int     `json:"tahun"`
+	Nm_kelas  string  `json:"nm_kelas"`
+	Biaya_spp float64 `json:"biaya_spp"`
+}
+
+func UpdateConfPeriode(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var dataMaster table_data.Tbl_conf_periode_spps
+	if err := db.Where("id_conf = ? and flag_aktif=? ", c.Param("idconf"), 0).First(&dataMaster).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataInput EditTahunAkademik
+	if err := c.ShouldBindJSON(&dataInput); err != nil {
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		var error_binding []string
+		error_binding = append(error_binding, err.Error())
+		errorMessage := gin.H{"errors": error_binding}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+	date := "2006-01-02 15:04:05"
+	datenowx, err := time.Parse(date, datenows)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser")
+
+	data := table_data.Tbl_conf_periode_spps{
+		Biaya_spp:  dataInput.Biaya_spp,
+		Edited_by:  currentUser.(string),
+		Edited_on:  datenowx,
+		Flag_aktif: 0,
+	}
+
+	err = db.Model(&dataMaster).Updates(data).Error
+	if err != nil {
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataMaster)
+	c.JSON(http.StatusOK, response)
+
+}
+
+func UpdateConfPeriodeAll(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var dataInput table_data.Tbl_conf_periode_spps
+	if err := c.ShouldBindJSON(&dataInput); err != nil {
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		var error_binding []string
+		error_binding = append(error_binding, err.Error())
+		errorMessage := gin.H{"errors": error_binding}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataMaster table_data.Tbl_conf_periode_spps
+	if err := db.Where("tahun_akademik = ? and flag_aktif=? and nm_kelas=?", dataInput.Tahun_akademik, 0, dataInput.Nm_kelas).First(&dataMaster).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var tahun_akademik_s string
+	row := db.Table("tbl_tahun_akademik").Where("flag_tahun = ? and tahun_akademik=?", 0, dataInput.Tahun_akademik).Select("tahun_akademik").Row()
+	row.Scan(&tahun_akademik_s)
+	if tahun_akademik_s == "" {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Tahun Akademik Tidak Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var nm_kelas_s string = ""
+
+	sqlkelas := " SELECT REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' FROM tbl_kelas "
+	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') = '%s'", sqlkelas, dataInput.Nm_kelas)
+	sqlkelas = fmt.Sprintf("%s GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') ", sqlkelas)
+
+	rowskelas, _ := db.Raw(sqlkelas).Rows()
+	defer rowskelas.Close()
+	for rowskelas.Next() {
+		rowskelas.Scan(&nm_kelas_s)
+	}
+
+	if nm_kelas_s == "" {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Tingkat Kelas (Nama Kelas) Tidak Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+	date := "2006-01-02 15:04:05"
+	datenowx, err := time.Parse(date, datenows)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser")
+
+	var tblupdate table_data.Tbl_conf_periode_spps
+	err = db.Raw("update tbl_conf_periode_spps SET edited_by  = ? , edited_on = ?  , biaya_spp = ? "+
+		" WHERE tahun_akademik = ? ", currentUser.(string), datenowx, dataInput.Biaya_spp, dataInput.Tahun_akademik).Scan(&tblupdate).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	var nm_sett string
+	var tahun_akademik string
+
+	SetArrayDataA := []Return_Up{}
+	rows, _ := db.Raw("select nm_sett,tahun_akademik from tbl_conf_periode_spps where flag_aktif=0 and tahun_akademik=? GROUP BY tahun_akademik", dataInput.Tahun_akademik).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&nm_sett, &tahun_akademik)
+		arraydata := Return_Up{}
+		arraydata.Nm_Sett = nm_sett
+		arraydata.Tahun_akademik = tahun_akademik
+
+		var id_conf int
+		var seqno int
+		var kd_bulan string
+		var tahun int
+		var nm_kelas string
+		var biaya_spp float64
+
+		SetArrayDataDetail := []Return_Down{}
+		rowsdet, _ := db.Raw("SELECT id_conf,seqno,kd_bulan,tahun,nm_kelas,biaya_spp "+
+			" from tbl_conf_periode_spps where flag_aktif=0 and tahun_akademik=? order by seqno", dataInput.Tahun_akademik).Rows()
+		defer rowsdet.Close()
+		for rowsdet.Next() {
+			arraydatadetail := Return_Down{}
+			rowsdet.Scan(&id_conf, &seqno, &kd_bulan, &tahun, &nm_kelas, &biaya_spp)
+			arraydatadetail.Id_conf = id_conf
+			arraydatadetail.Seqno = seqno
+			arraydatadetail.Kd_bulan = kd_bulan
+			arraydatadetail.Tahun = tahun
+			arraydatadetail.Nm_kelas = nm_kelas
+			arraydatadetail.Biaya_spp = biaya_spp
+			SetArrayDataDetail = append(SetArrayDataDetail, arraydatadetail)
+		}
+
+		arraydata.Detail = SetArrayDataDetail
+
+		SetArrayDataA = append(SetArrayDataA, arraydata)
+	}
+
+	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", SetArrayDataA)
+	c.JSON(http.StatusOK, response)
+
+	// response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", tblupdate)
+	// c.JSON(http.StatusOK, response)
+
 }
 
 func DeleteConfPeriode(c *gin.Context) {
@@ -297,18 +580,18 @@ func DeleteConfPeriode(c *gin.Context) {
 		return
 	}
 
-	var result CekDataSettPeriode
-	db.Raw("SELECT count(*) as 'jumlah' FROM tbl_conf_periode_spps a "+
-		" INNER JOIN tbl_sett_periode_spps b on a.kd_periode_spp = b.kd_periode_spp "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 "+
-		" and tahun_akademik = ? ", dataInput.Tahun_akademik).Scan(&result)
+	// var result CekDataSettPeriode
+	// db.Raw("SELECT count(*) as 'jumlah' FROM tbl_conf_periode_spps a "+
+	// 	" INNER JOIN tbl_sett_periode_spps b on a.kd_periode_spp = b.kd_periode_spp "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0 "+
+	// 	" and tahun_akademik = ? ", dataInput.Tahun_akademik).Scan(&result)
 
-	if result.Jumlah > 0 {
-		errorMessage := gin.H{"errors": "Data Configurasi Periode Sudah Terpakai Di Master Setting SPP ..."}
-		response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
+	// if result.Jumlah > 0 {
+	// 	errorMessage := gin.H{"errors": "Data Configurasi Periode Sudah Terpakai Di Master Setting SPP ..."}
+	// 	response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	// 	c.JSON(http.StatusUnprocessableEntity, response)
+	// 	return
+	// }
 
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
@@ -345,7 +628,7 @@ func DeleteConfPeriode(c *gin.Context) {
 		SetArrayData = append(SetArrayData, arraydata)
 	}
 
-	response := APIResponseDelete("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Kd_periode_spp, conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, SetArrayData)
+	response := APIResponseDelete("Delete Data Sukses ...", http.StatusOK, "success", conf_periode_spps.Tahun, conf_periode_spps.Tahun_akademik, SetArrayData)
 	c.JSON(http.StatusOK, response)
 
 }
@@ -373,7 +656,7 @@ type DataDelete struct {
 	Detail         interface{} `json:"detail"`
 }
 
-func APIResponseDelete(message string, code int, status string, kd_periode_spp int, tahun int, tahun_akademik string, datax interface{}) ResponseDelete {
+func APIResponseDelete(message string, code int, status string, tahun int, tahun_akademik string, datax interface{}) ResponseDelete {
 	meta := MetaDelete{
 		Message: message,
 		Code:    code,
@@ -381,7 +664,7 @@ func APIResponseDelete(message string, code int, status string, kd_periode_spp i
 	}
 
 	data := DataDelete{
-		Kd_periode_spp: kd_periode_spp,
+		// Kd_periode_spp: kd_periode_spp,
 		Tahun:          tahun,
 		Tahun_akademik: tahun_akademik,
 		Detail:         datax,

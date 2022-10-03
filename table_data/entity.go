@@ -56,7 +56,7 @@ type Tbl_sub_kategori_uangs struct {
 }
 
 type Tbl_conf_periode_spps struct {
-	Kd_periode_spp int
+	Id_conf        int `gorm:"primary_key;auto_increment;not_null" json:"id_conf"`
 	Seqno          int
 	Kd_bulan       string
 	Tahun          int
@@ -67,6 +67,8 @@ type Tbl_conf_periode_spps struct {
 	Created_by     string
 	Edited_on      time.Time
 	Edited_by      string
+	Nm_kelas       string
+	Biaya_spp      float64
 }
 
 type Tbl_sett_periode_spps struct {

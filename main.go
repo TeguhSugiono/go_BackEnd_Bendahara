@@ -10,7 +10,6 @@ import (
 	"rest_api_bendahara/master_kategori_uang"
 	"rest_api_bendahara/master_kelas_akademik"
 	"rest_api_bendahara/master_sett_periode"
-	"rest_api_bendahara/master_sett_spp"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
 	"rest_api_bendahara/transaksi_uang_masuk_spp"
@@ -80,13 +79,15 @@ func main() {
 	api.GET("/settingperiode/listconfperiode", authMiddleware(), master_sett_periode.ListConfPeriode)
 	api.GET("/settingperiode/showconfperiode", authMiddleware(), master_sett_periode.ShowConfPeriode)
 	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
+	api.PUT("/settingperiode/updateconfperiode/:idconf", authMiddleware(), master_sett_periode.UpdateConfPeriode)
+	api.PUT("/settingperiode/updateconfperiodeall", authMiddleware(), master_sett_periode.UpdateConfPeriodeAll)
 	api.POST("/settingperiode/deleteconfperiode", authMiddleware(), master_sett_periode.DeleteConfPeriode)
 
-	api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
-	api.GET("/settingperiode/showsettperiode", authMiddleware(), master_sett_spp.ShowSettPeriode)
-	api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
-	api.PUT("/settingperiode/updatesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.UpdateSettPeriode)
-	api.PUT("/settingperiode/deletesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.DeleteSettPeriode)
+	// api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
+	// api.GET("/settingperiode/showsettperiode", authMiddleware(), master_sett_spp.ShowSettPeriode)
+	// api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
+	// api.PUT("/settingperiode/updatesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.UpdateSettPeriode)
+	// api.PUT("/settingperiode/deletesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.DeleteSettPeriode)
 
 	api.GET("/transaksi/uangmasukspp/listgroupkategori", authMiddleware(), transaksi_uang_masuk_spp.ListGroupKategori)
 	api.GET("/transaksi/uangmasukspp/listkategoriuang", authMiddleware(), transaksi_uang_masuk_spp.ListKategoriUang)

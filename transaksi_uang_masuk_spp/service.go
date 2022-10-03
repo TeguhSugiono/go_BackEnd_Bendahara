@@ -30,7 +30,7 @@ func ListGroupKategori(c *gin.Context) {
 
 	db.Raw(sql).Scan(&master)
 
-	response := helper.APIResponse("List Data ..."+sql, http.StatusOK, "success", master_group_kategori.FormatGroupKategori(master))
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", master_group_kategori.FormatGroupKategori(master))
 	c.JSON(http.StatusOK, response)
 }
 

@@ -1110,7 +1110,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2023-2024\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"biaya_spp\" : 320000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1132,6 +1132,87 @@
 								"v1",
 								"settingperiode",
 								"insertconfperiode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"biaya_spp\" : 400000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/updateconfperiode/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"updateconfperiode",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Data All",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNDg5NjY4fQ.rze0BLyiqiT5OLVIWnE_VVBHSHB8vkE34jsd84XRvBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"X\",\r\n    \"biaya_spp\" : 175000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/settingperiode/updateconfperiodeall",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"settingperiode",
+								"updateconfperiodeall"
 							]
 						}
 					},
@@ -1228,7 +1309,7 @@
 			]
 		},
 		{
-			"name": "8.Master Setting Periode",
+			"name": "X8.Master Setting Periode",
 			"item": [
 				{
 					"name": "List Data",
@@ -1451,7 +1532,7 @@
 			]
 		},
 		{
-			"name": "9.Master Kelas Akademik",
+			"name": "8.Master Kelas Akademik",
 			"item": [
 				{
 					"name": "List Data",
@@ -1499,7 +1580,7 @@
 			]
 		},
 		{
-			"name": "10.Transaksi UM SPP",
+			"name": "9.Transaksi UM SPP",
 			"item": [
 				{
 					"name": "1. List Group Kategori",
@@ -1597,7 +1678,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0MzM3OTIyfQ.n1R66enjaoUk35mkygMV7V6mRJgBZI9lAe5cghL6nA0",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY0NzA1NjQ4fQ.1jZ0zwx_4m2EPKPplcEZn-Tlid5_0WHo-s22nD1Pg60",
 				"type": "string"
 			}
 		]
