@@ -14,7 +14,7 @@ func ListSiswaAkademik(c *gin.Context) {
 	var master []ListData
 	//db.Find(&master)
 	sql := " SELECT nis,nm_siswa FROM tbl_siswa " +
-		" WHERE flag_siswa = 0 AND status_siswa NOT IN ('Tidak Aktif') order by nm_siswa "
+		" WHERE flag_siswa = 0 AND status_siswa NOT IN ('Tidak Aktif','LULUS') order by nm_siswa "
 
 	db.Raw(sql).Scan(&master)
 

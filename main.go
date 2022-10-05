@@ -92,7 +92,11 @@ func main() {
 
 	api.GET("/transaksi/uangmasukspp/listgroupkategori", authMiddleware(), transaksi_uang_masuk_spp.ListGroupKategori)
 	api.GET("/transaksi/uangmasukspp/listkategoriuang", authMiddleware(), transaksi_uang_masuk_spp.ListKategoriUang)
+	api.GET("/transaksi/uangmasukspp/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
+	api.POST("/transaksi/uangmasukspp/listsiswa", authMiddleware(), transaksi_uang_masuk_spp.ListSiswa)
+	api.POST("/transaksi/uangmasukspp/listdata", authMiddleware(), transaksi_uang_masuk_spp.ListData)
 	api.POST("/transaksi/uangmasukspp/createuangmasukspp", authMiddleware(), transaksi_uang_masuk_spp.CreateUangMasukSpp)
+	api.PUT("/transaksi/uangmasukspp/updateuangmasukspp/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_spp.UpdateUangMasukSpp)
 
 	//AKADEMIK SIA
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)

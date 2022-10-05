@@ -92,6 +92,7 @@ type Tbl_trans_uang_masuk_spp_headers struct {
 	Nm_kelas       string
 	Tahun_akademik string
 	Total_biaya    float64
+	Total_bayar    float64
 	Sisa_biaya     float64
 	Keterangan     string
 	Flag_aktif     int
@@ -106,7 +107,7 @@ type Tbl_trans_uang_masuk_spp_details struct {
 	Kd_trans_masuk_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_detail"`
 	Seqno                 int
 	Periode_bayar         string
-	Tgl_bayar             time.Time
+	Tgl_bayar             string
 	Jml_bayar             float64
 	Keterangan            string
 	Flag_aktif            int
