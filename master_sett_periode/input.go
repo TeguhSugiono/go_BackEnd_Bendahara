@@ -20,6 +20,11 @@ type InputTahunAkademik struct {
 	Biaya_spp      float64 `form:"biaya_spp" json:"biaya_spp" binding:"required"`
 }
 
+type DeleteTahunAkademik struct {
+	Tahun_akademik string `form:"tahun_akademik" json:"tahun_akademik" binding:"required"`
+	Nm_kelas       string `form:"nm_kelas" json:"nm_kelas" binding:"required"`
+}
+
 type EditTahunAkademik struct {
 	Biaya_spp float64 `form:"biaya_spp" json:"biaya_spp" binding:"required"`
 }

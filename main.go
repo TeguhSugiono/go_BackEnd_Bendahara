@@ -80,7 +80,7 @@ func main() {
 	api.GET("/settingperiode/listconfperiode", authMiddleware(), master_sett_periode.ListConfPeriode)
 	api.GET("/settingperiode/showconfperiode", authMiddleware(), master_sett_periode.ShowConfPeriode)
 	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
-	api.PUT("/settingperiode/updateconfperiode/:idconf", authMiddleware(), master_sett_periode.UpdateConfPeriode)
+	//api.PUT("/settingperiode/updateconfperiode/:idconf", authMiddleware(), master_sett_periode.UpdateConfPeriode)
 	api.PUT("/settingperiode/updateconfperiodeall", authMiddleware(), master_sett_periode.UpdateConfPeriodeAll)
 	api.POST("/settingperiode/deleteconfperiode", authMiddleware(), master_sett_periode.DeleteConfPeriode)
 

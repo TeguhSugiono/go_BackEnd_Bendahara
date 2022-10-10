@@ -21,7 +21,7 @@ func ListConfPeriode(c *gin.Context) {
 
 	var master []ListData
 
-	sql := " SELECT * from tbl_conf_periode_spps where flag_aktif = 0 group by kd_periode_spp order by tahun_akademik "
+	sql := " SELECT tahun_akademik,nm_kelas,biaya_spp,nm_sett from tbl_conf_periode_spps where flag_aktif = 0 GROUP BY tahun_akademik,nm_kelas order by tahun_akademik "
 
 	db.Raw(sql).Scan(&master)
 
@@ -41,17 +41,19 @@ func ShowConfPeriode(c *gin.Context) {
 
 	var master []ListData
 
-	sql := " SELECT kd_periode_spp,tahun,tahun_akademik from tbl_conf_periode_spps  " +
+	sql := " SELECT tahun_akademik,nm_kelas,biaya_spp,nm_sett from tbl_conf_periode_spps  " +
 		" where flag_aktif=0 "
 
 	if s := c.Query("search"); s != "" {
 		if len(c.Query("search")) >= 3 {
 			//sql = fmt.Sprintf("%s and nm_sett LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and (kd_bulan LIKE '%%%s%%' or tahun LIKE '%%%s%%' or nm_sett LIKE '%%%s%%'  or tahun_akademik LIKE '%%%s%%') ", sql, s, s, s, s)
+			sql = fmt.Sprintf("%s and (kd_bulan LIKE '%%%s%%' or tahun LIKE '%%%s%%' "+
+				" or nm_sett LIKE '%%%s%%' or tahun_akademik LIKE '%%%s%%' or nm_kelas LIKE '%%%s%%' "+
+				" or biaya_spp LIKE '%%%s%%') ", sql, s, s, s, s, s, s)
 		}
 	}
 
-	sql = fmt.Sprintf("%s GROUP BY tahun,tahun_akademik ", sql)
+	sql = fmt.Sprintf("%s GROUP BY tahun_akademik,nm_kelas ", sql)
 
 	if sort := c.Query("sort"); sort != "" {
 		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,seqno %s", sql, "asc", "asc")
@@ -370,66 +372,66 @@ type Return_Down struct {
 	Biaya_spp float64 `json:"biaya_spp"`
 }
 
-func UpdateConfPeriode(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
+// func UpdateConfPeriode(c *gin.Context) {
+// 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataMaster table_data.Tbl_conf_periode_spps
-	if err := db.Where("id_conf = ? and flag_aktif=? ", c.Param("idconf"), 0).First(&dataMaster).Error; err != nil {
-		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
-		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
+// 	var dataMaster table_data.Tbl_conf_periode_spps
+// 	if err := db.Where("id_conf = ? and flag_aktif=? ", c.Param("idconf"), 0).First(&dataMaster).Error; err != nil {
+// 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
+// 		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
 
-	var dataInput EditTahunAkademik
-	if err := c.ShouldBindJSON(&dataInput); err != nil {
-		var ve validator.ValidationErrors
-		if errors.As(err, &ve) {
-			errors := helper.FormatValidationError(err)
-			errorMessage := gin.H{"errors": errors}
-			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-			c.JSON(http.StatusUnprocessableEntity, response)
-			return
-		}
-		var error_binding []string
-		error_binding = append(error_binding, err.Error())
-		errorMessage := gin.H{"errors": error_binding}
-		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
+// 	var dataInput EditTahunAkademik
+// 	if err := c.ShouldBindJSON(&dataInput); err != nil {
+// 		var ve validator.ValidationErrors
+// 		if errors.As(err, &ve) {
+// 			errors := helper.FormatValidationError(err)
+// 			errorMessage := gin.H{"errors": errors}
+// 			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+// 			c.JSON(http.StatusUnprocessableEntity, response)
+// 			return
+// 		}
+// 		var error_binding []string
+// 		error_binding = append(error_binding, err.Error())
+// 		errorMessage := gin.H{"errors": error_binding}
+// 		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
 
-	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
-	date := "2006-01-02 15:04:05"
-	datenowx, err := time.Parse(date, datenows)
-	if err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
-		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
+// 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+// 	date := "2006-01-02 15:04:05"
+// 	datenowx, err := time.Parse(date, datenows)
+// 	if err != nil {
+// 		errors := helper.FormatValidationError(err)
+// 		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+// 		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
 
-	currentUser := c.MustGet("currentUser")
+// 	currentUser := c.MustGet("currentUser")
 
-	data := table_data.Tbl_conf_periode_spps{
-		Biaya_spp:  dataInput.Biaya_spp,
-		Edited_by:  currentUser.(string),
-		Edited_on:  datenowx,
-		Flag_aktif: 0,
-	}
+// 	data := table_data.Tbl_conf_periode_spps{
+// 		Biaya_spp:  dataInput.Biaya_spp,
+// 		Edited_by:  currentUser.(string),
+// 		Edited_on:  datenowx,
+// 		Flag_aktif: 0,
+// 	}
 
-	err = db.Model(&dataMaster).Updates(data).Error
-	if err != nil {
-		response := helper.APIResponse("Update Data Gagal ...", http.StatusBadRequest, "error", err)
-		c.JSON(http.StatusBadRequest, response)
-		return
-	}
+// 	err = db.Model(&dataMaster).Updates(data).Error
+// 	if err != nil {
+// 		response := helper.APIResponse("Update Data Gagal ...", http.StatusBadRequest, "error", err)
+// 		c.JSON(http.StatusBadRequest, response)
+// 		return
+// 	}
 
-	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataMaster)
-	c.JSON(http.StatusOK, response)
+// 	response := helper.APIResponse("Update Data Sukses ...", http.StatusOK, "success", dataMaster)
+// 	c.JSON(http.StatusOK, response)
 
-}
+// }
 
 func UpdateConfPeriodeAll(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
@@ -504,7 +506,7 @@ func UpdateConfPeriodeAll(c *gin.Context) {
 
 	var tblupdate table_data.Tbl_conf_periode_spps
 	err = db.Raw("update tbl_conf_periode_spps SET edited_by  = ? , edited_on = ?  , biaya_spp = ? "+
-		" WHERE tahun_akademik = ? ", currentUser.(string), datenowx, dataInput.Biaya_spp, dataInput.Tahun_akademik).Scan(&tblupdate).Error
+		" WHERE tahun_akademik = ? and nm_kelas=?", currentUser.(string), datenowx, dataInput.Biaya_spp, dataInput.Tahun_akademik, dataInput.Nm_kelas).Scan(&tblupdate).Error
 	if err != nil {
 		response := helper.APIResponse("Delete Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -562,7 +564,7 @@ func UpdateConfPeriodeAll(c *gin.Context) {
 func DeleteConfPeriode(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var dataInput InputTahunAkademik
+	var dataInput DeleteTahunAkademik
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
@@ -607,7 +609,7 @@ func DeleteConfPeriode(c *gin.Context) {
 	currentUser := c.MustGet("currentUser")
 
 	var tblupdate table_data.Tbl_conf_periode_spps
-	err = db.Raw("update tbl_conf_periode_spps SET Flag_aktif = ?, edited_by  = ? , edited_on = ?  WHERE tahun_akademik = ? ", 9, currentUser.(string), datenowx, dataInput.Tahun_akademik).Scan(&tblupdate).Error
+	err = db.Raw("update tbl_conf_periode_spps SET Flag_aktif = ?, edited_by  = ? , edited_on = ?  WHERE tahun_akademik = ? and nm_kelas=?", 9, currentUser.(string), datenowx, dataInput.Tahun_akademik, dataInput.Nm_kelas).Scan(&tblupdate).Error
 	if err != nil {
 		response := helper.APIResponse("Delete Data Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
