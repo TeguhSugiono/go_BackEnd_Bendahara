@@ -179,6 +179,15 @@ func CreateUangMasukSpp(c *gin.Context) {
 		return
 	}
 
+	db.Raw("SELECT count(*) jmldata FROM tbl_conf_periode_spps "+
+		" where flag_aktif = 0 and tahun_akademik=?  and nm_kelas=?", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Data Configurasi SPP Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
 	var CekDataUangMasuk table_data.Tbl_trans_uang_masuk_spp_headers
 	checkUser := db.Select("*").Where("flag_aktif = 0 and kd_group= ? and kd_kategori= ? and nis_siswa=? and nm_kelas=? and tahun_akademik = ?", paramInputSPP.Kd_group, paramInputSPP.Kd_kategori, paramInputSPP.Nis_siswa, paramInputSPP.Nm_kelas, paramInputSPP.Tahun_akademik).Find(&CekDataUangMasuk)
 	if checkUser.RowsAffected > 0 {
