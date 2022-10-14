@@ -3,3 +3,7 @@ table yang di ambil dari data sia
 - tbl_naik_kelas
 - tbl_siswa
 - tbl_tahun_akademik
+
+table yang di ambil dari data ppdb
+- tbl_user_ppdb di ppdb tbl_user
+- tbl_biayadaftar

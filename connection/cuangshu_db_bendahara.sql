@@ -11,11 +11,29 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 13/10/2022 02:58:57
+ Date: 15/10/2022 05:40:16
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for tbl_biayadaftar
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_biayadaftar`;
+CREATE TABLE `tbl_biayadaftar`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jumlah_pembayaran` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `aktif` char(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_biayadaftar
+-- ----------------------------
+INSERT INTO `tbl_biayadaftar` VALUES (1, '3.400.000', '0');
+INSERT INTO `tbl_biayadaftar` VALUES (2, '3.050.000', '0');
+INSERT INTO `tbl_biayadaftar` VALUES (3, '2.000.000', '0');
 
 -- ----------------------------
 -- Table structure for tbl_conf_periode_spps
@@ -924,10 +942,10 @@ INSERT INTO `tbl_tahun_akademik` VALUES (4, '2022-2023', 'Tidak Aktif', '2022-07
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_trans_uang_masuk_ppdb_details`;
 CREATE TABLE `tbl_trans_uang_masuk_ppdb_details`  (
-  `kd_trans_masuk` int(11) NULL DEFAULT NULL,
-  `kd_trans_masuk_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_trans_masuk_ppdb` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_detail_ppdb` int(11) NOT NULL AUTO_INCREMENT,
   `seqno` int(11) NULL DEFAULT NULL,
-  `periode_bayar` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `kategori_biaya_ppdb` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `tgl_bayar` date NULL DEFAULT NULL,
   `jml_bayar` double(19, 2) NULL DEFAULT NULL,
   `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -936,7 +954,7 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_details`  (
   `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`kd_trans_masuk_detail`) USING BTREE
+  PRIMARY KEY (`kd_trans_masuk_detail_ppdb`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -950,10 +968,11 @@ DROP TABLE IF EXISTS `tbl_trans_uang_masuk_ppdb_headers`;
 CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers`  (
   `kd_group` int(11) NULL DEFAULT NULL,
   `kd_kategori` int(11) NULL DEFAULT NULL,
-  `kd_trans_masuk` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_trans_masuk_ppdb` int(11) NOT NULL AUTO_INCREMENT,
+  `nik` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgldaftar` date NULL DEFAULT NULL,
+  `tahun_daftar` varchar(4) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `tahun_akademik` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `nis_siswa` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `nm_kelas` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `total_biaya` double(19, 2) NULL DEFAULT NULL,
   `total_bayar` double(19, 2) NULL DEFAULT NULL,
   `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
@@ -963,7 +982,7 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers`  (
   `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`kd_trans_masuk`) USING BTREE
+  PRIMARY KEY (`kd_trans_masuk_ppdb`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------

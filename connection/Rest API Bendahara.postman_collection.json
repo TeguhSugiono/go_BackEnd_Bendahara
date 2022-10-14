@@ -1946,7 +1946,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listgroupkategori",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/listgroupkategori",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1959,7 +1959,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasukspp",
+								"uangmasukppdb",
 								"listgroupkategori"
 							]
 						}
@@ -1990,7 +1990,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listkategoriuang",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/listkategoriuang",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -2003,8 +2003,49 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasukspp",
+								"uangmasukppdb",
 								"listkategoriuang"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. List Siswa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/listsiswa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukppdb",
+								"listsiswa"
 							]
 						}
 					},
@@ -2049,47 +2090,6 @@
 								"transaksi",
 								"uangmasukspp",
 								"listkelas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "4. List Siswa",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listsiswa",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"listsiswa"
 							]
 						}
 					},
@@ -2217,7 +2217,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY1NjkwMjEyfQ.IfA5xGHfDKPGoMNt_35P8IyD2QSfuJym1rRnCbj1d-w",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY1NzgzNTc0fQ.GXBbu9Qw09kl-m0EzUsiDLnF64dY_X9wbkZcWNl_K4g",
 				"type": "string"
 			}
 		]

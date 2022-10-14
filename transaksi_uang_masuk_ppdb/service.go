@@ -71,25 +71,26 @@ func ListKelas(c *gin.Context) {
 func ListSiswa(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var paramChangeNmKelas ParamChangeNmKelas
-	if err := c.ShouldBindJSON(&paramChangeNmKelas); err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	var getNikAndName []GetNikAndNameSiswa
+	db.Raw("SELECT nik,concat('Double Data ==> ','',nm_siswa) 'nm_siswa' FROM tbl_user_ppdb " +
+		" WHERE (nik <> '' or nik is not null) " +
+		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' " +
+		" GROUP BY nik " +
+		" HAVING count(*) > 1 ").Scan(&getNikAndName)
+
+	if len(getNikAndName) > 0 {
+		response := helper.APIResponse("Terdapat Data Siswa Yang Double ...", http.StatusUnprocessableEntity, "error", getNikAndName)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
-	var getNisAndNameSiswa []GetNisAndNameSiswa
-	db.Raw("SELECT DISTINCT a.nis,a.nm_siswa FROM tbl_siswa a  "+
-		" LEFT JOIN tbl_trans_uang_masuk_spp_headers b on a.nis = b.nis_siswa "+
-		" and b.flag_aktif=0 and b.tahun_akademik=? and b.nm_kelas=? "+
-		" where a.flag_siswa = 0 AND a.status_siswa NOT IN ('Tidak Aktif') "+
-		" and (a.tahun_aktif = ? or a.tahun_aktif = REPLACE(?,'-','/')) "+
-		" and REPLACE(REPLACE(a.nm_kelas,'MIA',''),'IIS','') = ? "+
-		" ORDER BY a.nm_siswa ", paramChangeNmKelas.Tahun_akademik, paramChangeNmKelas.Nm_kelas, paramChangeNmKelas.Tahun_akademik, paramChangeNmKelas.Tahun_akademik, paramChangeNmKelas.Nm_kelas).Scan(&getNisAndNameSiswa)
+	var getNikAndNameSiswa []GetNikAndNameSiswa
+	db.Raw(" SELECT nik,nm_siswa,tahun_daftar,tgldaftar,id_biaya FROM tbl_user_ppdb WHERE (nik <> '' or nik is not null)  " +
+		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' ").Scan(&getNikAndNameSiswa)
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", getNisAndNameSiswa)
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", getNikAndNameSiswa)
 	c.JSON(http.StatusOK, response)
 }
 

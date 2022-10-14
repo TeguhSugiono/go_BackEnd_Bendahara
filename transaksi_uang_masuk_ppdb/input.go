@@ -1,5 +1,10 @@
 package transaksi_uang_masuk_ppdb
 
+type GetNikAndNameSiswa struct {
+	Nik      string
+	Nm_siswa string
+}
+
 type ParamInputSPP struct {
 	Kd_group       int     `form:"kd_group" json:"kd_group" binding:"required"`
 	Kd_kategori    int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
@@ -34,11 +39,6 @@ type ParamChangeNmKelas struct {
 type GetIdAndNameKelas struct {
 	Id_kelas string
 	Nm_kelas string
-}
-
-type GetNisAndNameSiswa struct {
-	Nis      string
-	Nm_siswa string
 }
 
 type ParamChangeSiswa struct {
