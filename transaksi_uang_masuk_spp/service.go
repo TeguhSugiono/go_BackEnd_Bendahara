@@ -107,7 +107,7 @@ func ListData(c *gin.Context) {
 
 	var getDataUmSpp []GetDataUmSpp
 	db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
@@ -244,18 +244,19 @@ func CreateUangMasukSpp(c *gin.Context) {
 
 		var int_seqno int
 		var periodebayar string
-		var jmlbayar float64
+		var jmltagihan float64
 		rows, _ := db.Raw("SELECT seqno,CONCAT(kd_bulan,'-',tahun) 'periodebayar',biaya_spp FROM tbl_conf_periode_spps WHERE flag_aktif=0 and tahun_akademik=? and nm_kelas=? ORDER BY seqno", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas).Rows()
 		defer rows.Close()
 		for rows.Next() {
-			rows.Scan(&int_seqno, &periodebayar, &jmlbayar)
+			rows.Scan(&int_seqno, &periodebayar, &jmltagihan)
 
 			datadetail := table_data.Tbl_trans_uang_masuk_spp_details{
 				Kd_trans_masuk:        intKd_trans_masuk,
 				Kd_trans_masuk_detail: intKd_trans_masuk_detail,
 				Seqno:                 int_seqno,
 				Periode_bayar:         periodebayar,
-				Jml_bayar:             jmlbayar,
+				Jml_tagihan:           jmltagihan,
+				Jml_bayar:             0,
 				Keterangan:            "",
 				Created_by:            currentUser.(string),
 				Created_on:            datenowx,
@@ -276,7 +277,7 @@ func CreateUangMasukSpp(c *gin.Context) {
 
 		var getDataUmSpp []GetDataUmSpp
 		db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-			" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+			" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
 			" FROM tbl_trans_uang_masuk_spp_headers a "+
 			" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
@@ -357,7 +358,7 @@ func UpdateUangMasukSpp(c *gin.Context) {
 	tTglBayar, err2 := time.Parse("02-01-2006", paramEditSPPDetail.Tgl_bayar)
 	if err2 != nil {
 		errors := helper.FormatValidationError(err2)
-		errorMessage := gin.H{"errors": errors, "date": datenowx}
+		errorMessage := gin.H{"errors": errors, "date": tTglBayar}
 		response := helper.APIResponse("Tanggal Format Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
@@ -395,7 +396,7 @@ func UpdateUangMasukSpp(c *gin.Context) {
 
 	var getDataUmSpp []GetDataUmSpp
 	db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+

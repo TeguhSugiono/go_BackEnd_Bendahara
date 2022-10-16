@@ -1768,7 +1768,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"nis_siswa\" : \"5650\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XI\",\r\n    \"nis_siswa\" : \"5762\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1803,7 +1803,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5650\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"Tidak Wajib Isi ini\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5650\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1839,7 +1839,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 620000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1847,7 +1847,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/updateuangmasukspp/1/6",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/updateuangmasukspp/:kd_trans_masuk/:kd_trans_masuk_detail",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1862,8 +1862,18 @@
 								"transaksi",
 								"uangmasukspp",
 								"updateuangmasukspp",
-								"1",
-								"6"
+								":kd_trans_masuk",
+								":kd_trans_masuk_detail"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk",
+									"value": "1"
+								},
+								{
+									"key": "kd_trans_masuk_detail",
+									"value": "6"
+								}
 							]
 						}
 					},
@@ -2052,6 +2062,47 @@
 					"response": []
 				},
 				{
+					"name": "4. List Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nik\" : \"3275066605060002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/listdata",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukppdb",
+								"listdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "3. List Kelas",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -2090,47 +2141,6 @@
 								"transaksi",
 								"uangmasukspp",
 								"listkelas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "5. List Data",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"nis_siswa\" : \"5650\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listdata",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"listdata"
 							]
 						}
 					},
@@ -2217,7 +2227,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY1NzgzNTc0fQ.GXBbu9Qw09kl-m0EzUsiDLnF64dY_X9wbkZcWNl_K4g",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY1OTYwODE3fQ.H1s_LRGSH02bMWRfGxgZdeRjUOdQBGpEctNfnGvFoQ8",
 				"type": "string"
 			}
 		]

@@ -5,6 +5,19 @@ type GetNikAndNameSiswa struct {
 	Nm_siswa string
 }
 
+type ParamChangeSiswa struct {
+	Nik string `form:"nik" json:"nik" binding:"required"`
+}
+
+type GetDataPPDB struct {
+	Tgldaftar    string
+	Tahun_daftar string
+	Total_biaya  float64
+	Total_bayar  float64
+	Sisa_biaya   float64
+	//Detail       interface{}
+}
+
 type ParamInputSPP struct {
 	Kd_group       int     `form:"kd_group" json:"kd_group" binding:"required"`
 	Kd_kategori    int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
@@ -39,12 +52,6 @@ type ParamChangeNmKelas struct {
 type GetIdAndNameKelas struct {
 	Id_kelas string
 	Nm_kelas string
-}
-
-type ParamChangeSiswa struct {
-	Tahun_akademik string `form:"tahun_akademik" json:"tahun_akademik" binding:"required"`
-	Nm_kelas       string `form:"nm_kelas" json:"nm_kelas" binding:"required"`
-	Nis_siswa      string `form:"nis_siswa" json:"nis_siswa" binding:"required"`
 }
 
 type GetDataUmSpp struct {

@@ -19,11 +19,12 @@ type ParamInputSPP struct {
 }
 
 type ParamEditSPPDetail struct {
-	Tgl_bayar  string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
-	Jml_bayar  float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
-	Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
-	Edited_on  string  `form:"edited_on" json:"edited_on"`
-	Edited_by  string  `form:"edited_by" json:"edited_by"`
+	Tgl_bayar   string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
+	Jml_bayar   float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
+	Jml_tagihan float64 `form:"jml_tagihan" json:"jml_tagihan" binding:"number"`
+	Keterangan  string  `form:"keterangan" json:"keterangan" binding:"required"`
+	Edited_on   string  `form:"edited_on" json:"edited_on"`
+	Edited_by   string  `form:"edited_by" json:"edited_by"`
 }
 
 type ParamChangeNmKelas struct {
@@ -53,6 +54,7 @@ type GetDataUmSpp struct {
 	Seqno                 int
 	Periode_bayar         string
 	Tgl_bayar             string
+	Jml_tagihan           float64
 	Jml_bayar             float64
 	Keterangan            string
 }

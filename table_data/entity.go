@@ -108,6 +108,7 @@ type Tbl_trans_uang_masuk_spp_details struct {
 	Seqno                 int
 	Periode_bayar         string
 	Tgl_bayar             string
+	Jml_tagihan           float64
 	Jml_bayar             float64
 	Keterangan            string
 	Flag_aktif            int
