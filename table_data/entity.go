@@ -117,3 +117,37 @@ type Tbl_trans_uang_masuk_spp_details struct {
 	Edited_on             time.Time
 	Edited_by             string
 }
+
+type Tbl_trans_uang_masuk_ppdb_headers struct {
+	Kd_group            int
+	Kd_kategori         int
+	Kd_trans_masuk_ppdb int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_ppdb"`
+	Nik                 string
+	Tgldaftar           string
+	Tahun_daftar        string
+	Tahun_akademik      string
+	Total_biaya         float64
+	Total_bayar         float64
+	Sisa_biaya          float64
+	Keterangan          string
+	Flag_aktif          int
+	Created_on          time.Time
+	Created_by          string
+	Edited_on           time.Time
+	Edited_by           string
+}
+
+type Tbl_trans_uang_masuk_ppdb_details struct {
+	Kd_trans_masuk_ppdb        int
+	Kd_trans_masuk_detail_ppdb int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_detail_ppdb"`
+	Seqno                      int
+	Kategori_biaya_ppdb        string
+	Tgl_bayar                  string
+	Jml_bayar                  float64
+	Keterangan                 string
+	Flag_aktif                 int
+	Created_on                 time.Time
+	Created_by                 string
+	Edited_on                  time.Time
+	Edited_by                  string
+}

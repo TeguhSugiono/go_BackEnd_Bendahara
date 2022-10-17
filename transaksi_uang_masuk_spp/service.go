@@ -369,9 +369,18 @@ func UpdateUangMasukSpp(c *gin.Context) {
 
 	tTglBayar, err2 := time.Parse("02-01-2006", paramEditSPPDetail.Tgl_bayar)
 	if err2 != nil {
-		errors := helper.FormatValidationError(err2)
-		errorMessage := gin.H{"errors": errors, "date": tTglBayar}
-		response := helper.APIResponse("Tanggal Format Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		var ve validator.ValidationErrors
+		if errors.As(err2, &ve) {
+			errors := helper.FormatValidationError(err2)
+			errorMessage := gin.H{"errors": errors}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		var error_binding []string
+		error_binding = append(error_binding, err2.Error())
+		errorMessage := gin.H{"errors": error_binding}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
