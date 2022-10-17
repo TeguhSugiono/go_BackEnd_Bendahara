@@ -188,13 +188,25 @@ func CreateUangMasukSpp(c *gin.Context) {
 		return
 	}
 
-	var CekDataUangMasuk table_data.Tbl_trans_uang_masuk_spp_headers
-	checkUser := db.Select("*").Where("flag_aktif = 0 and kd_group= ? and kd_kategori= ? and nis_siswa=? and nm_kelas=? and tahun_akademik = ?", paramInputSPP.Kd_group, paramInputSPP.Kd_kategori, paramInputSPP.Nis_siswa, paramInputSPP.Nm_kelas, paramInputSPP.Tahun_akademik).Find(&CekDataUangMasuk)
-	if checkUser.RowsAffected > 0 {
+	db.Raw(" SELECT count(*) jmldata from tbl_trans_uang_masuk_spp_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and kd_group=?  "+
+		" and kd_kategori=? and nis_siswa=? and nm_kelas=? "+
+		" and tahun_akademik=? ", paramInputSPP.Kd_group, paramInputSPP.Kd_kategori, paramInputSPP.Nis_siswa, paramInputSPP.Nm_kelas, paramInputSPP.Tahun_akademik).Scan(&intJmldata)
+	if intJmldata > 0 {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
 		response := helper.APIResponse("Data Pembayaran SPP Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
+		//}
+
+		// var CekDataUangMasuk table_data.Tbl_trans_uang_masuk_spp_headers
+		// checkUser := db.Select("*").Where("flag_aktif = 0 and kd_group= ? and kd_kategori= ? and nis_siswa=? and nm_kelas=? and tahun_akademik = ?", paramInputSPP.Kd_group, paramInputSPP.Kd_kategori, paramInputSPP.Nis_siswa, paramInputSPP.Nm_kelas, paramInputSPP.Tahun_akademik).Find(&CekDataUangMasuk)
+		// if checkUser.RowsAffected > 0 {
+		// errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		// response := helper.APIResponse("Data Pembayaran SPP Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		// c.JSON(http.StatusUnprocessableEntity, response)
+		//return
 	} else {
 
 		//Jika data spp belum dibuat

@@ -129,17 +129,26 @@ func ListData(c *gin.Context) {
 			rows.Scan(&tgldaftar, &tahun_daftar, &total_biaya, &total_bayar, &sisa_biaya)
 			arraydata := GetDataPPDB{}
 
-			//tTgldaftar, _ := time.Parse("02-01-2006", tgldaftar)
-			// if err != nil {
-			// 	errors := helper.FormatValidationError(err)
-			// 	errorMessage := gin.H{"errors": errors, "date": tTgldaftar}
-			// 	response := helper.APIResponse("Tanggal Format Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
-			// 	c.JSON(http.StatusUnprocessableEntity, response)
-			// 	return
-			// }
-			//dateStr := tTgldaftar.Format("2006-01-02")
+			tTgldaftar, err := time.Parse("2006-01-02", tgldaftar)
+			if err != nil {
+				var ve validator.ValidationErrors
+				if errors.As(err, &ve) {
+					errors := helper.FormatValidationError(err)
+					errorMessage := gin.H{"errors": errors}
+					response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+					c.JSON(http.StatusUnprocessableEntity, response)
+					return
+				}
+				var error_binding []string
+				error_binding = append(error_binding, err.Error())
+				errorMessage := gin.H{"errors": error_binding}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			dateStr := tTgldaftar.Format("2006-01-02")
 
-			arraydata.Tgldaftar = tgldaftar
+			arraydata.Tgldaftar = dateStr
 			arraydata.Tahun_daftar = tahun_daftar
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = total_bayar
