@@ -20,6 +20,9 @@ type GetDataPPDB struct {
 
 type GetBiayaAndSisa struct {
 	Kd_trans_masuk_ppdb int
+	Tgldaftar           string
+	Tahun_daftar        string
+	Tahun_akademik      string
 	Total_biaya         float64
 	Total_bayar         float64
 	Sisa_biaya          float64
@@ -49,13 +52,13 @@ type ParamChangeNik struct {
 	Nik string `form:"nik" json:"nik" binding:"required"`
 }
 
-// type ParamEditSPPDetail struct {
-// 	Tgl_bayar  string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
-// 	Jml_bayar  float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
-// 	Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
-// 	Edited_on  string  `form:"edited_on" json:"edited_on"`
-// 	Edited_by  string  `form:"edited_by" json:"edited_by"`
-// }
+type ParamEditPPdbDetail struct {
+	Tgl_bayar  string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
+	Jml_bayar  float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
+	Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
+	Edited_on  string  `form:"edited_on" json:"edited_on"`
+	Edited_by  string  `form:"edited_by" json:"edited_by"`
+}
 
 // type GetIdAndNameKelas struct {
 // 	Id_kelas string

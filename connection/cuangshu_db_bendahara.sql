@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 16/10/2022 13:19:48
+ Date: 19/10/2022 12:03:34
 */
 
 SET NAMES utf8mb4;
@@ -955,11 +955,14 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_ppdb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_ppdb_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 1, 1, 'Biaya Seragam', '2022-07-02', 140000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:53:49', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 2, 2, 'Biaya Uang Gedung', '2022-07-02', 800000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:53:20', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 3, 3, 'Biaya Formulir Pendaftaran', '2022-07-02', 260000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:54:20', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_headers
@@ -983,11 +986,12 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_ppdb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_ppdb_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '3172032402070005', '2022-06-30', '2022', '2022-2023', 3400000.00, 1200000.00, 2200000.00, 'Tidak Wajib Isi ini', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:54:20', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_spp_details
@@ -1008,7 +1012,7 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_details
@@ -1049,6 +1053,18 @@ INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 33, 9, '03-2023', NULL
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 34, 10, '04-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-16 13:10:56', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 35, 11, '05-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-16 13:10:56', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 36, 12, '06-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-16 13:10:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 37, 1, '07-2022', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 38, 2, '08-2022', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 39, 3, '09-2022', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 40, 4, '10-2022', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 41, 5, '11-2022', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 42, 6, '12-2022', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 43, 7, '01-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 44, 8, '02-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 45, 9, '03-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 46, 10, '04-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 47, 11, '05-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 48, 12, '06-2023', NULL, 450000.00, 0.00, '', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_spp_headers
@@ -1071,14 +1087,15 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022-2023', '5897', 'X', 3000000.00, 100000.00, 2900000.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2022-10-16 13:19:15', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022-2023', '5897', 'X', 3000000.00, 100000.00, 2900000.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2022-10-19 11:49:41', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 2, '2022-2023', '5762', 'XI', 4200000.00, 0.00, 4200000.00, '', 0, '2022-10-16 13:10:11', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 3, '2022-2023', '5650', 'XII', 5400000.00, 0.00, 5400000.00, '', 0, '2022-10-16 13:10:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 4, '2022-2023', '5652', 'XII', 5400000.00, 0.00, 5400000.00, 'Tidak Wajib Isi ini', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_user_ppdb

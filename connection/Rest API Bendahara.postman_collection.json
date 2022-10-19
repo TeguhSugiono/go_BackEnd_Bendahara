@@ -2033,7 +2033,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2074,7 +2074,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nik\" : \"3275066605060002\"\r\n}",
+							"raw": "{\r\n    \"nik\" : \"3172032402070005\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2103,57 +2103,13 @@
 					"response": []
 				},
 				{
-					"name": "3. List Kelas",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listkelas",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"listkelas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "6. Create SPP Uang Masuk",
+					"name": "5. Create PPdb Uang Masuk",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5650\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"Tidak Wajib Isi ini\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172032402070005\",\r\n    \"tgldaftar\" : \"30-06-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"Tidak Wajib Isi ini\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2161,7 +2117,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/createuangmasukspp/",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/createuangmasukppdb/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -2174,8 +2130,8 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasukspp",
-								"createuangmasukspp",
+								"uangmasukppdb",
+								"createuangmasukppdb",
 								""
 							]
 						}
@@ -2183,13 +2139,13 @@
 					"response": []
 				},
 				{
-					"name": "7. Edit SPP Uang Masuk",
+					"name": "6. Edit PPdb Uang Masuk",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 620000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 260000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2197,7 +2153,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/updateuangmasukspp/1/6",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/updateuangmasukppdb/:kd_trans_masuk_ppdb/:kd_trans_masuk_detail_ppdb",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -2210,10 +2166,20 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasukspp",
-								"updateuangmasukspp",
-								"1",
-								"6"
+								"uangmasukppdb",
+								"updateuangmasukppdb",
+								":kd_trans_masuk_ppdb",
+								":kd_trans_masuk_detail_ppdb"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk_ppdb",
+									"value": "1"
+								},
+								{
+									"key": "kd_trans_masuk_detail_ppdb",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -2227,7 +2193,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY1OTYwODE3fQ.H1s_LRGSH02bMWRfGxgZdeRjUOdQBGpEctNfnGvFoQ8",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY2MjI5NTI0fQ.aw5b7iEKfM-657yiCHtRsW-KvFbUrlWTE4POSSw4XTQ",
 				"type": "string"
 			}
 		]
