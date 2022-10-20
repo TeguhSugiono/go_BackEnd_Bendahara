@@ -2186,6 +2186,417 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "12.Transaksi UM Siswa",
+			"item": [
+				{
+					"name": "1. List Kd Group",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/listgroupkategori",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"listgroupkategori"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. List Kd Kategori",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/listkategoriuang",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"listkategoriuang"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. List Kelas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listkelas",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"listkelas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. List Siswa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listsiswa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"listsiswa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. List Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XI\",\r\n    \"nis_siswa\" : \"5762\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listdata",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"listdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Create SPP Uang Masuk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5650\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/createuangmasukspp/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"createuangmasukspp",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Edit SPP Uang Masuk",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/updateuangmasukspp/:kd_trans_masuk/:kd_trans_masuk_detail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"updateuangmasukspp",
+								":kd_trans_masuk",
+								":kd_trans_masuk_detail"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk",
+									"value": "1"
+								},
+								{
+									"key": "kd_trans_masuk_detail",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "13.Master Configurasi Spp PPdb",
+			"item": [
+				{
+					"name": "Tampil Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterconfsppdb/showconfspppdb?page=1&perpage=10",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterconfsppdb",
+								"showconfspppdb"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "na",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "asc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Data",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterconfsppdb/updateconfspppdb/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterconfsppdb",
+								"updateconfspppdb",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -2193,7 +2604,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY2MjI5NTI0fQ.aw5b7iEKfM-657yiCHtRsW-KvFbUrlWTE4POSSw4XTQ",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjY2MzE4MDUzfQ.h2Gp_sBINrhVV9yfTelPwW4wRkZ7i7jNyDKd51qtIoc",
 				"type": "string"
 			}
 		]

@@ -32,6 +32,13 @@ type Tbl_jenis_trans struct {
 	Edited_by   string
 }
 
+type Tbl_link_kategoris struct {
+	Id_link     int `gorm:"primary_key;auto_increment;not_null" json:"id_link"`
+	Link_name   string
+	Kd_group    int
+	Kd_kategori int
+}
+
 type Tbl_kategori_uangs struct {
 	Kd_group    int
 	Kd_kategori int `gorm:"primary_key;auto_increment;not_null" json:"kd_kategori"`
@@ -150,4 +157,37 @@ type Tbl_trans_uang_masuk_ppdb_details struct {
 	Created_by                 string
 	Edited_on                  time.Time
 	Edited_by                  string
+}
+
+type Tbl_trans_uang_masuk_siswa_headers struct {
+	Kd_group       int
+	Kd_kategori    int
+	Kd_trans_masuk int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk"`
+	Nis_siswa      string
+	Nm_kelas       string
+	Tahun_akademik string
+	Total_biaya    float64
+	Total_bayar    float64
+	Sisa_biaya     float64
+	Keterangan     string
+	Flag_aktif     int
+	Created_on     time.Time
+	Created_by     string
+	Edited_on      time.Time
+	Edited_by      string
+}
+
+type Tbl_trans_uang_masuk_siswa_details struct {
+	Kd_trans_masuk        int
+	Kd_trans_masuk_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_detail"`
+	Seqno                 int
+	Periode_bayar         string
+	Tgl_bayar             string
+	Jml_bayar             float64
+	Keterangan            string
+	Flag_aktif            int
+	Created_on            time.Time
+	Created_by            string
+	Edited_on             time.Time
+	Edited_by             string
 }

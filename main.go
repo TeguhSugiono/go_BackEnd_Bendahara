@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"rest_api_bendahara/connection"
 	"rest_api_bendahara/helper"
+	"rest_api_bendahara/master_conf_spp_ppdb"
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_jenis_trans"
 	"rest_api_bendahara/master_kategori_uang"
@@ -14,6 +15,7 @@ import (
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
 	"rest_api_bendahara/transaksi_uang_masuk_ppdb"
+	"rest_api_bendahara/transaksi_uang_masuk_siswa"
 	"rest_api_bendahara/transaksi_uang_masuk_spp"
 	"rest_api_bendahara/user"
 	"strings"
@@ -85,6 +87,9 @@ func main() {
 	api.PUT("/settingperiode/updateconfperiodeall", authMiddleware(), master_sett_periode.UpdateConfPeriodeAll)
 	api.POST("/settingperiode/deleteconfperiode", authMiddleware(), master_sett_periode.DeleteConfPeriode)
 
+	api.GET("/masterconfsppdb/showconfspppdb", authMiddleware(), master_conf_spp_ppdb.ShowConfSppPPDB)
+	api.PUT("/masterconfsppdb/updateconfspppdb/:idlink", authMiddleware(), master_conf_spp_ppdb.UpdateConfSppPPDB)
+
 	// api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
 	// api.GET("/settingperiode/showsettperiode", authMiddleware(), master_sett_spp.ShowSettPeriode)
 	// api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
@@ -105,10 +110,13 @@ func main() {
 	api.GET("/transaksi/uangmasukppdb/listkategoriuang", authMiddleware(), transaksi_uang_masuk_ppdb.ListKategoriUang)
 	api.GET("/transaksi/uangmasukppdb/listkelas", authMiddleware(), transaksi_uang_masuk_ppdb.ListKelas)
 	api.POST("/transaksi/uangmasukppdb/listsiswa", authMiddleware(), transaksi_uang_masuk_ppdb.ListSiswa)
-	//api.POST("/transaksi/uangmasukppdb/listsiswachange", authMiddleware(), transaksi_uang_masuk_ppdb.ListSiswaChange)
 	api.POST("/transaksi/uangmasukppdb/listdata", authMiddleware(), transaksi_uang_masuk_ppdb.ListData)
 	api.POST("/transaksi/uangmasukppdb/createuangmasukppdb", authMiddleware(), transaksi_uang_masuk_ppdb.CreateUangMasukPPdb)
 	api.PUT("/transaksi/uangmasukppdb/updateuangmasukppdb/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_ppdb.UpdateUangMasukPPdb)
+
+	//UANG MASUK SISWA
+	api.GET("/transaksi/uangmasuksiswa/listgroupkategori", authMiddleware(), transaksi_uang_masuk_siswa.ListGroupKategori)
+	api.GET("/transaksi/uangmasuksiswa/listkategoriuang", authMiddleware(), transaksi_uang_masuk_siswa.ListKategoriUang)
 
 	//AKADEMIK SIA
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)

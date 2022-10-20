@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 19/10/2022 12:03:34
+ Date: 21/10/2022 04:28:14
 */
 
 SET NAMES utf8mb4;
@@ -228,6 +228,20 @@ CREATE TABLE `tbl_link_kategoris`  (
 -- ----------------------------
 INSERT INTO `tbl_link_kategoris` VALUES (1, 'form_biaya_spp', '3', '3');
 INSERT INTO `tbl_link_kategoris` VALUES (2, 'form_biaya_ppdb', '1', '1');
+
+-- ----------------------------
+-- Table structure for tbl_run_number_bendahara
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_run_number_bendahara`;
+CREATE TABLE `tbl_run_number_bendahara`  (
+  `code_trans` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `number` bigint(20) NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_run_number_bendahara
+-- ----------------------------
+INSERT INTO `tbl_run_number_bendahara` VALUES ('trans_siswa', 0);
 
 -- ----------------------------
 -- Table structure for tbl_sett_periode_spps
@@ -992,6 +1006,57 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers`  (
 -- Records of tbl_trans_uang_masuk_ppdb_headers
 -- ----------------------------
 INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '3172032402070005', '2022-06-30', '2022', '2022-2023', 3400000.00, 1200000.00, 2200000.00, 'Tidak Wajib Isi ini', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:54:20', 'teguh');
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_masuk_siswa_details
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_masuk_siswa_details`;
+CREATE TABLE `tbl_trans_uang_masuk_siswa_details`  (
+  `kd_trans_masuk` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `seqno` int(11) NULL DEFAULT NULL,
+  `periode_bayar` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgl_bayar` date NULL DEFAULT NULL,
+  `jml_bayar` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(1) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_masuk_detail`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_masuk_siswa_details
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_masuk_siswa_headers
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_masuk_siswa_headers`;
+CREATE TABLE `tbl_trans_uang_masuk_siswa_headers`  (
+  `kd_group` int(11) NULL DEFAULT NULL,
+  `kd_kategori` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk` int(11) NOT NULL AUTO_INCREMENT,
+  `tahun_akademik` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `nis_siswa` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `nm_kelas` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `total_biaya` double(19, 2) NULL DEFAULT NULL,
+  `total_bayar` double(19, 2) NULL DEFAULT NULL,
+  `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(11) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_masuk`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_masuk_siswa_headers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_spp_details
