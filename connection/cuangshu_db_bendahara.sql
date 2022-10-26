@@ -11,11 +11,29 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 21/10/2022 04:28:14
+ Date: 27/10/2022 03:03:44
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for tbl_biaya_masuk_keluars
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_biaya_masuk_keluars`;
+CREATE TABLE `tbl_biaya_masuk_keluars`  (
+  `kd_biaya_kategori` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_kategori` int(11) NULL DEFAULT NULL,
+  `jml_biaya` double(19, 2) NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_biaya_kategori`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_biaya_masuk_keluars
+-- ----------------------------
+INSERT INTO `tbl_biaya_masuk_keluars` VALUES (1, 2, 150000.00);
+INSERT INTO `tbl_biaya_masuk_keluars` VALUES (2, 3, 205000.00);
+INSERT INTO `tbl_biaya_masuk_keluars` VALUES (3, 4, 220000.00);
 
 -- ----------------------------
 -- Table structure for tbl_biayadaftar
@@ -1797,6 +1815,7 @@ CREATE TABLE `tbl_users`  (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `password` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `full_name` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `created_on` datetime NULL DEFAULT NULL,
   `edited_on` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id_user`) USING BTREE
@@ -1805,7 +1824,7 @@ CREATE TABLE `tbl_users`  (
 -- ----------------------------
 -- Records of tbl_users
 -- ----------------------------
-INSERT INTO `tbl_users` VALUES (1, 'teguh', '$2a$04$hqeGToL4EuyL.sOu3dV4I.7GsCpN624ckPL.qrKUDh5x4v3F8ulli', '2022-08-06 04:31:37', NULL);
+INSERT INTO `tbl_users` VALUES (1, 'teguh', '$2a$04$W3xS4kmWsPRGutn8Zf4AE.XBYTNnuh8.iPtjS8aC1BTwgC7Xj4oMq', 'Teguh Sugiono', '2022-10-24 21:37:11', NULL);
 
 -- ----------------------------
 -- View structure for vw_kelas_trans

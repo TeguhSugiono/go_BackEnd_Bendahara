@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"rest_api_bendahara/connection"
 	"rest_api_bendahara/helper"
+	"rest_api_bendahara/master_conf_biaya_kategori"
 	"rest_api_bendahara/master_conf_spp_ppdb"
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_jenis_trans"
@@ -90,6 +91,12 @@ func main() {
 	api.GET("/masterconfsppdb/showconfspppdb", authMiddleware(), master_conf_spp_ppdb.ShowConfSppPPDB)
 	api.PUT("/masterconfsppdb/updateconfspppdb/:idlink", authMiddleware(), master_conf_spp_ppdb.UpdateConfSppPPDB)
 
+	api.GET("/masterbiayakategori/listbiayakategori", authMiddleware(), master_conf_biaya_kategori.ListBiayaKategori)
+	api.GET("/masterbiayakategori/showbiayakategori", authMiddleware(), master_conf_biaya_kategori.ShowBiayaKategori)
+	api.POST("/masterbiayakategori/insertbiayakategori", authMiddleware(), master_conf_biaya_kategori.InsertBiayaKategori)
+	api.PUT("/masterbiayakategori/updatebiayakategori/:kdbiayakategori", authMiddleware(), master_conf_biaya_kategori.UpdateBiayaKategori)
+	api.DELETE("/masterbiayakategori/deletebiayakategori/:kdbiayakategori", authMiddleware(), master_conf_biaya_kategori.DeleteBiayaKategori)
+
 	// api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
 	// api.GET("/settingperiode/showsettperiode", authMiddleware(), master_sett_spp.ShowSettPeriode)
 	// api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
@@ -116,7 +123,14 @@ func main() {
 
 	//UANG MASUK SISWA
 	api.GET("/transaksi/uangmasuksiswa/listgroupkategori", authMiddleware(), transaksi_uang_masuk_siswa.ListGroupKategori)
-	api.GET("/transaksi/uangmasuksiswa/listkategoriuang", authMiddleware(), transaksi_uang_masuk_siswa.ListKategoriUang)
+	api.POST("/transaksi/uangmasuksiswa/listkategoriuang", authMiddleware(), transaksi_uang_masuk_siswa.ListKategoriUang)
+	api.POST("/transaksi/uangmasuksiswa/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListDataAddSiswa)
+	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
+	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
+
+	// api.POST("/transaksi/uangmasukspp/listdata", authMiddleware(), transaksi_uang_masuk_spp.ListData)
+	// api.POST("/transaksi/uangmasukspp/createuangmasukspp", authMiddleware(), transaksi_uang_masuk_spp.CreateUangMasukSpp)
+	// api.PUT("/transaksi/uangmasukspp/updateuangmasukspp/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_spp.UpdateUangMasukSpp)
 
 	//AKADEMIK SIA
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
@@ -182,7 +196,7 @@ func CORSMiddleware() gin.HandlerFunc {
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Credentials", "true")
 		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT")
+		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT, DELETE")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)

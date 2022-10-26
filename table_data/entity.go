@@ -191,3 +191,9 @@ type Tbl_trans_uang_masuk_siswa_details struct {
 	Edited_on             time.Time
 	Edited_by             string
 }
+
+type Tbl_biaya_masuk_keluars struct {
+	Kd_biaya_kategori int `gorm:"primary_key;auto_increment;not_null" json:"kd_biaya_kategori"`
+	Kd_kategori       int
+	Jml_biaya         float64
+}

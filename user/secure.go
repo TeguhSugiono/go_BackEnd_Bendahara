@@ -13,6 +13,7 @@ func GenerateToken(input DataTokenInput) (string, error) {
 	claim := jwt.MapClaims{}
 	claim["Id_user"] = input.Id_user
 	claim["Username"] = input.Username
+	claim["Full_name"] = input.Full_name
 
 	ttl := 24 * time.Hour
 	claim["exp"] = time.Now().UTC().Add(ttl).Unix()

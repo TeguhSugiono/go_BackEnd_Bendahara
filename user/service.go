@@ -49,6 +49,7 @@ func SignUp(c *gin.Context) {
 	data := Tbl_user{
 		Username:   dataInput.Username,
 		Password:   string(passwordHash),
+		Full_name:  dataInput.Full_name,
 		Created_on: datenowx,
 	}
 
@@ -60,7 +61,7 @@ func SignUp(c *gin.Context) {
 	}
 
 	var result DataTokenInput
-	db.Raw("SELECT Id_user,Username FROM tbl_users WHERE Username = ?", dataInput.Username).Scan(&result)
+	db.Raw("SELECT Id_user,Username,Full_name FROM tbl_users WHERE Username = ?", dataInput.Username).Scan(&result)
 
 	token, err := GenerateToken(result)
 	if err != nil {
@@ -115,7 +116,7 @@ func Login(c *gin.Context) {
 	//password := dataInput.Password
 
 	var result DataTokenInput
-	db.Raw("SELECT Id_user,Password,Username FROM tbl_users WHERE Username = ?", dataInput.Username).Scan(&result)
+	db.Raw("SELECT Id_user,Password,Username,Full_name FROM tbl_users WHERE Username = ?", dataInput.Username).Scan(&result)
 
 	err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(dataInput.Password))
 	if err != nil {
