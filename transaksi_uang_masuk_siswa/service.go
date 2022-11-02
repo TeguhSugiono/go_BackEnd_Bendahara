@@ -78,15 +78,37 @@ func ListDataAddSiswa(c *gin.Context) {
 		return
 	}
 
-	var master []ListData
-	sql := " SELECT DISTINCT id_tahun_aktif 'id_tahun',tahun_aktif 'tahun_akademik', " +
-		" REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'id_kelas', " +
-		" REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' " +
-		" FROM tbl_siswa " +
-		" WHERE flag_siswa = 0 AND status_siswa NOT IN ('Tidak Aktif','LULUS') and nis='" + paramGetSiswaAdd.Nis + "' "
-	db.Raw(sql).Scan(&master)
+	//cari setting tarif
+	var float_jml_biaya float64
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", master)
+	db.Raw(" SELECT jml_biaya FROM tbl_biaya_masuk_keluars where kd_kategori=?", paramGetSiswaAdd.Kd_kategori).Scan(&float_jml_biaya)
+
+	var id_tahun int
+	var tahun_akademik string
+	var id_kelas string
+	var nm_kelas string
+
+	SetArrayData := []ListData{}
+	rows, _ := db.Raw(" SELECT DISTINCT id_tahun_aktif 'id_tahun',tahun_aktif 'tahun_akademik', "+
+		" REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'id_kelas', "+
+		" REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' "+
+		" FROM tbl_siswa "+
+		" WHERE flag_siswa = 0 AND status_siswa NOT IN ('Tidak Aktif','LULUS') and nis=?", paramGetSiswaAdd.Nis).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		arraydata := ListData{}
+		rows.Scan(&id_tahun, &tahun_akademik, &id_kelas, &nm_kelas)
+		arraydata.Id_tahun = id_tahun
+		arraydata.Tahun_akademik = tahun_akademik
+		arraydata.Id_kelas = id_kelas
+		arraydata.Nm_kelas = nm_kelas
+		arraydata.Total_biaya = float_jml_biaya
+		arraydata.Total_bayar = 0
+		arraydata.Sisa_biaya = float_jml_biaya
+		SetArrayData = append(SetArrayData, arraydata)
+	}
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -164,9 +186,9 @@ func ListDataAddSiswa(c *gin.Context) {
 // 		arraydata.Kd_trans_masuk = kd_trans_masuk
 // 		arraydata.Total_biaya = total_biaya
 // 		arraydata.Total_bayar = total_bayar
-// 		arraydata.Sisa_biaya = sisa_biaya
-// 		arraydata.Detail = GetDataUmSiswa
-// 		SetArrayData = append(SetArrayData, arraydata)
+// arraydata.Sisa_biaya = sisa_biaya
+// arraydata.Detail = GetDataUmSiswa
+// SetArrayData = append(SetArrayData, arraydata)
 // 	}
 
 // 	if len(GetDataUmSiswa) == 0 {

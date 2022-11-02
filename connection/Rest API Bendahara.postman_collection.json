@@ -2288,7 +2288,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5719\"\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5719\",\r\n    \"kd_kategori\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2830,7 +2830,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2Njg0MjEwOX0.RGKlAxy1NyFz82hXkizhji9wcNupX9Bid70kDm3BRHs",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2NzQ4OTczM30.ygrwzHWARfLLtfKgvbRpNpMyzZXgaJvzMjKA7GU0rbw",
 				"type": "string"
 			}
 		]

@@ -5,7 +5,8 @@ type ParamChangeKategori struct {
 }
 
 type ParamGetSiswaAdd struct {
-	Nis string `form:"nis" json:"nis" binding:"required"`
+	Nis         string `form:"nis" json:"nis" binding:"required"`
+	Kd_kategori int    `form:"kd_kategori" json:"kd_kategori" binding:"required"`
 }
 
 type ListData struct {
@@ -13,6 +14,9 @@ type ListData struct {
 	Tahun_akademik string
 	Id_kelas       string
 	Nm_kelas       string
+	Total_biaya    float64
+	Total_bayar    float64
+	Sisa_biaya     float64
 }
 
 // type ParamInputSiswa struct {
@@ -22,9 +26,9 @@ type ListData struct {
 // 	Nis_siswa      string  `form:"nis_siswa" json:"nis_siswa" binding:"required"`
 // 	Nm_kelas       string  `form:"nm_kelas" json:"nm_kelas" binding:"required"`
 // 	Tahun_akademik string  `form:"tahun_akademik" json:"tahun_akademik" binding:"required"`
-// 	Total_biaya    float64 `form:"total_biaya" json:"total_biaya"`
-// 	Total_bayar    float64 `form:"total_bayar" json:"total_bayar"`
-// 	Sisa_biaya     float64 `form:"sisa_biaya" json:"sisa_biaya"`
+// Total_biaya    float64 `form:"total_biaya" json:"total_biaya"`
+// Total_bayar    float64 `form:"total_bayar" json:"total_bayar"`
+// Sisa_biaya     float64 `form:"sisa_biaya" json:"sisa_biaya"`
 // 	Keterangan     string  `form:"keterangan" json:"keterangan"`
 // 	Flag_aktif     int     `form:"flag_aktif" json:"flag_aktif"`
 // 	Created_on     string  `form:"created_on" json:"created_on"`
