@@ -125,6 +125,11 @@ func main() {
 	api.GET("/transaksi/uangmasuksiswa/listgroupkategori", authMiddleware(), transaksi_uang_masuk_siswa.ListGroupKategori)
 	api.POST("/transaksi/uangmasuksiswa/listkategoriuang", authMiddleware(), transaksi_uang_masuk_siswa.ListKategoriUang)
 	api.POST("/transaksi/uangmasuksiswa/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListDataAddSiswa)
+	api.POST("/transaksi/uangmasuksiswa/createuangmasuksiswa", authMiddleware(), transaksi_uang_masuk_siswa.CreateUangMasukSiswa)
+	api.PUT("/transaksi/uangmasuksiswa/edituangmasuksiswa/:idhead", authMiddleware(), transaksi_uang_masuk_siswa.EditUangMasukSiswa)
+	api.PUT("/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_siswa.UpdateUangMasukSiswaDetail)
+	api.POST("/transaksi/uangmasuksiswa/createuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.CreateUangMasukSiswaDetail)
+
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
 
