@@ -2288,7 +2288,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5719\",\r\n    \"kd_kategori\" : 2\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5651\",\r\n    \"kd_kategori\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2311,6 +2311,235 @@
 								"transaksi",
 								"uangmasuksiswa",
 								"listdataaddsiswa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Create Siswa Uang Masuk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5763\",\r\n    \"nm_kelas\" : \"XI\",    \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/createuangmasuksiswa/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"createuangmasuksiswa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Edit Uang Masuk Siswa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 4,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5763\",\r\n    \"nm_kelas\" : \"XI\",    \r\n    \"keterangan\" : \"TEST EDIT DATA\",\r\n    \"total_biaya\" : 1200000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/edituangmasuksiswa/:kd_trans_masuk_siswa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"edituangmasuksiswa",
+								":kd_trans_masuk_siswa"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk_siswa",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Edit Uang Masuk Siswa Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 200000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:kd_trans_masuk_siswa/:kd_trans_masuk_detail_siswa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"updateuangmasuksiswadetail",
+								":kd_trans_masuk_siswa",
+								":kd_trans_masuk_detail_siswa"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk_siswa",
+									"value": "1"
+								},
+								{
+									"key": "kd_trans_masuk_detail_siswa",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Add Siswa Uang Masuk Detail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/createuangmasuksiswadetail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"createuangmasuksiswadetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8.Tampil Data / Dashboard Uang Masuk Siswa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/showuangmasuksiswa?page=1&perpage=10",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"showuangmasuksiswa"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "Terang",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "PPDB",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -2740,42 +2969,6 @@
 					"response": []
 				},
 				{
-					"name": "6. Create SPP Uang Masuk",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5650\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/createuangmasukspp/",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"createuangmasukspp",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "7. Edit SPP Uang Masuk",
 					"request": {
 						"method": "PUT",
@@ -2830,7 +3023,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2NzQ4OTczM30.ygrwzHWARfLLtfKgvbRpNpMyzZXgaJvzMjKA7GU0rbw",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2ODgwNjI0Mn0.9Wm403zpGeV0qoswc-mbJhj3Dhrgf30pyLNew0Kai8M",
 				"type": "string"
 			}
 		]

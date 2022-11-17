@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 03/11/2022 00:39:18
+ Date: 18/11/2022 05:24:13
 */
 
 SET NAMES utf8mb4;
@@ -1030,10 +1030,9 @@ INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '31720324020700
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_trans_uang_masuk_siswa_details`;
 CREATE TABLE `tbl_trans_uang_masuk_siswa_details`  (
-  `kd_trans_masuk` int(11) NULL DEFAULT NULL,
-  `kd_trans_masuk_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_trans_masuk_siswa` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_detail_siswa` int(11) NOT NULL AUTO_INCREMENT,
   `seqno` int(11) NULL DEFAULT NULL,
-  `periode_bayar` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `tgl_bayar` date NULL DEFAULT NULL,
   `jml_bayar` double(19, 2) NULL DEFAULT NULL,
   `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -1042,12 +1041,13 @@ CREATE TABLE `tbl_trans_uang_masuk_siswa_details`  (
   `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`kd_trans_masuk_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+  PRIMARY KEY (`kd_trans_masuk_detail_siswa`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_siswa_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (1, 1, 1, NULL, 0.00, '', 0, '2022-11-18 04:53:56', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_siswa_headers
@@ -1056,7 +1056,7 @@ DROP TABLE IF EXISTS `tbl_trans_uang_masuk_siswa_headers`;
 CREATE TABLE `tbl_trans_uang_masuk_siswa_headers`  (
   `kd_group` int(11) NULL DEFAULT NULL,
   `kd_kategori` int(11) NULL DEFAULT NULL,
-  `kd_trans_masuk` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_trans_masuk_siswa` int(11) NOT NULL AUTO_INCREMENT,
   `tahun_akademik` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `nis_siswa` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `nm_kelas` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -1069,12 +1069,13 @@ CREATE TABLE `tbl_trans_uang_masuk_siswa_headers`  (
   `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`kd_trans_masuk`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+  PRIMARY KEY (`kd_trans_masuk_siswa`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_siswa_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 2, 1, '2022/2023', '5763', 'XI', 150000.00, 0.00, 150000.00, '', 0, '2022-11-18 04:53:56', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_spp_details
