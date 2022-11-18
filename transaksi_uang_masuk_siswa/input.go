@@ -10,6 +10,27 @@ type ParamGetSiswaAdd struct {
 }
 
 type ListData struct {
+	Kd_group                    int
+	Nm_group                    string
+	Kd_kategori                 int
+	Nm_kategori                 string
+	Kd_trans_masuk_siswa        int
+	Tahun_akademik              string
+	Nis_siswa                   string
+	Nm_siswa                    string
+	Nm_kelas                    string
+	Total_biaya                 float64
+	Total_bayar                 float64
+	Sisa_biaya                  float64
+	Keterangan                  string
+	Kd_trans_masuk_detail_siswa int
+	Seqno                       int
+	Tgl_bayar                   string
+	Jml_bayar                   float64
+	Keterangandetail            string
+}
+
+type ListAddSiswa struct {
 	Id_tahun       int
 	Tahun_akademik string
 	Id_kelas       string
