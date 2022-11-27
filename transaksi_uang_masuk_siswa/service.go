@@ -27,19 +27,27 @@ func ListGroupKategori(c *gin.Context) {
 	// defer rows.Close()
 	// for rows.Next() {
 	// 	rows.Scan(&result_kd_group)
-	// 	if nomor == 0 {
-	// 		str_kd_group = result_kd_group
-	// 	} else {
-	// 		str_kd_group = str_kd_group + "," + result_kd_group
-	// 	}
+	// if nomor == 0 {
+	// 	str_kd_group = result_kd_group
+	// } else {
+	// 	str_kd_group = str_kd_group + "," + result_kd_group
+	// }
 	// 	nomor++
 	// }
 
+	nomor := 0
 	var result_kd_group string
+	var str_kd_group string
 	rows, _ := db.Raw("SELECT kd_group FROM tbl_link_kategoris where link_name in('form_biaya_spp','form_biaya_ppdb')").Rows()
 	defer rows.Close()
 	for rows.Next() {
 		rows.Scan(&result_kd_group)
+		if nomor == 0 {
+			str_kd_group = result_kd_group
+		} else {
+			str_kd_group = str_kd_group + "," + result_kd_group
+		}
+		nomor++
 	}
 
 	// var result_kd_jenis string
@@ -54,11 +62,11 @@ func ListGroupKategori(c *gin.Context) {
 	sql := "  SELECT a.*,b.proses_uang FROM tbl_group_kategoris as a " +
 		" inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  " +
 		" where a.flag_aktif=0 and b.flag_aktif=0  " +
-		" and a.kd_group not in(" + result_kd_group + ")  and a.kd_jenis in('1') order by b.proses_uang "
+		" and a.kd_group not in(" + str_kd_group + ")  and a.kd_jenis in('1') order by b.proses_uang "
 
 	db.Raw(sql).Scan(&master)
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", master_group_kategori.FormatGroupKategori(master))
+	response := helper.APIResponse("List Data ..."+result_kd_group, http.StatusOK, "success", master_group_kategori.FormatGroupKategori(master))
 	c.JSON(http.StatusOK, response)
 }
 
@@ -707,27 +715,6 @@ func ListData(c *gin.Context) {
 		return
 	}
 
-	sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-		" b.tgl_bayar,b.jml_bayar,b.keterangan " +
-		" FROM tbl_trans_uang_masuk_siswa_headers a " +
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
-		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
-		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
-
-	sql = fmt.Sprintf("%s and a.tahun_akademik= '%s'", sql, paramChangeSiswa.Tahun_akademik)
-
-	if paramChangeSiswa.Nm_kelas != "" {
-		sql = fmt.Sprintf("%s and a.nm_kelas= '%s'", sql, paramChangeSiswa.Nm_kelas)
-	}
-	if paramChangeSiswa.Nis_siswa != "" {
-		sql = fmt.Sprintf("%s and a.nis_siswa= '%s'", sql, paramChangeSiswa.Nis_siswa)
-	}
-
-	sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
-
-	var getDataUmSiswa []GetDataUmSiswa
-	db.Raw(sql).Scan(&getDataUmSiswa)
-
 	SetArrayData := []GetBiayaAndSisa{}
 	var kd_trans_masuk_siswa int
 	var total_biaya float64
@@ -767,12 +754,27 @@ func ListData(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+
+		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" FROM tbl_trans_uang_masuk_siswa_headers a " +
+			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
+
+		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)
+
+		sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
+
+		var getDataUmSiswa []GetDataUmSiswa
+		db.Raw(sql).Scan(&getDataUmSiswa)
+
 		arraydata.Detail = getDataUmSiswa
 		SetArrayData = append(SetArrayData, arraydata)
 	}
 
-	if len(getDataUmSiswa) == 0 {
-		response := helper.APIResponse("List Data ...", http.StatusOK, "success", getDataUmSiswa)
+	if len(SetArrayData) == 0 {
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 		c.JSON(http.StatusOK, response)
 		return
 	}
