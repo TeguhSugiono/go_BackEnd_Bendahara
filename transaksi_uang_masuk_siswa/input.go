@@ -9,7 +9,7 @@ type ParamGetSiswaAdd struct {
 	Kd_kategori int    `form:"kd_kategori" json:"kd_kategori" binding:"required"`
 }
 
-type ListData struct {
+type ListDataView struct {
 	Kd_group                    int
 	Nm_group                    string
 	Kd_kategori                 int
@@ -85,6 +85,10 @@ type GetDataUmSiswa struct {
 
 type GetBiayaAndSisa struct {
 	Kd_trans_masuk_siswa int
+	Tahun_akademik       string
+	Nis_siswa            string
+	Nm_siswa             string
+	Nm_kelas             string
 	Total_biaya          float64
 	Total_bayar          float64
 	Sisa_biaya           float64
@@ -101,4 +105,10 @@ type ParamEditUmSiswaDetail struct {
 
 type ParamAddDetail struct {
 	Kd_trans_masuk_siswa int `form:"kd_trans_masuk_siswa" json:"kd_trans_masuk_siswa"`
+}
+
+type ParamChangeSiswa struct {
+	Tahun_akademik string `form:"tahun_akademik" json:"tahun_akademik" binding:"required"`
+	Nm_kelas       string `form:"nm_kelas" json:"nm_kelas"`
+	Nis_siswa      string `form:"nis_siswa" json:"nis_siswa"`
 }

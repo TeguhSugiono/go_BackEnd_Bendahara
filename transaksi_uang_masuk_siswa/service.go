@@ -3,13 +3,11 @@ package transaksi_uang_masuk_siswa
 import (
 	"errors"
 	"fmt"
-	"math"
 	"net/http"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_kategori_uang"
 	"rest_api_bendahara/table_data"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -697,71 +695,157 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 
 }
 
-func ShowUangMasukSiswa(c *gin.Context) {
+func ListData(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []ListData
+	var paramChangeSiswa ParamChangeSiswa
+	if err := c.ShouldBindJSON(&paramChangeSiswa); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
 
-	sql := " SELECT " +
-		" a.kd_group,c.nm_group,a.kd_kategori,d.nm_kategori,a.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,e.nm_siswa,a.nm_kelas, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan, " +
-		" b.kd_trans_masuk_detail_siswa,b.seqno, " +
-		" b.tgl_bayar,b.jml_bayar,b.keterangan 'keterangandetail' " +
-		" from tbl_trans_uang_masuk_siswa_headers a " +
+	sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
+		" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
-		" INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group " +
-		" INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori " +
-		" INNER JOIN tbl_siswa e on a.nis_siswa=e.nis " +
-		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0 and e.flag_siswa = 0 and e.status_siswa not in('Tidak Aktif') "
+		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
-	if s := c.Query("search"); s != "" {
-		if len(c.Query("search")) >= 3 {
-			sql = fmt.Sprintf("%s and c.nm_group LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and d.nm_kategori LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and a.tahun_akademik LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and a.nis_siswa LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and a.nm_kelas LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and a.keterangan LIKE '%%%s%%' ", sql, s)
-			sql = fmt.Sprintf("%s and b.keterangan LIKE '%%%s%%' ", sql, s)
-		}
+	sql = fmt.Sprintf("%s and a.tahun_akademik= '%s'", sql, paramChangeSiswa.Tahun_akademik)
+
+	if paramChangeSiswa.Nm_kelas != "" {
+		sql = fmt.Sprintf("%s and a.nm_kelas= '%s'", sql, paramChangeSiswa.Nm_kelas)
+	}
+	if paramChangeSiswa.Nis_siswa != "" {
+		sql = fmt.Sprintf("%s and a.nis_siswa= '%s'", sql, paramChangeSiswa.Nis_siswa)
 	}
 
-	if sort := c.Query("sort"); sort != "" {
-		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "asc", "asc")
-	} else {
-		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "desc", "desc")
+	sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
+
+	var getDataUmSiswa []GetDataUmSiswa
+	db.Raw(sql).Scan(&getDataUmSiswa)
+
+	SetArrayData := []GetBiayaAndSisa{}
+	var kd_trans_masuk_siswa int
+	var total_biaya float64
+	var total_bayar float64
+	var sisa_biaya float64
+	var tahun_akademik string
+	var nis_siswa string
+	var nm_kelas string
+	var nm_siswa string
+
+	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" FROM tbl_trans_uang_masuk_siswa_headers a " +
+		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif')  "
+
+	ssql = fmt.Sprintf("%s and a.tahun_akademik= '%s'", ssql, paramChangeSiswa.Tahun_akademik)
+
+	if paramChangeSiswa.Nm_kelas != "" {
+		ssql = fmt.Sprintf("%s and a.nm_kelas= '%s'", ssql, paramChangeSiswa.Nm_kelas)
+	}
+	if paramChangeSiswa.Nis_siswa != "" {
+		ssql = fmt.Sprintf("%s and a.nis_siswa= '%s'", ssql, paramChangeSiswa.Nis_siswa)
 	}
 
-	page := c.Query("page")
-	perPage := c.Query("perpage")
+	ssql = fmt.Sprintf("%s ORDER BY a.tahun_akademik %s,a.nm_kelas %s", ssql, "asc", "asc")
+	rows, _ := db.Raw(ssql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&kd_trans_masuk_siswa, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		arraydata := GetBiayaAndSisa{}
+		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
+		arraydata.Tahun_akademik = tahun_akademik
+		arraydata.Nis_siswa = nis_siswa
+		arraydata.Nm_siswa = nm_siswa
+		arraydata.Nm_kelas = nm_kelas
+		arraydata.Total_biaya = total_biaya
+		arraydata.Total_bayar = total_bayar
+		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Detail = getDataUmSiswa
+		SetArrayData = append(SetArrayData, arraydata)
+	}
 
-	intpage, err := strconv.Atoi(page)
-	if err != nil {
-		response := helper.APIResponse("Format Page Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
-		c.JSON(http.StatusUnprocessableEntity, response)
+	if len(getDataUmSiswa) == 0 {
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", getDataUmSiswa)
+		c.JSON(http.StatusOK, response)
 		return
 	}
 
-	intperPage, err := strconv.Atoi(perPage)
-	if err != nil {
-		response := helper.APIResponse("Format Perpage Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-
-	var total int64
-
-	db.Raw(sql).Count(&total)
-
-	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
-	db.Raw(sql).Scan(&master)
-
-	CompTableData := table_data.TableData{
-		Total:     total,
-		Page:      intpage,
-		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
-	}
-
-	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, master)
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
 }
+
+// func ShowUangMasukSiswa(c *gin.Context) {
+// 	db := c.MustGet("db").(*gorm.DB)
+
+// 	var master []ListData
+
+// 	sql := " SELECT " +
+// 		" a.kd_group,c.nm_group,a.kd_kategori,d.nm_kategori,a.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,e.nm_siswa,a.nm_kelas, " +
+// 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan, " +
+// 		" b.kd_trans_masuk_detail_siswa,b.seqno, " +
+// 		" b.tgl_bayar,b.jml_bayar,b.keterangan 'keterangandetail' " +
+// 		" from tbl_trans_uang_masuk_siswa_headers a " +
+// 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+// 		" INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group " +
+// 		" INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori " +
+// 		" INNER JOIN tbl_siswa e on a.nis_siswa=e.nis " +
+// 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0 and e.flag_siswa = 0 and e.status_siswa not in('Tidak Aktif') "
+
+// 	if s := c.Query("search"); s != "" {
+// 		if len(c.Query("search")) >= 3 {
+// 			sql = fmt.Sprintf("%s and c.nm_group LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and d.nm_kategori LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.tahun_akademik LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.nis_siswa LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.nm_kelas LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.keterangan LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and b.keterangan LIKE '%%%s%%' ", sql, s)
+// 		}
+// 	}
+
+// 	if sort := c.Query("sort"); sort != "" {
+// 		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "asc", "asc")
+// 	} else {
+// 		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "desc", "desc")
+// 	}
+
+// 	page := c.Query("page")
+// 	perPage := c.Query("perpage")
+
+// 	intpage, err := strconv.Atoi(page)
+// 	if err != nil {
+// 		response := helper.APIResponse("Format Page Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
+
+// 	intperPage, err := strconv.Atoi(perPage)
+// 	if err != nil {
+// 		response := helper.APIResponse("Format Perpage Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
+
+// 	var total int64
+
+// 	db.Raw(sql).Count(&total)
+
+// 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
+// 	db.Raw(sql).Scan(&master)
+
+// 	CompTableData := table_data.TableData{
+// 		Total:     total,
+// 		Page:      intpage,
+// 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
+// 	}
+
+// 	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, master)
+// 	c.JSON(http.StatusOK, response)
+// }

@@ -4,14 +4,14 @@
  Source Server         : localhost3306-MBA
  Source Server Type    : MySQL
  Source Server Version : 50531
- Source Host           : localhost:3306
+ Source Host           : 127.0.0.1:3306
  Source Schema         : cuangshu_db_bendahara
 
  Target Server Type    : MySQL
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 18/11/2022 05:24:13
+ Date: 27/11/2022 14:47:06
 */
 
 SET NAMES utf8mb4;

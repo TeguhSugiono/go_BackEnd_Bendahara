@@ -2477,22 +2477,19 @@
 					"response": []
 				},
 				{
-					"name": "8.Tampil Data / Dashboard Uang Masuk Siswa",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "8. List Data (Dahsboard)",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5763\",\r\n    \"nm_kelas\" : \"XI\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2500,7 +2497,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/showuangmasuksiswa?page=1&perpage=10",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/listdata",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -2514,32 +2511,7 @@
 								"v1",
 								"transaksi",
 								"uangmasuksiswa",
-								"showuangmasuksiswa"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "perpage",
-									"value": "10"
-								},
-								{
-									"key": "search",
-									"value": "Terang",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "asc",
-									"disabled": true
-								},
-								{
-									"key": "filter",
-									"value": "PPDB",
-									"disabled": true
-								}
+								"listdata"
 							]
 						}
 					},
@@ -3023,7 +2995,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2ODgwNjI0Mn0.9Wm403zpGeV0qoswc-mbJhj3Dhrgf30pyLNew0Kai8M",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2OTYyMDg0Nn0.3ibbyG9VNHS7GUE0xgDzapM2i0R9kVeUd1JV5t0efHc",
 				"type": "string"
 			}
 		]

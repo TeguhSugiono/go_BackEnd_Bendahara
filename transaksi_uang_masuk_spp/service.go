@@ -452,6 +452,75 @@ func UpdateUangMasukSpp(c *gin.Context) {
 
 }
 
+// func ShowUangMasukSpp(c *gin.Context) {
+// 	db := c.MustGet("db").(*gorm.DB)
+
+// 	var master []ListData
+
+// 	sql := " SELECT " +
+// 		" a.kd_group,c.nm_group,a.kd_kategori,d.nm_kategori,a.kd_trans_masuk,a.tahun_akademik,a.nis_siswa,e.nm_siswa,a.nm_kelas, " +
+// 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan, " +
+// 		" b.kd_trans_masuk_detail,b.seqno, " +
+// 		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan 'keterangandetail' " +
+// 		" from tbl_trans_uang_masuk_spp_headers a " +
+// 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk " +
+// 		" INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group " +
+// 		" INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori " +
+// 		" INNER JOIN tbl_siswa e on a.nis_siswa=e.nis " +
+// 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0 and e.flag_siswa = 0 and e.status_siswa not in('Tidak Aktif') "
+
+// 	if s := c.Query("search"); s != "" {
+// 		if len(c.Query("search")) >= 3 {
+// 			sql = fmt.Sprintf("%s and c.nm_group LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and d.nm_kategori LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.tahun_akademik LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.nis_siswa LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.nm_kelas LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and a.keterangan LIKE '%%%s%%' ", sql, s)
+// 			sql = fmt.Sprintf("%s and b.keterangan LIKE '%%%s%%' ", sql, s)
+// 		}
+// 	}
+
+// 	if sort := c.Query("sort"); sort != "" {
+// 		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "asc", "asc")
+// 	} else {
+// 		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "desc", "desc")
+// 	}
+
+// 	page := c.Query("page")
+// 	perPage := c.Query("perpage")
+
+// 	intpage, err := strconv.Atoi(page)
+// 	if err != nil {
+// 		response := helper.APIResponse("Format Page Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
+
+// 	intperPage, err := strconv.Atoi(perPage)
+// 	if err != nil {
+// 		response := helper.APIResponse("Format Perpage Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+// 		c.JSON(http.StatusUnprocessableEntity, response)
+// 		return
+// 	}
+
+// 	var total int64
+
+// 	db.Raw(sql).Count(&total)
+
+// 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
+// 	db.Raw(sql).Scan(&master)
+
+// 	CompTableData := table_data.TableData{
+// 		Total:     total,
+// 		Page:      intpage,
+// 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
+// 	}
+
+// 	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, master)
+// 	c.JSON(http.StatusOK, response)
+// }
+
 // func LinkKdGroup(input GetLinkKdGroup) (string, error) {
 // 	return "", nil
 // }
