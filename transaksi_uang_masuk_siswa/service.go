@@ -253,34 +253,92 @@ func CreateUangMasukSiswa(c *gin.Context) {
 
 		//setting tampilan habis save siswa
 
-		var getDataUmSiswa []GetDataUmSiswa
-		db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
-			" b.tgl_bayar,b.jml_bayar,b.keterangan "+
-			" FROM tbl_trans_uang_masuk_siswa_headers a "+
-			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
-			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
-			" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? "+
-			" order by b.seqno ", paramInputSiswa.Tahun_akademik, paramInputSiswa.Nm_kelas, paramInputSiswa.Nis_siswa).Scan(&getDataUmSiswa)
+		// var getDataUmSiswa []GetDataUmSiswa
+		// db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
+		// 	" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		// 	" FROM tbl_trans_uang_masuk_siswa_headers a "+
+		// 	" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
+		// 	" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+		// 	" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
+		// 	" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? "+
+		// 	" order by b.seqno ", paramInputSiswa.Tahun_akademik, paramInputSiswa.Nm_kelas, paramInputSiswa.Nis_siswa).Scan(&getDataUmSiswa)
+
+		// SetArrayData := []GetBiayaAndSisa{}
+		// var kd_trans_masuk int
+		// var total_biaya float64
+		// var total_bayar float64
+		// var sisa_biaya float64
+		// rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+		// 	" FROM tbl_trans_uang_masuk_siswa_headers a "+
+		// 	" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
+		// 	" where a.flag_aktif=0 and b.flag_aktif=0  "+
+		// 	" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? ", paramInputSiswa.Tahun_akademik, paramInputSiswa.Nm_kelas, paramInputSiswa.Nis_siswa).Rows()
+		// defer rowss.Close()
+		// for rowss.Next() {
+		// 	rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+		// 	arraydata := GetBiayaAndSisa{}
+		// 	arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+		// 	arraydata.Total_biaya = total_biaya
+		// 	arraydata.Total_bayar = total_bayar
+		// 	arraydata.Sisa_biaya = sisa_biaya
+		// 	arraydata.Detail = getDataUmSiswa
+		// 	SetArrayData = append(SetArrayData, arraydata)
+		// }
 
 		SetArrayData := []GetBiayaAndSisa{}
-		var kd_trans_masuk int
+		var kd_trans_masuk_siswa int
 		var total_biaya float64
 		var total_bayar float64
 		var sisa_biaya float64
-		rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
-			" FROM tbl_trans_uang_masuk_siswa_headers a "+
-			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-			" where a.flag_aktif=0 and b.flag_aktif=0  "+
-			" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? ", paramInputSiswa.Tahun_akademik, paramInputSiswa.Nm_kelas, paramInputSiswa.Nis_siswa).Rows()
-		defer rowss.Close()
-		for rowss.Next() {
-			rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+		var tahun_akademik string
+		var nis_siswa string
+		var nm_kelas string
+		var nm_siswa string
+
+		ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+			" FROM tbl_trans_uang_masuk_siswa_headers a " +
+			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif')  "
+
+		ssql = fmt.Sprintf("%s and a.tahun_akademik= '%s'", ssql, paramInputSiswa.Tahun_akademik)
+
+		if paramInputSiswa.Nm_kelas != "" {
+			ssql = fmt.Sprintf("%s and a.nm_kelas= '%s'", ssql, paramInputSiswa.Nm_kelas)
+		}
+		if paramInputSiswa.Nis_siswa != "" {
+			ssql = fmt.Sprintf("%s and a.nis_siswa= '%s'", ssql, paramInputSiswa.Nis_siswa)
+		}
+
+		ssql = fmt.Sprintf("%s ORDER BY a.tahun_akademik %s,a.nm_kelas %s", ssql, "asc", "asc")
+		rows, _ := db.Raw(ssql).Rows()
+		defer rows.Close()
+		for rows.Next() {
+			rows.Scan(&kd_trans_masuk_siswa, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
 			arraydata := GetBiayaAndSisa{}
-			arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+			arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
+			arraydata.Tahun_akademik = tahun_akademik
+			arraydata.Nis_siswa = nis_siswa
+			arraydata.Nm_siswa = nm_siswa
+			arraydata.Nm_kelas = nm_kelas
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = total_bayar
 			arraydata.Sisa_biaya = sisa_biaya
+
+			sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
+				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+				" FROM tbl_trans_uang_masuk_siswa_headers a " +
+				" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+				" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+				" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
+
+			sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)
+
+			sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
+
+			var getDataUmSiswa []GetDataUmSiswa
+			db.Raw(sql).Scan(&getDataUmSiswa)
+
 			arraydata.Detail = getDataUmSiswa
 			SetArrayData = append(SetArrayData, arraydata)
 		}
@@ -372,14 +430,18 @@ func EditUangMasukSiswa(c *gin.Context) {
 
 	var sisa_biaya float64 = paramInputSiswa.Total_biaya - sumJmlBayar
 
+	// response := helper.APIResponse("Simpan Data Sukses ..."+strconv.Itoa(kd_group_old)+"---"+strconv.Itoa(kd_kategori_old)+"---"+tahun_akademik_old+"---"+nis_siswa_old+"---"+nm_kelas_old, http.StatusOK, "success"+strconv.Itoa(paramInputSiswa.Kd_group)+"---"+strconv.Itoa(paramInputSiswa.Kd_kategori)+paramInputSiswa.Tahun_akademik+"---"+paramInputSiswa.Nis_siswa+"---"+paramInputSiswa.Nm_kelas, paramInputSiswa)
+	// c.JSON(http.StatusOK, response)
+
 	//===============================================================================================================================
 
-	if kd_group_old != paramInputSiswa.Kd_group || kd_kategori_old != paramInputSiswa.Kd_kategori || tahun_akademik_old != paramInputSiswa.Tahun_akademik || nis_siswa_old != paramInputSiswa.Nis_siswa || nm_kelas_old != paramInputSiswa.Nm_kelas {
+	if (kd_group_old != paramInputSiswa.Kd_group) || (kd_kategori_old != paramInputSiswa.Kd_kategori) || (tahun_akademik_old != paramInputSiswa.Tahun_akademik) || (nis_siswa_old != paramInputSiswa.Nis_siswa) || (nm_kelas_old != paramInputSiswa.Nm_kelas) {
 		db.Raw(" SELECT count(*) jmldata from tbl_trans_uang_masuk_siswa_headers a "+
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
 			" where a.flag_aktif=0 and b.flag_aktif=0 and kd_group=?  "+
 			" and kd_kategori=? and nis_siswa=? and nm_kelas=? "+
-			" and tahun_akademik=? ", paramInputSiswa.Kd_group, paramInputSiswa.Kd_kategori, paramInputSiswa.Nis_siswa, paramInputSiswa.Nm_kelas, paramInputSiswa.Tahun_akademik).Scan(&intJmldata)
+			" and tahun_akademik=? ", paramInputSiswa.Kd_group, paramInputSiswa.Kd_kategori, paramInputSiswa.Nis_siswa,
+			paramInputSiswa.Nm_kelas, paramInputSiswa.Tahun_akademik).Scan(&intJmldata)
 
 		if intJmldata > 0 {
 			errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
@@ -430,40 +492,63 @@ func EditUangMasukSiswa(c *gin.Context) {
 	//End Validasi data sama
 
 	//setting tampilan habis save siswa
-	var getDataUmSiswa []GetDataUmSiswa
-	db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
-		" FROM tbl_trans_uang_masuk_siswa_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
-		" and a.kd_trans_masuk_siswa=? "+
-		" order by b.seqno ", kd_trans_masuk_siswa).Scan(&getDataUmSiswa)
 
 	SetArrayData := []GetBiayaAndSisa{}
-	var kd_trans_masuk int
+	var kd_trans_masuk_siswaX int
 	var total_biaya float64
 	var total_bayar float64
 	//var sisa_biaya float64
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
-		" FROM tbl_trans_uang_masuk_siswa_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-		" where a.flag_aktif=0 and b.flag_aktif=0  "+
-		" and a.kd_trans_masuk_siswa=? ", kd_trans_masuk_siswa).Rows()
-	defer rowss.Close()
-	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+	var tahun_akademik string
+	var nis_siswa string
+	var nm_kelas string
+	var nm_siswa string
+
+	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" FROM tbl_trans_uang_masuk_siswa_headers a " +
+		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif')  "
+
+	ssql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa= '%s'", ssql, kd_trans_masuk_siswa)
+
+	ssql = fmt.Sprintf("%s ORDER BY a.tahun_akademik %s,a.nm_kelas %s", ssql, "asc", "asc")
+	rows, _ := db.Raw(ssql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&kd_trans_masuk_siswaX, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
-		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswaX
+		arraydata.Tahun_akademik = tahun_akademik
+		arraydata.Nis_siswa = nis_siswa
+		arraydata.Nm_siswa = nm_siswa
+		arraydata.Nm_kelas = nm_kelas
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+
+		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" FROM tbl_trans_uang_masuk_siswa_headers a " +
+			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
+
+		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = '%s'", sql, kd_trans_masuk_siswa)
+
+		sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
+
+		var getDataUmSiswa []GetDataUmSiswa
+		db.Raw(sql).Scan(&getDataUmSiswa)
+
 		arraydata.Detail = getDataUmSiswa
 		SetArrayData = append(SetArrayData, arraydata)
 	}
 
 	response := helper.APIResponse("Simpan Data Sukses ...", http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
+
+	// response := helper.APIResponse("Simpan Data Sukses ..."+strconv.Itoa(kd_group_old)+"---"+strconv.Itoa(kd_kategori_old)+"---"+tahun_akademik_old+"---"+nis_siswa_old+"---"+nm_kelas_old, http.StatusOK, "success"+strconv.Itoa(paramInputSiswa.Kd_group)+"---"+strconv.Itoa(paramInputSiswa.Kd_kategori)+paramInputSiswa.Tahun_akademik+"---"+paramInputSiswa.Nis_siswa+"---"+paramInputSiswa.Nm_kelas, paramInputSiswa)
+	// c.JSON(http.StatusOK, response)
 }
 
 func UpdateUangMasukSiswaDetail(c *gin.Context) {
@@ -491,7 +576,7 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	}
 
 	var dataUtama table_data.Tbl_trans_uang_masuk_siswa_details
-	if err := db.Where("flag_aktif=0 and kd_trans_masuk_detail_siswa=?", kd_trans_masuk_detail_siswa).First(&dataUtama).Error; err != nil {
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk_detail_siswa=? and kd_trans_masuk_siswa=?", kd_trans_masuk_detail_siswa, kd_trans_masuk_siswa).First(&dataUtama).Error; err != nil {
 		errorMessage := gin.H{"errors": "Data Tidak Ditemukan ..."}
 		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
@@ -532,8 +617,8 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_siswa_details
 	err = db.Raw("update tbl_trans_uang_masuk_siswa_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=? "+
-		" where kd_trans_masuk_detail_siswa=? and flag_aktif=0 ", dateStr,
-		paramEditUmSiswaDetail.Jml_bayar, paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx, kd_trans_masuk_detail_siswa).Scan(&dataDetail).Error
+		" where kd_trans_masuk_detail_siswa=? and kd_trans_masuk_siswa=? and flag_aktif=0 ", dateStr,
+		paramEditUmSiswaDetail.Jml_bayar, paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx, kd_trans_masuk_detail_siswa, kd_trans_masuk_siswa).Scan(&dataDetail).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_siswa_details Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -559,33 +644,84 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	}
 
 	//setting tampilan habis save siswa
-	var getDataUmSiswa []GetDataUmSiswa
-	db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
-		" FROM tbl_trans_uang_masuk_siswa_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
-		" and a.kd_trans_masuk_siswa=? "+
-		" order by b.seqno ", kd_trans_masuk_siswa).Scan(&getDataUmSiswa)
+	// var getDataUmSiswa []GetDataUmSiswa
+	// db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
+	// 	" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+	// 	" FROM tbl_trans_uang_masuk_siswa_headers a "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
+	// 	" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
+	// 	" and a.kd_trans_masuk_siswa=? "+
+	// 	" order by b.seqno ", kd_trans_masuk_siswa).Scan(&getDataUmSiswa)
+
+	// SetArrayData := []GetBiayaAndSisa{}
+	// var kd_trans_masuk int
+	// var total_bayar float64
+	// //var sisa_biaya float64
+	// rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	// 	" FROM tbl_trans_uang_masuk_siswa_headers a "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0  "+
+	// 	" and a.kd_trans_masuk_siswa=? ", kd_trans_masuk_siswa).Rows()
+	// defer rowss.Close()
+	// for rowss.Next() {
+	// 	rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+	// 	arraydata := GetBiayaAndSisa{}
+	// 	arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+	// 	arraydata.Total_biaya = total_biaya
+	// 	arraydata.Total_bayar = total_bayar
+	// 	arraydata.Sisa_biaya = sisa_biaya
+	// 	arraydata.Detail = getDataUmSiswa
+	// 	SetArrayData = append(SetArrayData, arraydata)
+	// }
 
 	SetArrayData := []GetBiayaAndSisa{}
-	var kd_trans_masuk int
+	var kd_trans_masuk_siswaX int
+	//var total_biaya float64
 	var total_bayar float64
 	//var sisa_biaya float64
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
-		" FROM tbl_trans_uang_masuk_siswa_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-		" where a.flag_aktif=0 and b.flag_aktif=0  "+
-		" and a.kd_trans_masuk_siswa=? ", kd_trans_masuk_siswa).Rows()
-	defer rowss.Close()
-	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+	var tahun_akademik string
+	var nis_siswa string
+	var nm_kelas string
+	var nm_siswa string
+
+	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" FROM tbl_trans_uang_masuk_siswa_headers a " +
+		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif')  "
+
+	ssql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa= '%s'", ssql, kd_trans_masuk_siswa)
+
+	ssql = fmt.Sprintf("%s ORDER BY a.tahun_akademik %s,a.nm_kelas %s", ssql, "asc", "asc")
+	rows, _ := db.Raw(ssql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&kd_trans_masuk_siswaX, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
-		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswaX
+		arraydata.Tahun_akademik = tahun_akademik
+		arraydata.Nis_siswa = nis_siswa
+		arraydata.Nm_siswa = nm_siswa
+		arraydata.Nm_kelas = nm_kelas
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+
+		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" FROM tbl_trans_uang_masuk_siswa_headers a " +
+			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
+
+		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = '%s'", sql, kd_trans_masuk_siswa)
+
+		sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
+
+		var getDataUmSiswa []GetDataUmSiswa
+		db.Raw(sql).Scan(&getDataUmSiswa)
+
 		arraydata.Detail = getDataUmSiswa
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -666,34 +802,80 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 	}
 
 	//setting tampilan habis save siswa
-	var getDataUmSiswa []GetDataUmSiswa
-	db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
-		" FROM tbl_trans_uang_masuk_siswa_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
-		" and a.kd_trans_masuk_siswa=? "+
-		" order by b.seqno ", paramAddDetail.Kd_trans_masuk_siswa).Scan(&getDataUmSiswa)
+	// var getDataUmSiswa []GetDataUmSiswa
+	// db.Raw("SELECT b.kd_trans_masuk_detail_siswa,b.seqno, "+
+	// 	" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+	// 	" FROM tbl_trans_uang_masuk_siswa_headers a "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
+	// 	" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
+	// 	" and a.kd_trans_masuk_siswa=? "+
+	// 	" order by b.seqno ", paramAddDetail.Kd_trans_masuk_siswa).Scan(&getDataUmSiswa)
 
 	SetArrayData := []GetBiayaAndSisa{}
-	var kd_trans_masuk int
+	var kd_trans_masuk_siswa int
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
-		" FROM tbl_trans_uang_masuk_siswa_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
-		" where a.flag_aktif=0 and b.flag_aktif=0  "+
-		" and a.kd_trans_masuk_siswa=? ", paramAddDetail.Kd_trans_masuk_siswa).Rows()
-	defer rowss.Close()
-	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+	var tahun_akademik string
+	var nis_siswa string
+	var nm_kelas string
+	var nm_siswa string
+
+	// rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_siswa,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	// 	" FROM tbl_trans_uang_masuk_siswa_headers a "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0  "+
+	// 	" and a.kd_trans_masuk_siswa=? ", paramAddDetail.Kd_trans_masuk_siswa).Rows()
+	// defer rowss.Close()
+	// for rowss.Next() {
+	// 	rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+	// 	arraydata := GetBiayaAndSisa{}
+	// 	arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+	// 	arraydata.Total_biaya = total_biaya
+	// 	arraydata.Total_bayar = total_bayar
+	// 	arraydata.Sisa_biaya = sisa_biaya
+	// 	arraydata.Detail = getDataUmSiswa
+	// 	SetArrayData = append(SetArrayData, arraydata)
+	// }
+
+	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" FROM tbl_trans_uang_masuk_siswa_headers a " +
+		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif')  "
+
+	ssql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa= %d", ssql, paramAddDetail.Kd_trans_masuk_siswa)
+
+	ssql = fmt.Sprintf("%s ORDER BY a.tahun_akademik %s,a.nm_kelas %s", ssql, "asc", "asc")
+	rows, _ := db.Raw(ssql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&kd_trans_masuk_siswa, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
-		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk
+		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
+		arraydata.Tahun_akademik = tahun_akademik
+		arraydata.Nis_siswa = nis_siswa
+		arraydata.Nm_siswa = nm_siswa
+		arraydata.Nm_kelas = nm_kelas
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+
+		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" FROM tbl_trans_uang_masuk_siswa_headers a " +
+			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
+			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
+
+		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, paramAddDetail.Kd_trans_masuk_siswa)
+
+		sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
+
+		var getDataUmSiswa []GetDataUmSiswa
+		db.Raw(sql).Scan(&getDataUmSiswa)
+
 		arraydata.Detail = getDataUmSiswa
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -782,72 +964,3 @@ func ListData(c *gin.Context) {
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
 }
-
-// func ShowUangMasukSiswa(c *gin.Context) {
-// 	db := c.MustGet("db").(*gorm.DB)
-
-// 	var master []ListData
-
-// 	sql := " SELECT " +
-// 		" a.kd_group,c.nm_group,a.kd_kategori,d.nm_kategori,a.kd_trans_masuk_siswa,a.tahun_akademik,a.nis_siswa,e.nm_siswa,a.nm_kelas, " +
-// 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan, " +
-// 		" b.kd_trans_masuk_detail_siswa,b.seqno, " +
-// 		" b.tgl_bayar,b.jml_bayar,b.keterangan 'keterangandetail' " +
-// 		" from tbl_trans_uang_masuk_siswa_headers a " +
-// 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
-// 		" INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group " +
-// 		" INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori " +
-// 		" INNER JOIN tbl_siswa e on a.nis_siswa=e.nis " +
-// 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0 and e.flag_siswa = 0 and e.status_siswa not in('Tidak Aktif') "
-
-// 	if s := c.Query("search"); s != "" {
-// 		if len(c.Query("search")) >= 3 {
-// 			sql = fmt.Sprintf("%s and c.nm_group LIKE '%%%s%%' ", sql, s)
-// 			sql = fmt.Sprintf("%s and d.nm_kategori LIKE '%%%s%%' ", sql, s)
-// 			sql = fmt.Sprintf("%s and a.tahun_akademik LIKE '%%%s%%' ", sql, s)
-// 			sql = fmt.Sprintf("%s and a.nis_siswa LIKE '%%%s%%' ", sql, s)
-// 			sql = fmt.Sprintf("%s and a.nm_kelas LIKE '%%%s%%' ", sql, s)
-// 			sql = fmt.Sprintf("%s and a.keterangan LIKE '%%%s%%' ", sql, s)
-// 			sql = fmt.Sprintf("%s and b.keterangan LIKE '%%%s%%' ", sql, s)
-// 		}
-// 	}
-
-// 	if sort := c.Query("sort"); sort != "" {
-// 		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "asc", "asc")
-// 	} else {
-// 		sql = fmt.Sprintf("%s ORDER BY e.nm_siswa %s,b.seqno %s", sql, "desc", "desc")
-// 	}
-
-// 	page := c.Query("page")
-// 	perPage := c.Query("perpage")
-
-// 	intpage, err := strconv.Atoi(page)
-// 	if err != nil {
-// 		response := helper.APIResponse("Format Page Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
-// 		c.JSON(http.StatusUnprocessableEntity, response)
-// 		return
-// 	}
-
-// 	intperPage, err := strconv.Atoi(perPage)
-// 	if err != nil {
-// 		response := helper.APIResponse("Format Perpage Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
-// 		c.JSON(http.StatusUnprocessableEntity, response)
-// 		return
-// 	}
-
-// 	var total int64
-
-// 	db.Raw(sql).Count(&total)
-
-// 	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
-// 	db.Raw(sql).Scan(&master)
-
-// 	CompTableData := table_data.TableData{
-// 		Total:     total,
-// 		Page:      intpage,
-// 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
-// 	}
-
-// 	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, master)
-// 	c.JSON(http.StatusOK, response)
-// }
