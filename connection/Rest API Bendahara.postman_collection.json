@@ -2288,7 +2288,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5651\",\r\n    \"kd_kategori\" : 2\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5900\",\r\n    \"kd_kategori\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2323,7 +2323,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5763\",\r\n    \"nm_kelas\" : \"XI\",    \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5959\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2359,7 +2359,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 4,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5763\",\r\n    \"nm_kelas\" : \"XI\",    \r\n    \"keterangan\" : \"TEST EDIT DATA\",\r\n    \"total_biaya\" : 1200000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5959\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"TEST DOANG\",\r\n    \"total_biaya\" : 1600000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2387,7 +2387,7 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_siswa",
-									"value": "1"
+									"value": "4"
 								}
 							]
 						}
@@ -2401,7 +2401,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 200000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2430,11 +2430,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_siswa",
-									"value": "1"
+									"value": "4"
 								},
 								{
 									"key": "kd_trans_masuk_detail_siswa",
-									"value": "1"
+									"value": "5"
 								}
 							]
 						}
@@ -2448,7 +2448,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : 1\r\n}",
+							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2489,7 +2489,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5763\",\r\n    \"nm_kelas\" : \"XI\"\r\n    \r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"\",\r\n    \"nm_kelas\" : \"\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2995,7 +2995,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY2OTYyMDg0Nn0.3ibbyG9VNHS7GUE0xgDzapM2i0R9kVeUd1JV5t0efHc",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MDY4NDEwNn0.gdaVh0uGiBDfBQaLX-DlSR4iZfV74FoDqMYXIIqRT1A",
 				"type": "string"
 			}
 		]

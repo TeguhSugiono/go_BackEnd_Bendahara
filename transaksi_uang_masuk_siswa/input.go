@@ -85,6 +85,10 @@ type GetDataUmSiswa struct {
 
 type GetBiayaAndSisa struct {
 	Kd_trans_masuk_siswa int
+	Kd_group       		 int  
+	Nm_group       		 string
+	Kd_kategori    		 int
+	Nm_kategori       	 string
 	Tahun_akademik       string
 	Nis_siswa            string
 	Nm_siswa             string
