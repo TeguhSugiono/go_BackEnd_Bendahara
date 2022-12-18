@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 10/12/2022 00:21:32
+ Date: 18/12/2022 13:52:08
 */
 
 SET NAMES utf8mb4;
@@ -968,6 +968,54 @@ INSERT INTO `tbl_tahun_akademik` VALUES (1, '2019/2020', 'Tidak Aktif', '2020-02
 INSERT INTO `tbl_tahun_akademik` VALUES (2, '2020/2021', 'Tidak Aktif', '2020-03-31 12:07:42', 'farhan', NULL, NULL, 0);
 INSERT INTO `tbl_tahun_akademik` VALUES (3, '2021/2022', 'Aktif', '2021-06-17 09:37:53', 'cuang', '2021-07-07 08:09:37', 'jejen', 0);
 INSERT INTO `tbl_tahun_akademik` VALUES (4, '2022-2023', 'Tidak Aktif', '2022-07-07 11:51:51', 'jejen', NULL, NULL, 0);
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_masuk_lain_details
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_masuk_lain_details`;
+CREATE TABLE `tbl_trans_uang_masuk_lain_details`  (
+  `kd_trans_masuk_lain` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_detail_lain` int(11) NOT NULL AUTO_INCREMENT,
+  `seqno` int(11) NULL DEFAULT NULL,
+  `tgl_bayar` date NULL DEFAULT NULL,
+  `jml_bayar` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(1) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_masuk_detail_lain`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_masuk_lain_details
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_masuk_lain_headers
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_masuk_lain_headers`;
+CREATE TABLE `tbl_trans_uang_masuk_lain_headers`  (
+  `kd_group` int(11) NULL DEFAULT NULL,
+  `kd_kategori` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_lain` int(11) NOT NULL AUTO_INCREMENT,
+  `tgl_transaksi` date NULL DEFAULT NULL,
+  `total_biaya` double(19, 2) NULL DEFAULT NULL,
+  `total_bayar` double(19, 2) NULL DEFAULT NULL,
+  `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(11) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_masuk_lain`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_masuk_lain_headers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_details

@@ -277,14 +277,16 @@ func CreateUangMasukSiswa(c *gin.Context) {
 			" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif')  "
 
-		ssql = fmt.Sprintf("%s and a.tahun_akademik= '%s'", ssql, paramInputSiswa.Tahun_akademik)
+		ssql = fmt.Sprintf("%s and a.tahun_akademik= %d", ssql, intKd_trans_masuk)
 
-		if paramInputSiswa.Nm_kelas != "" {
-			ssql = fmt.Sprintf("%s and a.nm_kelas= '%s'", ssql, paramInputSiswa.Nm_kelas)
-		}
-		if paramInputSiswa.Nis_siswa != "" {
-			ssql = fmt.Sprintf("%s and a.nis_siswa= '%s'", ssql, paramInputSiswa.Nis_siswa)
-		}
+		// ssql = fmt.Sprintf("%s and a.tahun_akademik= '%s'", ssql, paramInputSiswa.Tahun_akademik)
+
+		// if paramInputSiswa.Nm_kelas != "" {
+		// 	ssql = fmt.Sprintf("%s and a.nm_kelas= '%s'", ssql, paramInputSiswa.Nm_kelas)
+		// }
+		// if paramInputSiswa.Nis_siswa != "" {
+		// 	ssql = fmt.Sprintf("%s and a.nis_siswa= '%s'", ssql, paramInputSiswa.Nis_siswa)
+		// }
 
 		ssql = fmt.Sprintf("%s ORDER BY a.tahun_akademik %s,a.nm_kelas %s", ssql, "asc", "asc")
 		rows, _ := db.Raw(ssql).Rows()
@@ -312,7 +314,7 @@ func CreateUangMasukSiswa(c *gin.Context) {
 				" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
 				" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
-			sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)
+			sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, intKd_trans_masuk)
 
 			sql = fmt.Sprintf("%s ORDER BY a.kd_trans_masuk_siswa %s,b.seqno %s", sql, "asc", "asc")
 
@@ -500,11 +502,11 @@ func EditUangMasukSiswa(c *gin.Context) {
 
 			var dataHeader table_data.Tbl_trans_uang_masuk_siswa_headers
 			err = db.Raw("UPDATE tbl_trans_uang_masuk_siswa_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?, "+
-				" edited_on = ? , edited_by = ? ,kd_group=?,kd_kategori=?,nis_siswa=?,nm_kelas=?,tahun_akademik=?  "+
+				" edited_on = ? , edited_by = ? ,kd_group=?,kd_kategori=?,nis_siswa=?,nm_kelas=?,tahun_akademik=?,kd_group=?,kd_kategori=?  "+
 				" WHERE kd_trans_masuk_siswa = ? "+
 				" and flag_aktif=0 ", paramInputSiswa.Total_biaya, sumJmlBayar, sisa_biaya, datenowx, currentUser.(string),
 				paramInputSiswa.Kd_group, paramInputSiswa.Kd_kategori, paramInputSiswa.Nis_siswa,
-				paramInputSiswa.Nm_kelas, paramInputSiswa.Tahun_akademik, kd_trans_masuk_siswa).Scan(&dataHeader).Error
+				paramInputSiswa.Nm_kelas, paramInputSiswa.Tahun_akademik, paramInputSiswa.Kd_group, paramInputSiswa.Kd_kategori, kd_trans_masuk_siswa).Scan(&dataHeader).Error
 			if err != nil {
 				response := helper.APIResponse("Update Data Ke tbl_trans_uang_masuk_siswa_headers Gagal ...", http.StatusBadRequest, "error", err)
 				c.JSON(http.StatusBadRequest, response)
@@ -1099,9 +1101,26 @@ func ListData(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	var paramChangeSiswa ParamChangeSiswa
+	// if err := c.ShouldBindJSON(&paramChangeSiswa); err != nil {
+	// 	errors := helper.FormatValidationError(err)
+	// 	errorMessage := gin.H{"errors": errors}
+	// 	response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	// 	c.JSON(http.StatusUnprocessableEntity, response)
+	// 	return
+	// }
+
 	if err := c.ShouldBindJSON(&paramChangeSiswa); err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors}
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		var error_binding []string
+		error_binding = append(error_binding, err.Error())
+		errorMessage := gin.H{"errors": error_binding}
 		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return

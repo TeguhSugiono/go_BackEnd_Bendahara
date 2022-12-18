@@ -302,7 +302,7 @@ func CreateUangMasukSpp(c *gin.Context) {
 		}
 
 		var intKd_trans_masuk int
-		db.Raw("SELECT ifnull(max(kd_trans_masuk),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_spp_headers where flag_aktif=0").Scan(&intKd_trans_masuk)
+		db.Raw("SELECT ifnull(max(kd_trans_masuk),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_spp_headers ").Scan(&intKd_trans_masuk)
 
 		var float_biaya_spp float64
 		db.Raw("SELECT sum(biaya_spp) 'biaya_spp' FROM tbl_conf_periode_spps where tahun_akademik=? and nm_kelas=? and flag_aktif=0", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas).Scan(&float_biaya_spp)
@@ -332,7 +332,7 @@ func CreateUangMasukSpp(c *gin.Context) {
 		}
 
 		var intKd_trans_masuk_detail int
-		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_spp_details where flag_aktif=0").Scan(&intKd_trans_masuk_detail)
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_spp_details ").Scan(&intKd_trans_masuk_detail)
 
 		var int_seqno int
 		var periodebayar string

@@ -196,3 +196,33 @@ type Tbl_biaya_masuk_keluars struct {
 	Kd_kategori       int
 	Jml_biaya         float64
 }
+
+type Tbl_trans_uang_masuk_lain_headers struct {
+	Kd_group            int
+	Kd_kategori         int
+	Kd_trans_masuk_lain int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_lain"`
+	Tgl_transaksi       string
+	Total_biaya         float64
+	Total_bayar         float64
+	Sisa_biaya          float64
+	Keterangan          string
+	Flag_aktif          int
+	Created_on          time.Time
+	Created_by          string
+	Edited_on           time.Time
+	Edited_by           string
+}
+
+type Tbl_trans_uang_masuk_lain_details struct {
+	Kd_trans_masuk_lain        int
+	Kd_trans_masuk_detail_lain int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_detail_lain"`
+	Seqno                      int
+	Tgl_bayar                  string
+	Jml_bayar                  float64
+	Keterangan                 string
+	Flag_aktif                 int
+	Created_on                 time.Time
+	Created_by                 string
+	Edited_on                  time.Time
+	Edited_by                  string
+}

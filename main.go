@@ -15,6 +15,7 @@ import (
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
+	"rest_api_bendahara/transaksi_uang_masuk_lainlain"
 	"rest_api_bendahara/transaksi_uang_masuk_ppdb"
 	"rest_api_bendahara/transaksi_uang_masuk_siswa"
 	"rest_api_bendahara/transaksi_uang_masuk_spp"
@@ -131,6 +132,16 @@ func main() {
 	api.PUT("/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_siswa.UpdateUangMasukSiswaDetail)
 	api.POST("/transaksi/uangmasuksiswa/createuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.CreateUangMasukSiswaDetail)
 	api.POST("/transaksi/uangmasuksiswa/listdata", authMiddleware(), transaksi_uang_masuk_siswa.ListData)
+
+	//UANG MASUK LAIN
+	api.GET("/transaksi/uangmasuklainlain/listgroupkategori", authMiddleware(), transaksi_uang_masuk_lainlain.ListGroupKategori)
+	api.POST("/transaksi/uangmasuklainlain/listkategoriuang", authMiddleware(), transaksi_uang_masuk_lainlain.ListKategoriUang)
+	//api.POST("/transaksi/uangmasuklainlain/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_lainlain.ListDataAddSiswa)
+	api.POST("/transaksi/uangmasuklainlain/createuangmasuklain", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukLain)
+	api.PUT("/transaksi/uangmasuklainlain/edituangmasuksiswa/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.EditUangMasukLain)
+	api.PUT("/transaksi/uangmasuklainlain/updateuangmasuksiswadetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_lainlain.UpdateUangMasukSiswaDetail)
+	api.POST("/transaksi/uangmasuklainlain/createuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukSiswaDetail)
+	api.POST("/transaksi/uangmasuklainlain/listdata", authMiddleware(), transaksi_uang_masuk_lainlain.ListData)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

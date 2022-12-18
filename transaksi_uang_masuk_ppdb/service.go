@@ -263,7 +263,7 @@ func CreateUangMasukPPdb(c *gin.Context) {
 		}
 
 		var intKd_trans_masuk int
-		db.Raw("SELECT ifnull(max(kd_trans_masuk_ppdb),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_ppdb_headers where flag_aktif=0").Scan(&intKd_trans_masuk)
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_ppdb),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_ppdb_headers ").Scan(&intKd_trans_masuk)
 
 		var tgldaftar string
 		var tahun_daftar string
@@ -305,7 +305,7 @@ func CreateUangMasukPPdb(c *gin.Context) {
 		}
 
 		var intKd_trans_masuk_detail int
-		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail_ppdb),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_ppdb_details where flag_aktif=0").Scan(&intKd_trans_masuk_detail)
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail_ppdb),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_ppdb_details ").Scan(&intKd_trans_masuk_detail)
 
 		var int_seqno int = 1
 		var nm_sub_kategori string
