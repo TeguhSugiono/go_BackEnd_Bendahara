@@ -7,6 +7,7 @@ type ParamChangeKategori struct {
 type ParamGetSiswaAdd struct {
 	Nis         string `form:"nis" json:"nis" binding:"required"`
 	Kd_kategori int    `form:"kd_kategori" json:"kd_kategori" binding:"required"`
+	Kd_group    int    `form:"kd_group" json:"kd_group" binding:"required"`
 }
 
 type ListDataView struct {
@@ -85,10 +86,10 @@ type GetDataUmSiswa struct {
 
 type GetBiayaAndSisa struct {
 	Kd_trans_masuk_siswa int
-	Kd_group       		 int  
-	Nm_group       		 string
-	Kd_kategori    		 int
-	Nm_kategori       	 string
+	Kd_group             int
+	Nm_group             string
+	Kd_kategori          int
+	Nm_kategori          string
 	Tahun_akademik       string
 	Nis_siswa            string
 	Nm_siswa             string

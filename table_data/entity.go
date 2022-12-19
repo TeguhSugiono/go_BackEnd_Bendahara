@@ -201,7 +201,8 @@ type Tbl_trans_uang_masuk_lain_headers struct {
 	Kd_group            int
 	Kd_kategori         int
 	Kd_trans_masuk_lain int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_masuk_lain"`
-	Tgl_transaksi       string
+	No_document         string
+	Tgl_document        string
 	Total_biaya         float64
 	Total_bayar         float64
 	Sisa_biaya          float64

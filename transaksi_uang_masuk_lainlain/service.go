@@ -137,7 +137,7 @@ func CreateUangMasukLain(c *gin.Context) {
 		return
 	}
 
-	tTglTransaksi, err2 := time.Parse("02-01-2006", paramInputTransaksi.Tgl_transaksi)
+	tTglTransaksi, err2 := time.Parse("02-01-2006", paramInputTransaksi.Tgl_document)
 	if err2 != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err2, &ve) {
@@ -156,150 +156,156 @@ func CreateUangMasukLain(c *gin.Context) {
 	}
 	dateStr := tTglTransaksi.Format("2006-01-02")
 
-	//cek data siswa
+	//cek data document
 	var intJmldata int
 	db.Raw(" SELECT count(*) jmldata from tbl_trans_uang_masuk_lain_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and kd_group=?  "+
-		" and kd_kategori=? ", paramInputTransaksi.Kd_group, paramInputTransaksi.Kd_kategori).Scan(&intJmldata)
+		" and kd_kategori=? and no_document=? and tgl_document=? ",
+		paramInputTransaksi.Kd_group, paramInputTransaksi.Kd_kategori, paramInputTransaksi.No_document, dateStr).Scan(&intJmldata)
 
-	// if intJmldata > 0 {
-	// 	errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
-	// 	response := helper.APIResponse("Data Pembayaran Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
-	// 	c.JSON(http.StatusUnprocessableEntity, response)
-	// 	return
-	// } else {
-	//Jika data spp belum dibuat
-	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
-	date := "2006-01-02 15:04:05"
-	datenowx, err := time.Parse(date, datenows)
-	if err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors, "tgl": datenowx}
-		response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	if intJmldata > 0 {
+
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Data Document Pembayaran Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
-	}
 
-	var intKd_trans_masuk int
-	db.Raw("SELECT ifnull(max(Kd_trans_masuk_lain),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_lain_headers ").Scan(&intKd_trans_masuk)
+	} else {
 
-	var float_biaya_spp float64
-	db.Raw("SELECT jml_biaya FROM tbl_biaya_masuk_keluars where kd_kategori=?", paramInputTransaksi.Kd_kategori).Scan(&float_biaya_spp)
+		var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+		date := "2006-01-02 15:04:05"
+		datenowx, err := time.Parse(date, datenows)
+		if err != nil {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+			response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
 
-	if paramInputTransaksi.Total_biaya > 0 {
-		float_biaya_spp = paramInputTransaksi.Total_biaya
-	}
+		var intKd_trans_masuk int
+		db.Raw("SELECT ifnull(max(Kd_trans_masuk_lain),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_lain_headers ").Scan(&intKd_trans_masuk)
 
-	currentUser := c.MustGet("currentUser")
-	data := table_data.Tbl_trans_uang_masuk_lain_headers{
-		Kd_group:            paramInputTransaksi.Kd_group,
-		Kd_kategori:         paramInputTransaksi.Kd_kategori,
-		Kd_trans_masuk_lain: intKd_trans_masuk,
-		Tgl_transaksi:       dateStr,
-		Total_biaya:         float_biaya_spp,
-		Total_bayar:         0,
-		Sisa_biaya:          float_biaya_spp,
-		Keterangan:          paramInputTransaksi.Keterangan,
-		Created_by:          currentUser.(string),
-		Created_on:          datenowx,
-		Flag_aktif:          0,
-	}
+		var float_biaya_spp float64
+		db.Raw("SELECT jml_biaya FROM tbl_biaya_masuk_keluars where kd_kategori=?", paramInputTransaksi.Kd_kategori).Scan(&float_biaya_spp)
 
-	err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
-	if err != nil {
-		response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)
-		c.JSON(http.StatusBadRequest, response)
-		return
-	}
+		if paramInputTransaksi.Total_biaya > 0 {
+			float_biaya_spp = paramInputTransaksi.Total_biaya
+		}
 
-	var intKd_trans_masuk_detail int
-	db.Raw("SELECT ifnull(max(kd_trans_masuk_detail_lain),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_lain_details ").Scan(&intKd_trans_masuk_detail)
+		currentUser := c.MustGet("currentUser")
+		data := table_data.Tbl_trans_uang_masuk_lain_headers{
+			Kd_group:            paramInputTransaksi.Kd_group,
+			Kd_kategori:         paramInputTransaksi.Kd_kategori,
+			Kd_trans_masuk_lain: intKd_trans_masuk,
+			No_document:         paramInputTransaksi.No_document,
+			Tgl_document:        dateStr,
+			Total_biaya:         float_biaya_spp,
+			Total_bayar:         0,
+			Sisa_biaya:          float_biaya_spp,
+			Keterangan:          paramInputTransaksi.Keterangan,
+			Created_by:          currentUser.(string),
+			Created_on:          datenowx,
+			Flag_aktif:          0,
+		}
 
-	datadetail := table_data.Tbl_trans_uang_masuk_lain_details{
-		Kd_trans_masuk_lain:        intKd_trans_masuk,
-		Kd_trans_masuk_detail_lain: intKd_trans_masuk_detail,
-		Seqno:                      1,
-		Jml_bayar:                  0,
-		Keterangan:                 "",
-		Created_by:                 currentUser.(string),
-		Created_on:                 datenowx,
-		Flag_aktif:                 0,
-	}
+		err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
+		if err != nil {
+			response := helper.APIResponse("Simpan Data Gagal ...", http.StatusBadRequest, "error", err)
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
 
-	err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
-	if err != nil {
-		response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
-		c.JSON(http.StatusBadRequest, response)
-		return
-	}
+		var intKd_trans_masuk_detail int
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail_lain),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_lain_details ").Scan(&intKd_trans_masuk_detail)
 
-	//setting tampilan habis save siswa
+		datadetail := table_data.Tbl_trans_uang_masuk_lain_details{
+			Kd_trans_masuk_lain:        intKd_trans_masuk,
+			Kd_trans_masuk_detail_lain: intKd_trans_masuk_detail,
+			Seqno:                      1,
+			Jml_bayar:                  0,
+			Keterangan:                 "",
+			Created_by:                 currentUser.(string),
+			Created_on:                 datenowx,
+			Flag_aktif:                 0,
+		}
 
-	SetArrayData := []GetBiayaAndSisa{}
-	var Kd_trans_masuk_lain int
-	var kd_group int
-	var nm_group string
-	var kd_kategori int
-	var nm_kategori string
-	var total_biaya float64
-	var total_bayar float64
-	var sisa_biaya float64
-	var tgl_transaksi string
+		err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+		if err != nil {
+			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
 
-	ssql := " SELECT distinct a.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tgl_transaksi " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
-		" FROM tbl_trans_uang_masuk_lain_headers a " +
-		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
-		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
-		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
-		" where a.flag_aktif=0 and b.flag_aktif=0  "
+		//setting tampilan habis save document
+		SetArrayData := []GetBiayaAndSisa{}
+		var Kd_trans_masuk_lain int
+		var kd_group int
+		var nm_group string
+		var kd_kategori int
+		var nm_kategori string
+		var total_biaya float64
+		var total_bayar float64
+		var sisa_biaya float64
+		var no_document string
+		var tgl_document string
 
-	ssql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain= %d", ssql, intKd_trans_masuk)
-	ssql = fmt.Sprintf("%s ORDER BY a.tgl_transaksi %s", ssql, "asc")
-
-	rows, _ := db.Raw(ssql).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tgl_transaksi, &total_biaya, &total_bayar, &sisa_biaya)
-		arraydata := GetBiayaAndSisa{}
-		arraydata.Kd_trans_masuk_lain = Kd_trans_masuk_lain
-		arraydata.Kd_group = kd_group
-		arraydata.Nm_group = nm_group
-		arraydata.Kd_kategori = kd_kategori
-		arraydata.Nm_kategori = nm_kategori
-		arraydata.Tgl_transaksi = tgl_transaksi
-		arraydata.Total_biaya = total_biaya
-		arraydata.Total_bayar = total_bayar
-		arraydata.Sisa_biaya = sisa_biaya
-
-		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+		ssql := " SELECT distinct a.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
+			" a.total_biaya,a.total_bayar,a.sisa_biaya " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
-			" where a.flag_aktif=0 and b.flag_aktif=0 "
+			" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
+			" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
+			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
-		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, Kd_trans_masuk_lain)
+		ssql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain= %d", ssql, intKd_trans_masuk)
+		ssql = fmt.Sprintf("%s ORDER BY a.tgl_document %s", ssql, "asc")
 
-		sql = fmt.Sprintf("%s ORDER BY a.Kd_trans_masuk_lain %s,b.seqno %s", sql, "asc", "asc")
+		rows, _ := db.Raw(ssql).Rows()
+		defer rows.Close()
+		for rows.Next() {
+			rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+			arraydata := GetBiayaAndSisa{}
+			arraydata.Kd_trans_masuk_lain = Kd_trans_masuk_lain
+			arraydata.Kd_group = kd_group
+			arraydata.Nm_group = nm_group
+			arraydata.Kd_kategori = kd_kategori
+			arraydata.Nm_kategori = nm_kategori
+			arraydata.No_document = no_document
+			arraydata.Tgl_document = tgl_document
+			arraydata.Total_biaya = total_biaya
+			arraydata.Total_bayar = total_bayar
+			arraydata.Sisa_biaya = sisa_biaya
 
-		var getDataUmSiswa []GetDataUmSiswa
-		db.Raw(sql).Scan(&getDataUmSiswa)
+			sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
+				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+				" FROM tbl_trans_uang_masuk_lain_headers a " +
+				" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
+				" where a.flag_aktif=0 and b.flag_aktif=0 "
 
-		arraydata.Detail = getDataUmSiswa
-		SetArrayData = append(SetArrayData, arraydata)
-	}
+			sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, Kd_trans_masuk_lain)
 
-	if len(SetArrayData) == 0 {
+			sql = fmt.Sprintf("%s ORDER BY a.Kd_trans_masuk_lain %s,b.seqno %s", sql, "asc", "asc")
+
+			var getDataUmSiswa []GetDataUmSiswa
+			db.Raw(sql).Scan(&getDataUmSiswa)
+
+			arraydata.Detail = getDataUmSiswa
+			SetArrayData = append(SetArrayData, arraydata)
+		}
+
+		if len(SetArrayData) == 0 {
+			response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+			c.JSON(http.StatusOK, response)
+			return
+		}
+
 		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 		c.JSON(http.StatusOK, response)
-		return
+
 	}
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
-	c.JSON(http.StatusOK, response)
-
-	// }
 }
 
 func EditUangMasukLain(c *gin.Context) {
@@ -325,7 +331,7 @@ func EditUangMasukLain(c *gin.Context) {
 		return
 	}
 
-	tTglTransaksi, err2 := time.Parse("02-01-2006", paramInputTransaksiEdit.Tgl_transaksi)
+	tTglTransaksi, err2 := time.Parse("02-01-2006", paramInputTransaksiEdit.Tgl_document)
 	if err2 != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err2, &ve) {
@@ -344,16 +350,15 @@ func EditUangMasukLain(c *gin.Context) {
 	}
 	dateStr := tTglTransaksi.Format("2006-01-02")
 
-	//cek data siswa
 	var intJmldata int
 
-	//cek data transaksi
+	//cek data Document pembayaran mengada-ngada
 	db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_masuk_lain_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain "+
 		" where a.Kd_trans_masuk_lain=? and a.flag_aktif=0 and b.flag_aktif=0 ", Kd_trans_masuk_lain).Scan(&intJmldata)
 	if intJmldata == 0 {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
-		response := helper.APIResponse("Data Transaksi Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Data Document Pembayaran Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -442,10 +447,10 @@ func EditUangMasukLain(c *gin.Context) {
 
 	var dataHeader table_data.Tbl_trans_uang_masuk_lain_headers
 	err = db.Raw("UPDATE tbl_trans_uang_masuk_lain_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?, "+
-		" edited_on = ? , edited_by = ? ,kd_group=?,kd_kategori=?,tgl_transaksi=? "+
+		" edited_on = ? , edited_by = ? ,kd_group=?,kd_kategori=?,no_document=?,tgl_document=? "+
 		" WHERE Kd_trans_masuk_lain = ? "+
 		" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya, datenowx, currentUser.(string),
-		paramInputTransaksiEdit.Kd_group, paramInputTransaksiEdit.Kd_kategori, dateStr,
+		paramInputTransaksiEdit.Kd_group, paramInputTransaksiEdit.Kd_kategori, paramInputTransaksiEdit.No_document, dateStr,
 		Kd_trans_masuk_lain).Scan(&dataHeader).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke tbl_trans_uang_masuk_lain_headers Gagal ...", http.StatusBadRequest, "error", err)
@@ -465,10 +470,10 @@ func EditUangMasukLain(c *gin.Context) {
 	var nm_kategori string
 	var total_biaya float64
 	var total_bayar float64
-	//var sisa_biaya float64
-	var tgl_transaksi string
+	var no_document string
+	var tgl_document string
 
-	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tgl_transaksi, " +
+	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
@@ -477,21 +482,21 @@ func EditUangMasukLain(c *gin.Context) {
 		" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 	ssql = fmt.Sprintf("%s and a.kd_trans_masuk_lain= '%s'", ssql, Kd_trans_masuk_lain)
-	ssql = fmt.Sprintf("%s ORDER BY a.tgl_transaksi %s", ssql, "asc")
+	ssql = fmt.Sprintf("%s ORDER BY a.tgl_document %s", ssql, "asc")
 
 	int_Kd_trans_masuk_lain, _ := strconv.Atoi(Kd_trans_masuk_lain)
 
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tgl_transaksi, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = int_Kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
 		arraydata.Nm_group = nm_group
 		arraydata.Kd_kategori = kd_kategori
 		arraydata.Nm_kategori = nm_kategori
-		arraydata.Tgl_transaksi = tgl_transaksi
+		arraydata.Tgl_document = no_document
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
@@ -626,10 +631,10 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	var nm_kategori string
 	//var total_biaya float64
 	var total_bayar float64
-	//var sisa_biaya float64
-	var tgl_transaksi string
+	var no_document string
+	var tgl_document string
 
-	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tgl_transaksi, " +
+	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
@@ -638,21 +643,22 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 		" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 	ssql = fmt.Sprintf("%s and a.kd_trans_masuk_lain= '%s'", ssql, Kd_trans_masuk_lain)
-	ssql = fmt.Sprintf("%s ORDER BY a.tgl_transaksi %s", ssql, "asc")
+	ssql = fmt.Sprintf("%s ORDER BY a.tgl_document %s", ssql, "asc")
 
 	int_Kd_trans_masuk_lain, _ := strconv.Atoi(Kd_trans_masuk_lain)
 
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tgl_transaksi, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = int_Kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
 		arraydata.Nm_group = nm_group
 		arraydata.Kd_kategori = kd_kategori
 		arraydata.Nm_kategori = nm_kategori
-		arraydata.Tgl_transaksi = tgl_transaksi
+		arraydata.No_document = no_document
+		arraydata.Tgl_document = tgl_document
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
@@ -766,10 +772,11 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
-	var tgl_transaksi string
+	var no_document string
+	var tgl_document string
 
-	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -785,14 +792,15 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tgl_transaksi, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = paramAddDetail.Kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
 		arraydata.Nm_group = nm_group
 		arraydata.Kd_kategori = kd_kategori
 		arraydata.Nm_kategori = nm_kategori
-		arraydata.Tgl_transaksi = tgl_transaksi
+		arraydata.No_document = no_document
+		arraydata.Tgl_document = tgl_document
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
@@ -837,7 +845,7 @@ func ListData(c *gin.Context) {
 		return
 	}
 
-	tTglTransaksi1, err2 := time.Parse("02-01-2006", paramChangeSiswa.Tgl_transaksi1)
+	tTglTransaksi1, err2 := time.Parse("02-01-2006", paramChangeSiswa.Tgl_document1)
 	if err2 != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err2, &ve) {
@@ -856,7 +864,7 @@ func ListData(c *gin.Context) {
 	}
 	dateStr1 := tTglTransaksi1.Format("2006-01-02")
 
-	tTglTransaksi2, err2 := time.Parse("02-01-2006", paramChangeSiswa.Tgl_transaksi2)
+	tTglTransaksi2, err2 := time.Parse("02-01-2006", paramChangeSiswa.Tgl_document2)
 	if err2 != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err2, &ve) {
@@ -884,9 +892,10 @@ func ListData(c *gin.Context) {
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
-	var tgl_transaksi string
+	var no_document string
+	var tgl_document string
 
-	ssql := " SELECT distinct b.kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tgl_transaksi, " +
+	ssql := " SELECT distinct b.kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
@@ -894,8 +903,8 @@ func ListData(c *gin.Context) {
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0   "
 
-	ssql = fmt.Sprintf("%s and a.tgl_transaksi >= '%s'", ssql, dateStr1)
-	ssql = fmt.Sprintf("%s and a.tgl_transaksi <= '%s'", ssql, dateStr2)
+	ssql = fmt.Sprintf("%s and a.tgl_document >= '%s'", ssql, dateStr1)
+	ssql = fmt.Sprintf("%s and a.tgl_document <= '%s'", ssql, dateStr2)
 
 	// if paramChangeSiswa.Nm_kelas != "" {
 	// 	ssql = fmt.Sprintf("%s and a.nm_kelas= '%s'", ssql, paramChangeSiswa.Nm_kelas)
@@ -908,13 +917,14 @@ func ListData(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tgl_transaksi, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
 		arraydata.Nm_group = nm_group
 		arraydata.Kd_kategori = kd_kategori
-		arraydata.Tgl_transaksi = tgl_transaksi
+		arraydata.No_document = no_document
+		arraydata.Tgl_document = tgl_document
 		arraydata.Nm_kategori = nm_kategori
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar

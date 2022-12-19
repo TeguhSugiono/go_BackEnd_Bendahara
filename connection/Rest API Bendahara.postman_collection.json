@@ -428,7 +428,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_jenis\" : 2,\r\n    \"nm_group\" : \"Biaya Perlengkapan Siswa\"\r\n}",
+							"raw": "{\r\n    \"kd_jenis\" : 1,\r\n    \"nm_group\" : \"Uang Masuk Eksternal\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -657,7 +657,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"nm_kategori\" : \"TEST iNPUT\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"nm_kategori\" : \"Dana Masuk dari Bos (Pemilik Yayasan)\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2288,7 +2288,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5900\",\r\n    \"kd_kategori\" : 2\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5959\",\r\n    \"kd_kategori\" : 3,\r\n    \"kd_group\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2912,7 +2912,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : \"2\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : \"10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2941,7 +2941,7 @@
 					"response": []
 				},
 				{
-					"name": "3. List Add Siswa",
+					"name": "X3. List Add Siswa",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -2982,13 +2982,13 @@
 					"response": []
 				},
 				{
-					"name": "4. Create Siswa Uang Masuk",
+					"name": "4. Create Uang Masuk",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5959\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok12345\",\r\n    \"tgl_document\" : \"12-12-2022\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2996,7 +2996,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/createuangmasuksiswa/",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/createuangmasuklain/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -3010,7 +3010,7 @@
 								"v1",
 								"transaksi",
 								"uangmasuklainlain",
-								"createuangmasuksiswa",
+								"createuangmasuklain",
 								""
 							]
 						}
@@ -3018,13 +3018,13 @@
 					"response": []
 				},
 				{
-					"name": "5. Edit Uang Masuk Siswa",
+					"name": "5. Edit Uang Masuk",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5959\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"TEST DOANG\",\r\n    \"total_biaya\" : 1600000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"2022/2023\",\r\n    \"tgl_document\" : \"5959\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 1600000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3032,7 +3032,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/edituangmasuksiswa/:kd_trans_masuk_siswa",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/edituangmasuklain/:kd_trans_masuk_lain",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -3045,14 +3045,14 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasuksiswa",
-								"edituangmasuksiswa",
-								":kd_trans_masuk_siswa"
+								"uangmasuklainlain",
+								"edituangmasuklain",
+								":kd_trans_masuk_lain"
 							],
 							"variable": [
 								{
-									"key": "kd_trans_masuk_siswa",
-									"value": "4"
+									"key": "kd_trans_masuk_lain",
+									"value": "1"
 								}
 							]
 						}
@@ -3327,7 +3327,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MDk2NDEzMX0.JGtoLPLipzjOPIDslccdXOiAh26bhZYl-4mJTUL50T0",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MTUzMjU5Nn0.1Mk6Aq_sDDvVvCT3kyaYlnEpQRwnk_6aGgq8uNM2QHI",
 				"type": "string"
 			}
 		]

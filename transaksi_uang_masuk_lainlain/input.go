@@ -44,7 +44,8 @@ type ParamInputTransaksi struct {
 	Kd_group            int     `form:"kd_group" json:"kd_group" binding:"required"`
 	Kd_kategori         int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
 	Kd_trans_masuk_lain int     `form:"kd_trans_masuk_lain" json:"kd_trans_masuk_lain"`
-	Tgl_transaksi       string  `form:"tgl_transaksi" json:"tgl_transaksi" binding:"required"`
+	No_document         string  `form:"no_document" json:"no_document" binding:"required"`
+	Tgl_document        string  `form:"tgl_document" json:"tgl_document" binding:"required"`
 	Total_biaya         float64 `form:"total_biaya" json:"total_biaya" binding:"number"`
 	Total_bayar         float64 `form:"total_bayar" json:"total_bayar"`
 	Sisa_biaya          float64 `form:"sisa_biaya" json:"sisa_biaya"`
@@ -57,18 +58,19 @@ type ParamInputTransaksi struct {
 }
 
 type ParamInputTransaksiEdit struct {
-	Kd_group      int     `form:"kd_group" json:"kd_group" binding:"required"`
-	Kd_kategori   int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
-	Tgl_transaksi string  `form:"tgl_transaksi" json:"tgl_transaksi" binding:"required"`
-	Total_biaya   float64 `form:"total_biaya" json:"total_biaya" binding:"required,number"`
-	Total_bayar   float64 `form:"total_bayar" json:"total_bayar"`
-	Sisa_biaya    float64 `form:"sisa_biaya" json:"sisa_biaya"`
-	Keterangan    string  `form:"keterangan" json:"keterangan"`
-	Flag_aktif    int     `form:"flag_aktif" json:"flag_aktif"`
-	Created_on    string  `form:"created_on" json:"created_on"`
-	Created_by    string  `form:"created_by" json:"created_by"`
-	Edited_on     string  `form:"edited_on" json:"edited_on"`
-	Edited_by     string  `form:"edited_by" json:"edited_by"`
+	Kd_group     int     `form:"kd_group" json:"kd_group" binding:"required"`
+	Kd_kategori  int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
+	No_document  string  `form:"no_document" json:"no_document" binding:"required"`
+	Tgl_document string  `form:"tgl_document" json:"tgl_document" binding:"required"`
+	Total_biaya  float64 `form:"total_biaya" json:"total_biaya" binding:"required,number"`
+	Total_bayar  float64 `form:"total_bayar" json:"total_bayar"`
+	Sisa_biaya   float64 `form:"sisa_biaya" json:"sisa_biaya"`
+	Keterangan   string  `form:"keterangan" json:"keterangan"`
+	Flag_aktif   int     `form:"flag_aktif" json:"flag_aktif"`
+	Created_on   string  `form:"created_on" json:"created_on"`
+	Created_by   string  `form:"created_by" json:"created_by"`
+	Edited_on    string  `form:"edited_on" json:"edited_on"`
+	Edited_by    string  `form:"edited_by" json:"edited_by"`
 }
 
 type GetDataUmSiswa struct {
@@ -85,7 +87,8 @@ type GetBiayaAndSisa struct {
 	Nm_group            string
 	Kd_kategori         int
 	Nm_kategori         string
-	Tgl_transaksi       string
+	No_document         string
+	Tgl_document        string
 	Total_biaya         float64
 	Total_bayar         float64
 	Sisa_biaya          float64
@@ -105,6 +108,7 @@ type ParamAddDetail struct {
 }
 
 type ParamChangeSiswa struct {
-	Tgl_transaksi1 string `form:"tgl_transaksi1" json:"tgl_transaksi1" binding:"required"`
-	Tgl_transaksi2 string `form:"tgl_transaksi2" json:"tgl_transaksi2" binding:"required"`
+	Tgl_document1 string `form:"tgl_document1" json:"tgl_document1" binding:"required"`
+	Tgl_document2 string `form:"tgl_document2" json:"tgl_document2" binding:"required"`
+	No_document   string `form:"no_document" json:"no_document" binding:"required"`
 }

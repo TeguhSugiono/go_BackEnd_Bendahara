@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 18/12/2022 13:52:08
+ Date: 20/12/2022 05:03:57
 */
 
 SET NAMES utf8mb4;
@@ -129,7 +129,7 @@ CREATE TABLE `tbl_group_kategoris`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_group_kategoris
@@ -143,6 +143,7 @@ INSERT INTO `tbl_group_kategoris` VALUES (2, 6, 'Biaya Gaji Pegawai', 'Gaji', 0,
 INSERT INTO `tbl_group_kategoris` VALUES (2, 7, 'Biaya Kegiatan Siswa', 'Buka Puasa Bersama,Pesantren Kilat', 0, '2022-09-09 03:32:45', 'teguh', NULL, NULL);
 INSERT INTO `tbl_group_kategoris` VALUES (2, 8, 'Biaya Rutin Gedung Sekolah', 'Listrik,Air,Telp,Internet', 0, '2022-09-09 03:32:58', 'teguh', NULL, NULL);
 INSERT INTO `tbl_group_kategoris` VALUES (2, 9, 'Biaya Perlengkapan Siswa', 'Buku Tulis,Buku Paket,Alat Tulis', 0, '2022-09-09 03:33:16', 'teguh', NULL, NULL);
+INSERT INTO `tbl_group_kategoris` VALUES (1, 10, 'Uang Masuk Eksternal', 'Dana Masuk dari Pemerintah,Dana Masuk dari Investor,Dana Masuk dari Bos (Pemilik Yayasan)', 0, '2022-12-19 23:59:51', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_jenis_trans
@@ -180,7 +181,7 @@ CREATE TABLE `tbl_kategori_uangs`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_kategori`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_kategori_uangs
@@ -200,6 +201,9 @@ INSERT INTO `tbl_kategori_uangs` VALUES (9, 12, 'Buku Tulis', NULL, 0, '2022-09-
 INSERT INTO `tbl_kategori_uangs` VALUES (9, 13, 'Buku Paket', NULL, 0, '2022-09-09 03:41:53', 'teguh', NULL, NULL);
 INSERT INTO `tbl_kategori_uangs` VALUES (9, 14, 'Alat Tulis', NULL, 0, '2022-09-09 03:42:15', 'teguh', NULL, NULL);
 INSERT INTO `tbl_kategori_uangs` VALUES (1, 15, 'TEST INPUT DATA', NULL, 9, '2022-09-24 23:35:21', 'teguh', '2022-09-24 23:36:59', 'teguh');
+INSERT INTO `tbl_kategori_uangs` VALUES (10, 16, 'Dana Masuk dari Pemerintah', NULL, 0, '2022-12-20 00:01:03', 'teguh', NULL, NULL);
+INSERT INTO `tbl_kategori_uangs` VALUES (10, 17, 'Dana Masuk dari Investor', NULL, 0, '2022-12-20 00:01:21', 'teguh', NULL, NULL);
+INSERT INTO `tbl_kategori_uangs` VALUES (10, 18, 'Dana Masuk dari Bos (Pemilik Yayasan)', NULL, 0, '2022-12-20 00:01:42', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_kelas
@@ -986,11 +990,13 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (1, 1, 1, NULL, 0.00, '', 0, '2022-12-20 00:24:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 2, 1, NULL, 0.00, '', 0, '2022-12-20 00:25:06', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_headers
@@ -1000,7 +1006,8 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_headers`  (
   `kd_group` int(11) NULL DEFAULT NULL,
   `kd_kategori` int(11) NULL DEFAULT NULL,
   `kd_trans_masuk_lain` int(11) NOT NULL AUTO_INCREMENT,
-  `tgl_transaksi` date NULL DEFAULT NULL,
+  `no_document` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgl_document` date NULL DEFAULT NULL,
   `total_biaya` double(19, 2) NULL DEFAULT NULL,
   `total_bayar` double(19, 2) NULL DEFAULT NULL,
   `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
@@ -1011,11 +1018,13 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 1, 'nodok12345', '2022-12-12', 0.00, 0.00, 0.00, '', 0, '2022-12-20 00:24:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 2, 'nodok12345', '2022-12-12', 0.00, 0.00, 0.00, '', 0, '2022-12-20 00:25:06', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_details

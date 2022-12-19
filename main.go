@@ -138,9 +138,9 @@ func main() {
 	api.POST("/transaksi/uangmasuklainlain/listkategoriuang", authMiddleware(), transaksi_uang_masuk_lainlain.ListKategoriUang)
 	//api.POST("/transaksi/uangmasuklainlain/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_lainlain.ListDataAddSiswa)
 	api.POST("/transaksi/uangmasuklainlain/createuangmasuklain", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukLain)
-	api.PUT("/transaksi/uangmasuklainlain/edituangmasuksiswa/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.EditUangMasukLain)
-	api.PUT("/transaksi/uangmasuklainlain/updateuangmasuksiswadetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_lainlain.UpdateUangMasukSiswaDetail)
-	api.POST("/transaksi/uangmasuklainlain/createuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukSiswaDetail)
+	api.PUT("/transaksi/uangmasuklainlain/edituangmasuklain/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.EditUangMasukLain)
+	api.PUT("/transaksi/uangmasuklainlain/updateuangmasuklaindetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_lainlain.UpdateUangMasukSiswaDetail)
+	api.POST("/transaksi/uangmasuklainlain/createuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukSiswaDetail)
 	api.POST("/transaksi/uangmasuklainlain/listdata", authMiddleware(), transaksi_uang_masuk_lainlain.ListData)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
