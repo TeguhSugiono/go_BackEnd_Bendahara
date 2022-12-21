@@ -2976,13 +2976,13 @@
 					"response": []
 				},
 				{
-					"name": "3. Create Uang Masuk",
+					"name": "3. Create Uang Masuk Lain",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok12345\",\r\n    \"tgl_document\" : \"12-12-2022\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3012,13 +3012,13 @@
 					"response": []
 				},
 				{
-					"name": "4. Edit Uang Masuk",
+					"name": "4. Edit Uang Masuk Lain",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok12345\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 1600000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 4500000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3054,13 +3054,13 @@
 					"response": []
 				},
 				{
-					"name": "5. Edit Uang Masuk Siswa Detail",
+					"name": "5. Edit Uang Lain Siswa Detail",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 700000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3068,7 +3068,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:kd_trans_masuk_siswa/:kd_trans_masuk_detail_siswa",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/updateuangmasuklaindetail/:kd_trans_masuk_lain/:kd_trans_masuk_detail_lain",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -3081,18 +3081,18 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasuksiswa",
-								"updateuangmasuksiswadetail",
-								":kd_trans_masuk_siswa",
-								":kd_trans_masuk_detail_siswa"
+								"uangmasuklainlain",
+								"updateuangmasuklaindetail",
+								":kd_trans_masuk_lain",
+								":kd_trans_masuk_detail_lain"
 							],
 							"variable": [
 								{
-									"key": "kd_trans_masuk_siswa",
-									"value": "4"
+									"key": "kd_trans_masuk_lain",
+									"value": "2"
 								},
 								{
-									"key": "kd_trans_masuk_detail_siswa",
+									"key": "kd_trans_masuk_detail_lain",
 									"value": "5"
 								}
 							]
@@ -3101,13 +3101,13 @@
 					"response": []
 				},
 				{
-					"name": "6. Add Siswa Uang Masuk Detail",
+					"name": "6. Add Lain Uang Masuk Detail",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : 4\r\n}",
+							"raw": "{\r\n    \"kd_trans_masuk_lain\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3115,7 +3115,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/createuangmasuksiswadetail",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/createuangmasuklaindetail",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -3128,8 +3128,8 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangmasuksiswa",
-								"createuangmasuksiswadetail"
+								"uangmasuklainlain",
+								"createuangmasuklaindetail"
 							]
 						}
 					},
@@ -3148,7 +3148,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_transaksi1\" : \"01-01-2022\",\r\n    \"tgl_transaksi2\" : \"31-12-2022\"\r\n}",
+							"raw": "{\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2022\",\r\n    \"no_document\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3171,6 +3171,41 @@
 								"transaksi",
 								"uangmasuklainlain",
 								"listdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Delete Uang Masuk Lain Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_trans_masuk_lain\" : \"2\",\r\n    \"kd_trans_masuk_detail_lain\" : \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/deleteuangmasuklaindetail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuklainlain",
+								"deleteuangmasuklaindetail"
 							]
 						}
 					},

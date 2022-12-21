@@ -4,42 +4,6 @@ type ParamChangeKategori struct {
 	Kd_group string `form:"kd_group" json:"kd_group" binding:"required"`
 }
 
-// type ParamGetSiswaAdd struct {
-// 	Nis         string `form:"nis" json:"nis" binding:"required"`
-// 	Kd_kategori int    `form:"kd_kategori" json:"kd_kategori" binding:"required"`
-// }
-
-// type ListDataView struct {
-// 	Kd_group                    int
-// 	Nm_group                    string
-// 	Kd_kategori                 int
-// 	Nm_kategori                 string
-// 	Kd_trans_masuk_lain         int
-// 	Tahun_akademik              string
-// 	Nis_siswa                   string
-// 	Nm_siswa                    string
-// 	Nm_kelas                    string
-// 	Total_biaya                 float64
-// 	Total_bayar                 float64
-// 	Sisa_biaya                  float64
-// 	Keterangan                  string
-// 	Kd_trans_masuk_detail_siswa int
-// 	Seqno                       int
-// 	Tgl_bayar                   string
-// 	Jml_bayar                   float64
-// 	Keterangandetail            string
-// }
-
-// type ListAddSiswa struct {
-// 	Id_tahun       int
-// 	Tahun_akademik string
-// 	Id_kelas       string
-// 	Nm_kelas       string
-// 	Total_biaya    float64
-// 	Total_bayar    float64
-// 	Sisa_biaya     float64
-// }
-
 type ParamInputTransaksi struct {
 	Kd_group            int     `form:"kd_group" json:"kd_group" binding:"required"`
 	Kd_kategori         int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
@@ -74,11 +38,11 @@ type ParamInputTransaksiEdit struct {
 }
 
 type GetDataUmSiswa struct {
-	Kd_trans_masuk_detail_siswa int
-	Seqno                       int
-	Tgl_bayar                   string
-	Jml_bayar                   float64
-	Keterangan                  string
+	Kd_trans_masuk_detail_lain int
+	Seqno                      int
+	Tgl_bayar                  string
+	Jml_bayar                  float64
+	Keterangan                 string
 }
 
 type GetBiayaAndSisa struct {
@@ -110,5 +74,10 @@ type ParamAddDetail struct {
 type ParamChangeSiswa struct {
 	Tgl_document1 string `form:"tgl_document1" json:"tgl_document1" binding:"required"`
 	Tgl_document2 string `form:"tgl_document2" json:"tgl_document2" binding:"required"`
-	No_document   string `form:"no_document" json:"no_document" binding:"required"`
+	No_document   string `form:"no_document" json:"no_document"`
+}
+
+type ParamDeleteUmLainDetail struct {
+	Kd_trans_masuk_lain        string `form:"kd_trans_masuk_lain" json:"kd_trans_masuk_lain" binding:"required"`
+	Kd_trans_masuk_detail_lain string `form:"kd_trans_masuk_detail_lain" json:"kd_trans_masuk_detail_lain" binding:"required"`
 }

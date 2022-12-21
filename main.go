@@ -140,9 +140,10 @@ func main() {
 	//api.POST("/transaksi/uangmasuklainlain/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_lainlain.ListDataAddSiswa)
 	api.POST("/transaksi/uangmasuklainlain/createuangmasuklain", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukLain)
 	api.PUT("/transaksi/uangmasuklainlain/edituangmasuklain/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.EditUangMasukLain)
-	api.PUT("/transaksi/uangmasuklainlain/updateuangmasuklaindetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_lainlain.UpdateUangMasukSiswaDetail)
-	api.POST("/transaksi/uangmasuklainlain/createuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukSiswaDetail)
+	api.PUT("/transaksi/uangmasuklainlain/updateuangmasuklaindetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_lainlain.UpdateUangMasukLainetail)
+	api.POST("/transaksi/uangmasuklainlain/createuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukLainDetail)
 	api.POST("/transaksi/uangmasuklainlain/listdata", authMiddleware(), transaksi_uang_masuk_lainlain.ListData)
+	api.PUT("/transaksi/uangmasuklainlain/deleteuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteUangMasukLainDetail)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

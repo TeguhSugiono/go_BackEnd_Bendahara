@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 21/12/2022 09:12:32
+ Date: 21/12/2022 18:59:56
 */
 
 SET NAMES utf8mb4;
@@ -990,12 +990,16 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_details
 -- ----------------------------
 INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (1, 1, 1, NULL, 0.00, '', 0, '2022-12-20 10:28:46', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 2, 1, '2022-07-02', 500000.00, 'hehehehe', 0, '2022-12-21 18:16:07', 'teguh', '2022-12-21 18:32:02', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 3, 2, '2022-07-02', 200000.00, 'hehehehe', 0, '2022-12-21 18:33:35', 'teguh', '2022-12-21 18:38:04', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 4, 3, '2022-07-02', 400000.00, 'hehehehe', 0, '2022-12-21 18:35:32', 'teguh', '2022-12-21 18:38:12', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 5, 4, '2022-07-02', 700000.00, 'hehehehe', 9, '2022-12-21 18:37:23', 'teguh', '2022-12-21 18:58:50', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_headers
@@ -1017,12 +1021,13 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 1, 'nodok12345', '2022-12-12', 0.00, 0.00, 0.00, '', 0, '2022-12-20 10:28:46', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 1, 'nodok123456', '2022-12-13', 2500000.00, 0.00, 2500000.00, '', 0, '2022-12-20 10:28:46', 'teguh', '2022-12-21 18:14:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 2, 'nodok987263', '2022-12-12', 4500000.00, 1100000.00, 3400000.00, '', 0, '2022-12-21 18:16:07', 'teguh', '2022-12-21 18:58:50', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_details
