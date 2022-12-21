@@ -2401,7 +2401,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 1000000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2434,7 +2434,7 @@
 								},
 								{
 									"key": "kd_trans_masuk_detail_siswa",
-									"value": "5"
+									"value": "7"
 								}
 							]
 						}
@@ -2512,6 +2512,41 @@
 								"transaksi",
 								"uangmasuksiswa",
 								"listdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Delete Uang Masuk Siswa Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : \"4\",\r\n    \"kd_trans_masuk_detail_siswa\" : \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/deleteuangmasuksiswadetail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"deleteuangmasuksiswadetail"
 							]
 						}
 					},
@@ -2941,48 +2976,7 @@
 					"response": []
 				},
 				{
-					"name": "X3. List Add Siswa",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5900\",\r\n    \"kd_kategori\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/listdataaddsiswa",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasuklainlain",
-								"listdataaddsiswa"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "4. Create Uang Masuk",
+					"name": "3. Create Uang Masuk",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -3018,13 +3012,13 @@
 					"response": []
 				},
 				{
-					"name": "5. Edit Uang Masuk",
+					"name": "4. Edit Uang Masuk",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"2022/2023\",\r\n    \"tgl_document\" : \"5959\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 1600000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok12345\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 1600000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3052,7 +3046,7 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_lain",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -3060,7 +3054,7 @@
 					"response": []
 				},
 				{
-					"name": "6. Edit Uang Masuk Siswa Detail",
+					"name": "5. Edit Uang Masuk Siswa Detail",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -3107,7 +3101,7 @@
 					"response": []
 				},
 				{
-					"name": "7. Add Siswa Uang Masuk Detail",
+					"name": "6. Add Siswa Uang Masuk Detail",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -3142,7 +3136,7 @@
 					"response": []
 				},
 				{
-					"name": "8. List Data (Dahsboard)",
+					"name": "7. List Data (Dahsboard)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -3327,7 +3321,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MTUzMjU5Nn0.1Mk6Aq_sDDvVvCT3kyaYlnEpQRwnk_6aGgq8uNM2QHI",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MTY3NDU3M30.ZIMd8cIJt80TNb0qqHaQmU0fgPcAUqkNvCulnywgRjM",
 				"type": "string"
 			}
 		]

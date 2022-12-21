@@ -108,6 +108,11 @@ type ParamEditUmSiswaDetail struct {
 	Edited_by  string  `form:"edited_by" json:"edited_by"`
 }
 
+type ParamDeleteUmSiswaDetail struct {
+	Kd_trans_masuk_siswa        string `form:"kd_trans_masuk_siswa" json:"kd_trans_masuk_siswa" binding:"required"`
+	Kd_trans_masuk_detail_siswa string `form:"kd_trans_masuk_detail_siswa" json:"kd_trans_masuk_detail_siswa" binding:"required"`
+}
+
 type ParamAddDetail struct {
 	Kd_trans_masuk_siswa int `form:"kd_trans_masuk_siswa" json:"kd_trans_masuk_siswa"`
 }

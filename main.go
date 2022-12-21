@@ -132,6 +132,7 @@ func main() {
 	api.PUT("/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_siswa.UpdateUangMasukSiswaDetail)
 	api.POST("/transaksi/uangmasuksiswa/createuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.CreateUangMasukSiswaDetail)
 	api.POST("/transaksi/uangmasuksiswa/listdata", authMiddleware(), transaksi_uang_masuk_siswa.ListData)
+	api.PUT("/transaksi/uangmasuksiswa/deleteuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.DeleteUangMasukSiswaDetail)
 
 	//UANG MASUK LAIN
 	api.GET("/transaksi/uangmasuklainlain/listgroupkategori", authMiddleware(), transaksi_uang_masuk_lainlain.ListGroupKategori)
