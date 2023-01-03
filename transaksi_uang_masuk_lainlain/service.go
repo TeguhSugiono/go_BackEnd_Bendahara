@@ -439,7 +439,7 @@ func EditUangMasukLain(c *gin.Context) {
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
 
-		sql := " SELECT a.kd_trans_masuk_detail_lain,b.seqno, " +
+		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
@@ -844,7 +844,7 @@ func ListData(c *gin.Context) {
 	ssql = fmt.Sprintf("%s and a.tgl_document <= '%s'", ssql, dateStr2)
 
 	if paramChangeSiswa.No_document != "" {
-		ssql = fmt.Sprintf("%s and a.no_document <= '%s'", ssql, paramChangeSiswa.No_document)
+		ssql = fmt.Sprintf("%s and a.no_document = '%s'", ssql, paramChangeSiswa.No_document)
 	}
 
 	ssql = fmt.Sprintf("%s ORDER BY a.tgl_document %s", ssql, "asc")
@@ -1012,6 +1012,131 @@ func DeleteUangMasukLainDetail(c *gin.Context) {
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, int_kd_trans_masuk_siswa)
+
+		sql = fmt.Sprintf("%s ORDER BY a.Kd_trans_masuk_lain %s,b.seqno %s", sql, "asc", "asc")
+
+		var getDataUmSiswa []GetDataUmSiswa
+		db.Raw(sql).Scan(&getDataUmSiswa)
+
+		arraydata.Detail = getDataUmSiswa
+		SetArrayData = append(SetArrayData, arraydata)
+	}
+
+	if len(SetArrayData) == 0 {
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	c.JSON(http.StatusOK, response)
+
+}
+
+func DeleteAllUangMasuk(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	Kd_trans_masuk_lain := c.Param("idhead")
+
+	var dataUtama table_data.Tbl_trans_uang_masuk_lain_headers
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk_lain=?", Kd_trans_masuk_lain).First(&dataUtama).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Header Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataUtamaDet table_data.Tbl_trans_uang_masuk_lain_details
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk_lain=?", Kd_trans_masuk_lain).First(&dataUtamaDet).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Detail Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser")
+
+	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+	date := "2006-01-02 15:04:05"
+	datenowx, err := time.Parse(date, datenows)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors, "date": datenowx}
+		response := helper.APIResponse("Tanggal Format Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataDetail table_data.Tbl_trans_uang_masuk_lain_details
+	err = db.Raw("update tbl_trans_uang_masuk_lain_details set flag_aktif=9,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk_lain=? and flag_aktif=0 ",
+		currentUser.(string), datenowx, Kd_trans_masuk_lain).Scan(&dataDetail).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Ke Tbl_trans_uang_masuk_lain_details Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	var dataHead table_data.Tbl_trans_uang_masuk_lain_headers
+	err = db.Raw("update tbl_trans_uang_masuk_lain_headers set flag_aktif=9,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk_lain=? and flag_aktif=0 ",
+		currentUser.(string), datenowx, Kd_trans_masuk_lain).Scan(&dataHead).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Ke tbl_trans_uang_masuk_lain_headers Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	//setting tampilan habis save siswa
+
+	SetArrayData := []GetBiayaAndSisa{}
+	var kd_group int
+	var kd_trans_masuk_lain int
+	var nm_group string
+	var kd_kategori int
+	var nm_kategori string
+	var total_bayar float64
+	var no_document string
+	var tgl_document string
+	var total_biaya float64
+	var sisa_biaya float64
+
+	ssql := " SELECT distinct b.kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" FROM tbl_trans_uang_masuk_lain_headers a " +
+		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
+		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
+		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
+		" where a.flag_aktif=0 and b.flag_aktif=0   "
+
+	//ssql = fmt.Sprintf("%s and a.kd_trans_masuk_lain= '%s'", ssql, Kd_trans_masuk_lain)
+	ssql = fmt.Sprintf("%s ORDER BY a.tgl_document %s", ssql, "asc")
+
+	//int_Kd_trans_masuk_lain, _ := strconv.Atoi(Kd_trans_masuk_lain)
+
+	rows, _ := db.Raw(ssql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		arraydata := GetBiayaAndSisa{}
+		arraydata.Kd_trans_masuk_lain = kd_trans_masuk_lain
+		arraydata.Kd_group = kd_group
+		arraydata.Nm_group = nm_group
+		arraydata.Kd_kategori = kd_kategori
+		arraydata.Nm_kategori = nm_kategori
+		arraydata.No_document = no_document
+		arraydata.Tgl_document = tgl_document
+		arraydata.Total_biaya = total_biaya
+		arraydata.Total_bayar = total_bayar
+		arraydata.Sisa_biaya = sisa_biaya
+
+		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" FROM tbl_trans_uang_masuk_lain_headers a " +
+			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
+			" where a.flag_aktif=0 and b.flag_aktif=0  "
+
+		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, kd_trans_masuk_lain)
 
 		sql = fmt.Sprintf("%s ORDER BY a.Kd_trans_masuk_lain %s,b.seqno %s", sql, "asc", "asc")
 

@@ -1878,6 +1878,48 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "8. Delete All UM SPP",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/deletealluangmasuk/:kd_trans_masuk",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukspp",
+								"deletealluangmasuk",
+								":kd_trans_masuk"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2109,7 +2151,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172032402070005\",\r\n    \"tgldaftar\" : \"30-06-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"Tidak Wajib Isi ini\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172035606071003\",\r\n    \"tgldaftar\" : \"02-07-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"Tidak Wajib Isi ini\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2179,6 +2221,48 @@
 								{
 									"key": "kd_trans_masuk_detail_ppdb",
 									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Delete All UM PPdb",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/deletealluangmasuk/:kd_trans_masuk_ppdb",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukppdb",
+								"deletealluangmasuk",
+								":kd_trans_masuk_ppdb"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk_ppdb",
+									"value": "1"
 								}
 							]
 						}
@@ -2288,7 +2372,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5959\",\r\n    \"kd_kategori\" : 3,\r\n    \"kd_group\" : 2\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5897\",\r\n    \"kd_kategori\" : 17,\r\n    \"kd_group\" : 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2547,6 +2631,48 @@
 								"transaksi",
 								"uangmasuksiswa",
 								"deleteuangmasuksiswadetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Delete All Um Siswa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/deletealluangmasuk/:kd_trans_masuk_siswa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuksiswa",
+								"deletealluangmasuk",
+								":kd_trans_masuk_siswa"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk_siswa",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -3018,7 +3144,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 4500000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 16,\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Masuk\",\r\n    \"total_biaya\" : 5000000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3093,7 +3219,7 @@
 								},
 								{
 									"key": "kd_trans_masuk_detail_lain",
-									"value": "5"
+									"value": "4"
 								}
 							]
 						}
@@ -3206,6 +3332,48 @@
 								"transaksi",
 								"uangmasuklainlain",
 								"deleteuangmasuklaindetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Delete All UM Lain",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuklainlain/deletealluangmasuk/:kd_trans_masuk_lain",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasuklainlain",
+								"deletealluangmasuk",
+								":kd_trans_masuk_lain"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_masuk_lain",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -3356,7 +3524,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MTY3NDU3M30.ZIMd8cIJt80TNb0qqHaQmU0fgPcAUqkNvCulnywgRjM",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MjgyODg1OH0.Lm9cKwMnePcceXAmaqIzL6l4o8cbvDi8ZqWDO4p09Hk",
 				"type": "string"
 			}
 		]

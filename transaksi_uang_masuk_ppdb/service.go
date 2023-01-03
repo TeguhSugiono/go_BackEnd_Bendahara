@@ -506,3 +506,107 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+func DeleteAllUangMasuk(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	idhead := c.Param("idhead")
+
+	var dataUtama table_data.Tbl_trans_uang_masuk_ppdb_headers
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk_ppdb=?", idhead).First(&dataUtama).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Header Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataUtamaDet table_data.Tbl_trans_uang_masuk_ppdb_details
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk_ppdb=?", idhead).First(&dataUtamaDet).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Detail Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser")
+
+	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+	date := "2006-01-02 15:04:05"
+	datenowx, err := time.Parse(date, datenows)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors, "date": datenowx}
+		response := helper.APIResponse("Tanggal Format Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataDetail table_data.Tbl_trans_uang_masuk_ppdb_details
+	err = db.Raw("update tbl_trans_uang_masuk_ppdb_details set flag_aktif=9,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk_ppdb=? and flag_aktif=0 ",
+		currentUser.(string), datenowx, idhead).Scan(&dataDetail).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Ke Tbl_trans_uang_masuk_ppdb_details Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	var dataHead table_data.Tbl_trans_uang_masuk_ppdb_headers
+	err = db.Raw("update tbl_trans_uang_masuk_ppdb_headers set flag_aktif=9,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk_ppdb=? and flag_aktif=0 ",
+		currentUser.(string), datenowx, idhead).Scan(&dataHead).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Ke Tbl_trans_uang_masuk_ppdb_headers Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	//setting tampilan habis update ppdb
+	var getDataPPDB []GetDataPPDB
+	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
+		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.kd_trans_masuk_ppdb=? "+
+		" ORDER BY seqno ", idhead).Scan(&getDataPPDB)
+
+	SetArrayData := []GetBiayaAndSisa{}
+	var kd_trans_masuk_ppdb int
+	var total_bayar float64
+	var tgldaftar string
+	var tahun_daftar string
+	var tahun_akademik string
+	var total_biaya float64
+	var sisa_biaya float64
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.flag_aktif=0 and b.flag_aktif=0  "+
+		" and a.kd_trans_masuk_ppdb=?  ", idhead).Rows()
+	defer rowss.Close()
+	for rowss.Next() {
+		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya)
+		arraydata := GetBiayaAndSisa{}
+		arraydata.Kd_trans_masuk_ppdb = kd_trans_masuk_ppdb
+		tTglDaftar, _ := time.Parse("2006-01-02", tgldaftar)
+		dateStrTglDaftar := tTglDaftar.Format("02-01-2006")
+		arraydata.Tgldaftar = dateStrTglDaftar
+		arraydata.Tahun_daftar = tahun_daftar
+		arraydata.Tahun_akademik = tahun_akademik
+		arraydata.Total_biaya = total_biaya
+		arraydata.Total_bayar = total_bayar
+		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Detail = getDataPPDB
+		SetArrayData = append(SetArrayData, arraydata)
+	}
+
+	if len(SetArrayData) == 0 {
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	c.JSON(http.StatusOK, response)
+}

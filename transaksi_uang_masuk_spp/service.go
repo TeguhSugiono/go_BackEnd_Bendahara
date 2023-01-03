@@ -532,6 +532,104 @@ func UpdateUangMasukSpp(c *gin.Context) {
 
 }
 
+func DeleteAllUangMasuk(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	idhead := c.Param("idhead")
+
+	var dataUtama table_data.Tbl_trans_uang_masuk_spp_headers
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk=?", idhead).First(&dataUtama).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Header Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataUtamaDet table_data.Tbl_trans_uang_masuk_spp_details
+	if err := db.Where("flag_aktif=0 and kd_trans_masuk=?", idhead).First(&dataUtamaDet).Error; err != nil {
+		errorMessage := gin.H{"errors": "Data Detail Tidak Ditemukan ..."}
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser")
+
+	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+	date := "2006-01-02 15:04:05"
+	datenowx, err := time.Parse(date, datenows)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors, "date": datenowx}
+		response := helper.APIResponse("Tanggal Format Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var dataDetail table_data.Tbl_trans_uang_masuk_spp_details
+	err = db.Raw("update tbl_trans_uang_masuk_spp_details set flag_aktif=9,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk=? and flag_aktif=0 ",
+		currentUser.(string), datenowx, idhead).Scan(&dataDetail).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Ke Tbl_trans_uang_masuk_spp_details Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	var dataHead table_data.Tbl_trans_uang_masuk_spp_headers
+	err = db.Raw("update tbl_trans_uang_masuk_spp_headers set flag_aktif=9,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk=? and flag_aktif=0 ",
+		currentUser.(string), datenowx, idhead).Scan(&dataHead).Error
+	if err != nil {
+		response := helper.APIResponse("Delete Data Ke tbl_trans_uang_masuk_spp_headers Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	//setting tampilan habis update spp
+
+	var getDataUmSpp []GetDataUmSpp
+	db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
+		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
+		" FROM tbl_trans_uang_masuk_spp_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
+		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
+		" and a.kd_trans_masuk=? "+
+		" order by b.seqno ", idhead).Scan(&getDataUmSpp)
+
+	SetArrayData := []GetBiayaAndSisa{}
+	var kd_trans_masuk int
+	var total_biaya float64
+	var total_bayar float64
+	var sisa_biaya float64
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+		" FROM tbl_trans_uang_masuk_spp_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
+		" where a.flag_aktif=0 and b.flag_aktif=0  "+
+		" and a.kd_trans_masuk=? ", idhead).Rows()
+	defer rowss.Close()
+	for rowss.Next() {
+		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+		arraydata := GetBiayaAndSisa{}
+		arraydata.Kd_trans_masuk = kd_trans_masuk
+		arraydata.Total_biaya = total_biaya
+		arraydata.Total_bayar = total_bayar
+		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Detail = getDataUmSpp
+		SetArrayData = append(SetArrayData, arraydata)
+	}
+
+	if len(SetArrayData) == 0 {
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	c.JSON(http.StatusOK, response)
+}
+
 // func ShowUangMasukSpp(c *gin.Context) {
 // 	db := c.MustGet("db").(*gorm.DB)
 

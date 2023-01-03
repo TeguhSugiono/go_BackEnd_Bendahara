@@ -112,7 +112,7 @@ func main() {
 	api.POST("/transaksi/uangmasukspp/listdata", authMiddleware(), transaksi_uang_masuk_spp.ListData)
 	api.POST("/transaksi/uangmasukspp/createuangmasukspp", authMiddleware(), transaksi_uang_masuk_spp.CreateUangMasukSpp)
 	api.PUT("/transaksi/uangmasukspp/updateuangmasukspp/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_spp.UpdateUangMasukSpp)
-	//api.GET("/transaksi/uangmasukspp/showuangmasukspp", authMiddleware(), transaksi_uang_masuk_spp.ShowUangMasukSpp)
+	api.PUT("/transaksi/uangmasukspp/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_spp.DeleteAllUangMasuk)
 
 	//UANG MASUK PPDB
 	api.GET("/transaksi/uangmasukppdb/listgroupkategori", authMiddleware(), transaksi_uang_masuk_ppdb.ListGroupKategori)
@@ -122,6 +122,7 @@ func main() {
 	api.POST("/transaksi/uangmasukppdb/listdata", authMiddleware(), transaksi_uang_masuk_ppdb.ListData)
 	api.POST("/transaksi/uangmasukppdb/createuangmasukppdb", authMiddleware(), transaksi_uang_masuk_ppdb.CreateUangMasukPPdb)
 	api.PUT("/transaksi/uangmasukppdb/updateuangmasukppdb/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_ppdb.UpdateUangMasukPPdb)
+	api.PUT("/transaksi/uangmasukppdb/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_ppdb.DeleteAllUangMasuk)
 
 	//UANG MASUK SISWA
 	api.GET("/transaksi/uangmasuksiswa/listgroupkategori", authMiddleware(), transaksi_uang_masuk_siswa.ListGroupKategori)
@@ -133,6 +134,7 @@ func main() {
 	api.POST("/transaksi/uangmasuksiswa/createuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.CreateUangMasukSiswaDetail)
 	api.POST("/transaksi/uangmasuksiswa/listdata", authMiddleware(), transaksi_uang_masuk_siswa.ListData)
 	api.PUT("/transaksi/uangmasuksiswa/deleteuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.DeleteUangMasukSiswaDetail)
+	api.PUT("/transaksi/uangmasuksiswa/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_siswa.DeleteAllUangMasuk)
 
 	//UANG MASUK LAIN
 	api.GET("/transaksi/uangmasuklainlain/listgroupkategori", authMiddleware(), transaksi_uang_masuk_lainlain.ListGroupKategori)
@@ -144,6 +146,7 @@ func main() {
 	api.POST("/transaksi/uangmasuklainlain/createuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukLainDetail)
 	api.POST("/transaksi/uangmasuklainlain/listdata", authMiddleware(), transaksi_uang_masuk_lainlain.ListData)
 	api.PUT("/transaksi/uangmasuklainlain/deleteuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteUangMasukLainDetail)
+	api.PUT("/transaksi/uangmasuklainlain/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteAllUangMasuk)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
