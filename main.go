@@ -15,6 +15,7 @@ import (
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
+	"rest_api_bendahara/transaksi_uang_keluar"
 	"rest_api_bendahara/transaksi_uang_masuk_lainlain"
 	"rest_api_bendahara/transaksi_uang_masuk_ppdb"
 	"rest_api_bendahara/transaksi_uang_masuk_siswa"
@@ -147,6 +148,17 @@ func main() {
 	api.POST("/transaksi/uangmasuklainlain/listdata", authMiddleware(), transaksi_uang_masuk_lainlain.ListData)
 	api.PUT("/transaksi/uangmasuklainlain/deleteuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteUangMasukLainDetail)
 	api.PUT("/transaksi/uangmasuklainlain/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteAllUangMasuk)
+
+	//UANG Keluar
+	api.GET("/transaksi/uangkeluar/listgroupkategori", authMiddleware(), transaksi_uang_keluar.ListGroupKategori)
+	api.POST("/transaksi/uangkeluar/listkategoriuang", authMiddleware(), transaksi_uang_keluar.ListKategoriUang)
+	api.POST("/transaksi/uangkeluar/createuangkeluar", authMiddleware(), transaksi_uang_keluar.CreateUangKeluar)
+	api.PUT("/transaksi/uangkeluar/edituangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar.EditUangKeluar)
+	api.PUT("/transaksi/uangkeluar/updateuangkeluardetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_keluar.UpdateUangKeluarDetail)
+	api.POST("/transaksi/uangkeluar/createuangkeluardetail", authMiddleware(), transaksi_uang_keluar.CreateUangKeluarDetail)
+	api.POST("/transaksi/uangkeluar/listdata", authMiddleware(), transaksi_uang_keluar.ListData)
+	api.PUT("/transaksi/uangkeluar/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar.DeleteUangKeluarDetail)
+	api.PUT("/transaksi/uangkeluar/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar.DeleteAllUangKeluar)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

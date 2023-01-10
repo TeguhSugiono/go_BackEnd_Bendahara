@@ -3382,6 +3382,373 @@
 			]
 		},
 		{
+			"name": "16.Transaksi Uang Keluar",
+			"item": [
+				{
+					"name": "1. List Kd Group",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/listgroupkategori",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"listgroupkategori"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. List Kd Kategori",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : \"9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/listkategoriuang",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"listkategoriuang"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Create Uang Keluar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"kd_kategori\" : 12,\r\n    \"kd_proses\" : \"PRA\",\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"03-01-2023\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/createuangkeluar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"createuangkeluar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Edit Uang Keluar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"kd_kategori\" : 12,\r\n    \"kd_proses\" : \"PRA\",\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Keluar\",\r\n    \"total_biaya\" : 900000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/edituangkeluar/:kd_trans_keluar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"edituangkeluar",
+								":kd_trans_keluar"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_keluar",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Edit Uang Keluar Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 450000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/updateuangkeluardetail/:kd_trans_keluar/:kd_trans_keluar_detail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"updateuangkeluardetail",
+								":kd_trans_keluar",
+								":kd_trans_keluar_detail"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_keluar",
+									"value": "2"
+								},
+								{
+									"key": "kd_trans_keluar_detail",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Add Uang Keluar Detail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_trans_keluar\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/createuangkeluardetail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"createuangkeluardetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. List Data (Dahsboard)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_document1\" : \"12-12-2022\",\r\n    \"tgl_document2\" : \"31-12-2022\",\r\n    \"no_document\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/listdata",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"listdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Delete Uang Keluar Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_trans_keluar\" : \"1\",\r\n    \"kd_trans_keluar_detail\" : \"3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/deleteuangkeluardetail",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"deleteuangkeluardetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Delete All Uang Keluar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluar/deletealluangkeluar/:kd_trans_keluar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangkeluar",
+								"deletealluangkeluar",
+								":kd_trans_keluar"
+							],
+							"variable": [
+								{
+									"key": "kd_trans_keluar",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "New Folder",
 			"item": [
 				{
@@ -3524,7 +3891,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MjgyODg1OH0.Lm9cKwMnePcceXAmaqIzL6l4o8cbvDi8ZqWDO4p09Hk",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3MzQ0OTAyOX0.fIe3tnFq5c-Ys9TTtFQhcPbC91-7TGs9ENmmBfUx3PY",
 				"type": "string"
 			}
 		]

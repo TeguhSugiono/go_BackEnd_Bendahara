@@ -263,8 +263,24 @@ func CreateUangMasukSiswa(c *gin.Context) {
 		return
 	}
 
-	//cek data siswa
 	var intJmldata int
+	db.Raw(" SELECT count(*) jmldata FROM tbl_group_kategoris where kd_group=? and flag_aktif=0 ", paramInputSiswa.Kd_group).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Kode Group Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	db.Raw(" SELECT count(*) jmldata FROM tbl_kategori_uangs where kd_kategori=? and flag_aktif=0 ", paramInputSiswa.Kd_kategori).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Kode Kategori Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	//cek data siswa
+
 	db.Raw("SELECT count(*) jmldata FROM tbl_siswa where flag_siswa=0 and status_siswa not in('Tidak Aktif','LULUS') and nis=? "+
 		" and (tahun_aktif=? or tahun_aktif = REPLACE(?,'-','/')) "+
 		" and REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') = ?", paramInputSiswa.Nis_siswa, paramInputSiswa.Tahun_akademik, paramInputSiswa.Tahun_akademik, paramInputSiswa.Nm_kelas).Scan(&intJmldata)
@@ -523,8 +539,25 @@ func EditUangMasukSiswa(c *gin.Context) {
 		return
 	}
 
-	//cek data siswa
 	var intJmldata int
+
+	db.Raw(" SELECT count(*) jmldata FROM tbl_group_kategoris where kd_group=? and flag_aktif=0 ", paramInputSiswa.Kd_group).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Kode Group Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	db.Raw(" SELECT count(*) jmldata FROM tbl_kategori_uangs where kd_kategori=? and flag_aktif=0 ", paramInputSiswa.Kd_kategori).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Kode Kategori Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	//cek data siswa
+
 	db.Raw("SELECT count(*) jmldata FROM tbl_siswa where flag_siswa=0 and status_siswa not in('Tidak Aktif','LULUS') and nis=? "+
 		" and (tahun_aktif=? or tahun_aktif = REPLACE(?,'-','/')) "+
 		" and REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') = ?", paramInputSiswa.Nis_siswa, paramInputSiswa.Tahun_akademik, paramInputSiswa.Tahun_akademik, paramInputSiswa.Nm_kelas).Scan(&intJmldata)

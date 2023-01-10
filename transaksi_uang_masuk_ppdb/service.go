@@ -226,8 +226,24 @@ func CreateUangMasukPPdb(c *gin.Context) {
 	}
 	dateStrTglDaftar := tTglDaftar.Format("2006-01-02")
 
-	//cek data siswa ppdb
 	var intJmldata int
+	db.Raw(" SELECT count(*) jmldata FROM tbl_group_kategoris where kd_group=? and flag_aktif=0 ", paramInputPPdb.Kd_group).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Kode Group Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	db.Raw(" SELECT count(*) jmldata FROM tbl_kategori_uangs where kd_kategori=? and flag_aktif=0 ", paramInputPPdb.Kd_kategori).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Kode Kategori Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	//cek data siswa ppdb
+
 	db.Raw("SELECT count(*) jmldata "+
 		" FROM tbl_user_ppdb WHERE nik = ? and tgldaftar=? and tahun_daftar=? "+
 		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' "+
