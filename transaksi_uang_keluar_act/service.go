@@ -1,4 +1,4 @@
-package transaksi_uang_keluar
+package transaksi_uang_keluar_pra
 
 import (
 	"errors"

@@ -15,7 +15,8 @@ import (
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
-	"rest_api_bendahara/transaksi_uang_keluar"
+	"rest_api_bendahara/transaksi_uang_keluar_pra"
+	"rest_api_bendahara/transaksi_uang_keluar_pra_act"
 	"rest_api_bendahara/transaksi_uang_masuk_lainlain"
 	"rest_api_bendahara/transaksi_uang_masuk_ppdb"
 	"rest_api_bendahara/transaksi_uang_masuk_siswa"
@@ -149,16 +150,27 @@ func main() {
 	api.PUT("/transaksi/uangmasuklainlain/deleteuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteUangMasukLainDetail)
 	api.PUT("/transaksi/uangmasuklainlain/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteAllUangMasuk)
 
-	//UANG Keluar
-	api.GET("/transaksi/uangkeluar/listgroupkategori", authMiddleware(), transaksi_uang_keluar.ListGroupKategori)
-	api.POST("/transaksi/uangkeluar/listkategoriuang", authMiddleware(), transaksi_uang_keluar.ListKategoriUang)
-	api.POST("/transaksi/uangkeluar/createuangkeluar", authMiddleware(), transaksi_uang_keluar.CreateUangKeluar)
-	api.PUT("/transaksi/uangkeluar/edituangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar.EditUangKeluar)
-	api.PUT("/transaksi/uangkeluar/updateuangkeluardetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_keluar.UpdateUangKeluarDetail)
-	api.POST("/transaksi/uangkeluar/createuangkeluardetail", authMiddleware(), transaksi_uang_keluar.CreateUangKeluarDetail)
-	api.POST("/transaksi/uangkeluar/listdata", authMiddleware(), transaksi_uang_keluar.ListData)
-	api.PUT("/transaksi/uangkeluar/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar.DeleteUangKeluarDetail)
-	api.PUT("/transaksi/uangkeluar/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar.DeleteAllUangKeluar)
+	//UANG Keluar PRA
+	api.GET("/transaksi/uangkeluarpra/listgroupkategori", authMiddleware(), transaksi_uang_keluar_pra.ListGroupKategori)
+	api.POST("/transaksi/uangkeluarpra/listkategoriuang", authMiddleware(), transaksi_uang_keluar_pra.ListKategoriUang)
+	api.POST("/transaksi/uangkeluarpra/createuangkeluar", authMiddleware(), transaksi_uang_keluar_pra.CreateUangKeluar)
+	api.PUT("/transaksi/uangkeluarpra/edituangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra.EditUangKeluar)
+	api.PUT("/transaksi/uangkeluarpra/updateuangkeluardetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_keluar_pra.UpdateUangKeluarDetail)
+	api.POST("/transaksi/uangkeluarpra/createuangkeluardetail", authMiddleware(), transaksi_uang_keluar_pra.CreateUangKeluarDetail)
+	api.POST("/transaksi/uangkeluarpra/listdata", authMiddleware(), transaksi_uang_keluar_pra.ListData)
+	api.PUT("/transaksi/uangkeluarpra/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar_pra.DeleteUangKeluarDetail)
+	api.PUT("/transaksi/uangkeluarpra/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra.DeleteAllUangKeluar)
+
+	//UANG Keluar PRA ACT
+	api.GET("/transaksi/uangkeluarpraact/listgroupkategori", authMiddleware(), transaksi_uang_keluar_pra_act.ListGroupKategori)
+	api.POST("/transaksi/uangkeluarpraact/listkategoriuang", authMiddleware(), transaksi_uang_keluar_pra_act.ListKategoriUang)
+	api.POST("/transaksi/uangkeluarpraact/createuangkeluar", authMiddleware(), transaksi_uang_keluar_pra_act.CreateUangKeluar)
+	api.PUT("/transaksi/uangkeluarpraact/edituangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra_act.EditUangKeluar)
+	api.PUT("/transaksi/uangkeluarpraact/updateuangkeluardetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_keluar_pra_act.UpdateUangKeluarDetail)
+	api.POST("/transaksi/uangkeluarpraact/createuangkeluardetail", authMiddleware(), transaksi_uang_keluar_pra_act.CreateUangKeluarDetail)
+	api.POST("/transaksi/uangkeluarpraact/listdata", authMiddleware(), transaksi_uang_keluar_pra_act.ListData)
+	api.PUT("/transaksi/uangkeluarpraact/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar_pra_act.DeleteUangKeluarDetail)
+	api.PUT("/transaksi/uangkeluarpraact/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra_act.DeleteAllUangKeluar)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

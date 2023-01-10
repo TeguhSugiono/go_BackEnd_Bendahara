@@ -1,4 +1,4 @@
-package transaksi_uang_keluar
+package transaksi_uang_keluar_pra
 
 type ParamChangeKategori struct {
 	Kd_group string `form:"kd_group" json:"kd_group" binding:"required"`
