@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 10/01/2023 23:18:35
+ Date: 17/01/2023 03:24:03
 */
 
 SET NAMES utf8mb4;
@@ -974,13 +974,14 @@ INSERT INTO `tbl_tahun_akademik` VALUES (3, '2021/2022', 'Aktif', '2021-06-17 09
 INSERT INTO `tbl_tahun_akademik` VALUES (4, '2022-2023', 'Tidak Aktif', '2022-07-07 11:51:51', 'jejen', NULL, NULL, 0);
 
 -- ----------------------------
--- Table structure for tbl_trans_uang_keluar_details
+-- Table structure for tbl_trans_uang_keluar_pra_act_details
 -- ----------------------------
-DROP TABLE IF EXISTS `tbl_trans_uang_keluar_details`;
-CREATE TABLE `tbl_trans_uang_keluar_details`  (
+DROP TABLE IF EXISTS `tbl_trans_uang_keluar_pra_act_details`;
+CREATE TABLE `tbl_trans_uang_keluar_pra_act_details`  (
   `kd_trans_keluar` int(11) NULL DEFAULT NULL,
   `kd_trans_keluar_detail` int(11) NOT NULL AUTO_INCREMENT,
   `seqno` int(11) NULL DEFAULT NULL,
+  `kd_post_uang_masuk` int(255) NULL DEFAULT NULL,
   `tgl_bayar` date NULL DEFAULT NULL,
   `jml_bayar` double(19, 2) NULL DEFAULT NULL,
   `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -990,22 +991,17 @@ CREATE TABLE `tbl_trans_uang_keluar_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of tbl_trans_uang_keluar_details
+-- Records of tbl_trans_uang_keluar_pra_act_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_keluar_details` VALUES (1, 1, 1, '2022-07-02', 700000.00, 'hehehehe', 0, '2023-01-07 21:26:57', 'teguh', '2023-01-10 23:10:28', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_details` VALUES (2, 2, 1, '2022-07-02', 700000.00, 'hehehehe', 0, '2023-01-07 21:28:23', 'teguh', '2023-01-10 22:18:34', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_details` VALUES (1, 3, 2, '2022-07-02', 70000.00, 'hehehehe', 0, '2023-01-10 22:35:11', 'teguh', '2023-01-10 23:10:28', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_details` VALUES (1, 4, 3, '2022-07-02', 30000.00, 'hehehehe', 0, '2023-01-10 22:35:17', 'teguh', '2023-01-10 23:10:28', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_details` VALUES (2, 5, 2, '2022-07-02', 450000.00, 'hehehehe', 0, '2023-01-10 22:37:37', 'teguh', '2023-01-10 22:38:13', 'teguh');
 
 -- ----------------------------
--- Table structure for tbl_trans_uang_keluar_headers
+-- Table structure for tbl_trans_uang_keluar_pra_act_headers
 -- ----------------------------
-DROP TABLE IF EXISTS `tbl_trans_uang_keluar_headers`;
-CREATE TABLE `tbl_trans_uang_keluar_headers`  (
+DROP TABLE IF EXISTS `tbl_trans_uang_keluar_pra_act_headers`;
+CREATE TABLE `tbl_trans_uang_keluar_pra_act_headers`  (
   `kd_group` int(11) NULL DEFAULT NULL,
   `kd_kategori` int(11) NULL DEFAULT NULL,
   `kd_trans_keluar` int(11) NOT NULL AUTO_INCREMENT,
@@ -1022,13 +1018,62 @@ CREATE TABLE `tbl_trans_uang_keluar_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_keluar_pra_act_headers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_keluar_pra_details
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_keluar_pra_details`;
+CREATE TABLE `tbl_trans_uang_keluar_pra_details`  (
+  `kd_trans_keluar` int(11) NULL DEFAULT NULL,
+  `kd_trans_keluar_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `seqno` int(11) NULL DEFAULT NULL,
+  `jml_bayar` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(1) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of tbl_trans_uang_keluar_headers
+-- Records of tbl_trans_uang_keluar_pra_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (9, 12, 1, 'PRA', 'nodok987263', '2022-12-12', 900000.00, 730000.00, 170000.00, '', 0, '2023-01-07 21:26:57', 'teguh', '2023-01-10 23:10:28', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (9, 1, 2, 'PRA', 'nodok987263', '2022-12-06', 1200000.00, 1150000.00, 50000.00, '', 0, '2023-01-07 21:28:23', 'teguh', '2023-01-10 22:38:13', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (1, 1, 1, 450000.00, 'hehehehe', 9, '2023-01-17 03:22:18', 'teguh', '2023-01-17 03:22:58', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (1, 2, 2, 0.00, '', 9, '2023-01-17 03:22:36', 'teguh', '2023-01-17 03:22:53', 'teguh');
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_keluar_pra_headers
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_keluar_pra_headers`;
+CREATE TABLE `tbl_trans_uang_keluar_pra_headers`  (
+  `kd_group` int(11) NULL DEFAULT NULL,
+  `kd_kategori` int(11) NULL DEFAULT NULL,
+  `kd_trans_keluar` int(11) NOT NULL AUTO_INCREMENT,
+  `no_document` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgl_document` date NULL DEFAULT NULL,
+  `total_biaya` double(19, 2) NULL DEFAULT NULL,
+  `total_bayar` double(19, 2) NULL DEFAULT NULL,
+  `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(11) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_keluar`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_keluar_pra_headers
+-- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 1, 'nodok987263', '2022-12-12', 900000.00, 450000.00, 450000.00, '', 9, '2023-01-17 03:22:18', 'teguh', '2023-01-17 03:22:58', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_details

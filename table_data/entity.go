@@ -228,6 +228,69 @@ type Tbl_trans_uang_masuk_lain_details struct {
 	Edited_by                  string
 }
 
+type Tbl_trans_uang_keluar_pra_headers struct {
+	Kd_group        int
+	Kd_kategori     int
+	Kd_trans_keluar int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar"`
+	No_document     string
+	Tgl_document    string
+	Total_biaya     float64
+	Total_bayar     float64
+	Sisa_biaya      float64
+	Keterangan      string
+	Flag_aktif      int
+	Created_on      time.Time
+	Created_by      string
+	Edited_on       time.Time
+	Edited_by       string
+}
+
+type Tbl_trans_uang_keluar_pra_details struct {
+	Kd_trans_keluar        int
+	Kd_trans_keluar_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar_detail"`
+	Seqno                  int
+	Jml_bayar              float64
+	Keterangan             string
+	Flag_aktif             int
+	Created_on             time.Time
+	Created_by             string
+	Edited_on              time.Time
+	Edited_by              string
+}
+
+type Tbl_trans_uang_keluar_pra_act_headers struct {
+	Kd_group        int
+	Kd_kategori     int
+	Kd_trans_keluar int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar"`
+	Kd_proses       string
+	No_document     string
+	Tgl_document    string
+	Total_biaya     float64
+	Total_bayar     float64
+	Sisa_biaya      float64
+	Keterangan      string
+	Flag_aktif      int
+	Created_on      time.Time
+	Created_by      string
+	Edited_on       time.Time
+	Edited_by       string
+}
+
+type Tbl_trans_uang_keluar_pra_act_details struct {
+	Kd_trans_keluar        int
+	Kd_trans_keluar_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar_detail"`
+	Seqno                  int
+	Kd_post_uang_masuk     int
+	Tgl_bayar              string
+	Jml_bayar              float64
+	Keterangan             string
+	Flag_aktif             int
+	Created_on             time.Time
+	Created_by             string
+	Edited_on              time.Time
+	Edited_by              string
+}
+
 type Tbl_trans_uang_keluar_headers struct {
 	Kd_group        int
 	Kd_kategori     int
@@ -250,7 +313,6 @@ type Tbl_trans_uang_keluar_details struct {
 	Kd_trans_keluar        int
 	Kd_trans_keluar_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar_detail"`
 	Seqno                  int
-	Tgl_bayar              string
 	Jml_bayar              float64
 	Keterangan             string
 	Flag_aktif             int
