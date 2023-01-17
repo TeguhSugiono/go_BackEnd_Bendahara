@@ -24,6 +24,27 @@ func ListDokument(c *gin.Context) {
 }
 
 func CreateUangKeluar(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var paramCreateACT ParamCreateACT
+	if err := c.ShouldBindJSON(&paramCreateACT); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var intJmldata int
+	db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_keluar_pra_headers a "+
+		" INNER JOIN tbl_trans_uang_keluar_pra_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
+		" where a.flag_aktif=0 and a.flag_act=0 and b.flag_aktif=0 and a.no_document=? limit 1 ", paramCreateACT.No_document).Scan(&intJmldata)
+	if intJmldata == 0 {
+		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
+		response := helper.APIResponse("Data Perencanaan Tidak Ditemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
 
 }
 

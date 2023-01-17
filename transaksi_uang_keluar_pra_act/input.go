@@ -5,6 +5,10 @@ type ListDokumentPRA struct {
 	No_document     string
 }
 
+type ParamCreateACT struct {
+	No_document string `form:"no_document" json:"no_document" binding:"required"`
+}
+
 // type ParamChangeKategori struct {
 // 	Kd_group string `form:"kd_group" json:"kd_group" binding:"required"`
 // }
