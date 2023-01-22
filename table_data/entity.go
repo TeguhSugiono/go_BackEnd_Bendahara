@@ -313,6 +313,7 @@ type Tbl_trans_uang_keluar_act_details struct {
 	Kd_trans_keluar        int
 	Kd_trans_keluar_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar_detail"`
 	Seqno                  int
+	Kd_post_uang_masuk     string
 	Jml_bayar              float64
 	Keterangan             string
 	Flag_aktif             int
