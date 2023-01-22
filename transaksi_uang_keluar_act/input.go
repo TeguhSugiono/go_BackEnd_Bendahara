@@ -40,6 +40,7 @@ type GetDataUmSiswa struct {
 	Kd_trans_keluar_detail int
 	Seqno                  int
 	Kd_post_uang_masuk     int
+	Nm_group               string
 	Tgl_bayar              string
 	Jml_bayar              float64
 	Keterangan             string

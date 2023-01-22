@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 22/01/2023 16:48:18
+ Date: 22/01/2023 18:52:44
 */
 
 SET NAMES utf8mb4;
@@ -991,11 +991,15 @@ CREATE TABLE `tbl_trans_uang_keluar_act_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_act_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 1, 1, 1, '2023-01-05', 1000000.00, 'hehehehe', 0, '2023-01-22 16:58:50', 'teguh', '2023-01-22 18:34:56', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 2, 1, 2, '2023-01-05', 300000.00, 'hehehehe', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-22 18:21:29', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 3, 2, 2, '2023-01-05', 200000.00, 'hehehehe', 0, '2023-01-22 18:11:01', 'teguh', '2023-01-22 18:35:39', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 4, 2, NULL, NULL, 0.00, '', 0, '2023-01-22 18:27:50', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_act_headers
@@ -1018,11 +1022,13 @@ CREATE TABLE `tbl_trans_uang_keluar_act_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_act_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (9, 12, 1, '', 'gaji9829', '2023-01-06', 1200000.00, 1000000.00, 200000.00, '', 0, '2023-01-22 16:58:50', 'teguh', '2023-01-22 18:35:39', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (7, 7, 2, '', 'gaji982983z', '2023-01-06', 9000000.00, 300000.00, 8700000.00, '', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-22 18:21:29', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_act_details
@@ -2085,6 +2091,16 @@ SELECT a.total_bayar,a.kd_group,c.nm_group from tbl_trans_uang_masuk_lain_header
 INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
 where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group ;
+
+-- ----------------------------
+-- View structure for vw_group_uang_masuk_sisa
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_group_uang_masuk_sisa`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_group_uang_masuk_sisa` AS SELECT (a.total_bayar-b.total_bayar) 'total_bayar',a.kd_group,b.nm_group
+from vw_group_uang_masuk a 
+LEFT JOIN vw_group_uang_keluar b on a.kd_group=b.kd_group 
+where (a.total_bayar-b.total_bayar) is not null
+GROUP BY a.kd_group ;
 
 -- ----------------------------
 -- View structure for vw_kelas_trans

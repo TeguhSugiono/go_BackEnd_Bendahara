@@ -234,9 +234,10 @@ func CreateUangKeluar(c *gin.Context) {
 			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_keluar_detail,b.seqno, " +
-				" b.kd_post_uang_masuk,b.tgl_bayar,b.jml_bayar,b.keterangan " +
+				" b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar,b.jml_bayar,b.keterangan " +
 				" FROM Tbl_trans_uang_keluar_act_headers a " +
 				" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+				" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 				" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 			sql = fmt.Sprintf("%s and a.kd_trans_keluar = %d", sql, kd_trans_keluar)
@@ -452,10 +453,11 @@ func EditUangKeluar(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group, " +
 			" b.jml_bayar,b.keterangan " +
 			" FROM Tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" where a.flag_aktif=0 and b.flag_aktif=0   "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_keluar = '%s'", sql, Kd_trans_keluar)
@@ -641,10 +643,11 @@ func UpdateUangKeluarDetail(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan " +
 			" FROM Tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_keluar = '%s'", sql, kd_trans_keluar)
@@ -784,10 +787,11 @@ func CreateUangKeluarDetail(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan " +
 			" FROM Tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_keluar = %d", sql, kd_trans_keluar)
@@ -907,10 +911,11 @@ func ListData(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan " +
 			" FROM Tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_keluar = %d", sql, kd_trans_keluar)
@@ -1050,10 +1055,11 @@ func DeleteUangKeluarDetail(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan " +
 			" FROM Tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_keluar = %d", sql, int_kd_trans_keluar)
@@ -1175,10 +1181,11 @@ func DeleteAllUangKeluar(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk, b.tgl_bayar," +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group, b.tgl_bayar," +
 			" b.jml_bayar,b.keterangan " +
 			" FROM Tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_keluar = %d", sql, kd_trans_keluarx)

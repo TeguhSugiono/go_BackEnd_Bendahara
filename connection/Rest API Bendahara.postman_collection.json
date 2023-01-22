@@ -4115,7 +4115,7 @@
 			]
 		},
 		{
-			"name": "18. Transaksi Uang Keluar ACT",
+			"name": "18.Transaksi Uang Keluar ACT",
 			"item": [
 				{
 					"name": "1. List Kd Group",
@@ -4141,7 +4141,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/listgroupkategori",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/listgroupkategori",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4154,7 +4154,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"listgroupkategori"
 							]
 						}
@@ -4174,7 +4174,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : \"9\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : \"7\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4182,7 +4182,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/listkategoriuang",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/listkategoriuang",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4195,7 +4195,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"listkategoriuang"
 							]
 						}
@@ -4209,7 +4209,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"kd_kategori\" : 12,\r\n    \"no_document\" : \"nodok9887263\",\r\n    \"tgl_document\" : \"03-01-2023\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 2000000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 7,\r\n    \"kd_kategori\" : 7,\r\n    \"no_document\" : \"gaji982983\",\r\n    \"tgl_document\" : \"06-01-2023\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 9000000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4217,7 +4217,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/createuangkeluar",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/createuangkeluar",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4230,7 +4230,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"createuangkeluar"
 							]
 						}
@@ -4244,7 +4244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"kd_kategori\" : 12,\r\n    \"kd_proses\" : \"PRA\",\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Keluar\",\r\n    \"total_biaya\" : 900000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 7,\r\n    \"kd_kategori\" : 7,\r\n    \"no_document\" : \"gaji982983z\",\r\n    \"tgl_document\" : \"06-01-2023\",\r\n    \"keterangan\" : \"Edit Uang Keluar\",\r\n    \"total_biaya\" :1200000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4252,7 +4252,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/edituangkeluar/:kd_trans_keluar",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/edituangkeluar/:kd_trans_keluar",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4265,7 +4265,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"edituangkeluar",
 								":kd_trans_keluar"
 							],
@@ -4286,7 +4286,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"jml_bayar\" : 2000000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"kd_post_uang_masuk\" : 2,\r\n    \"tgl_bayar\" : \"05-01-2023\",\r\n    \"jml_bayar\" : 300000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4294,7 +4294,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/updateuangkeluardetail/:kd_trans_keluar/:kd_trans_keluar_detail",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/updateuangkeluardetail/:kd_trans_keluar/:kd_trans_keluar_detail",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4307,7 +4307,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"updateuangkeluardetail",
 								":kd_trans_keluar",
 								":kd_trans_keluar_detail"
@@ -4319,7 +4319,7 @@
 								},
 								{
 									"key": "kd_trans_keluar_detail",
-									"value": "3"
+									"value": "2"
 								}
 							]
 						}
@@ -4333,7 +4333,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_keluar\" : 1\r\n}",
+							"raw": "{\r\n    \"kd_trans_keluar\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4341,7 +4341,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/createuangkeluardetail",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/createuangkeluardetail",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4354,7 +4354,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"createuangkeluardetail"
 							]
 						}
@@ -4374,7 +4374,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_document1\" : \"12-12-2022\",\r\n    \"tgl_document2\" : \"31-12-2022\",\r\n    \"no_document\" : \"\"\r\n}",
+							"raw": "{\r\n    \"tgl_document1\" : \"12-12-2022\",\r\n    \"tgl_document2\" : \"31-12-2023\",\r\n    \"no_document\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4382,7 +4382,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/listdata",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/listdata",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4395,7 +4395,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"listdata"
 							]
 						}
@@ -4409,7 +4409,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_keluar\" : \"1\",\r\n    \"kd_trans_keluar_detail\" : \"2\"\r\n}",
+							"raw": "{\r\n    \"kd_trans_keluar\" : \"1\",\r\n    \"kd_trans_keluar_detail\" : \"3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4417,7 +4417,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/deleteuangkeluardetail",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/deleteuangkeluardetail",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4430,7 +4430,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"deleteuangkeluardetail"
 							]
 						}
@@ -4452,7 +4452,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpra/deletealluangkeluar/:kd_trans_keluar",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/deletealluangkeluar/:kd_trans_keluar",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4465,7 +4465,7 @@
 								"api",
 								"v1",
 								"transaksi",
-								"uangkeluarpra",
+								"uangkeluaract",
 								"deletealluangkeluar",
 								":kd_trans_keluar"
 							],
