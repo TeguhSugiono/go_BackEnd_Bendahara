@@ -64,6 +64,7 @@ type GetBiayaAndSisa struct {
 	Total_biaya    float64
 	Total_bayar    float64
 	Sisa_biaya     float64
+	Keterangan     string
 	Detail         interface{}
 }
 

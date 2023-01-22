@@ -1,4 +1,4 @@
-package transaksi_uang_keluar_pra
+package transaksi_uang_keluar_act
 
 type ParamChangeKategori struct {
 	Kd_group string `form:"kd_group" json:"kd_group" binding:"required"`
@@ -8,7 +8,6 @@ type ParamInputTransaksi struct {
 	Kd_group        int     `form:"kd_group" json:"kd_group" binding:"required"`
 	Kd_kategori     int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
 	Kd_trans_keluar int     `form:"Kd_trans_keluar" json:"Kd_trans_keluar"`
-	Kd_proses       string  `form:"kd_proses" json:"kd_proses"`
 	No_document     string  `form:"no_document" json:"no_document" binding:"required"`
 	Tgl_document    string  `form:"tgl_document" json:"tgl_document" binding:"required"`
 	Total_biaya     float64 `form:"total_biaya" json:"total_biaya" binding:"number"`
@@ -28,19 +27,18 @@ type GetBiayaAndSisa struct {
 	Nm_group        string
 	Kd_kategori     int
 	Nm_kategori     string
-	Kd_proses       string
 	No_document     string
 	Tgl_document    string
 	Total_biaya     float64
 	Total_bayar     float64
 	Sisa_biaya      float64
+	Keterangan      string
 	Detail          interface{}
 }
 
 type GetDataUmSiswa struct {
 	Kd_trans_keluar_detail int
 	Seqno                  int
-	Tgl_bayar              string
 	Jml_bayar              float64
 	Keterangan             string
 }
@@ -48,7 +46,6 @@ type GetDataUmSiswa struct {
 type ParamInputTransaksiEdit struct {
 	Kd_group     int     `form:"kd_group" json:"kd_group" binding:"required"`
 	Kd_kategori  int     `form:"kd_kategori" json:"kd_kategori" binding:"required"`
-	Kd_proses    string  `form:"kd_proses" json:"kd_proses" binding:"required"`
 	No_document  string  `form:"no_document" json:"no_document" binding:"required"`
 	Tgl_document string  `form:"tgl_document" json:"tgl_document" binding:"required"`
 	Total_biaya  float64 `form:"total_biaya" json:"total_biaya" binding:"required,number"`
@@ -63,7 +60,6 @@ type ParamInputTransaksiEdit struct {
 }
 
 type ParamEditUmSiswaDetail struct {
-	Tgl_bayar  string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
 	Jml_bayar  float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
 	Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
 	Edited_on  string  `form:"edited_on" json:"edited_on"`

@@ -200,19 +200,21 @@ func ListData(c *gin.Context) {
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
-	rows, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	var ket string
+	rows, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? ", paramChangeSiswa.Tahun_akademik, paramChangeSiswa.Nm_kelas, paramChangeSiswa.Nis_siswa).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk = kd_trans_masuk
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataUmSpp
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -397,19 +399,21 @@ func CreateUangMasukSpp(c *gin.Context) {
 		var total_biaya float64
 		var total_bayar float64
 		var sisa_biaya float64
-		rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+		var ket string
+		rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 			" FROM tbl_trans_uang_masuk_spp_headers a "+
 			" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 			" where a.flag_aktif=0 and b.flag_aktif=0  "+
 			" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? ", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas, paramInputSPP.Nis_siswa).Rows()
 		defer rowss.Close()
 		for rowss.Next() {
-			rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+			rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 			arraydata := GetBiayaAndSisa{}
 			arraydata.Kd_trans_masuk = kd_trans_masuk
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = total_bayar
 			arraydata.Sisa_biaya = sisa_biaya
+			arraydata.Keterangan = ket
 			arraydata.Detail = getDataUmSpp
 			SetArrayData = append(SetArrayData, arraydata)
 		}
@@ -525,19 +529,21 @@ func UpdateUangMasukSpp(c *gin.Context) {
 	//var total_biaya float64
 	var total_bayar float64
 	//var sisa_biaya float64
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	var ket string
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.kd_trans_masuk=? ", c.Param("idhead")).Rows()
 	defer rowss.Close()
 	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk = kd_trans_masuk
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataUmSpp
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -618,19 +624,21 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	var ket string
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.kd_trans_masuk=? ", idhead).Rows()
 	defer rowss.Close()
 	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya)
+		rowss.Scan(&kd_trans_masuk, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk = kd_trans_masuk
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataUmSpp
 		SetArrayData = append(SetArrayData, arraydata)
 	}

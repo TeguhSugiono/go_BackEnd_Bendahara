@@ -125,15 +125,16 @@ func ListData(c *gin.Context) {
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
+	var ket string
 	rows, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,convert(a.tgldaftar,CHAR) 'tgldaftar', "+
-		" a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+		" a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.nik=? ", paramChangeNik.Nik).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_ppdb = kd_trans_masuk_ppdb
 		tTglDaftar, _ := time.Parse("2006-01-02", tgldaftar)
@@ -144,6 +145,7 @@ func ListData(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataPPDB
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -374,14 +376,15 @@ func CreateUangMasukPPdb(c *gin.Context) {
 	var tgldaftar string
 	var tahun_daftar string
 	var tahun_akademik string
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	var ket string
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.nik=? and a.tahun_daftar=? and a.tgldaftar=? ", paramInputPPdb.Nik, paramInputPPdb.Tahun_daftar, dateStrTglDaftar).Rows()
 	defer rowss.Close()
 	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya)
+		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_ppdb = kd_trans_masuk_ppdb
 		tTglDaftar, _ := time.Parse("2006-01-02", tgldaftar)
@@ -392,6 +395,7 @@ func CreateUangMasukPPdb(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataPPDB
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -496,14 +500,15 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	var tgldaftar string
 	var tahun_daftar string
 	var tahun_akademik string
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	var ket string
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.kd_trans_masuk_ppdb=?  ", c.Param("idhead")).Rows()
 	defer rowss.Close()
 	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya)
+		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_ppdb = kd_trans_masuk_ppdb
 		tTglDaftar, _ := time.Parse("2006-01-02", tgldaftar)
@@ -514,6 +519,7 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataPPDB
 		SetArrayData = append(SetArrayData, arraydata)
 	}
@@ -595,14 +601,15 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	var tahun_akademik string
 	var total_biaya float64
 	var sisa_biaya float64
-	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya "+
+	var ket string
+	rowss, _ := db.Raw("SELECT distinct b.kd_trans_masuk_ppdb,CONVERT(a.tgldaftar,CHAR) 'tgldaftar',a.tahun_daftar,a.tahun_akademik,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" where a.flag_aktif=0 and b.flag_aktif=0  "+
 		" and a.kd_trans_masuk_ppdb=?  ", idhead).Rows()
 	defer rowss.Close()
 	for rowss.Next() {
-		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya)
+		rowss.Scan(&kd_trans_masuk_ppdb, &tgldaftar, &tahun_daftar, &tahun_akademik, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_ppdb = kd_trans_masuk_ppdb
 		tTglDaftar, _ := time.Parse("2006-01-02", tgldaftar)
@@ -613,6 +620,7 @@ func DeleteAllUangMasuk(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 		arraydata.Detail = getDataPPDB
 		SetArrayData = append(SetArrayData, arraydata)
 	}

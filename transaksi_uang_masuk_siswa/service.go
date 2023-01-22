@@ -175,9 +175,10 @@ func ListDataAddSiswa(c *gin.Context) {
 		var nis_siswa string
 		//var nm_kelas string
 		var nm_siswa string
+		var ket string
 
 		ssqlx := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-			" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+			" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -195,7 +196,7 @@ func ListDataAddSiswa(c *gin.Context) {
 		rows, _ := db.Raw(ssqlx).Rows()
 		defer rows.Close()
 		for rows.Next() {
-			rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+			rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 			arraydata := GetBiayaAndSisa{}
 			arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
 			arraydata.Kd_group = kd_group
@@ -209,6 +210,7 @@ func ListDataAddSiswa(c *gin.Context) {
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = total_bayar
 			arraydata.Sisa_biaya = sisa_biaya
+			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -385,9 +387,10 @@ func CreateUangMasukSiswa(c *gin.Context) {
 		var nis_siswa string
 		var nm_kelas string
 		var nm_siswa string
+		var ket string
 
 		ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-			" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+			" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -410,7 +413,7 @@ func CreateUangMasukSiswa(c *gin.Context) {
 		rows, _ := db.Raw(ssql).Rows()
 		defer rows.Close()
 		for rows.Next() {
-			rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+			rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 			arraydata := GetBiayaAndSisa{}
 			arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
 			arraydata.Kd_group = kd_group
@@ -424,6 +427,7 @@ func CreateUangMasukSiswa(c *gin.Context) {
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = total_bayar
 			arraydata.Sisa_biaya = sisa_biaya
+			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -691,9 +695,10 @@ func EditUangMasukSiswa(c *gin.Context) {
 	var nis_siswa string
 	var nm_kelas string
 	var nm_siswa string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -709,7 +714,7 @@ func EditUangMasukSiswa(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_siswa = int_kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -723,6 +728,7 @@ func EditUangMasukSiswa(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -897,9 +903,10 @@ func DeleteUangMasukSiswaDetail(c *gin.Context) {
 	var nis_siswa string
 	var nm_kelas string
 	var nm_siswa string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -915,7 +922,7 @@ func DeleteUangMasukSiswaDetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_siswa = int_kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -929,6 +936,7 @@ func DeleteUangMasukSiswaDetail(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -1066,9 +1074,10 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	var nis_siswa string
 	var nm_kelas string
 	var nm_siswa string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -1084,7 +1093,7 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_siswa = int_kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -1098,6 +1107,7 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -1266,9 +1276,10 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 	var nis_siswa string
 	var nm_kelas string
 	var nm_siswa string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -1284,7 +1295,7 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_siswa = paramAddDetail.Kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -1298,6 +1309,7 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -1424,9 +1436,10 @@ func ListData(c *gin.Context) {
 	var nis_siswa string
 	var nm_kelas string
 	var nm_siswa string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -1447,7 +1460,7 @@ func ListData(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -1461,6 +1474,7 @@ func ListData(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -1558,9 +1572,10 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	var nis_siswa string
 	var nm_kelas string
 	var nm_siswa string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_siswa,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.tahun_akademik,a.nis_siswa, " +
-		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" c.nm_siswa,a.nm_kelas,a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_siswa_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
@@ -1576,7 +1591,7 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_siswa = kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -1590,6 +1605,7 @@ func DeleteAllUangMasuk(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +

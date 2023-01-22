@@ -220,9 +220,10 @@ func CreateUangMasukLain(c *gin.Context) {
 		var sisa_biaya float64
 		var no_document string
 		var tgl_document string
+		var ket string
 
 		ssql := " SELECT distinct a.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-			" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+			" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
 			" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -235,7 +236,7 @@ func CreateUangMasukLain(c *gin.Context) {
 		rows, _ := db.Raw(ssql).Rows()
 		defer rows.Close()
 		for rows.Next() {
-			rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+			rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 			arraydata := GetBiayaAndSisa{}
 			arraydata.Kd_trans_masuk_lain = Kd_trans_masuk_lain
 			arraydata.Kd_group = kd_group
@@ -247,6 +248,7 @@ func CreateUangMasukLain(c *gin.Context) {
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = total_bayar
 			arraydata.Sisa_biaya = sisa_biaya
+			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -440,9 +442,10 @@ func EditUangMasukLain(c *gin.Context) {
 	var total_bayar float64
 	var no_document string
 	var tgl_document string
+	var ket string
 
 	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -457,7 +460,7 @@ func EditUangMasukLain(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = int_Kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
@@ -469,6 +472,7 @@ func EditUangMasukLain(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -602,9 +606,10 @@ func UpdateUangMasukLainetail(c *gin.Context) {
 	var total_bayar float64
 	var no_document string
 	var tgl_document string
+	var ket string
 
 	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -619,7 +624,7 @@ func UpdateUangMasukLainetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = int_Kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
@@ -631,6 +636,7 @@ func UpdateUangMasukLainetail(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -743,9 +749,10 @@ func CreateUangMasukLainDetail(c *gin.Context) {
 	var sisa_biaya float64
 	var no_document string
 	var tgl_document string
+	var ket string
 
 	ssql := " SELECT distinct b.Kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -760,7 +767,7 @@ func CreateUangMasukLainDetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&Kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = paramAddDetail.Kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
@@ -772,6 +779,7 @@ func CreateUangMasukLainDetail(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -862,9 +870,10 @@ func ListData(c *gin.Context) {
 	var sisa_biaya float64
 	var no_document string
 	var tgl_document string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -882,7 +891,7 @@ func ListData(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
@@ -894,6 +903,7 @@ func ListData(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -1006,9 +1016,10 @@ func DeleteUangMasukLainDetail(c *gin.Context) {
 	var total_bayar float64
 	var no_document string
 	var tgl_document string
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -1023,7 +1034,7 @@ func DeleteUangMasukLainDetail(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_siswa, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = int_kd_trans_masuk_siswa
 		arraydata.Kd_group = kd_group
@@ -1035,6 +1046,7 @@ func DeleteUangMasukLainDetail(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
@@ -1131,9 +1143,10 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	var tgl_document string
 	var total_biaya float64
 	var sisa_biaya float64
+	var ket string
 
 	ssql := " SELECT distinct b.kd_trans_masuk_lain,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
-		" a.total_biaya,a.total_bayar,a.sisa_biaya " +
+		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
 		" FROM tbl_trans_uang_masuk_lain_headers a " +
 		" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
@@ -1148,7 +1161,7 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya)
+		rows.Scan(&kd_trans_masuk_lain, &kd_group, &nm_group, &kd_kategori, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &ket)
 		arraydata := GetBiayaAndSisa{}
 		arraydata.Kd_trans_masuk_lain = kd_trans_masuk_lain
 		arraydata.Kd_group = kd_group
@@ -1160,6 +1173,7 @@ func DeleteAllUangMasuk(c *gin.Context) {
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
+		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
 			" b.tgl_bayar,b.jml_bayar,b.keterangan " +

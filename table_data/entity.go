@@ -280,7 +280,7 @@ type Tbl_trans_uang_keluar_pra_act_details struct {
 	Kd_trans_keluar        int
 	Kd_trans_keluar_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar_detail"`
 	Seqno                  int
-	Kd_post_uang_masuk     int
+	Kd_post_uang_masuk     string
 	Tgl_bayar              string
 	Jml_bayar              float64
 	Keterangan             string
@@ -291,7 +291,7 @@ type Tbl_trans_uang_keluar_pra_act_details struct {
 	Edited_by              string
 }
 
-type Tbl_trans_uang_keluar_headers struct {
+type Tbl_trans_uang_keluar_act_headers struct {
 	Kd_group        int
 	Kd_kategori     int
 	Kd_trans_keluar int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar"`
@@ -309,7 +309,7 @@ type Tbl_trans_uang_keluar_headers struct {
 	Edited_by       string
 }
 
-type Tbl_trans_uang_keluar_details struct {
+type Tbl_trans_uang_keluar_act_details struct {
 	Kd_trans_keluar        int
 	Kd_trans_keluar_detail int `gorm:"primary_key;auto_increment;not_null" json:"kd_trans_keluar_detail"`
 	Seqno                  int
