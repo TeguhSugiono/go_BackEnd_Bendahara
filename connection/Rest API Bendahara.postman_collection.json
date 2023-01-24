@@ -4482,7 +4482,7 @@
 			]
 		},
 		{
-			"name": "19.Report",
+			"name": "19.Report Uang Masuk",
 			"item": [
 				{
 					"name": "Report SPP",
@@ -4538,7 +4538,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5897\",\r\n    \"periode_bayar1\" : \"01-2022\" ,\r\n    \"periode_bayar2\" : \"12-2023\" ,\r\n    \"tgl_bayar1\" : \"01-01-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2022\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nik\" : \"\",\r\n    \"tgldaftar1\" : \"01-01-2022\",\r\n    \"tgldaftar2\" : \"01-01-2024\",\r\n    \"tgl_bayar1\" : \"01-01-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4561,6 +4561,47 @@
 								"report",
 								"uangmasuk",
 								"reportppdb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report UM Siswa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"\",\r\n    \"nm_kelas\" : \"\" ,\r\n    \"tgl_bayar1\" : \"01-01-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/uangmasuk/reportumsiswa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"uangmasuk",
+								"reportumsiswa"
 							]
 						}
 					},

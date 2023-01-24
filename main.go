@@ -190,6 +190,8 @@ func main() {
 	//REPORT EXCEL
 	api.POST("/report/uangmasuk/reportspp", authMiddleware(), report_uangmasuk.ReportSPP)
 	api.POST("/report/uangmasuk/reportppdb", authMiddleware(), report_uangmasuk.ReportPPDB)
+	api.POST("/report/uangmasuk/reportumsiswa", authMiddleware(), report_uangmasuk.ReportUmSiswa)
+	api.POST("/report/uangmasuk/reportumlain", authMiddleware(), report_uangmasuk.ReportUmLain)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 24/01/2023 21:19:10
+ Date: 25/01/2023 00:18:28
 */
 
 SET NAMES utf8mb4;
@@ -2115,6 +2115,23 @@ GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','')
 ORDER BY id_kelas ;
 
 -- ----------------------------
+-- View structure for vw_report_ppdb
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_ppdb`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_ppdb` AS SELECT c.nm_group,d.nm_kategori , a.nik,e.nm_siswa , a.tgldaftar ,a.tahun_daftar,a.tahun_akademik,
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+b.kategori_biaya_ppdb,b.tgl_bayar,b.jml_bayar,b.keterangan 'keterangan_detail',a.kd_trans_masuk_ppdb
+FROM tbl_trans_uang_masuk_ppdb_headers a
+INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+LEFT JOIN tbl_user_ppdb e on a.nik = e.nik
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+and e.status = 'sudah diverifikasi' and e.flag_verifikasidata='1' and e.flag_wawancara='1' 
+and e.flag_pembayaran='1' and e.flag=0 and e.flag_import<>'9' and e.status_berkas <> 'DiCabut'
+ORDER BY a.tahun_akademik,a.tgldaftar,e.nm_siswa,b.seqno ;
+
+-- ----------------------------
 -- View structure for vw_report_spp
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_report_spp`;
@@ -2126,6 +2143,22 @@ date_format(STR_TO_DATE(b.periode_bayar,'%m-%Y'),'%Y-%m') 'date_periode_bayar'
 ,a.kd_trans_masuk
 from tbl_trans_uang_masuk_spp_headers a 
 INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+ORDER BY a.tahun_akademik,a.nm_kelas,e.nm_siswa,b.seqno ;
+
+-- ----------------------------
+-- View structure for vw_report_umsiswa
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_umsiswa`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umsiswa` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa,a.nm_kelas, 
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
+a.kd_trans_masuk_siswa
+from tbl_trans_uang_masuk_siswa_headers a 
+INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
 INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
