@@ -22,6 +22,9 @@ import (
 	"rest_api_bendahara/transaksi_uang_masuk_ppdb"
 	"rest_api_bendahara/transaksi_uang_masuk_siswa"
 	"rest_api_bendahara/transaksi_uang_masuk_spp"
+
+	//"rest_api_bendahara/"
+	"rest_api_bendahara/report_uangmasuk"
 	"rest_api_bendahara/user"
 	"strings"
 
@@ -183,6 +186,10 @@ func main() {
 	api.POST("/transaksi/uangkeluaract/listdata", authMiddleware(), transaksi_uang_keluar_act.ListData)
 	api.PUT("/transaksi/uangkeluaract/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar_act.DeleteUangKeluarDetail)
 	api.PUT("/transaksi/uangkeluaract/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_act.DeleteAllUangKeluar)
+
+	//REPORT EXCEL
+	api.POST("/report/uangmasuk/reportspp", authMiddleware(), report_uangmasuk.ReportSPP)
+	api.POST("/report/uangmasuk/reportppdb", authMiddleware(), report_uangmasuk.ReportPPDB)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

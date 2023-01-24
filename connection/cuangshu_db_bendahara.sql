@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 22/01/2023 18:52:44
+ Date: 24/01/2023 21:19:10
 */
 
 SET NAMES utf8mb4;
@@ -1324,18 +1324,18 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_details`  (
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 1, 1, '07-2022', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 2, 2, '08-2022', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 3, 3, '09-2022', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 4, 4, '10-2022', '2022-07-02', 250000.00, 0.00, 'hehehehe', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 5, 5, '11-2022', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 6, 6, '12-2022', '2022-07-02', 250000.00, 100000.00, 'hehehehe', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 7, 7, '01-2023', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 8, 8, '02-2023', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 9, 9, '03-2023', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 10, 10, '04-2023', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 11, 11, '05-2023', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 12, 12, '06-2023', NULL, 250000.00, 0.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 1, 1, '07-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 2, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 3, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 4, 4, '10-2022', '2022-07-02', 250000.00, 0.00, 'hehehehe', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 5, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 6, 6, '12-2022', '2022-07-02', 250000.00, 100000.00, 'hehehehe', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 7, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 8, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 9, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 10, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 11, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 12, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 13, 1, '07-2022', NULL, 350000.00, 0.00, '', 0, '2022-10-16 13:10:11', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 14, 2, '08-2022', NULL, 350000.00, 0.00, '', 0, '2022-10-16 13:10:11', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 15, 3, '09-2022', NULL, 350000.00, 0.00, '', 0, '2022-10-16 13:10:11', 'teguh', NULL, NULL);
@@ -1399,7 +1399,7 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_headers`  (
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022-2023', '5897', 'X', 3000000.00, 100000.00, 2900000.00, '', 9, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022-2023', '5897', 'X', 3000000.00, 100000.00, 2900000.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 2, '2022-2023', '5762', 'XI', 4200000.00, 0.00, 4200000.00, '', 0, '2022-10-16 13:10:11', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 3, '2022-2023', '5650', 'XII', 5400000.00, 0.00, 5400000.00, '', 0, '2022-10-16 13:10:56', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 4, '2022-2023', '5652', 'XII', 5400000.00, 0.00, 5400000.00, 'Tidak Wajib Isi ini', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
@@ -2113,5 +2113,23 @@ REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' FROM 
 where flag_kelas = 0  
 GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') 
 ORDER BY id_kelas ;
+
+-- ----------------------------
+-- View structure for vw_report_spp
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_spp`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_spp` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa, 
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+date_format(STR_TO_DATE(concat('01','-',b.periode_bayar),'%d-%m-%Y'),'%M-%Y') 'periode_bayar',
+b.tgl_bayar,b.jml_tagihan, b.jml_bayar,b.keterangan 'keterangan_detail',
+date_format(STR_TO_DATE(b.periode_bayar,'%m-%Y'),'%Y-%m') 'date_periode_bayar'
+,a.kd_trans_masuk
+from tbl_trans_uang_masuk_spp_headers a 
+INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+ORDER BY a.tahun_akademik,a.nm_kelas,e.nm_siswa,b.seqno ;
 
 SET FOREIGN_KEY_CHECKS = 1;
