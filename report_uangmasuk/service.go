@@ -573,7 +573,7 @@ func ReportUmSiswa(c *gin.Context) {
 func ReportUmLain(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var paramReport ParamReportUmSiswa
+	var paramReport ParamReportUmLain
 	if err := c.ShouldBindJSON(&paramReport); err != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err, &ve) {
@@ -636,30 +636,67 @@ func ReportUmLain(c *gin.Context) {
 		TglBayar2 = tTglBayar2.Format("2006-01-02")
 	}
 
+	var TglDocument1 string
+	var TglDocument2 string
+
+	if paramReport.Tgl_document1 != "" {
+		tTglDocument1, err2 := time.Parse("02-01-2006", paramReport.Tgl_document1)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglDocument1 = tTglDocument1.Format("2006-01-02")
+	}
+
+	if paramReport.Tgl_document2 != "" {
+		tTglDocument2, err2 := time.Parse("02-01-2006", paramReport.Tgl_document2)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglDocument2 = tTglDocument2.Format("2006-01-02")
+	}
+
 	var nm_group string
 	var nm_kategori string
-	var tahun_akademik string
-	var nis_siswa string
-	var nm_siswa string
-	var nm_kelas string
+	var no_document string
+	var tgl_document string
 	var total_biaya float64
 	var total_bayar float64
 	var sisa_biaya float64
 	var keterangan string
-	var kd_trans_masuk_siswa int
+	var kd_trans_masuk_lain int
 
-	SetArrayData := []GetDataHeaderUmSiswa{}
-	ssql := " SELECT nm_group,nm_kategori,tahun_akademik,nis_siswa,nm_siswa,nm_kelas, " +
-		" total_biaya,total_bayar,sisa_biaya,keterangan,kd_trans_masuk_siswa " +
-		" FROM vw_report_umsiswa where nm_group<>'' "
-	if paramReport.Tahun_akademik != "" {
-		ssql = fmt.Sprintf("%s and tahun_akademik = '%s'", ssql, paramReport.Tahun_akademik)
-	}
-	if paramReport.Nis_siswa != "" {
-		ssql = fmt.Sprintf("%s and nis_siswa = '%s'", ssql, paramReport.Nis_siswa)
-	}
-	if paramReport.Nm_kelas != "" {
-		ssql = fmt.Sprintf("%s and nm_kelas = '%s'", ssql, paramReport.Nm_kelas)
+	SetArrayData := []GetDataHeaderUmLain{}
+	ssql := " SELECT nm_group,nm_kategori,no_document,tgl_document, " +
+		" total_biaya,total_bayar,sisa_biaya,keterangan,kd_trans_masuk_lain " +
+		" FROM vw_report_umlain where nm_group<>'' "
+	if paramReport.No_document != "" {
+		ssql = fmt.Sprintf("%s and no_document = '%s'", ssql, paramReport.No_document)
 	}
 	if paramReport.Tgl_bayar1 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssql, TglBayar1)
@@ -667,35 +704,33 @@ func ReportUmLain(c *gin.Context) {
 	if paramReport.Tgl_bayar2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglBayar2)
 	}
+	if paramReport.Tgl_document1 != "" {
+		ssql = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssql, TglDocument1)
+	}
+	if paramReport.Tgl_document2 != "" {
+		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglDocument2)
+	}
 
-	ssql = fmt.Sprintf("%s group by kd_trans_masuk_siswa ", ssql)
+	ssql = fmt.Sprintf("%s group by kd_trans_masuk_lain ", ssql)
 
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&nm_group, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk_siswa)
-		arraydata := GetDataHeaderUmSiswa{}
+		rows.Scan(&nm_group, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk_lain)
+		arraydata := GetDataHeaderUmLain{}
 		arraydata.Nm_group = nm_group
 		arraydata.Nm_kategori = nm_kategori
-		arraydata.Tahun_akademik = tahun_akademik
-		arraydata.Nis_siswa = nis_siswa
-		arraydata.Nm_siswa = nm_siswa
-		arraydata.Nm_kelas = nm_kelas
+		arraydata.No_document = no_document
+		arraydata.Tgl_document = tgl_document
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail FROM vw_report_umsiswa "
-		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_siswa = %d", ssqldetail, kd_trans_masuk_siswa)
-		if paramReport.Tahun_akademik != "" {
-			ssqldetail = fmt.Sprintf("%s and tahun_akademik = '%s'", ssqldetail, paramReport.Tahun_akademik)
-		}
-		if paramReport.Nis_siswa != "" {
-			ssqldetail = fmt.Sprintf("%s and nis_siswa = '%s'", ssqldetail, paramReport.Nis_siswa)
-		}
-		if paramReport.Nm_kelas != "" {
-			ssqldetail = fmt.Sprintf("%s and nm_kelas = '%s'", ssqldetail, paramReport.Nm_kelas)
+		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail FROM vw_report_umlain "
+		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_lain = %d", ssqldetail, kd_trans_masuk_lain)
+		if paramReport.No_document != "" {
+			ssqldetail = fmt.Sprintf("%s and no_document = '%s'", ssqldetail, paramReport.No_document)
 		}
 		if paramReport.Tgl_bayar1 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssqldetail, TglBayar1)
@@ -703,8 +738,14 @@ func ReportUmLain(c *gin.Context) {
 		if paramReport.Tgl_bayar2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglBayar2)
 		}
+		if paramReport.Tgl_document1 != "" {
+			ssqldetail = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssqldetail, TglDocument1)
+		}
+		if paramReport.Tgl_document2 != "" {
+			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglDocument2)
+		}
 
-		var getDataDetail []GetDataDetailUmSiswa
+		var getDataDetail []GetDataDetailUmLain
 		db.Raw(ssqldetail).Scan(&getDataDetail)
 
 		arraydata.Detail = getDataDetail

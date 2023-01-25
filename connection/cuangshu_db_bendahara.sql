@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 25/01/2023 00:18:28
+ Date: 25/01/2023 14:16:48
 */
 
 SET NAMES utf8mb4;
@@ -991,7 +991,7 @@ CREATE TABLE `tbl_trans_uang_keluar_act_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_act_details
@@ -1000,6 +1000,7 @@ INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 1, 1, 1, '2023-01-05'
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 2, 1, 2, '2023-01-05', 300000.00, 'hehehehe', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-22 18:21:29', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 3, 2, 2, '2023-01-05', 200000.00, 'hehehehe', 0, '2023-01-22 18:11:01', 'teguh', '2023-01-22 18:35:39', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 4, 2, NULL, NULL, 0.00, '', 0, '2023-01-22 18:27:50', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (3, 5, 1, 10, '2023-01-05', 4500000.00, 'Bayar Listrik Periode Desember 2022', 0, '2023-01-25 14:10:32', 'teguh', '2023-01-25 14:12:15', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_act_headers
@@ -1022,13 +1023,14 @@ CREATE TABLE `tbl_trans_uang_keluar_act_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_act_headers
 -- ----------------------------
 INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (9, 12, 1, '', 'gaji9829', '2023-01-06', 1200000.00, 1000000.00, 200000.00, '', 0, '2023-01-22 16:58:50', 'teguh', '2023-01-22 18:35:39', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (7, 7, 2, '', 'gaji982983z', '2023-01-06', 9000000.00, 300000.00, 8700000.00, '', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-22 18:21:29', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (8, 8, 3, '', 'INV-PLN-001', '2023-01-20', 4500000.00, 4500000.00, 0.00, 'Bayar PLN Listrik', 0, '2023-01-25 14:10:32', 'teguh', '2023-01-25 14:12:15', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_act_details
@@ -1147,11 +1149,14 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (1, 1, 1, '2023-01-02', 10000000.00, 'hehehehe', 0, '2023-01-25 13:37:11', 'teguh', '2023-01-25 13:38:12', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (1, 2, 2, '2023-01-06', 8000000.00, 'hehehehe', 0, '2023-01-25 13:38:36', 'teguh', '2023-01-25 13:38:55', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 3, 1, '2023-01-06', 60000000.00, 'hehehehe', 0, '2023-01-25 13:39:44', 'teguh', '2023-01-25 13:40:36', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_headers
@@ -1173,11 +1178,13 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 1, 'nodok987263', '2022-12-12', 18000000.00, 18000000.00, 0.00, '', 0, '2023-01-25 13:37:11', 'teguh', '2023-01-25 13:38:55', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 17, 2, 'TRF1232', '2023-01-02', 60000000.00, 60000000.00, 0.00, '', 0, '2023-01-25 13:39:44', 'teguh', '2023-01-25 13:40:36', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_details
@@ -2075,32 +2082,22 @@ DROP VIEW IF EXISTS `vw_group_uang_masuk`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_group_uang_masuk` AS SELECT a.total_bayar,a.kd_group,c.nm_group from tbl_trans_uang_masuk_spp_headers a
 INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
-where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY c.kd_group  
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY c.kd_group  ,a.kd_trans_masuk
 union all
 SELECT a.total_bayar,a.kd_group,c.nm_group from tbl_trans_uang_masuk_ppdb_headers a
 INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
-where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group,a.kd_trans_masuk_ppdb
 union all
 SELECT a.total_bayar,a.kd_group,c.nm_group from tbl_trans_uang_masuk_siswa_headers a
 INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
-where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group 
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group ,  a.kd_trans_masuk_siswa
 union all
 SELECT a.total_bayar,a.kd_group,c.nm_group from tbl_trans_uang_masuk_lain_headers a
 INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
-where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group ;
-
--- ----------------------------
--- View structure for vw_group_uang_masuk_sisa
--- ----------------------------
-DROP VIEW IF EXISTS `vw_group_uang_masuk_sisa`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_group_uang_masuk_sisa` AS SELECT (a.total_bayar-b.total_bayar) 'total_bayar',a.kd_group,b.nm_group
-from vw_group_uang_masuk a 
-LEFT JOIN vw_group_uang_keluar b on a.kd_group=b.kd_group 
-where (a.total_bayar-b.total_bayar) is not null
-GROUP BY a.kd_group ;
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group,a.kd_trans_masuk_lain ;
 
 -- ----------------------------
 -- View structure for vw_kelas_trans
@@ -2148,6 +2145,21 @@ INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
 where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
 ORDER BY a.tahun_akademik,a.nm_kelas,e.nm_siswa,b.seqno ;
+
+-- ----------------------------
+-- View structure for vw_report_umlain
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_umlain`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umlain` AS SELECT c.nm_group,d.nm_kategori, a.no_document,a.tgl_document,
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
+a.kd_trans_masuk_lain
+from tbl_trans_uang_masuk_lain_headers a 
+INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+ORDER BY a.tgl_document,a.no_document,b.seqno ;
 
 -- ----------------------------
 -- View structure for vw_report_umsiswa
