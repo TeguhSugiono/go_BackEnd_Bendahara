@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"rest_api_bendahara/connection"
+	"rest_api_bendahara/file_excel"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_conf_biaya_kategori"
 	"rest_api_bendahara/master_conf_spp_ppdb"
@@ -192,6 +193,8 @@ func main() {
 	api.POST("/report/uangmasuk/reportppdb", authMiddleware(), report_uangmasuk.ReportPPDB)
 	api.POST("/report/uangmasuk/reportumsiswa", authMiddleware(), report_uangmasuk.ReportUmSiswa)
 	api.POST("/report/uangmasuk/reportumlain", authMiddleware(), report_uangmasuk.ReportUmLain)
+
+	api.POST("/download", file_excel.Download_excel)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

@@ -381,10 +381,10 @@ func EditUangKeluar(c *gin.Context) {
 			return
 		}
 
-		err = db.Raw("UPDATE Tbl_trans_uang_keluar_pra_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?, "+
+		err = db.Raw("UPDATE Tbl_trans_uang_keluar_pra_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?,keterangan=?,  "+
 			" edited_on = ? , edited_by = ? ,kd_group=?,kd_kategori=?,tgl_document=?,no_document=?  "+
 			" WHERE kd_trans_keluar = ? "+
-			" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya, datenowx, currentUser.(string),
+			" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya, paramInputTransaksiEdit.Keterangan,datenowx, currentUser.(string),
 			paramInputTransaksiEdit.Kd_group, paramInputTransaksiEdit.Kd_kategori, dateStr, paramInputTransaksiEdit.No_document,
 			Kd_trans_keluar).Scan(&dataHeader).Error
 		if err != nil {
@@ -395,10 +395,10 @@ func EditUangKeluar(c *gin.Context) {
 
 	} else {
 
-		err = db.Raw("UPDATE Tbl_trans_uang_keluar_pra_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?, "+
+		err = db.Raw("UPDATE Tbl_trans_uang_keluar_pra_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?,keterangan=?, "+
 			" edited_on = ? , edited_by = ?   "+
 			" WHERE kd_trans_keluar = ? "+
-			" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya, datenowx, currentUser.(string),
+			" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya,paramInputTransaksiEdit.Keterangan, datenowx, currentUser.(string),
 			Kd_trans_keluar).Scan(&dataHeader).Error
 		if err != nil {
 			response := helper.APIResponse("Update Data Ke Tbl_trans_uang_keluar_pra_headers Gagal ...", http.StatusBadRequest, "error", err)
