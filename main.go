@@ -176,6 +176,7 @@ func main() {
 	api.POST("/transaksi/uangkeluarpraact/listdata", authMiddleware(), transaksi_uang_keluar_pra_act.ListData)
 	api.PUT("/transaksi/uangkeluarpraact/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar_pra_act.DeleteUangKeluarDetail)
 	api.PUT("/transaksi/uangkeluarpraact/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra_act.DeleteAllUangKeluar)
+	api.GET("/transaksi/uangkeluarpraact/postuangmasuk", authMiddleware(), transaksi_uang_keluar_pra_act.PostUangMasuk)
 
 	//UANG Keluar ACT
 	api.GET("/transaksi/uangkeluaract/listgroupkategori", authMiddleware(), transaksi_uang_keluar_act.ListGroupKategori)

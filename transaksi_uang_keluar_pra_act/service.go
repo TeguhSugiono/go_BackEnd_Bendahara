@@ -15,6 +15,22 @@ import (
 	"gorm.io/gorm"
 )
 
+func PostUangMasuk(c *gin.Context){
+	db := c.MustGet("db").(*gorm.DB)
+
+	//kd_jenis=2 adalah uang keluar
+	var master []master_group_kategori.ListData
+	sql := "  SELECT a.*,b.proses_uang FROM tbl_group_kategoris as a " +
+		" inner join tbl_jenis_trans as b on a.kd_jenis=b.kd_jenis  " +
+		" where a.flag_aktif=0 and b.flag_aktif=0  " +
+		" and a.kd_jenis in('1') order by b.proses_uang "
+
+	db.Raw(sql).Scan(&master)
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", master_group_kategori.FormatGroupKategori(master))
+	c.JSON(http.StatusOK, response)
+}
+
 func ListDokument(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 

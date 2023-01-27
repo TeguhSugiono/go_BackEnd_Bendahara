@@ -16,6 +16,8 @@ import (
 	"gorm.io/gorm"
 )
 
+
+
 func ListGroupKategori(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
