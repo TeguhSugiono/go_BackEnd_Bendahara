@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 25/01/2023 14:16:48
+ Date: 28/01/2023 06:28:48
 */
 
 SET NAMES utf8mb4;
@@ -999,7 +999,7 @@ CREATE TABLE `tbl_trans_uang_keluar_act_details`  (
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 1, 1, 1, '2023-01-05', 1000000.00, 'hehehehe', 0, '2023-01-22 16:58:50', 'teguh', '2023-01-22 18:34:56', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 2, 1, 2, '2023-01-05', 300000.00, 'hehehehe', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-22 18:21:29', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 3, 2, 2, '2023-01-05', 200000.00, 'hehehehe', 0, '2023-01-22 18:11:01', 'teguh', '2023-01-22 18:35:39', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 4, 2, NULL, NULL, 0.00, '', 0, '2023-01-22 18:27:50', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 4, 2, 10, '2023-01-05', 8700000.00, 'Bayar Listrik Periode Desember 2022', 0, '2023-01-22 18:27:50', 'teguh', '2023-01-27 15:09:14', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (3, 5, 1, 10, '2023-01-05', 4500000.00, 'Bayar Listrik Periode Desember 2022', 0, '2023-01-25 14:10:32', 'teguh', '2023-01-25 14:12:15', 'teguh');
 
 -- ----------------------------
@@ -1029,7 +1029,7 @@ CREATE TABLE `tbl_trans_uang_keluar_act_headers`  (
 -- Records of tbl_trans_uang_keluar_act_headers
 -- ----------------------------
 INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (9, 12, 1, '', 'gaji9829', '2023-01-06', 1200000.00, 1000000.00, 200000.00, '', 0, '2023-01-22 16:58:50', 'teguh', '2023-01-22 18:35:39', 'teguh');
-INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (7, 7, 2, '', 'gaji982983z', '2023-01-06', 9000000.00, 300000.00, 8700000.00, '', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-22 18:21:29', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (7, 7, 2, '', 'gaji982983z', '2023-01-06', 9000000.00, 9000000.00, 0.00, '', 0, '2023-01-22 16:59:47', 'teguh', '2023-01-27 15:09:14', 'teguh');
 INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (8, 8, 3, '', 'INV-PLN-001', '2023-01-20', 4500000.00, 4500000.00, 0.00, 'Bayar PLN Listrik', 0, '2023-01-25 14:10:32', 'teguh', '2023-01-25 14:12:15', 'teguh');
 
 -- ----------------------------
@@ -1050,11 +1050,12 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_act_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_act_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (1, 1, 1, 10, '2023-01-05', 1900000.00, 'Ambil dari Uang Masuk Eksternal', 0, '2023-01-28 00:03:40', 'teguh', '2023-01-28 00:11:00', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_act_headers
@@ -1077,11 +1078,12 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_act_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_act_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_act_headers` VALUES (9, 12, 1, '', 'nodok987263', '2022-12-12', 1900000.00, 1900000.00, 0.00, 'Edit Uang Keluar', 0, '2023-01-28 00:03:40', 'teguh', '2023-01-28 00:11:00', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_details
@@ -1099,11 +1101,12 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (1, 1, 1, 0.00, '', 0, '2023-01-27 11:14:46', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_headers
@@ -1126,11 +1129,12 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 1, 'nodok987263', '2022-12-12', 1900000.00, 0.00, 1900000.00, 'Edit Uang Keluar', 0, '1', '2023-01-27 11:14:46', 'teguh', '2023-01-28 00:03:40', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_details
@@ -1331,13 +1335,13 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_details`  (
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 1, 1, '07-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 2, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 3, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 1, 1, '07-2022', '2022-07-02', 250000.00, 250000.00, 'test', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-27 16:41:36', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 2, 2, '08-2022', '2022-07-02', 250000.00, 250000.00, 'test', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-27 16:45:00', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 3, 3, '09-2022', '2022-07-02', 250000.00, 250000.00, 'test 33333', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-27 16:50:12', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 4, 4, '10-2022', '2022-07-02', 250000.00, 0.00, 'hehehehe', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 5, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 5, 5, '11-2022', '2022-07-02', 250000.00, 250000.00, 'test 555555', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-27 16:51:16', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 6, 6, '12-2022', '2022-07-02', 250000.00, 100000.00, 'hehehehe', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 7, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 7, 7, '01-2023', '2022-07-02', 250000.00, 250000.00, 'test 777777', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-27 16:55:14', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 8, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 9, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 10, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
@@ -1406,7 +1410,7 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_headers`  (
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022-2023', '5897', 'X', 3000000.00, 100000.00, 2900000.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-03 18:20:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022-2023', '5897', 'X', 3000000.00, 1350000.00, 1650000.00, '', 0, '2022-10-16 13:09:05', 'teguh', '2023-01-27 16:55:14', 'teguh');
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 2, '2022-2023', '5762', 'XI', 4200000.00, 0.00, 4200000.00, '', 0, '2022-10-16 13:10:11', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 3, '2022-2023', '5650', 'XII', 5400000.00, 0.00, 5400000.00, '', 0, '2022-10-16 13:10:56', 'teguh', NULL, NULL);
 INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 4, '2022-2023', '5652', 'XII', 5400000.00, 0.00, 5400000.00, 'Tidak Wajib Isi ini', 0, '2022-10-17 17:16:39', 'teguh', NULL, NULL);
@@ -2112,6 +2116,23 @@ GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','')
 ORDER BY id_kelas ;
 
 -- ----------------------------
+-- View structure for vw_report_act
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_act`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_act` AS SELECT c.nm_group,d.nm_kategori, a.no_document,a.tgl_document,
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+e.nm_group 'pos_uang_masuk',
+b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
+a.kd_trans_keluar
+from tbl_trans_uang_keluar_act_headers a 
+INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+LEFT JOIN tbl_group_kategoris e on b.kd_post_uang_masuk=e.kd_group
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+ORDER BY a.tgl_document,a.no_document,b.seqno ;
+
+-- ----------------------------
 -- View structure for vw_report_ppdb
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_report_ppdb`;
@@ -2127,6 +2148,38 @@ where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
 and e.status = 'sudah diverifikasi' and e.flag_verifikasidata='1' and e.flag_wawancara='1' 
 and e.flag_pembayaran='1' and e.flag=0 and e.flag_import<>'9' and e.status_berkas <> 'DiCabut'
 ORDER BY a.tahun_akademik,a.tgldaftar,e.nm_siswa,b.seqno ;
+
+-- ----------------------------
+-- View structure for vw_report_pra
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_pra`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_pra` AS SELECT c.nm_group,d.nm_kategori, a.no_document,a.tgl_document,
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+ b.jml_bayar,b.keterangan 'keterangan_detail',
+a.kd_trans_keluar
+from tbl_trans_uang_keluar_pra_headers a 
+INNER JOIN tbl_trans_uang_keluar_pra_details b on a.kd_trans_keluar=b.kd_trans_keluar
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+ORDER BY a.tgl_document,a.no_document,b.seqno ;
+
+-- ----------------------------
+-- View structure for vw_report_pra_act
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_pra_act`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_pra_act` AS SELECT c.nm_group,d.nm_kategori, a.no_document,a.tgl_document,
+a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
+e.nm_group 'pos_uang_masuk',
+b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
+a.kd_trans_keluar
+from tbl_trans_uang_keluar_pra_act_headers a 
+INNER JOIN tbl_trans_uang_keluar_pra_act_details b on a.kd_trans_keluar=b.kd_trans_keluar
+INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
+INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
+LEFT JOIN tbl_group_kategoris e on b.kd_post_uang_masuk=e.kd_group
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+ORDER BY a.tgl_document,a.no_document,b.seqno ;
 
 -- ----------------------------
 -- View structure for vw_report_spp

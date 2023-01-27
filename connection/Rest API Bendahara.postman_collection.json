@@ -1839,7 +1839,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 250000,\r\n    \"keterangan\" : \"test 777777\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1872,7 +1872,7 @@
 								},
 								{
 									"key": "kd_trans_masuk_detail",
-									"value": "6"
+									"value": "7"
 								}
 							]
 						}
@@ -3842,7 +3842,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_keluar\" : 2,\r\n    \"no_document\" : \"nodok9887263\"\r\n}",
+							"raw": "{\r\n    \"kd_trans_keluar\" : 1,\r\n    \"no_document\" : \"nodok987263\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3919,7 +3919,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_post_uang_masuk\" : 10,\r\n    \"tgl_bayar\" : \"05-01-2023\",\r\n    \"jml_bayar\" : 200000,\r\n    \"keterangan\" : \"Ambil dari Uang Masuk Eksternal\"\r\n}",
+							"raw": "{\r\n    \"kd_post_uang_masuk\" : 10,\r\n    \"tgl_bayar\" : \"05-01-2023\",\r\n    \"jml_bayar\" : 1900000,\r\n    \"keterangan\" : \"Ambil dari Uang Masuk Eksternal\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3948,11 +3948,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_keluar",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "kd_trans_keluar_detail",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -4330,7 +4330,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_post_uang_masuk\" : 10,\r\n    \"tgl_bayar\" : \"05-01-2023\",\r\n    \"jml_bayar\" : 4500000,\r\n    \"keterangan\" : \"Bayar Listrik Periode Desember 2022\"\r\n}",
+							"raw": "{\r\n    \"kd_post_uang_masuk\" : 10,\r\n    \"tgl_bayar\" : \"05-01-2023\",\r\n    \"jml_bayar\" : 8700000,\r\n    \"keterangan\" : \"Bayar Listrik Periode Desember 2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4359,11 +4359,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_keluar",
-									"value": "3"
+									"value": "2"
 								},
 								{
 									"key": "kd_trans_keluar_detail",
-									"value": "5"
+									"value": "4"
 								}
 							]
 						}
@@ -4710,7 +4710,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2023\",\r\n    \"tgl_bayar1\" : \"01-01-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"raw": "{\r\n    \"no_document\" : \"nodok98726\",\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4718,7 +4718,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/report/uangmasuk/reportumlain",
+							"raw": "http://127.0.0.1:2022/api/v1/report/uangkeluar/reportpra",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4731,64 +4731,15 @@
 								"api",
 								"v1",
 								"report",
-								"uangmasuk",
-								"reportumlain"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "X17.Transaksi Uang Keluar PRA-ACT",
-			"item": [
-				{
-					"name": "1. List Kd Group",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/listgroupkategori",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"listgroupkategori"
+								"uangkeluar",
+								"reportpra"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "2. List Kd Kategori",
+					"name": "Report PRA ACT",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -4800,7 +4751,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : \"9\"\r\n}",
+							"raw": "{\r\n    \"no_document\" : \"\",\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2023\",\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4808,7 +4759,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/listkategoriuang",
+							"raw": "http://127.0.0.1:2022/api/v1/report/uangkeluar/reportpraact",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -4820,175 +4771,16 @@
 							"path": [
 								"api",
 								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"listkategoriuang"
+								"report",
+								"uangkeluar",
+								"reportpraact"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "3. Create Uang Keluar",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"kd_kategori\" : 12,\r\n    \"kd_proses\" : \"PRA\",\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"03-01-2023\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/createuangkeluar",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"createuangkeluar"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "4. Edit Uang Keluar",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 9,\r\n    \"kd_kategori\" : 12,\r\n    \"kd_proses\" : \"PRA\",\r\n    \"no_document\" : \"nodok987263\",\r\n    \"tgl_document\" : \"12-12-2022\",\r\n    \"keterangan\" : \"Edit Uang Keluar\",\r\n    \"total_biaya\" : 900000\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/edituangkeluar/:kd_trans_keluar",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"edituangkeluar",
-								":kd_trans_keluar"
-							],
-							"variable": [
-								{
-									"key": "kd_trans_keluar",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "5. Edit Uang Keluar Detail",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 450000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/updateuangkeluardetail/:kd_trans_keluar/:kd_trans_keluar_detail",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"updateuangkeluardetail",
-								":kd_trans_keluar",
-								":kd_trans_keluar_detail"
-							],
-							"variable": [
-								{
-									"key": "kd_trans_keluar",
-									"value": "2"
-								},
-								{
-									"key": "kd_trans_keluar_detail",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "6. Add Uang Keluar Detail",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_keluar\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/createuangkeluardetail",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"createuangkeluardetail"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "7. List Data (Dahsboard)",
+					"name": "Report ACT",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -5000,7 +4792,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_document1\" : \"12-12-2022\",\r\n    \"tgl_document2\" : \"31-12-2022\",\r\n    \"no_document\" : \"\"\r\n}",
+							"raw": "{\r\n    \"no_document\" : \"\",\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2023\",\r\n    \"tgl_bayar1\" : \"01-01-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5008,7 +4800,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/listdata",
+							"raw": "http://127.0.0.1:2022/api/v1/report/uangkeluar/reportact",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -5020,86 +4812,9 @@
 							"path": [
 								"api",
 								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"listdata"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "8. Delete Uang Keluar Detail",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_keluar\" : \"1\",\r\n    \"kd_trans_keluar_detail\" : \"3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/deleteuangkeluardetail",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"deleteuangkeluardetail"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "9. Delete All Uang Keluar",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/deletealluangkeluar/:kd_trans_keluar",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangkeluarpraact",
-								"deletealluangkeluar",
-								":kd_trans_keluar"
-							],
-							"variable": [
-								{
-									"key": "kd_trans_keluar",
-									"value": "1"
-								}
+								"report",
+								"uangkeluar",
+								"reportact"
 							]
 						}
 					},
