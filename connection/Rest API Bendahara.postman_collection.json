@@ -1110,7 +1110,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"biaya_spp\" : 450000\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"biaya_spp\" : 750000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1727,7 +1727,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1768,7 +1768,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"nis_siswa\" : \"5650\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"X\",\r\n    \"nis_siswa\" : \"5897\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1803,7 +1803,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nis_siswa\" : \"5650\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5664\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"SPP PEMBAYARAN ATAS NAMA DIANING PAKARTI\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1839,7 +1839,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 250000,\r\n    \"keterangan\" : \"test 777777\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 750000,\r\n    \"keterangan\" : \"test 777777\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1868,11 +1868,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk",
-									"value": "1"
+									"value": "6"
 								},
 								{
 									"key": "kd_trans_masuk_detail",
-									"value": "7"
+									"value": "62"
 								}
 							]
 						}
@@ -1914,7 +1914,7 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -4965,7 +4965,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NDg3OTIyNX0.ZVhPVtjYnZ-7WBvPMak-0XGgnbRRCbs6c3AZH_Xr3H4",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NTU5NzAzOH0.BfoF1JIl0ySQUxaRGWSmATsoQLoW3CzFaZ4vbD5dTzc",
 				"type": "string"
 			}
 		]
