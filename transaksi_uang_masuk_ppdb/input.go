@@ -15,7 +15,7 @@ type GetDataPPDB struct {
 	Kategori_biaya_ppdb        string
 	Tgl_bayar                  string
 	Jml_bayar                  float64
-	Keterangan                 string
+	// Keterangan                 string
 }
 
 type GetBiayaAndSisa struct {
@@ -54,11 +54,12 @@ type ParamChangeNik struct {
 }
 
 type ParamEditPPdbDetail struct {
-	Tgl_bayar  string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
-	Jml_bayar  float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
-	Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
-	Edited_on  string  `form:"edited_on" json:"edited_on"`
-	Edited_by  string  `form:"edited_by" json:"edited_by"`
+	Kategori_biaya_ppdb string  `form:"kategori_biaya_ppdb" json:"kategori_biaya_ppdb" binding:"required"`
+	Tgl_bayar           string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
+	Jml_bayar           float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
+	//Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
+	Edited_on string `form:"edited_on" json:"edited_on"`
+	Edited_by string `form:"edited_by" json:"edited_by"`
 }
 
 // type GetIdAndNameKelas struct {

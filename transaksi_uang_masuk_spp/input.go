@@ -40,6 +40,7 @@ type GetIdAndNameKelas struct {
 type GetNisAndNameSiswa struct {
 	Nis      string
 	Nm_siswa string
+	Nm_kelas string
 }
 
 type ParamChangeSiswa struct {

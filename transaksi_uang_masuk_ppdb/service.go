@@ -109,7 +109,7 @@ func ListData(c *gin.Context) {
 
 	var getDataPPDB []GetDataPPDB
 	db.Raw("SELECT distinct b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_bayar "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik = c.nik "+
@@ -361,7 +361,7 @@ func CreateUangMasukPPdb(c *gin.Context) {
 
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_bayar "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
@@ -458,8 +458,8 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	dateStr := tTglBayar.Format("2006-01-02")
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_ppdb_details
-	err = db.Raw("update tbl_trans_uang_masuk_ppdb_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=? "+
-		" where kd_trans_masuk_detail_ppdb=? and flag_aktif=0 ", dateStr, paramEditPPdbDetail.Jml_bayar, paramEditPPdbDetail.Keterangan, currentUser.(string), datenowx, c.Param("iddetail")).Scan(&dataDetail).Error
+	err = db.Raw("update tbl_trans_uang_masuk_ppdb_details set tgl_bayar=?,jml_bayar=?,kategori_biaya_ppdb=?,edited_by=?,edited_on=? "+
+		" where kd_trans_masuk_detail_ppdb=? and flag_aktif=0 ", dateStr, paramEditPPdbDetail.Jml_bayar, paramEditPPdbDetail.Kategori_biaya_ppdb, currentUser.(string), datenowx, c.Param("iddetail")).Scan(&dataDetail).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_ppdb_details Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -487,7 +487,7 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	//setting tampilan habis update ppdb
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_bayar "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
@@ -586,7 +586,7 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	//setting tampilan habis update ppdb
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_bayar "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+

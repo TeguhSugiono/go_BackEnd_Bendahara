@@ -81,9 +81,10 @@ func ListSiswa(c *gin.Context) {
 	}
 
 	var getNisAndNameSiswa []GetNisAndNameSiswa
-	db.Raw("SELECT DISTINCT a.nis,a.nm_siswa FROM tbl_siswa a  "+
+	db.Raw("SELECT DISTINCT a.nis,a.nm_siswa,c.nm_kelas FROM tbl_siswa a  "+
 		" LEFT JOIN tbl_trans_uang_masuk_spp_headers b on a.nis = b.nis_siswa "+
-		" and b.flag_aktif=0 and b.tahun_akademik=? and b.nm_kelas=? "+
+		" INNER JOIN tbl_kelas c on b.nm_kelas = REPLACE(REPLACE(REPLACE(c.nm_kelas,'MIA',''),'IIS',''),' ','') "+
+		" and b.flag_aktif=0 and c.flag_kelas = 0 and b.tahun_akademik=? and b.nm_kelas=? "+
 		" where a.flag_siswa = 0 AND a.status_siswa NOT IN ('Tidak Aktif') "+
 		" and (a.tahun_aktif = ? or a.tahun_aktif = REPLACE(?,'-','/')) "+
 		" and REPLACE(REPLACE(a.nm_kelas,'MIA',''),'IIS','') = ? "+
