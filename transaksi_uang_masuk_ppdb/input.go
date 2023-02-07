@@ -62,17 +62,20 @@ type ParamEditPPdbDetail struct {
 	Edited_by string `form:"edited_by" json:"edited_by"`
 }
 
-// type GetIdAndNameKelas struct {
-// 	Id_kelas string
-// 	Nm_kelas string
-// }
+type ParamAddDetail struct {
+	Kd_trans_masuk_ppdb int `form:"kd_trans_masuk_ppdb" json:"kd_trans_masuk_ppdb" binding:"required"`
+}
 
-// type GetDataUmSpp struct {
-// 	// Kd_trans_masuk        int
-// Kd_trans_masuk_detail int
-// Seqno                 int
-// Periode_bayar         string
-// Tgl_bayar             string
-// Jml_bayar             float64
-// Keterangan            string
-// }
+type ParamDeleteDetail struct {
+	Kd_trans_masuk_ppdb        int `form:"kd_trans_masuk_ppdb" json:"kd_trans_masuk_ppdb" binding:"required"`
+	Kd_trans_masuk_detail_ppdb int `form:"kd_trans_masuk_detail_ppdb" json:"kd_trans_masuk_detail_ppdb" binding:"required"`
+}
+
+type ParamEditPPDB struct {
+	Total_biaya float64 `form:"total_biaya" json:"total_biaya" binding:"required,number"`
+	Keterangan  string  `form:"keterangan" json:"keterangan"`
+	Created_on  string  `form:"created_on" json:"created_on"`
+	Created_by  string  `form:"created_by" json:"created_by"`
+	Edited_on   string  `form:"edited_on" json:"edited_on"`
+	Edited_by   string  `form:"edited_by" json:"edited_by"`
+}

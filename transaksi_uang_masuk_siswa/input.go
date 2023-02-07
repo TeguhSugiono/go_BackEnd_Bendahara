@@ -115,7 +115,7 @@ type ParamDeleteUmSiswaDetail struct {
 }
 
 type ParamAddDetail struct {
-	Kd_trans_masuk_siswa int `form:"kd_trans_masuk_siswa" json:"kd_trans_masuk_siswa"`
+	Kd_trans_masuk_siswa int `form:"kd_trans_masuk_siswa" json:"kd_trans_masuk_siswa" binding:"required"`
 }
 
 type ParamChangeSiswa struct {
