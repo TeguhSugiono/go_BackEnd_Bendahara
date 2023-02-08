@@ -400,6 +400,241 @@ func CreateUangMasukPPdb(c *gin.Context) {
 
 }
 
+func ImportAll(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var paramDataPPDB ParamDataPPDB
+	if err := c.ShouldBindJSON(&paramDataPPDB); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var Strnik string = ""
+	var StatusImport string
+	var Nik string
+
+	rowsData, _ := db.Raw(" SELECT c.nik, "+
+		" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' "+
+		" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   "+
+		" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  "+
+		" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9' and c.tahun_daftar=? "+
+		" ORDER BY c.nm_siswa ", paramDataPPDB.Tahun_daftar).Rows()
+
+	defer rowsData.Close()
+	for rowsData.Next() {
+		StatusImport = ""
+		Nik = ""
+
+		rowsData.Scan(&Nik, &StatusImport)
+
+		if StatusImport == "" && Strnik == "" {
+			Strnik = Nik
+		} else {
+			if StatusImport == "" && Strnik != "" {
+				Strnik = Strnik + "," + Nik
+			}
+		}
+	}
+
+	if Strnik == "" {
+		response := helper.APIResponse("Data Sudah Sinkron Semua...", http.StatusUnprocessableEntity, "error", nil)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var tgldaftar string
+	var tahun_daftar string
+	var total_biaya float64
+	var total_bayar float64
+	var nik string
+	var tahun_akademik string
+
+	rows, _ := db.Raw(" SELECT nik,CONVERT(tgldaftar,CHAR) 'tgldaftar',tahun_daftar, " +
+		" (SELECT REPLACE(jumlah_pembayaran,'.','') from tbl_biayadaftar where id=id_biaya) 'total_biaya',0 as 'total_bayar' " +
+		" FROM tbl_user_ppdb WHERE (nik <> '' or nik is not null)  " +
+		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' and nik in(" + Strnik + ")  ").Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&nik, &tgldaftar, &tahun_daftar, &total_biaya, &total_bayar)
+
+		var intKd_trans_masuk int
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_ppdb),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_ppdb_headers ").Scan(&intKd_trans_masuk)
+
+		sql := "SELECT tahun_akademik FROM tbl_tahun_akademik where flag_tahun=0 "
+		sql = fmt.Sprintf("%s and tahun_akademik LIKE '%s%%%%' ", sql, tahun_daftar)
+		db.Raw(sql).Scan(&tahun_akademik)
+
+		var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
+		date := "2006-01-02 15:04:05"
+		datenowx, err := time.Parse(date, datenows)
+		if err != nil {
+			errors := helper.FormatValidationError(err)
+			errorMessage := gin.H{"errors": errors, "tgl": datenowx}
+			response := helper.APIResponse("Format Tanggal Salah ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+
+		currentUser := c.MustGet("currentUser")
+		data := table_data.Tbl_trans_uang_masuk_ppdb_headers{
+			Kd_group:            1,
+			Kd_kategori:         1,
+			Kd_trans_masuk_ppdb: intKd_trans_masuk,
+			Nik:                 nik,
+			Tgldaftar:           tgldaftar,
+			Tahun_daftar:        tahun_daftar,
+			Tahun_akademik:      tahun_akademik,
+			Total_biaya:         total_biaya,
+			Total_bayar:         total_biaya,
+			Sisa_biaya:          0,
+			Keterangan:          "",
+			Created_by:          currentUser.(string),
+			Created_on:          datenowx,
+			Flag_aktif:          0,
+		}
+		err = db.Omit("Edited_on", "Edited_by").Create(&data).Error
+		if err != nil {
+			response := helper.APIResponse("Simpan Data Header Gagal ...", http.StatusBadRequest, "error", err)
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
+
+		var intKd_trans_masuk_detail int
+		db.Raw("SELECT ifnull(max(kd_trans_masuk_detail_ppdb),0) + 1 as 'run_number' FROM tbl_trans_uang_masuk_ppdb_details ").Scan(&intKd_trans_masuk_detail)
+
+		var int_seqno int = 1
+
+		datadetail := table_data.Tbl_trans_uang_masuk_ppdb_details{
+			Kd_trans_masuk_ppdb:        intKd_trans_masuk,
+			Kd_trans_masuk_detail_ppdb: intKd_trans_masuk_detail,
+			Seqno:                      int_seqno,
+			Kategori_biaya_ppdb:        "Biaya Import dari PPDB",
+			Tgl_bayar:                  tgldaftar,   //tgl byar belum tau dapat dri mana untuk sementara saya ambil dari tgl daftar
+			Jml_bayar:                  total_biaya, //biaya cicilan belum tau dapat dri mana untuk sementara saya ambil dari header nya
+			Created_by:                 currentUser.(string),
+			Created_on:                 datenowx,
+			Flag_aktif:                 0,
+		}
+
+		err = db.Omit("Edited_on", "Edited_by", "Keterangan").Create(&datadetail).Error
+		if err != nil {
+			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
+
+	}
+
+	var totalDataPendaftar int
+	var jmlDataSudahImport int
+	var jmlDataBelumImport int
+
+	db.Raw("SELECT count(*) jmldata "+
+		" FROM tbl_user_ppdb WHERE tahun_daftar=? "+
+		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' "+
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9'", paramDataPPDB.Tahun_daftar).Scan(&totalDataPendaftar)
+	// if totalDataPendaftar == 0 {
+	// 	errorMessage := gin.H{"errors": "Pencarian Data Pendaftar PPDB Error ..."}
+	// 	response := helper.APIResponse("Data Siswa Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	// 	c.JSON(http.StatusUnprocessableEntity, response)
+	// 	return
+	// }
+
+	db.Raw(" SELECT COUNT(jmldata) as 'jmldata' from (SELECT count(*) jmldata FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.tahun_daftar=?  and a.flag_aktif=0 and b.flag_aktif=0 GROUP BY a.nik) as jmldata ", paramDataPPDB.Tahun_daftar).Scan(&jmlDataSudahImport)
+
+	jmlDataBelumImport = totalDataPendaftar - jmlDataSudahImport
+
+	SetArrayData := []ListDataPPDB{}
+	arraydata := ListDataPPDB{}
+	arraydata.TotalDataPendaftar = totalDataPendaftar
+	arraydata.JmlDataSudahImport = jmlDataSudahImport
+	arraydata.JmlDataBelumImport = jmlDataBelumImport
+
+	var listDataPPDBDetail []ListDataPPDBDetail
+	db.Raw(" SELECT c.nik,c.nm_siswa,CONVERT(DATE_FORMAT(c.tgldaftar,'%d-%m-%Y'),CHAR) 'tgldaftar', "+
+		" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' "+
+		" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   "+
+		" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  "+
+		" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9' and c.tahun_daftar=? "+
+		" ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) desc, c.nm_siswa ", paramDataPPDB.Tahun_daftar).Scan(&listDataPPDBDetail)
+
+	arraydata.Detail = listDataPPDBDetail
+	SetArrayData = append(SetArrayData, arraydata)
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	c.JSON(http.StatusOK, response)
+}
+
+func DataListPPDB(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var paramDataPPDB ParamDataPPDB
+	if err := c.ShouldBindJSON(&paramDataPPDB); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var totalDataPendaftar int
+	var jmlDataSudahImport int
+	var jmlDataBelumImport int
+
+	db.Raw("SELECT count(*) jmldata "+
+		" FROM tbl_user_ppdb WHERE tahun_daftar=? "+
+		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' "+
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9'", paramDataPPDB.Tahun_daftar).Scan(&totalDataPendaftar)
+	if totalDataPendaftar == 0 {
+		errorMessage := gin.H{"errors": "Pencarian Data Pendaftar PPDB Error ..."}
+		response := helper.APIResponse("Data Siswa Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	db.Raw(" SELECT COUNT(jmldata) as 'jmldata' from (SELECT count(*) jmldata FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.tahun_daftar=?  and a.flag_aktif=0 and b.flag_aktif=0 GROUP BY a.nik) as jmldata ", paramDataPPDB.Tahun_daftar).Scan(&jmlDataSudahImport)
+
+	jmlDataBelumImport = totalDataPendaftar - jmlDataSudahImport
+
+	SetArrayData := []ListDataPPDB{}
+	arraydata := ListDataPPDB{}
+	arraydata.TotalDataPendaftar = totalDataPendaftar
+	arraydata.JmlDataSudahImport = jmlDataSudahImport
+	arraydata.JmlDataBelumImport = jmlDataBelumImport
+
+	var listDataPPDBDetail []ListDataPPDBDetail
+	db.Raw(" SELECT c.nik,c.nm_siswa,CONVERT(DATE_FORMAT(c.tgldaftar,'%d-%m-%Y'),CHAR) 'tgldaftar', "+
+		" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' "+
+		" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   "+
+		" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  "+
+		" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9' and c.tahun_daftar=? "+
+		" ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) desc, c.nm_siswa ", paramDataPPDB.Tahun_daftar).Scan(&listDataPPDBDetail)
+
+	arraydata.Detail = listDataPPDBDetail
+	SetArrayData = append(SetArrayData, arraydata)
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	c.JSON(http.StatusOK, response)
+}
+
 func UpdateUangMasukPPdb(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 

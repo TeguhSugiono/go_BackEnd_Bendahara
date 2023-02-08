@@ -15,6 +15,7 @@ type GetDataHeaderSPP struct {
 	Tahun_akademik string
 	Nis_siswa      string
 	Nm_siswa       string
+	Nm_kelas       string
 	Total_biaya    float64
 	Total_bayar    float64
 	Sisa_biaya     float64
@@ -55,10 +56,9 @@ type GetDataHeaderPPDB struct {
 }
 
 type GetDataDetailPPDB struct {
-	Kategori_biaya_ppdb string
-	Tgl_bayar           string
-	Jml_bayar           float64
-	Keterangan_detail   string
+	Tgl_bayar         string
+	Jml_bayar         float64
+	Keterangan_detail string
 }
 
 type ParamReportUmSiswa struct {

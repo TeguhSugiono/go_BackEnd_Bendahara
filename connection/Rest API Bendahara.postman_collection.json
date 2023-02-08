@@ -2151,7 +2151,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172035606071003\",\r\n    \"tgldaftar\" : \"02-07-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172031711060006\",\r\n    \"tgldaftar\" : \"28-06-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4985,13 +4985,13 @@
 			"name": "21. Import all Data PPDB",
 			"item": [
 				{
-					"name": "Import All PPDB",
+					"name": "1. List Data PPDB",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172035606071003\",\r\n    \"tgldaftar\" : \"02-07-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"\"\r\n}",
+							"raw": "{\r\n    \"tahun_daftar\" : \"2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4999,7 +4999,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/createuangmasukppdb/",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/datalistppdb",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -5013,8 +5013,42 @@
 								"v1",
 								"transaksi",
 								"uangmasukppdb",
-								"createuangmasukppdb",
-								""
+								"datalistppdb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Import Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_daftar\" : \"2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/importallppdb",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"uangmasukppdb",
+								"importallppdb"
 							]
 						}
 					},

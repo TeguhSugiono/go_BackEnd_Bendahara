@@ -133,9 +133,10 @@ func ReportSPP(c *gin.Context) {
 	var sisa_biaya float64
 	var keterangan string
 	var kd_trans_masuk int
+	var nm_kelas string
 
 	SetArrayData := []GetDataHeaderSPP{}
-	ssql := " SELECT nm_group,nm_kategori,tahun_akademik,nis_siswa,nm_siswa, " +
+	ssql := " SELECT nm_group,nm_kategori,tahun_akademik,nis_siswa,nm_siswa,nm_kelas, " +
 		" total_biaya,total_bayar,sisa_biaya,keterangan,kd_trans_masuk " +
 		" FROM vw_report_spp where nm_group<>'' "
 	if paramReport.Tahun_akademik != "" {
@@ -162,13 +163,14 @@ func ReportSPP(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&nm_group, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk)
+		rows.Scan(&nm_group, &nm_kategori, &tahun_akademik, &nis_siswa, &nm_siswa, &nm_kelas, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk)
 		arraydata := GetDataHeaderSPP{}
 		arraydata.Nm_group = nm_group
 		arraydata.Nm_kategori = nm_kategori
 		arraydata.Tahun_akademik = tahun_akademik
 		arraydata.Nis_siswa = nis_siswa
 		arraydata.Nm_siswa = nm_siswa
+		arraydata.Nm_kelas = nm_kelas
 		arraydata.Total_biaya = total_biaya
 		arraydata.Total_bayar = total_bayar
 		arraydata.Sisa_biaya = sisa_biaya
@@ -379,7 +381,7 @@ func ReportPPDB(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT kategori_biaya_ppdb,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,kd_trans_masuk_ppdb FROM vw_report_ppdb "
+		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,kd_trans_masuk_ppdb FROM vw_report_ppdb "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_ppdb = %d", ssqldetail, kd_trans_masuk_ppdb)
 		if paramReport.Tahun_akademik != "" {
 			ssqldetail = fmt.Sprintf("%s and tahun_akademik = '%s'", ssqldetail, paramReport.Tahun_akademik)

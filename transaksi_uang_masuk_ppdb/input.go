@@ -79,3 +79,21 @@ type ParamEditPPDB struct {
 	Edited_on   string  `form:"edited_on" json:"edited_on"`
 	Edited_by   string  `form:"edited_by" json:"edited_by"`
 }
+
+type ParamDataPPDB struct {
+	Tahun_daftar string `form:"tahun_daftar" json:"tahun_daftar" binding:"required"`
+}
+
+type ListDataPPDB struct {
+	TotalDataPendaftar int
+	JmlDataSudahImport int
+	JmlDataBelumImport int
+	Detail             interface{}
+}
+
+type ListDataPPDBDetail struct {
+	Nik          string
+	Nm_siswa     string
+	Tgldaftar    string
+	StatusImport string
+}

@@ -134,6 +134,9 @@ func main() {
 	api.PUT("/transaksi/uangmasukppdb/deleteuangmasukdetail", authMiddleware(), transaksi_uang_masuk_ppdb.DeleteUangMasukDetail)
 	api.PUT("/transaksi/uangmasukppdb/edituangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_ppdb.EditUangMasuk)
 
+	api.POST("/transaksi/uangmasukppdb/datalistppdb", authMiddleware(), transaksi_uang_masuk_ppdb.DataListPPDB)
+	api.POST("/transaksi/uangmasukppdb/importallppdb", authMiddleware(), transaksi_uang_masuk_ppdb.ImportAll)
+
 	//UANG MASUK SISWA
 	api.GET("/transaksi/uangmasuksiswa/listgroupkategori", authMiddleware(), transaksi_uang_masuk_siswa.ListGroupKategori)
 	api.POST("/transaksi/uangmasuksiswa/listkategoriuang", authMiddleware(), transaksi_uang_masuk_siswa.ListKategoriUang)

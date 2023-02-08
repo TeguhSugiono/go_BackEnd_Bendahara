@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 04/02/2023 19:09:10
+ Date: 08/02/2023 15:53:08
 */
 
 SET NAMES utf8mb4;
@@ -1199,23 +1199,53 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_ppdb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_ppdb_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 1, 1, 'Biaya Seragam', '2022-07-02', 140000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2023-01-03 18:08:00', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 2, 2, 'Biaya Uang Gedung', '2022-07-02', 800000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2023-01-03 18:08:00', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 3, 3, 'Biaya Formulir Pendaftaran', '2022-07-02', 260000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2023-01-03 18:08:00', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 4, 1, 'Biaya Seragam', NULL, 0.00, '', 0, '2023-01-03 18:05:52', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 5, 2, 'Biaya Uang Gedung', NULL, 0.00, '', 0, '2023-01-03 18:05:52', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 6, 3, 'Biaya Formulir Pendaftaran', NULL, 0.00, '', 0, '2023-01-03 18:05:52', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 7, 1, 'Biaya Seragam', NULL, 0.00, '', 0, '2023-01-28 09:54:49', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 8, 2, 'Biaya Uang Gedung', NULL, 0.00, '', 0, '2023-01-28 09:54:49', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 9, 3, 'Biaya Formulir Pendaftaran', NULL, 0.00, '', 0, '2023-01-28 09:54:49', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 10, 1, 'Biaya Seragam', '2023-01-28', 700000.00, 'SEragam', 0, '2023-01-28 10:00:24', 'teguh', '2023-01-28 10:01:14', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 11, 2, 'Biaya Uang Gedung', '2023-01-28', 2600000.00, 'gedung', 0, '2023-01-28 10:00:24', 'teguh', '2023-01-28 10:01:46', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 12, 3, 'Biaya Formulir Pendaftaran', '2023-01-28', 100000.00, 'formulir', 0, '2023-01-28 10:00:24', 'teguh', '2023-01-28 10:02:32', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 1, 1, 'Biaya Import dari PPDB', '2022-07-02', 3400000.00, NULL, 0, '2023-02-07 20:55:40', 'teguh', '2023-02-07 21:01:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 2, 2, 'nyicil', '2022-09-02', 600000.00, '', 0, '2023-02-07 20:56:41', 'teguh', '2023-02-07 21:01:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 3, 3, 'nyicil', '2022-09-02', 1000000.00, '', 9, '2023-02-07 20:56:48', 'teguh', '2023-02-07 21:00:53', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 4, 1, 'Biaya Import dari PPDB', '2022-06-28', 3400000.00, NULL, 0, '2023-02-08 04:03:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 5, 1, 'Biaya Import dari PPDB', '2022-04-14', 3400000.00, NULL, 0, '2023-02-08 15:04:34', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 6, 1, 'Biaya Import dari PPDB', '2022-05-14', 3400000.00, NULL, 0, '2023-02-08 15:04:34', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (5, 7, 1, 'Biaya Import dari PPDB', '2022-05-18', 3400000.00, NULL, 0, '2023-02-08 15:04:34', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (6, 8, 1, 'Biaya Import dari PPDB', '2022-05-20', 3400000.00, NULL, 0, '2023-02-08 15:04:35', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (7, 9, 1, 'Biaya Import dari PPDB', '2022-06-08', 3050000.00, NULL, 0, '2023-02-08 15:04:35', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (8, 10, 1, 'Biaya Import dari PPDB', '2022-06-13', 3400000.00, NULL, 0, '2023-02-08 15:09:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (9, 11, 1, 'Biaya Import dari PPDB', '2022-06-13', 3050000.00, NULL, 0, '2023-02-08 15:09:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (10, 12, 1, 'Biaya Import dari PPDB', '2022-06-13', 3050000.00, NULL, 0, '2023-02-08 15:09:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (11, 13, 1, 'Biaya Import dari PPDB', '2022-06-14', 3050000.00, NULL, 0, '2023-02-08 15:09:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (12, 14, 1, 'Biaya Import dari PPDB', '2022-06-15', 3400000.00, NULL, 0, '2023-02-08 15:09:56', 'teguh', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_masuk_ppdb_details_copy1
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_masuk_ppdb_details_copy1`;
+CREATE TABLE `tbl_trans_uang_masuk_ppdb_details_copy1`  (
+  `kd_trans_masuk_ppdb` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_detail_ppdb` int(11) NOT NULL AUTO_INCREMENT,
+  `seqno` int(11) NULL DEFAULT NULL,
+  `kategori_biaya_ppdb` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgl_bayar` date NULL DEFAULT NULL,
+  `jml_bayar` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(1) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_masuk_detail_ppdb`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_masuk_ppdb_details_copy1
+-- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details_copy1` VALUES (1, 1, 1, 'Biaya Import dari PPDB', '2022-07-02', 3400000.00, NULL, 0, '2023-02-07 20:55:40', 'teguh', '2023-02-07 21:01:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details_copy1` VALUES (1, 2, 2, 'nyicil', '2022-09-02', 600000.00, '', 0, '2023-02-07 20:56:41', 'teguh', '2023-02-07 21:01:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details_copy1` VALUES (1, 3, 3, 'nyicil', '2022-09-02', 1000000.00, '', 9, '2023-02-07 20:56:48', 'teguh', '2023-02-07 21:00:53', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details_copy1` VALUES (2, 4, 1, 'Biaya Import dari PPDB', '2022-06-28', 3400000.00, NULL, 0, '2023-02-08 04:03:18', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_headers
@@ -1239,15 +1269,53 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_ppdb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_ppdb_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '3172032402070005', '2022-06-30', '2022', '2022-2023', 3400000.00, 1200000.00, 2200000.00, 'Tidak Wajib Isi ini', 0, '2022-10-19 10:36:40', 'teguh', '2023-01-03 18:08:00', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 2, '3172035606071003', '2022-07-02', '2022', '2022-2023', 3400000.00, 0.00, 3400000.00, 'Tidak Wajib Isi ini', 0, '2023-01-03 18:05:52', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 3, '3674032206060002', '2022-06-13', '2022', '2022-2023', 3050000.00, 0.00, 3050000.00, '', 0, '2023-01-28 09:54:49', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 4, '3172042701070004', '2022-06-23', '2022', '2022-2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-01-28 10:00:24', 'teguh', '2023-01-28 10:02:32', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '3172035606071003', '2022-07-02', '2022', '2022-2023', 5000000.00, 4000000.00, 1000000.00, 'Edit Nominal Biaya PPDB', 0, '2023-02-07 20:55:40', 'teguh', '2023-02-07 21:01:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 2, '3172031711060006', '2022-06-28', '2022', '2022-2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 04:03:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 3, '3172045503070005', '2022-04-14', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 15:04:34', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 4, '3275066605060002', '2022-05-14', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 15:04:34', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 5, '3172035412061002', '2022-05-18', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 15:04:34', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 6, '3275054203070001', '2022-05-20', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 15:04:35', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 7, '3172030506060001', '2022-06-08', '2022', '2022/2023', 3050000.00, 3050000.00, 0.00, '', 0, '2023-02-08 15:04:35', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 8, '3172035907070008', '2022-06-13', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 15:09:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 9, '3674032206060002', '2022-06-13', '2022', '2022/2023', 3050000.00, 3050000.00, 0.00, '', 0, '2023-02-08 15:09:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 10, '3172044811060003', '2022-06-13', '2022', '2022/2023', 3050000.00, 3050000.00, 0.00, '', 0, '2023-02-08 15:09:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 11, '3172030404070008', '2022-06-14', '2022', '2022/2023', 3050000.00, 3050000.00, 0.00, '', 0, '2023-02-08 15:09:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 12, '31720450806071004', '2022-06-15', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 15:09:56', 'teguh', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_masuk_ppdb_headers_copy1
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_masuk_ppdb_headers_copy1`;
+CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers_copy1`  (
+  `kd_group` int(11) NULL DEFAULT NULL,
+  `kd_kategori` int(11) NULL DEFAULT NULL,
+  `kd_trans_masuk_ppdb` int(11) NOT NULL AUTO_INCREMENT,
+  `nik` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgldaftar` date NULL DEFAULT NULL,
+  `tahun_daftar` varchar(4) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tahun_akademik` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `total_biaya` double(19, 2) NULL DEFAULT NULL,
+  `total_bayar` double(19, 2) NULL DEFAULT NULL,
+  `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(11) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_masuk_ppdb`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_masuk_ppdb_headers_copy1
+-- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers_copy1` VALUES (1, 1, 1, '3172035606071003', '2022-07-02', '2022', '2022-2023', 5000000.00, 4000000.00, 1000000.00, 'Edit Nominal Biaya PPDB', 0, '2023-02-07 20:55:40', 'teguh', '2023-02-07 21:01:35', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers_copy1` VALUES (1, 1, 2, '3172031711060006', '2022-06-28', '2022', '2022-2023', 3400000.00, 3400000.00, 0.00, '', 0, '2023-02-08 04:03:18', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_siswa_details
@@ -2163,7 +2231,7 @@ ORDER BY a.tgl_document,a.no_document,b.seqno ;
 DROP VIEW IF EXISTS `vw_report_ppdb`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_ppdb` AS SELECT c.nm_group,d.nm_kategori , a.nik,e.nm_siswa , a.tgldaftar ,a.tahun_daftar,a.tahun_akademik,
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
-b.kategori_biaya_ppdb,b.tgl_bayar,b.jml_bayar,b.keterangan 'keterangan_detail',a.kd_trans_masuk_ppdb
+b.tgl_bayar,b.jml_bayar,b.kategori_biaya_ppdb 'keterangan_detail',a.kd_trans_masuk_ppdb
 FROM tbl_trans_uang_masuk_ppdb_headers a
 INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
@@ -2210,14 +2278,15 @@ ORDER BY a.tgl_document,a.no_document,b.seqno ;
 -- View structure for vw_report_spp
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_report_spp`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_spp` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa, 
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_spp` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa,f.nm_kelas, 
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 date_format(STR_TO_DATE(concat('01','-',b.periode_bayar),'%d-%m-%Y'),'%M-%Y') 'periode_bayar',
 b.tgl_bayar,b.jml_tagihan, b.jml_bayar,b.keterangan 'keterangan_detail',
-date_format(STR_TO_DATE(b.periode_bayar,'%m-%Y'),'%Y-%m') 'date_periode_bayar'
+date_format(STR_TO_DATE(concat('01','-',b.periode_bayar),'%d-%m-%Y'),'%Y-%m') 'date_periode_bayar'
 ,a.kd_trans_masuk
 from tbl_trans_uang_masuk_spp_headers a 
 INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk
+INNER JOIN tbl_kelas f on a.nm_kelas = REPLACE(REPLACE(REPLACE(f.nm_kelas,'MIA',''),'IIS',''),' ','')
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
 INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
@@ -2243,12 +2312,13 @@ ORDER BY a.tgl_document,a.no_document,b.seqno ;
 -- View structure for vw_report_umsiswa
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_report_umsiswa`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umsiswa` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa,a.nm_kelas, 
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umsiswa` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa,f.nm_kelas,
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
 a.kd_trans_masuk_siswa
 from tbl_trans_uang_masuk_siswa_headers a 
 INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa
+INNER JOIN tbl_kelas f on a.nm_kelas = REPLACE(REPLACE(REPLACE(f.nm_kelas,'MIA',''),'IIS',''),' ','')
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
 INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
