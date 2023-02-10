@@ -80,15 +80,25 @@ func ListSiswa(c *gin.Context) {
 		return
 	}
 
+
 	var getNisAndNameSiswa []GetNisAndNameSiswa
-	db.Raw("SELECT DISTINCT a.nis,a.nm_siswa,c.nm_kelas FROM tbl_siswa a  "+
-		" LEFT JOIN tbl_trans_uang_masuk_spp_headers b on a.nis = b.nis_siswa "+
-		" INNER JOIN tbl_kelas c on b.nm_kelas = REPLACE(REPLACE(REPLACE(c.nm_kelas,'MIA',''),'IIS',''),' ','') "+
-		" and b.flag_aktif=0 and c.flag_kelas = 0 and b.tahun_akademik=? and b.nm_kelas=? "+
-		" where a.flag_siswa = 0 AND a.status_siswa NOT IN ('Tidak Aktif') "+
-		" and (a.tahun_aktif = ? or a.tahun_aktif = REPLACE(?,'-','/')) "+
-		" and REPLACE(REPLACE(a.nm_kelas,'MIA',''),'IIS','') = ? "+
+	db.Raw(" SELECT DISTINCT a.nis,a.nm_siswa,a.nm_kelas FROM tbl_siswa a  "+
+		" LEFT JOIN tbl_trans_uang_masuk_spp_headers b on a.nis = b.nis_siswa and b.flag_aktif=0 and b.tahun_akademik=? and b.nm_kelas=? "+
+		" and REPLACE(REPLACE(REPLACE(a.nm_kelas,'MIA',''),'IIS',''),' ','') = b.nm_kelas "+
+		" INNER JOIN tbl_kelas c on a.nm_kelas = c.nm_kelas  and c.flag_kelas = 0 "+
+		" where a.flag_siswa = 0 AND a.status_siswa NOT IN ('Tidak Aktif')  "+
+		" and (a.tahun_aktif = ? or a.tahun_aktif = REPLACE(?,'-','/'))  "+
+		" and REPLACE(REPLACE(a.nm_kelas,'MIA',''),'IIS','') = ?  "+
 		" ORDER BY a.nm_siswa ", paramChangeNmKelas.Tahun_akademik, paramChangeNmKelas.Nm_kelas, paramChangeNmKelas.Tahun_akademik, paramChangeNmKelas.Tahun_akademik, paramChangeNmKelas.Nm_kelas).Scan(&getNisAndNameSiswa)
+
+
+	if len(getNisAndNameSiswa) == 0 {
+		SetArrayData := []GetBiayaAndSisa{}
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", getNisAndNameSiswa)
 	c.JSON(http.StatusOK, response)
