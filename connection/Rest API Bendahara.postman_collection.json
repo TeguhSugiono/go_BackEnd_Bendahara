@@ -58,13 +58,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/users/login",
+							"raw": "http://10.5.57.55:2022/api/v1/users/login",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"10",
+								"5",
+								"57",
+								"55"
 							],
 							"port": "2022",
 							"path": [
@@ -1727,7 +1727,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XII\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XIII\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1735,13 +1735,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listsiswa",
+							"raw": "http://10.5.57.55:2022/api/v1/transaksi/uangmasukspp/listsiswa",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"10",
+								"5",
+								"57",
+								"55"
 							],
 							"port": "2022",
 							"path": [
@@ -5057,6 +5057,93 @@
 			]
 		},
 		{
+			"name": "22. Report Histori",
+			"item": [
+				{
+					"name": "1. List Nik & Nis",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nis\" : \"5897\",\r\n    \"nik\" : \"3172031711060006\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/reporthistori/listniknis",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reporthistori",
+								"listniknis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Report Histori",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nis\" : \"5897\",\r\n    \"nik\" : \"3172031711060006\",\r\n    \"nm_siswa\" : \"ABDILLAH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/reporthistori/reporthistori",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reporthistori",
+								"reporthistori"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "New Folder",
 			"item": [
 				{
@@ -5199,7 +5286,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NTg2MzU3MH0.9QJh1BVy5WEVvxnnSfz0cnwJBkSiWD1-eE_Z8pNqMKg",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NjA4NTA2OX0.nCy_9m-45AWyzb5hug9wojo5ans7rSm-MB1CzicQoiw",
 				"type": "string"
 			}
 		]

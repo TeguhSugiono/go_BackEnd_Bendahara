@@ -15,6 +15,7 @@ import (
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
+	"rest_api_bendahara/report_histori"
 	"rest_api_bendahara/report_uangkeluar"
 	"rest_api_bendahara/transaksi_uang_keluar_act"
 	"rest_api_bendahara/transaksi_uang_keluar_pra"
@@ -204,6 +205,9 @@ func main() {
 	api.POST("/report/uangkeluar/reportpra", authMiddleware(), report_uangkeluar.ReportPRA)
 	api.POST("/report/uangkeluar/reportpraact", authMiddleware(), report_uangkeluar.ReportPRAACT)
 	api.POST("/report/uangkeluar/reportact", authMiddleware(), report_uangkeluar.ReportACT)
+
+	api.POST("/report/reporthistori/listniknis", authMiddleware(), report_histori.ListNikNis)
+	api.POST("/report/reporthistori/reporthistori", authMiddleware(), report_histori.ReportHistori)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
