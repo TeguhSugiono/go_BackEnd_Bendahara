@@ -11,12 +11,12 @@ import (
 func ListTahunAkademik(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var master []ListData
+	var returnListData []ReturnListData
 	//db.Find(&master)
-	sql := " SELECT tahun_akademik as 'id_tahun',tahun_akademik FROM tbl_tahun_akademik where flag_tahun=0  order by status "
+	sql := " SELECT tahun_akademik as 'id_tahun',tahun_akademik,status FROM tbl_tahun_akademik where flag_tahun=0  order by status "
 
-	db.Raw(sql).Scan(&master)
+	db.Raw(sql).Scan(&returnListData)
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", FormatShowData(master))
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", returnListData)
 	c.JSON(http.StatusOK, response)
 }
