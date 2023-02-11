@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 11/02/2023 14:28:14
+ Date: 11/02/2023 23:45:18
 */
 
 SET NAMES utf8mb4;
@@ -2324,6 +2324,7 @@ INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
 INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 LEFT JOIN tbl_siswa e on a.nis_siswa=e.nis
 where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
+GROUP BY b.kd_trans_masuk_detail_siswa
 ORDER BY a.tahun_akademik,a.nm_kelas,e.nm_siswa,b.seqno ;
 
 SET FOREIGN_KEY_CHECKS = 1;
