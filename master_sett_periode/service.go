@@ -21,7 +21,7 @@ func ListConfPeriode(c *gin.Context) {
 
 	var master []ListData
 
-	sql := " SELECT tahun_akademik,nm_kelas,biaya_spp,nm_sett from tbl_conf_periode_spps where flag_aktif = 0 GROUP BY tahun_akademik,nm_kelas order by tahun_akademik "
+	sql := " SELECT tahun_akademik,nm_kelas,biaya_spp,nm_sett from tbl_conf_periode_spps where flag_aktif = 0 GROUP BY tahun_akademik,nm_kelas order by tahun_akademik,nm_kelas "
 
 	db.Raw(sql).Scan(&master)
 
@@ -56,9 +56,9 @@ func ShowConfPeriode(c *gin.Context) {
 	sql = fmt.Sprintf("%s GROUP BY tahun_akademik,nm_kelas ", sql)
 
 	if sort := c.Query("sort"); sort != "" {
-		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,seqno %s", sql, "asc", "asc")
+		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,nm_kelas %s, seqno %s", sql, "asc", "asc", "asc")
 	} else {
-		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,seqno %s", sql, "desc", "desc")
+		sql = fmt.Sprintf("%s ORDER BY tahun_akademik %s,nm_kelas %s,seqno %s", sql, "desc", "desc", "desc")
 	}
 
 	page := c.Query("page")
@@ -91,118 +91,15 @@ func ShowConfPeriode(c *gin.Context) {
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
 	}
 
-	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", sql, CompTableData, FormatShowData(master))
+	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, FormatShowData(master))
 	c.JSON(http.StatusOK, response)
 
 }
-
-// var kd_periode_spp int
-// 	var tahun int
-// 	var tahun_akademik string
-// 	var id_conf int
-// 	var seqno int
-// 	var kd_bulan string
-
-// 	// var kd_periode_spp_first int
-// 	// var tahun_first int
-// 	// var tahun_akademik_first string
-// 	// var id_conf_first int
-// 	// var seqno_first int
-// 	// var kd_bulan_first string
-// 	// var intLooping int = 0
-
-// SetArrayData := []ResponDataTable{}
-// rows, _ := db.Raw(sql).Rows()
-// defer rows.Close()
-// for rows.Next() {
-// 		rows.Scan(&kd_periode_spp, &tahun, &tahun_akademik)
-// 		arraydata := ResponDataTable{}
-// 		arraydata.Kd_periode_spp = kd_periode_spp
-// 		arraydata.Tahun = tahun
-// 		arraydata.Tahun_akademik = tahun_akademik
-
-// SetArrayDataDetail := []ResponDataTableDetail{}
-
-// rowsdet, _ := db.Raw("SELECT id_conf,seqno,kd_bulan "+
-// 	" from tbl_conf_periode_spps where flag_aktif=? and tahun=? and kd_periode_spp=? ", 0, tahun, kd_periode_spp).Rows()
-// defer rowsdet.Close()
-// for rowsdet.Next() {
-// 	arraydatadetail := ResponDataTableDetail{}
-
-// 	rowsdet.Scan(&id_conf, &seqno, &kd_bulan)
-// 			arraydatadetail.Id_conf = id_conf
-// 			arraydatadetail.Seqno = seqno
-// 			arraydatadetail.Kd_bulan = kd_bulan
-
-// 			SetArrayDataDetail = append(SetArrayDataDetail, arraydatadetail)
-// 		}
-
-// 		arraydata.Detail = SetArrayDataDetail
-// 		SetArrayData = append(SetArrayData, arraydata)
-
-// 	}
-
-// type ResponDataTable struct {
-// 	Kd_periode_spp int         `json:"kd_periode_spp"`
-// 	Tahun          int         `json:"tahun"`
-// 	Tahun_akademik string      `json:"tahun_akademik"`
-// 	Detail         interface{} `json:"detail"`
-// 	// Id_conf        int    `json:"id_conf"`
-// 	// Seqno          int    `json:"seqno"`
-// 	// Kd_bulan       string `json:"kd_bulan"`
-// }
-
-// type ResponDataTableDetail struct {
-// Id_conf  int    `json:"id_conf"`
-// Seqno    int    `json:"seqno"`
-// Kd_bulan string `json:"kd_bulan"`
-// 	// Kd_periode_spp int    `json:"kd_periode_spp"`
-// 	// Tahun          int    `json:"tahun"`
-// 	// Tahun_akademik string `json:"tahun_akademik"`
-// 	// Detail         interface{} `json:"detail"`
-// }
-
-// type ResponseShowTable struct {
-// 	Meta      MetaShowTable `json:"meta"`
-// 	DataTable interface{}   `json:"datatable"`
-// 	Data      interface{}   `json:"data"`
-// }
-
-// type MetaShowTable struct {
-// 	Message string `json:"message"`
-// 	Code    int    `json:"code"`
-// 	Status  string `json:"status"`
-// 	Query   string `json:"query"`
-// }
-
-// func APIResponseShowTable(message string, code int, status string, query string, datatable interface{}, data interface{}) ResponseShowTable {
-// 	meta := MetaShowTable{
-// 		Message: message,
-// 		Code:    code,
-// 		Status:  status,
-// 		Query:   query,
-// 	}
-
-// 	jsonResponse := ResponseShowTable{
-// 		Meta:      meta,
-// 		DataTable: datatable,
-// 		Data:      data,
-// 	}
-
-// 	return jsonResponse
-// }
 
 func InsertConfPeriode(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	var dataInput InputTahunAkademik
-	// if err := c.ShouldBindJSON(&dataInput); err != nil {
-	// 	errors := helper.FormatValidationError(err)
-	// 	errorMessage := gin.H{"errors": errors}
-	// 	response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-	// 	c.JSON(http.StatusUnprocessableEntity, response)
-	// 	return
-	// }
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err, &ve) {
@@ -241,9 +138,9 @@ func InsertConfPeriode(c *gin.Context) {
 
 	var nm_kelas_s string = ""
 
-	sqlkelas := " SELECT REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' FROM tbl_kelas "
-	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') = '%s'", sqlkelas, dataInput.Nm_kelas)
-	sqlkelas = fmt.Sprintf("%s GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') ", sqlkelas)
+	sqlkelas := " SELECT nm_kelas FROM tbl_kelas "
+	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and nm_kelas = '%s'", sqlkelas, dataInput.Nm_kelas)
+	//sqlkelas = fmt.Sprintf("%s GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') ", sqlkelas)
 
 	rowskelas, _ := db.Raw(sqlkelas).Rows()
 	defer rowskelas.Close()
@@ -474,9 +371,8 @@ func UpdateConfPeriodeAll(c *gin.Context) {
 
 	var nm_kelas_s string = ""
 
-	sqlkelas := " SELECT REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' FROM tbl_kelas "
-	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') = '%s'", sqlkelas, dataInput.Nm_kelas)
-	sqlkelas = fmt.Sprintf("%s GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') ", sqlkelas)
+	sqlkelas := " SELECT nm_kelas FROM tbl_kelas "
+	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and nm_kelas = '%s'", sqlkelas, dataInput.Nm_kelas)
 
 	rowskelas, _ := db.Raw(sqlkelas).Rows()
 	defer rowskelas.Close()
@@ -582,19 +478,6 @@ func DeleteConfPeriode(c *gin.Context) {
 		return
 	}
 
-	// var result CekDataSettPeriode
-	// db.Raw("SELECT count(*) as 'jumlah' FROM tbl_conf_periode_spps a "+
-	// 	" INNER JOIN tbl_sett_periode_spps b on a.kd_periode_spp = b.kd_periode_spp "+
-	// 	" where a.flag_aktif=0 and b.flag_aktif=0 "+
-	// 	" and tahun_akademik = ? ", dataInput.Tahun_akademik).Scan(&result)
-
-	// if result.Jumlah > 0 {
-	// 	errorMessage := gin.H{"errors": "Data Configurasi Periode Sudah Terpakai Di Master Setting SPP ..."}
-	// 	response := helper.APIResponse("Delete Data Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
-	// 	c.JSON(http.StatusUnprocessableEntity, response)
-	// 	return
-	// }
-
 	var datenows string = time.Now().UTC().Format("2006-01-02 15:04:05")
 	date := "2006-01-02 15:04:05"
 	datenowx, err := time.Parse(date, datenows)
@@ -652,7 +535,7 @@ type MetaDelete struct {
 }
 
 type DataDelete struct {
-	Kd_periode_spp int         `json:"kd_periode_spp"`
+	//Kd_periode_spp int         `json:"kd_periode_spp"`
 	Tahun          int         `json:"tahun"`
 	Tahun_akademik string      `json:"tahun_akademik"`
 	Detail         interface{} `json:"detail"`

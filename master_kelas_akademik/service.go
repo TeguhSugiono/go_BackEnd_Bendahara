@@ -13,10 +13,9 @@ func ListKelasAkademik(c *gin.Context) {
 
 	var master []ListData
 	//db.Find(&master)
-	sql := " SELECT  REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','')as 'id_kelas', " +
-		" REPLACE(REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS',''),' ','') as 'nm_kelas' FROM tbl_kelas " +
+	sql := " SELECT  nm_kelas as 'id_kelas', " +
+		" nm_kelas as 'nm_kelas' FROM tbl_kelas " +
 		" where flag_kelas = 0  " +
-		" GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') " +
 		" ORDER BY id_kelas "
 
 	db.Raw(sql).Scan(&master)

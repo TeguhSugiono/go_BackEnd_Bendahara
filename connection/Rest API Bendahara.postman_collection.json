@@ -58,13 +58,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/users/login",
+							"raw": "http://10.5.57.66:2022/api/v1/users/login",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"10",
+								"5",
+								"57",
+								"66"
 							],
 							"port": "2022",
 							"path": [
@@ -1110,7 +1110,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XII\",\r\n    \"biaya_spp\" : 750000\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XII MIA\",\r\n    \"biaya_spp\" : 400000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1191,7 +1191,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"X\",\r\n    \"biaya_spp\" : 125000\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"X MIA\",\r\n    \"biaya_spp\" : 265000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1231,7 +1231,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"tahun_akademik\" : \"2022-2023\",\r\n     \"nm_kelas\" : \"X\"\r\n}",
+							"raw": "{\r\n     \"tahun_akademik\" : \"2022/2023\",\r\n     \"nm_kelas\" : \"X MIA\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1727,7 +1727,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XIII\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"XII MIA\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1735,13 +1735,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://10.5.57.55:2022/api/v1/transaksi/uangmasukspp/listsiswa",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listsiswa",
 							"protocol": "http",
 							"host": [
-								"10",
-								"5",
-								"57",
-								"55"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
 							"port": "2022",
 							"path": [
@@ -1768,7 +1768,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"X\",\r\n    \"nis_siswa\" : \"5897\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nm_kelas\" : \"X IIS\",\r\n    \"nis_siswa\" : \"5897\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1803,7 +1803,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5664\",\r\n    \"nm_kelas\" : \"XII\",    \r\n    \"keterangan\" : \"SPP PEMBAYARAN ATAS NAMA DIANING PAKARTI\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 3,\r\n    \"kd_kategori\" : 3,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5654\",\r\n    \"nm_kelas\" : \"XII MIA\",    \r\n    \"keterangan\" : \"SPP PEMBAYARAN ATAS AKMAL RAFI TAMIR\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1833,13 +1833,13 @@
 					"response": []
 				},
 				{
-					"name": "7. Edit SPP Uang Masuk",
+					"name": "7. Edit SPP Uang Masuk Detail",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 750000,\r\n    \"keterangan\" : \"test 777777\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"07-09-2022\",\r\n    \"jml_bayar\" : 260000,\r\n    \"keterangan\" : \"Bayaran Bulan September 2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1868,11 +1868,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk",
-									"value": "6"
+									"value": "1"
 								},
 								{
 									"key": "kd_trans_masuk_detail",
-									"value": "62"
+									"value": "3"
 								}
 							]
 						}
@@ -1914,7 +1914,7 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk",
-									"value": "2"
+									"value": "1"
 								}
 							]
 						}
@@ -2151,7 +2151,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172031711060006\",\r\n    \"tgldaftar\" : \"28-06-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"\"\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 1,\r\n    \"kd_kategori\" : 1,\r\n    \"nik\" : \"3172031711060006\",\r\n    \"tgldaftar\" : \"28-06-2022\",\r\n    \"tahun_daftar\" : \"2022\",\r\n    \"tahun_akademik\" : \"2022-2023\", \r\n    \"keterangan\" : \"PPDB abdillah\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2267,7 +2267,7 @@
 								},
 								{
 									"key": "kd_trans_masuk_detail_ppdb",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -2566,7 +2566,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5959\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 0\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5897\",\r\n    \"nm_kelas\" : \"X IIS\",    \r\n    \"keterangan\" : \"Bayar PTS Ganjil\",\r\n    \"total_biaya\" : 2000000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2602,7 +2602,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5959\",\r\n    \"nm_kelas\" : \"X\",    \r\n    \"keterangan\" : \"TEST DOANG\",\r\n    \"total_biaya\" : 1600000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5897\",\r\n    \"nm_kelas\" : \"X IIS\",    \r\n    \"keterangan\" : \"Bayar PTS Ganjil\",\r\n    \"total_biaya\" : 3000000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2630,7 +2630,7 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_siswa",
-									"value": "4"
+									"value": "1"
 								}
 							]
 						}
@@ -2644,7 +2644,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 1000000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"02-12-2022\",\r\n    \"jml_bayar\" : 1800000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2673,11 +2673,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_siswa",
-									"value": "4"
+									"value": "1"
 								},
 								{
 									"key": "kd_trans_masuk_detail_siswa",
-									"value": "7"
+									"value": "2"
 								}
 							]
 						}
@@ -2691,7 +2691,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : 4\r\n}",
+							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2767,7 +2767,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : \"4\",\r\n    \"kd_trans_masuk_detail_siswa\" : \"5\"\r\n}",
+							"raw": "{\r\n    \"kd_trans_masuk_siswa\" : \"1\",\r\n    \"kd_trans_masuk_detail_siswa\" : \"2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4708,13 +4708,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/report/uangmasuk/reportspp",
+							"raw": "http://10.5.57.66:2022/api/v1/report/uangmasuk/reportspp",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"10",
+								"5",
+								"57",
+								"66"
 							],
 							"port": "2022",
 							"path": [
@@ -5072,7 +5072,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5897\",\r\n    \"nik\" : \"3172031711060006\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5113,7 +5113,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5959\",\r\n    \"nik\" : \"3172035606071003\",\r\n    \"nm_siswa\" : \"ABDILLAH\"\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5897\",\r\n    \"nik\" : \"3172031711060006\",\r\n    \"nm_siswa\" : \"ABDILLAH\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5142,6 +5142,10 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "23. Report Uang Masuk & Keluar",
+			"item": []
 		},
 		{
 			"name": "New Folder",
@@ -5286,7 +5290,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NjIxMjI3N30.Mrxi3Jk071ID7ccQPbETDjL4wrZRc068JM8zXpcvHQU",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NjUzODE1MX0.NV-6m6kWpUw0dgTS0zTmJr354YmpaKcMFFwahov8Vlw",
 				"type": "string"
 			}
 		]
