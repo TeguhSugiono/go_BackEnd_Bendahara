@@ -84,6 +84,10 @@ type ParamDataPPDB struct {
 	Tahun_daftar string `form:"tahun_daftar" json:"tahun_daftar" binding:"required"`
 }
 
+type ParamPPdb struct {
+	Tahun_daftar string `form:"tahun_daftar" json:"tahun_daftar"`
+}
+
 type ListDataPPDB struct {
 	TotalDataPendaftar int
 	JmlDataSudahImport int

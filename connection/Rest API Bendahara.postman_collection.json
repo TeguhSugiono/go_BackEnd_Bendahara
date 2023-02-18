@@ -2075,7 +2075,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"tahun_daftar\" : \"2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4700,7 +4700,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5897\",\r\n    \"periode_bayar1\" : \"01-2022\" ,\r\n    \"periode_bayar2\" : \"12-2023\" ,\r\n    \"tgl_bayar1\" : \"01-01-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2022\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"\",\r\n    \"periode_bayar1\" : \"07-2022\" ,\r\n    \"periode_bayar2\" : \"06-2023\" ,\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5290,7 +5290,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NjUzODE1MX0.NV-6m6kWpUw0dgTS0zTmJr354YmpaKcMFFwahov8Vlw",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MiwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NjY5NDAxMX0.XbCOcOwNWbxnpDrSOxAnBjp3nwzcMce6BUcpGRTKjXQ",
 				"type": "string"
 			}
 		]

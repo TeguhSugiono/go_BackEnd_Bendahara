@@ -160,6 +160,8 @@ func ReportSPP(c *gin.Context) {
 
 	ssql = fmt.Sprintf("%s group by kd_trans_masuk ", ssql)
 
+	ssqldetail := ""
+
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
@@ -176,7 +178,7 @@ func ReportSPP(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT periode_bayar,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_tagihan,jml_bayar,keterangan_detail FROM vw_report_spp "
+		ssqldetail = " SELECT periode_bayar,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_tagihan,jml_bayar,keterangan_detail FROM vw_report_spp "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk = %d", ssqldetail, kd_trans_masuk)
 		if paramReport.Tahun_akademik != "" {
 			ssqldetail = fmt.Sprintf("%s and tahun_akademik = '%s'", ssqldetail, paramReport.Tahun_akademik)
@@ -211,7 +213,7 @@ func ReportSPP(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	response := helper.APIResponse("List Data ..."+ssql+" <> "+ssqldetail, http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
 }
 

@@ -73,26 +73,71 @@ func ListKelas(c *gin.Context) {
 func ListSiswa(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var getNikAndName []GetNikAndNameSiswa
-	db.Raw("SELECT nik,concat('Double Data ==> ','',nm_siswa) 'nm_siswa' FROM tbl_user_ppdb " +
-		" WHERE (nik <> '' or nik is not null) " +
-		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
-		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' " +
-		" GROUP BY nik " +
-		" HAVING count(*) > 1 ").Scan(&getNikAndName)
-
-	if len(getNikAndName) > 0 {
-		response := helper.APIResponse("Terdapat Data Siswa Yang Double ...", http.StatusUnprocessableEntity, "error", getNikAndName)
+	var paramPPdb ParamPPdb
+	if err := c.ShouldBindJSON(&paramPPdb); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
-	var getNikAndNameSiswa []GetNikAndNameSiswa
-	db.Raw(" SELECT nik,nm_siswa FROM tbl_user_ppdb WHERE (nik <> '' or nik is not null)  " +
+	ssql := " SELECT nik,concat('Double Data ==> ','',nm_siswa) 'nm_siswa' FROM tbl_user_ppdb " +
+		" WHERE (nik <> '' or nik is not null) " +
 		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
-		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' order by nm_siswa").Scan(&getNikAndNameSiswa)
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' "
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", getNikAndNameSiswa)
+	if paramPPdb.Tahun_daftar != "" {
+		ssql = fmt.Sprintf("%s and tahun_daftar = '%s'", ssql, paramPPdb.Tahun_daftar)
+	}
+
+	ssql = fmt.Sprintf("%s GROUP BY nik HAVING count(*) > 1  ", ssql)
+
+	SetArrayData := []GetNikAndNameSiswa{}
+	var nik string
+	var nm_siswa string
+	rows, _ := db.Raw(ssql).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&nik, &nm_siswa)
+		arraydata := GetNikAndNameSiswa{}
+		arraydata.Nik = nik
+		arraydata.Nm_siswa = nm_siswa
+		SetArrayData = append(SetArrayData, arraydata)
+	}
+
+	if len(SetArrayData) > 0 {
+		response := helper.APIResponse("Terdapat Data Siswa Yang Double ...", http.StatusUnprocessableEntity, "error", SetArrayData)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	ssqls := " SELECT nik,nm_siswa FROM tbl_user_ppdb " +
+		" WHERE (nik <> '' or nik is not null) " +
+		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' "
+
+	if paramPPdb.Tahun_daftar != "" {
+		ssqls = fmt.Sprintf("%s and tahun_daftar = '%s'", ssqls, paramPPdb.Tahun_daftar)
+	}
+	ssqls = fmt.Sprintf("%s order by nm_siswa  ", ssqls)
+	SetArrayDatax := []GetNikAndNameSiswa{}
+	rowsd, _ := db.Raw(ssqls).Rows()
+	defer rowsd.Close()
+	for rowsd.Next() {
+		rowsd.Scan(&nik, &nm_siswa)
+		arraydata := GetNikAndNameSiswa{}
+		arraydata.Nik = nik
+		arraydata.Nm_siswa = nm_siswa
+		SetArrayDatax = append(SetArrayDatax, arraydata)
+	}
+
+	// var getNikAndNameSiswa []GetNikAndNameSiswa
+	// db.Raw(" SELECT nik,nm_siswa FROM tbl_user_ppdb WHERE (nik <> '' or nik is not null)  " +
+	// 	" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
+	// 	" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' order by nm_siswa").Scan(&getNikAndNameSiswa)
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayDatax)
 	c.JSON(http.StatusOK, response)
 }
 
