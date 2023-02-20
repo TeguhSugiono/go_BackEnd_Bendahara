@@ -213,7 +213,7 @@ func ReportSPP(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("List Data ..."+ssql+" <> "+ssqldetail, http.StatusOK, "success", SetArrayData)
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
 }
 

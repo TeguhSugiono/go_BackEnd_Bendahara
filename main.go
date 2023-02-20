@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"rest_api_bendahara/connection"
+	"rest_api_bendahara/dashboard"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_conf_biaya_kategori"
 	"rest_api_bendahara/master_conf_spp_ppdb"
@@ -15,6 +16,7 @@ import (
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
+	"rest_api_bendahara/report_group"
 	"rest_api_bendahara/report_histori"
 	"rest_api_bendahara/report_uangkeluar"
 	"rest_api_bendahara/transaksi_uang_keluar_act"
@@ -208,6 +210,13 @@ func main() {
 
 	api.POST("/report/reporthistori/listniknis", authMiddleware(), report_histori.ListNikNis)
 	api.POST("/report/reporthistori/reporthistori", authMiddleware(), report_histori.ReportHistori)
+
+	api.POST("/report/reportgroup/reportgroupmasuk", authMiddleware(), report_group.Report_Group_Masuk)
+	api.POST("/report/reportgroup/reportgroupkeluar", authMiddleware(), report_group.Report_Group_Keluar)
+	api.POST("/report/reportgroup/reportgroupmasukkeluar", authMiddleware(), report_group.Report_Group_Masuk_Keluar)
+
+	//Dashboard
+	api.GET("/dashboard", authMiddleware(), dashboard.DataDashboard)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

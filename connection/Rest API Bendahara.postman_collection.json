@@ -58,13 +58,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://10.5.57.66:2022/api/v1/users/login",
+							"raw": "http://127.0.01:2022/api/v1/users/login",
 							"protocol": "http",
 							"host": [
-								"10",
-								"5",
-								"57",
-								"66"
+								"127",
+								"0",
+								"01"
 							],
 							"port": "2022",
 							"path": [
@@ -3267,7 +3266,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 17,\r\n    \"no_document\" : \"TRF1232\",\r\n    \"tgl_document\" : \"02-01-2023\",  \r\n    \"keterangan\" : \"\",\r\n    \"total_biaya\" : 60000000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 10,\r\n    \"kd_kategori\" : 17,\r\n    \"no_document\" : \"TRFs1232\",\r\n    \"tgl_document\" : \"21-02-2023\",  \r\n    \"keterangan\" : \"Dana Masuk SUMBANGAN\",\r\n    \"total_biaya\" : 1200000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3345,7 +3344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"06-01-2023\",\r\n    \"jml_bayar\" : 60000000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"21-02-2023\",\r\n    \"jml_bayar\" : 1200000,\r\n    \"keterangan\" : \"Dana Masuk SUMBANGAN\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3374,11 +3373,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_lain",
-									"value": "2"
+									"value": "11"
 								},
 								{
 									"key": "kd_trans_masuk_detail_lain",
-									"value": "3"
+									"value": "21"
 								}
 							]
 						}
@@ -4412,7 +4411,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 8,\r\n    \"kd_kategori\" : 8,\r\n    \"no_document\" : \"INV-PLN-001\",\r\n    \"tgl_document\" : \"20-01-2023\",  \r\n    \"keterangan\" : \"Bayar PLN Listrik\",\r\n    \"total_biaya\" : 4500000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 8,\r\n    \"kd_kategori\" : 8,\r\n    \"no_document\" : \"INV-PLN-001\",\r\n    \"tgl_document\" : \"20-02-2023\",  \r\n    \"keterangan\" : \"Bayar PLN Listrik Periode Februari\",\r\n    \"total_biaya\" : 4500000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4489,7 +4488,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_post_uang_masuk\" : 10,\r\n    \"tgl_bayar\" : \"05-01-2023\",\r\n    \"jml_bayar\" : 8700000,\r\n    \"keterangan\" : \"Bayar Listrik Periode Desember 2022\"\r\n}",
+							"raw": "{\r\n    \"kd_post_uang_masuk\" : 10,\r\n    \"tgl_bayar\" : \"20-02-2023\",\r\n    \"jml_bayar\" : 4500000,\r\n    \"keterangan\" : \"Bayar PLN Listrik Periode Februari\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4518,11 +4517,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_keluar",
-									"value": "2"
+									"value": "4"
 								},
 								{
 									"key": "kd_trans_keluar_detail",
-									"value": "4"
+									"value": "7"
 								}
 							]
 						}
@@ -5144,14 +5143,120 @@
 			]
 		},
 		{
-			"name": "23. Report Uang Masuk & Keluar",
-			"item": []
-		},
-		{
-			"name": "New Folder",
+			"name": "23. Report Group Uang Masuk & Keluar",
 			"item": [
 				{
-					"name": "3. List Kelas",
+					"name": "Report Uang Masuk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-01-2023\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupmasuk",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reportgroup",
+								"reportgroupmasuk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report Uang Keluar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"28-01-2023\",\r\n    \"tgl_bayar2\" : \"28-01-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupkeluar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reportgroup",
+								"reportgroupkeluar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report Uang Masuk Keluar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-12-2022\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupmasukkeluar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reportgroup",
+								"reportgroupmasukkeluar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "24. Dashboard",
+			"item": [
+				{
+					"name": "Dashboard Utama",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -5174,7 +5279,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listkelas",
+							"raw": "http://127.0.0.1:2022/api/v1/dashboard",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -5186,97 +5291,7 @@
 							"path": [
 								"api",
 								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"listkelas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "5. List Data",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022-2023\",\r\n    \"nm_kelas\" : \"XI\",\r\n    \"nis_siswa\" : \"5762\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/listdata",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"listdata"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "7. Edit SPP Uang Masuk",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-07-2022\",\r\n    \"jml_bayar\" : 100000,\r\n    \"keterangan\" : \"hehehehe\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukspp/updateuangmasukspp/:kd_trans_masuk/:kd_trans_masuk_detail",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "2022",
-							"path": [
-								"api",
-								"v1",
-								"transaksi",
-								"uangmasukspp",
-								"updateuangmasukspp",
-								":kd_trans_masuk",
-								":kd_trans_masuk_detail"
-							],
-							"variable": [
-								{
-									"key": "kd_trans_masuk",
-									"value": "1"
-								},
-								{
-									"key": "kd_trans_masuk_detail",
-									"value": "6"
-								}
+								"dashboard"
 							]
 						}
 					},
@@ -5290,7 +5305,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MiwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NjY5NDAxMX0.XbCOcOwNWbxnpDrSOxAnBjp3nwzcMce6BUcpGRTKjXQ",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MiwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3Njk4NjcwOX0.d90aLGb4H6mFJhRPs_-fTmpZKXps2RHaiP_3xrZ7kqU",
 				"type": "string"
 			}
 		]

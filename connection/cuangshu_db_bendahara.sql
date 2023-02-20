@@ -11,7 +11,7 @@
  Target Server Version : 50531
  File Encoding         : 65001
 
- Date: 16/02/2023 15:04:58
+ Date: 21/02/2023 02:23:10
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `tbl_biaya_masuk_keluars`  (
   `kd_kategori` int(11) NULL DEFAULT NULL,
   `jml_biaya` double(19, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`kd_biaya_kategori`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_biaya_masuk_keluars
@@ -44,7 +44,7 @@ CREATE TABLE `tbl_biayadaftar`  (
   `jumlah_pembayaran` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `aktif` char(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_biayadaftar
@@ -72,83 +72,71 @@ CREATE TABLE `tbl_conf_periode_spps`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_conf`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_conf_periode_spps
 -- ----------------------------
-INSERT INTO `tbl_conf_periode_spps` VALUES (1, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (2, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (3, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (4, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (5, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (6, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (7, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (8, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (9, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (10, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (11, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (12, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 260000.00, 0, '2023-02-16 02:06:23', 'teguh', '2023-02-16 02:21:56', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (13, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (14, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (15, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (16, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (17, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (18, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (19, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (20, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (21, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (22, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (23, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (24, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 265000.00, 0, '2023-02-16 02:07:04', 'teguh', '2023-02-16 02:28:33', 'teguh');
-INSERT INTO `tbl_conf_periode_spps` VALUES (25, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (26, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (27, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (28, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (29, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (30, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (31, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (32, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (33, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (34, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (35, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (36, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI IIS', 350000.00, 0, '2023-02-16 02:07:53', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (37, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (38, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (39, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (40, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (41, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (42, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (43, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (44, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (45, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (46, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (47, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (48, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI MIA', 350000.00, 0, '2023-02-16 02:08:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (49, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (50, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (51, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (52, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (53, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (54, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (55, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (56, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (57, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (58, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (59, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (60, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII IIS', 400000.00, 0, '2023-02-16 02:08:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (61, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (62, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (63, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (64, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (65, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (66, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (67, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (68, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (69, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (70, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (71, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
-INSERT INTO `tbl_conf_periode_spps` VALUES (72, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII MIA', 400000.00, 0, '2023-02-16 02:08:36', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (1, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (2, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (3, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (4, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (5, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (6, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (7, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (8, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (9, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (10, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (11, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (12, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X', 250000.00, 0, '2022-10-13 02:56:44', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (13, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (14, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (15, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (16, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (17, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (18, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (19, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (20, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (21, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (22, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (23, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (24, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XI', 350000.00, 0, '2022-10-13 02:56:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (25, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (26, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (27, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (28, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (29, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (30, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (31, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (32, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (33, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (34, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (35, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (36, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'XII', 450000.00, 0, '2022-10-13 02:57:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (37, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (38, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (39, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (40, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (41, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (42, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (43, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (44, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (45, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (46, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (47, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (48, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X IIS', 250000.00, 0, '2023-02-17 10:24:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (49, 1, '07', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (50, 2, '08', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (51, 3, '09', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (52, 4, '10', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (53, 5, '11', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (54, 6, '12', 2022, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (55, 7, '01', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (56, 8, '02', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (57, 9, '03', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (58, 10, '04', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (59, 11, '05', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
+INSERT INTO `tbl_conf_periode_spps` VALUES (60, 12, '06', 2023, 'Tahun Akademik 2022 s/d 2023 ', '2022/2023', 'X MIA', 250000.00, 0, '2023-02-17 10:24:31', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_group_kategoris
@@ -165,7 +153,7 @@ CREATE TABLE `tbl_group_kategoris`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_group_kategoris
@@ -194,7 +182,7 @@ CREATE TABLE `tbl_jenis_trans`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_jenis`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_jenis_trans
@@ -217,7 +205,7 @@ CREATE TABLE `tbl_kategori_uangs`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_kategori`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_kategori_uangs
@@ -256,7 +244,7 @@ CREATE TABLE `tbl_kelas`  (
   `edited_by` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `flag_kelas` tinyint(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id_kelas`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_kelas
@@ -279,7 +267,7 @@ CREATE TABLE `tbl_link_kategoris`  (
   `kd_group` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `kd_kategori` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_link`, `link_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_link_kategoris
@@ -294,7 +282,7 @@ DROP TABLE IF EXISTS `tbl_run_number_bendahara`;
 CREATE TABLE `tbl_run_number_bendahara`  (
   `code_trans` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `number` bigint(20) NULL DEFAULT NULL
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_run_number_bendahara
@@ -317,11 +305,14 @@ CREATE TABLE `tbl_sett_periode_spps`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_sett_spp`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_sett_periode_spps
 -- ----------------------------
+INSERT INTO `tbl_sett_periode_spps` VALUES (1, 1, 'X', 300000.00, 'Biaya SPP Tahun Akademik 2022-2023 Kelas Sepuluh', 9, '2022-09-09 03:51:12', 'teguh', '2022-09-17 13:42:16', 'teguh');
+INSERT INTO `tbl_sett_periode_spps` VALUES (1, 2, 'XI', 325000.00, 'Biaya SPP Tahun Akademik 2022-2023 Kelas Sebelas', 9, '2022-09-09 03:51:34', 'teguh', '2022-09-17 13:42:13', 'teguh');
+INSERT INTO `tbl_sett_periode_spps` VALUES (1, 3, 'XII', 350000.00, 'Biaya SPP Tahun Akademik 2022-2023 Kelas Dua Belas', 9, '2022-09-09 03:51:52', 'teguh', '2022-09-17 13:42:09', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_siswa
@@ -379,7 +370,7 @@ CREATE TABLE `tbl_siswa`  (
   `qrcode` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `alamat_kk` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_siswa`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_siswa
@@ -972,11 +963,15 @@ CREATE TABLE `tbl_sub_kategori_uangs`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_sub_kategori`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_sub_kategori_uangs
 -- ----------------------------
+INSERT INTO `tbl_sub_kategori_uangs` VALUES (1, 1, 'Biaya Seragam', 0, '2022-09-09 03:43:59', 'teguh', NULL, NULL);
+INSERT INTO `tbl_sub_kategori_uangs` VALUES (1, 2, 'Biaya Uang Gedung', 0, '2022-09-09 03:44:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_sub_kategori_uangs` VALUES (1, 3, 'Biaya Formulir Pendaftaran', 0, '2022-09-09 03:44:19', 'teguh', NULL, NULL);
+INSERT INTO `tbl_sub_kategori_uangs` VALUES (1, 4, 'TEST INPUT', 9, '2022-09-24 23:39:12', 'teguh', '2022-09-24 23:40:36', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_tahun_akademik
@@ -992,15 +987,15 @@ CREATE TABLE `tbl_tahun_akademik`  (
   `edited_by` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `flag_tahun` tinyint(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id_tahun`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_tahun_akademik
 -- ----------------------------
 INSERT INTO `tbl_tahun_akademik` VALUES (1, '2019/2020', 'Tidak Aktif', '2020-02-14 09:50:02', 'cuang', NULL, NULL, 0);
 INSERT INTO `tbl_tahun_akademik` VALUES (2, '2020/2021', 'Tidak Aktif', '2020-03-31 12:07:42', 'farhan', NULL, NULL, 0);
-INSERT INTO `tbl_tahun_akademik` VALUES (3, '2021/2022', 'Aktif', '2021-06-17 09:37:53', 'cuang', '2021-07-07 08:09:37', 'jejen', 0);
-INSERT INTO `tbl_tahun_akademik` VALUES (4, '2022/2023', 'Tidak Aktif', '2022-07-07 11:51:51', 'jejen', NULL, NULL, 0);
+INSERT INTO `tbl_tahun_akademik` VALUES (3, '2021/2022', 'Tidak Aktif', '2021-06-17 09:37:53', 'cuang', '2021-07-07 08:09:37', 'jejen', 0);
+INSERT INTO `tbl_tahun_akademik` VALUES (4, '2022/2023', 'Aktif', '2022-07-07 11:51:51', 'jejen', NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_act_details
@@ -1020,11 +1015,18 @@ CREATE TABLE `tbl_trans_uang_keluar_act_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_act_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 1, 1, 2, '2023-01-27', 150000.00, 'ghkjsahdkjahdk askdjhasjkhds asldkjsalkdjlaskjdsa', 0, '2023-01-27 15:33:14', 'teguh', '2023-01-27 15:55:17', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 2, 2, 1, '2023-01-27', 200000.00, '-', 0, '2023-01-27 15:36:02', 'teguh', '2023-01-27 15:36:25', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (1, 3, 3, 10, '2023-01-27', 150000.00, '-', 0, '2023-01-27 15:36:35', 'teguh', '2023-01-27 15:36:49', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 4, 1, 1, '2023-01-28', 1000.00, '-', 9, '2023-01-28 07:10:20', 'teguh', '2023-01-28 07:12:29', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (2, 5, 2, 10, '2023-01-28', 20000.00, '-', 9, '2023-01-28 07:10:58', 'teguh', '2023-01-28 07:12:29', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (3, 6, 1, NULL, NULL, 0.00, '', 0, '2023-01-28 11:56:07', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_act_details` VALUES (4, 7, 1, 10, '2023-02-20', 4500000.00, 'Bayar PLN Listrik Periode Februari', 0, '2023-02-21 02:17:23', 'teguh', '2023-02-21 02:18:07', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_act_headers
@@ -1047,11 +1049,88 @@ CREATE TABLE `tbl_trans_uang_keluar_act_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_act_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (7, 6, 1, '', 'ACT1', '2023-01-27', 500000.00, 500000.00, 0.00, '-', 0, '2023-01-27 15:33:14', 'teguh', '2023-01-27 17:12:14', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (9, 14, 2, '', 'ACT2', '2023-01-28', 50000.00, 21000.00, 29000.00, '-', 9, '2023-01-28 07:10:20', 'teguh', '2023-01-28 07:12:29', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (7, 6, 3, '', '13', '2023-01-28', 0.00, 0.00, 0.00, '', 0, '2023-01-28 11:56:07', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_act_headers` VALUES (8, 8, 4, '', 'INV-PLN-001', '2023-02-20', 4500000.00, 4500000.00, 0.00, 'Bayar PLN Listrik Periode Februari', 0, '2023-02-21 02:17:23', 'teguh', '2023-02-21 02:18:07', 'teguh');
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_keluar_details
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_keluar_details`;
+CREATE TABLE `tbl_trans_uang_keluar_details`  (
+  `kd_trans_keluar` int(11) NULL DEFAULT NULL,
+  `kd_trans_keluar_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `seqno` int(11) NULL DEFAULT NULL,
+  `tgl_bayar` date NULL DEFAULT NULL,
+  `jml_bayar` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(1) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_keluar_details
+-- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (1, 1, 1, '2022-07-02', 700000.00, 'hehehehe', 0, '2023-01-07 21:26:57', 'teguh', '2023-01-10 23:10:28', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (2, 2, 1, '2022-07-02', 700000.00, 'hehehehe', 0, '2023-01-07 21:28:23', 'teguh', '2023-01-10 22:18:34', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (1, 3, 2, '2022-07-02', 70000.00, 'hehehehe', 0, '2023-01-10 22:35:11', 'teguh', '2023-01-10 23:10:28', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (1, 4, 3, '2022-07-02', 30000.00, 'hehehehe', 0, '2023-01-10 22:35:17', 'teguh', '2023-01-10 23:10:28', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (2, 5, 2, '2022-07-02', 450000.00, 'hehehehe', 0, '2023-01-10 22:37:37', 'teguh', '2023-01-10 22:38:13', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (3, 6, 1, NULL, 0.00, '', 9, '2023-01-15 13:42:23', 'teguh', '2023-01-15 14:39:31', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (4, 7, 1, NULL, 0.00, '', 0, '2023-01-15 13:43:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (5, 8, 1, '2023-01-15', 50000.00, 'Nasi Kotak', 0, '2023-01-15 13:53:33', 'teguh', '2023-01-15 13:54:00', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (6, 9, 1, '2023-01-15', 50000.00, 'Nasi Kotak', 0, '2023-01-15 13:55:35', 'teguh', '2023-01-15 13:55:49', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (6, 10, 2, '2023-01-15', 20000.00, 'Makanan Ringan', 0, '2023-01-15 13:55:54', 'teguh', '2023-01-15 13:56:40', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (6, 11, 3, '2022-01-01', 30000.00, 'Santunan', 0, '2023-01-15 13:56:47', 'teguh', '2023-01-15 14:09:27', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (7, 12, 1, '2022-01-01', 2000000.00, 'Biaya Pemateri', 0, '2023-01-15 14:31:44', 'teguh', '2023-01-15 14:32:42', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (7, 13, 2, '2022-01-01', 2000000.00, 'Makanan Ringan dan Buah-buahan', 0, '2023-01-15 14:32:46', 'teguh', '2023-01-15 14:33:16', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (7, 14, 3, '2022-01-01', 1000000.00, 'Sewa panggung dan tenda', 0, '2023-01-15 14:33:22', 'teguh', '2023-01-15 14:33:57', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (7, 15, 4, '2022-01-01', 200000.00, 'Pembelian Banner / Spanduk Pesantren Kilat', 0, '2023-01-15 14:34:00', 'teguh', '2023-01-15 14:37:01', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_details` VALUES (7, 16, 5, NULL, 0.00, '', 9, '2023-01-15 14:34:52', 'teguh', '2023-01-15 14:35:52', 'teguh');
+
+-- ----------------------------
+-- Table structure for tbl_trans_uang_keluar_headers
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_trans_uang_keluar_headers`;
+CREATE TABLE `tbl_trans_uang_keluar_headers`  (
+  `kd_group` int(11) NULL DEFAULT NULL,
+  `kd_kategori` int(11) NULL DEFAULT NULL,
+  `kd_trans_keluar` int(11) NOT NULL AUTO_INCREMENT,
+  `kd_proses` varchar(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `no_document` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tgl_document` date NULL DEFAULT NULL,
+  `total_biaya` double(19, 2) NULL DEFAULT NULL,
+  `total_bayar` double(19, 2) NULL DEFAULT NULL,
+  `sisa_biaya` double(19, 2) NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `flag_aktif` int(11) NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `edited_on` datetime NULL DEFAULT NULL,
+  `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`kd_trans_keluar`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of tbl_trans_uang_keluar_headers
+-- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (9, 12, 1, 'PRA', 'nodok987263', '2022-12-12', 900000.00, 730000.00, 170000.00, '', 0, '2023-01-07 21:26:57', 'teguh', '2023-01-10 23:10:28', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (9, 1, 2, 'PRA', 'nodok987263', '2022-12-06', 1200000.00, 1150000.00, 50000.00, '', 0, '2023-01-07 21:28:23', 'teguh', '2023-01-10 22:38:13', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (7, 6, 3, 'PRA', 'BK001', '2023-01-15', 0.00, 0.00, 0.00, '', 9, '2023-01-15 13:42:23', 'teguh', '2023-01-15 14:39:31', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (7, 6, 4, 'PRA', 'BK002', '2023-01-15', 0.00, 0.00, 0.00, '', 0, '2023-01-15 13:43:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (7, 6, 5, 'PRA', 'BK003', '2023-01-15', 0.00, 50000.00, -50000.00, '', 0, '2023-01-15 13:53:33', 'teguh', '2023-01-15 13:54:00', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (7, 6, 6, 'PRA', 'BK004', '2023-01-15', 100000.00, 100000.00, 0.00, '', 0, '2023-01-15 13:55:35', 'teguh', '2023-01-15 14:09:27', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_headers` VALUES (7, 7, 7, 'PRA', 'BK005', '2023-01-15', 5300000.00, 5200000.00, 100000.00, '', 0, '2023-01-15 14:31:44', 'teguh', '2023-01-15 14:37:01', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_act_details
@@ -1071,11 +1150,20 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_act_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_act_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (1, 1, 1, 1, '2023-01-27', 150000.00, '-', 0, '2023-01-28 07:42:50', 'teguh', '2023-01-28 08:23:31', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (1, 2, 2, 10, '2023-01-27', 350000.00, '-', 0, '2023-01-28 07:42:50', 'teguh', '2023-01-28 08:25:12', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (2, 3, 1, NULL, '2023-01-27', 0.00, '', 0, '2023-01-28 07:49:46', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (2, 4, 2, NULL, '2023-01-27', 0.00, '', 0, '2023-01-28 07:49:46', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (3, 5, 1, NULL, '2023-01-27', 0.00, '', 0, '2023-01-28 07:51:28', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (1, 6, 3, NULL, NULL, 0.00, '', 9, '2023-01-28 08:25:40', 'teguh', '2023-01-28 08:26:30', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (4, 7, 1, NULL, '2023-01-27', 0.00, '', 9, '2023-01-28 08:40:22', 'teguh', '2023-01-28 08:41:39', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (4, 8, 2, NULL, NULL, 0.00, '', 9, '2023-01-28 08:40:30', 'teguh', '2023-01-28 08:41:12', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_details` VALUES (5, 9, 1, 3, '2023-01-28', 200000.00, '-', 0, '2023-01-28 11:51:05', 'teguh', '2023-01-28 11:51:36', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_act_headers
@@ -1098,11 +1186,16 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_act_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_act_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_act_headers` VALUES (8, 8, 1, '', 'nodoc1', '2023-01-27', 500000.00, 500000.00, 0.00, '', 0, '2023-01-28 07:42:50', 'teguh', '2023-01-28 08:27:07', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_headers` VALUES (6, 5, 2, '', 'nodoc2', '2023-01-27', 100.00, 0.00, 100.00, '', 0, '2023-01-28 07:49:46', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_act_headers` VALUES (9, 12, 3, '', 'nodoc3', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '2023-01-28 07:51:28', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_act_headers` VALUES (9, 12, 4, '', 'nodoc4', '2023-01-27', 0.00, 0.00, 0.00, '', 9, '2023-01-28 08:40:22', 'teguh', '2023-01-28 08:41:39', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_act_headers` VALUES (6, 5, 5, '', '12', '2023-01-28', 2000000.00, 200000.00, 1800000.00, '-', 0, '2023-01-28 11:51:05', 'teguh', '2023-01-28 11:51:36', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_details
@@ -1120,11 +1213,28 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (1, 1, 1, 500000.00, '-', 0, '2023-01-27 09:13:47', 'teguh', '2023-01-27 09:14:16', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (1, 2, 2, 0.00, '', 0, '2023-01-27 09:56:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (2, 3, 1, 0.00, '', 0, '2023-01-27 10:06:22', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (3, 4, 1, 0.00, '', 0, '2023-01-27 10:08:40', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (4, 5, 1, 0.00, '', 0, '2023-01-27 10:11:53', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (5, 6, 1, 0.00, '', 0, '2023-01-27 10:12:23', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (6, 7, 1, 0.00, '', 0, '2023-01-27 10:12:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (7, 8, 1, 0.00, '', 0, '2023-01-27 10:13:43', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (8, 9, 1, 0.00, '', 0, '2023-01-27 10:14:51', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (9, 10, 1, 500000.00, '-', 0, '2023-01-27 10:17:24', 'teguh', '2023-01-27 10:17:58', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (9, 11, 2, 20000.00, '-', 0, '2023-01-27 10:19:20', 'teguh', '2023-01-27 10:19:31', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (9, 12, 3, 0.00, '', 0, '2023-01-27 10:21:26', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (2, 13, 2, 0.00, '', 0, '2023-01-27 10:35:36', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (10, 14, 1, 0.00, '', 0, '2023-01-27 10:35:51', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (10, 15, 2, 0.00, '', 0, '2023-01-27 10:36:29', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (11, 16, 1, 0.00, '', 0, '2023-01-27 10:41:30', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_details` VALUES (12, 17, 1, 200000.00, '-', 0, '2023-01-28 11:48:53', 'teguh', '2023-01-28 11:49:34', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_keluar_pra_headers
@@ -1147,11 +1257,23 @@ CREATE TABLE `tbl_trans_uang_keluar_pra_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_keluar`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_keluar_pra_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (8, 8, 1, 'nodoc1', '2023-01-27', 500000.00, 500000.00, 0.00, '', 0, '1', '2023-01-27 09:13:47', 'teguh', '2023-01-28 07:42:50', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (6, 5, 2, 'nodoc2', '2023-01-27', 100.00, 0.00, 100.00, '', 0, '1', '2023-01-27 10:06:22', 'teguh', '2023-01-28 07:49:46', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 3, 'nodoc3', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '1', '2023-01-27 10:08:40', 'teguh', '2023-01-28 07:51:28', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 4, 'nodoc4', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '1', '2023-01-27 10:11:53', 'teguh', '2023-01-28 08:40:22', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 5, 'nodoc5', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '0', '2023-01-27 10:12:23', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 6, 'nodoc6', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '0', '2023-01-27 10:12:56', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 7, 'nodoc7', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '0', '2023-01-27 10:13:43', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 8, 'nodoc8', '2023-01-27', 0.00, 0.00, 0.00, '', 0, '0', '2023-01-27 10:14:51', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 12, 9, 'nodoc9', '2023-01-27', 700000.00, 520000.00, 180000.00, '', 0, '0', '2023-01-27 10:17:24', 'teguh', '2023-01-27 10:19:31', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (8, 9, 10, 'nodoc10', '2023-01-27', 1000000.00, 0.00, 1000000.00, '', 0, '0', '2023-01-27 10:35:51', 'teguh', '2023-01-27 10:36:05', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (9, 13, 11, 'nodoc11', '2023-01-27', 2000000.00, 0.00, 2000000.00, '', 0, '0', '2023-01-27 10:41:30', 'teguh', '2023-01-27 10:41:44', 'teguh');
+INSERT INTO `tbl_trans_uang_keluar_pra_headers` VALUES (6, 5, 12, '12', '2023-01-28', 2000000.00, 200000.00, 1800000.00, '-', 0, '1', '2023-01-28 11:48:53', 'teguh', '2023-01-28 11:51:05', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_details
@@ -1170,11 +1292,32 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_details
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (1, 1, 1, NULL, 0.00, '', 0, '2022-12-20 10:28:46', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 2, 1, '2022-07-02', 500000.00, 'hehehehe', 0, '2022-12-21 18:16:07', 'teguh', '2022-12-21 18:32:02', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 3, 2, '2022-07-02', 200000.00, 'hehehehe', 0, '2022-12-21 18:33:35', 'teguh', '2022-12-21 18:38:04', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 4, 3, '2022-07-02', 300000.00, 'hehehehe', 0, '2022-12-21 18:35:32', 'teguh', '2022-12-31 12:18:46', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 5, 4, '2022-07-02', 700000.00, 'hehehehe', 9, '2022-12-21 18:37:23', 'teguh', '2022-12-21 18:58:50', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (3, 6, 1, '2022-07-02', 700000.00, 'hehehehe', 9, '2022-12-26 13:06:28', 'teguh', '2022-12-26 14:39:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (3, 7, 2, NULL, 0.00, '', 0, '2022-12-26 13:30:18', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (4, 8, 1, '2022-12-31', 50000.00, '-', 0, '2022-12-26 14:19:14', 'teguh', '2022-12-31 12:37:17', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (5, 9, 1, '2023-01-08', 10000.00, '-', 9, '2022-12-26 14:25:30', 'teguh', '2023-01-08 13:37:09', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (6, 10, 1, '2022-12-26', 200000.00, '-', 9, '2022-12-26 14:34:24', 'teguh', '2023-01-08 13:16:29', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (6, 11, 2, '2022-12-26', 150000.00, '-', 9, '2022-12-26 14:37:26', 'teguh', '2023-01-08 13:16:29', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (7, 12, 1, '2022-12-26', 300000.00, '-', 9, '2022-12-26 14:42:04', 'teguh', '2022-12-26 14:42:39', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (7, 13, 2, '2022-12-26', 150000.00, '-', 9, '2022-12-26 14:42:20', 'teguh', '2022-12-26 14:42:46', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 14, 4, '2022-12-31', 1000000.00, '-', 0, '2022-12-31 16:04:04', 'teguh', '2022-12-31 16:04:15', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 15, 5, '2022-12-31', 1500000.00, '-', 9, '2022-12-31 16:04:24', 'teguh', '2022-12-31 16:05:10', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (2, 16, 5, '2022-12-31', 2500000.00, '-', 0, '2022-12-31 16:05:16', 'teguh', '2022-12-31 16:05:24', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (1, 17, 2, NULL, 0.00, '', 0, '2023-01-15 10:09:29', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (8, 18, 1, '2023-01-02', 60000000.00, 'Dana Dari Investor', 0, '2023-02-18 13:52:48', 'teguh', '2023-02-20 21:10:05', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (9, 19, 1, '2023-03-02', 120000000.00, 'Dana Dari Investor', 0, '2023-02-20 21:09:02', 'teguh', '2023-02-20 21:11:24', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (10, 20, 1, '2023-02-21', 1000000.00, 'Dana Dari Investor', 0, '2023-02-21 02:14:52', 'teguh', '2023-02-21 02:15:26', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_details` VALUES (11, 21, 1, '2023-02-21', 1200000.00, 'Dana Masuk SUMBANGAN', 0, '2023-02-21 02:15:50', 'teguh', '2023-02-21 02:16:21', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_lain_headers
@@ -1196,11 +1339,22 @@ CREATE TABLE `tbl_trans_uang_masuk_lain_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_lain`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_lain_headers
 -- ----------------------------
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 1, 'nodok123456', '2022-12-13', 3000000.00, 0.00, 3000000.00, '', 0, '2022-12-20 10:28:46', 'teguh', '2023-01-15 10:09:54', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 2, 'nodok987263', '2022-12-12', 4500000.00, 4500000.00, 0.00, '', 0, '2022-12-21 18:16:07', 'teguh', '2023-01-01 19:17:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 3, 'nodok987264', '2022-12-12', 0.00, 0.00, 0.00, '', 0, '2022-12-26 13:06:28', 'teguh', '2022-12-26 14:39:08', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 4, '001', '2022-12-26', 150000.00, 50000.00, 100000.00, '', 0, '2022-12-26 14:19:14', 'teguh', '2023-01-01 19:22:23', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 5, '002', '2022-12-26', 200000.00, 10000.00, 190000.00, '', 9, '2022-12-26 14:25:30', 'teguh', '2023-01-08 13:37:09', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 6, '003', '2022-12-26', 400000.00, 350000.00, 50000.00, '', 9, '2022-12-26 14:34:24', 'teguh', '2023-01-08 13:16:29', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 16, 7, '004', '2022-12-26', 0.00, 0.00, 0.00, '', 0, '2022-12-26 14:42:04', 'teguh', '2022-12-26 14:42:46', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 17, 8, 'TRF1232', '2023-01-02', 60000000.00, 60000000.00, 0.00, 'Dana Masuk Dari Investor', 0, '2023-02-18 13:52:48', 'teguh', '2023-02-20 21:10:05', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 17, 9, 'TRF1232', '2023-03-02', 120000000.00, 120000000.00, 0.00, 'Dana Masuk Dari Investor', 0, '2023-02-20 21:09:02', 'teguh', '2023-02-20 21:11:24', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 17, 10, 'TRF1232', '2023-02-21', 1000000.00, 1000000.00, 0.00, 'Dana Masuk Dari Investor', 0, '2023-02-21 02:14:52', 'teguh', '2023-02-21 02:15:26', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_lain_headers` VALUES (10, 17, 11, 'TRFs1232', '2023-02-21', 1200000.00, 1200000.00, 0.00, 'Dana Masuk SUMBANGAN', 0, '2023-02-21 02:15:50', 'teguh', '2023-02-21 02:16:21', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_details
@@ -1220,12 +1374,29 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_ppdb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_ppdb_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 1, 1, 'Biaya Import dari PPDB', '2022-06-28', 3400000.00, NULL, 0, '2023-02-16 11:08:21', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 1, 1, 'Biaya Seragam', '2022-07-02', 140000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:53:49', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 2, 2, 'Biaya Uang Gedung', '2022-07-02', 800000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:53:20', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (1, 3, 3, 'Biaya Formulir Pendaftaran', '2022-07-02', 260000.00, 'hehehehe', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:54:20', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 4, 1, 'Biaya Seragam', NULL, 0.00, '', 9, '2023-01-08 15:18:51', 'teguh', '2023-01-08 15:22:11', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 5, 2, 'Biaya Uang Gedung', NULL, 0.00, '', 9, '2023-01-08 15:18:51', 'teguh', '2023-01-08 15:22:11', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (2, 6, 3, 'Biaya Formulir Pendaftaran', NULL, 0.00, '', 9, '2023-01-08 15:18:51', 'teguh', '2023-01-08 15:22:11', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 7, 1, 'Biaya Seragam', NULL, 0.00, '', 9, '2023-01-08 15:23:38', 'teguh', '2023-01-08 15:23:43', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 8, 2, 'Biaya Uang Gedung', NULL, 0.00, '', 9, '2023-01-08 15:23:38', 'teguh', '2023-01-08 15:23:43', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (3, 9, 3, 'Biaya Formulir Pendaftaran', NULL, 0.00, '', 9, '2023-01-08 15:23:38', 'teguh', '2023-01-08 15:23:43', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 10, 1, 'Biaya Seragam', NULL, 0.00, '', 0, '2023-01-08 15:30:53', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 11, 2, 'Biaya Uang Gedung', NULL, 0.00, '', 0, '2023-01-08 15:30:53', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 12, 3, 'Biaya Formulir Pendaftaran', NULL, 0.00, '', 9, '2023-01-08 15:30:53', 'teguh', '2023-02-12 09:25:29', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (5, 13, 1, 'Biaya Seragam', '2023-01-28', 2000000.00, '-', 9, '2023-01-28 11:13:24', 'teguh', '2023-02-12 08:58:47', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (5, 14, 2, 'Biaya Uang Gedung', NULL, 0.00, '', 9, '2023-01-28 11:13:24', 'teguh', '2023-02-12 08:58:47', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (5, 15, 3, 'Biaya Formulir Pendaftaran', NULL, 0.00, '', 9, '2023-01-28 11:13:24', 'teguh', '2023-02-12 08:58:47', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (6, 16, 1, 'Biaya Import dari PPDB', '2022-06-23', 3400000.00, NULL, 9, '2023-02-12 08:59:40', 'teguh', '2023-02-12 08:59:55', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (7, 17, 1, 'Biaya Import dari PPDB', '2022-07-04', 3400000.00, NULL, 9, '2023-02-12 09:00:13', 'teguh', '2023-02-12 09:00:19', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_details` VALUES (4, 18, 4, 'test kategori', '2023-02-12', 300000.00, '', 0, '2023-02-12 09:09:29', 'teguh', '2023-02-12 09:20:45', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_ppdb_headers
@@ -1249,12 +1420,18 @@ CREATE TABLE `tbl_trans_uang_masuk_ppdb_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_ppdb`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_ppdb_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '3172031711060006', '2022-06-28', '2022', '2022-2023', 3400000.00, 3400000.00, 0.00, 'PPDB abdillah', 0, '2023-02-16 11:08:21', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 1, '3172032402070005', '2022-06-30', '2022', '2022-2023', 3400000.00, 1200000.00, 2200000.00, 'Tidak Wajib Isi ini', 0, '2022-10-19 10:36:40', 'teguh', '2022-10-19 11:54:20', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 2, '3172031711060006', '2022-06-28', '2022', '2022/2023', 3400000.00, 0.00, 3400000.00, '', 9, '2023-01-08 15:18:51', 'teguh', '2023-01-08 15:22:11', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 3, '3172031711060006', '2022-06-28', '2022', '2022/2023', 3400000.00, 0.00, 3400000.00, '', 9, '2023-01-08 15:23:38', 'teguh', '2023-01-08 15:23:43', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 4, '3172031711060006', '2022-06-28', '2022', '2022/2023', 3400000.00, 300000.00, 3100000.00, '', 0, '2023-01-08 15:30:53', 'teguh', '2023-02-12 09:25:29', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 5, '3172042701070004', '2022-06-23', '2022', '2022/2023', 3400000.00, 2000000.00, 1400000.00, '', 9, '2023-01-28 11:13:24', 'teguh', '2023-02-12 08:58:47', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 6, '3172042701070004', '2022-06-23', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 9, '2023-02-12 08:59:40', 'teguh', '2023-02-12 08:59:55', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_ppdb_headers` VALUES (1, 1, 7, '3172046403060007', '2022-07-04', '2022', '2022/2023', 3400000.00, 3400000.00, 0.00, '', 9, '2023-02-12 09:00:13', 'teguh', '2023-02-12 09:00:19', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_siswa_details
@@ -1273,13 +1450,29 @@ CREATE TABLE `tbl_trans_uang_masuk_siswa_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail_siswa`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_siswa_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (1, 1, 1, '2022-12-02', 1200000.00, 'hehehehe', 0, '2023-02-16 13:59:27', 'teguh', '2023-02-16 14:08:13', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (1, 2, 2, '2022-12-02', 1800000.00, 'hehehehe', 0, '2023-02-16 14:06:36', 'teguh', '2023-02-16 14:07:41', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (1, 1, 1, '2022-07-02', 101000.00, 'hehehehe', 0, '2022-11-30 21:39:13', 'teguh', '2022-12-02 04:38:24', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (2, 2, 1, NULL, 0.00, '', 0, '2022-11-30 21:40:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (3, 3, 1, NULL, 0.00, NULL, 0, '2022-11-30 21:41:26', 'teguh', '2022-12-02 04:39:25', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (1, 4, 2, '2022-07-02', 400000.00, 'hehehehe', 0, '2022-12-02 04:38:52', 'teguh', '2022-12-02 04:42:57', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (4, 5, 1, '2022-07-02', 100000.00, 'hehehehe', 9, '2022-12-09 23:42:09', 'teguh', '2022-12-21 09:10:41', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (4, 6, 2, NULL, 0.00, '', 0, '2022-12-10 00:17:30', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (4, 7, 3, '2022-07-02', 1000000.00, 'hehehehe', 0, '2022-12-21 09:11:29', 'teguh', '2022-12-21 09:12:17', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (5, 8, 1, '2023-01-08', 220000.00, '-', 9, '2022-12-24 11:42:56', 'teguh', '2023-01-08 15:17:46', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (6, 9, 1, NULL, 0.00, '', 0, '2022-12-24 11:44:05', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (7, 10, 1, NULL, 0.00, '', 0, '2022-12-26 14:15:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (8, 11, 1, '2023-01-08', 220000.00, '-', 9, '2023-01-08 15:17:57', 'teguh', '2023-01-08 15:18:21', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (9, 12, 1, '2023-01-31', 110000.00, '-', 0, '2023-01-08 15:18:27', 'teguh', '2023-01-31 08:18:36', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (9, 13, 2, '2023-01-31', 110000.00, '-', 0, '2023-01-15 10:11:00', 'teguh', '2023-01-31 08:18:43', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (10, 14, 1, NULL, 0.00, '', 0, '2023-01-28 08:57:51', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (11, 15, 1, '2023-01-28', 220000.00, '-', 0, '2023-01-28 11:43:48', 'teguh', '2023-01-28 11:44:49', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (11, 16, 2, NULL, 0.00, '', 9, '2023-01-28 11:44:18', 'teguh', '2023-01-28 11:45:28', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (11, 17, 3, NULL, 0.00, '', 9, '2023-01-28 11:45:08', 'teguh', '2023-01-28 11:45:32', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_details` VALUES (12, 18, 1, '2023-02-17', 150000.00, '-', 0, '2023-02-17 10:26:26', 'teguh', '2023-02-17 10:26:43', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_siswa_headers
@@ -1302,12 +1495,23 @@ CREATE TABLE `tbl_trans_uang_masuk_siswa_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_siswa`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_siswa_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 2, 1, '2022/2023', '5897', 'X IIS', 3000000.00, 3000000.00, 0.00, 'Bayar PTS Ganjil', 0, '2023-02-16 13:59:27', 'teguh', '2023-02-16 14:08:13', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 6, 1, '2022/2023', '5728', 'XII', 1501000.00, 501000.00, 1000000.00, '', 0, '2022-11-30 21:39:13', 'teguh', '2022-12-02 04:42:57', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 2, 2, '2022/2023', '5728', 'XII', 150000.00, 0.00, 150000.00, '', 0, '2022-11-30 21:40:55', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 2, 3, '2022/2023', '5983', 'X', 150000.00, 0.00, 150000.00, '', 0, '2022-11-30 21:41:26', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 2, 4, '2022/2023', '5959', 'X', 1600000.00, 1000000.00, 600000.00, '', 0, '2022-12-09 23:42:09', 'teguh', '2022-12-21 09:12:17', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (4, 4, 5, '2022/2023', '5897', 'X', 220000.00, 220000.00, 0.00, '', 9, '2022-12-24 11:42:56', 'teguh', '2023-01-08 15:17:46', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (4, 4, 6, '2022/2023', '5898', 'X', 220000.00, 0.00, 220000.00, '', 0, '2022-12-24 11:44:05', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (4, 4, 7, '2022/2023', '5899', 'X', 220000.00, 0.00, 220000.00, '', 0, '2022-12-26 14:15:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (4, 4, 8, '2022/2023', '5897', 'X', 220000.00, 220000.00, 0.00, '', 9, '2023-01-08 15:17:57', 'teguh', '2023-01-08 15:18:21', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (4, 4, 9, '2022/2023', '5897', 'X', 220000.00, 220000.00, 0.00, '', 0, '2023-01-08 15:18:27', 'teguh', '2023-01-31 08:18:43', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 16, 10, '2022/2023', '5897', 'X', 0.00, 0.00, 0.00, '', 0, '2023-01-28 08:57:51', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (4, 4, 11, '2022/2023', '5900', 'X', 220000.00, 220000.00, 0.00, '', 0, '2023-01-28 11:43:48', 'teguh', '2023-01-28 11:45:32', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_siswa_headers` VALUES (2, 2, 12, '2022/2023', '5897', 'X IIS', 150000.00, 150000.00, 0.00, '', 0, '2023-02-17 10:26:26', 'teguh', '2023-02-17 10:26:43', 'teguh');
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_spp_details
@@ -1328,83 +1532,95 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_details`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk_detail`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_details
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 1, 1, '07-2022', '2022-07-02', 260000.00, 260000.00, 'Bayaran Bulan Juli 2022', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 2, 2, '08-2022', '2022-08-03', 260000.00, 260000.00, 'Bayaran Bulan Agustus 2022', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 3, 3, '09-2022', '2022-09-07', 260000.00, 260000.00, 'Bayaran Bulan September 2022', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 4, 4, '10-2022', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 5, 5, '11-2022', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 6, 6, '12-2022', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 7, 7, '01-2023', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 8, 8, '02-2023', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 9, 9, '03-2023', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 10, 10, '04-2023', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 11, 11, '05-2023', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 12, 12, '06-2023', NULL, 260000.00, 0.00, '', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 13, 1, '07-2022', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 14, 2, '08-2022', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 15, 3, '09-2022', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 16, 4, '10-2022', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 17, 5, '11-2022', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 18, 6, '12-2022', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 19, 7, '01-2023', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 20, 8, '02-2023', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 21, 9, '03-2023', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 22, 10, '04-2023', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 23, 11, '05-2023', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 24, 12, '06-2023', NULL, 265000.00, 0.00, '', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 25, 1, '07-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 26, 2, '08-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 27, 3, '09-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 28, 4, '10-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 29, 5, '11-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 30, 6, '12-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 31, 7, '01-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 32, 8, '02-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 33, 9, '03-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 34, 10, '04-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 35, 11, '05-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 36, 12, '06-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 37, 1, '07-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 38, 2, '08-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 39, 3, '09-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 40, 4, '10-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 41, 5, '11-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 42, 6, '12-2022', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 43, 7, '01-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 44, 8, '02-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 45, 9, '03-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 46, 10, '04-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 47, 11, '05-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 48, 12, '06-2023', NULL, 350000.00, 0.00, '', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 49, 1, '07-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 50, 2, '08-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 51, 3, '09-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 52, 4, '10-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 53, 5, '11-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 54, 6, '12-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 55, 7, '01-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 56, 8, '02-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 57, 9, '03-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 58, 10, '04-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 59, 11, '05-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 60, 12, '06-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 61, 1, '07-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 62, 2, '08-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 63, 3, '09-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 64, 4, '10-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 65, 5, '11-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 66, 6, '12-2022', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 67, 7, '01-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 68, 8, '02-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 69, 9, '03-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 70, 10, '04-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 71, 11, '05-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 72, 12, '06-2023', NULL, 400000.00, 0.00, '', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 1, 1, '07-2022', '2023-01-27', 250000.00, 250000.00, '-', 0, '2023-01-27 17:09:10', 'teguh', '2023-01-27 17:09:20', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 2, 2, '08-2022', '2023-02-12', 250000.00, 250000.00, '-', 0, '2023-01-27 17:09:10', 'teguh', '2023-02-12 11:15:03', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 3, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 4, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 5, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 6, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 7, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 8, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 9, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 10, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 11, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (1, 12, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-27 17:09:10', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 13, 1, '07-2022', '2023-01-28', 250000.00, 250000.00, '-', 0, '2023-01-28 11:03:11', 'teguh', '2023-01-28 11:03:47', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 14, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 15, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 16, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 17, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 18, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 19, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 20, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 21, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 22, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 23, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (2, 24, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:03:11', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 25, 1, '07-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 26, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 27, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 28, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 29, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 30, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 31, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 32, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 33, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 34, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 35, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (3, 36, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 37, 1, '07-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 38, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 39, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 40, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 41, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 42, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 43, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 44, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 45, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 46, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 47, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (4, 48, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 49, 1, '07-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 50, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 51, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 52, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 53, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 54, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 55, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 56, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 57, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 58, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 59, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (5, 60, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 61, 1, '07-2022', '2023-02-17', 250000.00, 250000.00, '-', 0, '2023-02-17 10:24:48', 'teguh', '2023-02-17 10:25:04', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 62, 2, '08-2022', '2023-02-17', 250000.00, 250000.00, '-', 0, '2023-02-17 10:24:48', 'teguh', '2023-02-17 10:25:14', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 63, 3, '09-2022', '2023-02-17', 250000.00, 250000.00, '-', 0, '2023-02-17 10:24:48', 'teguh', '2023-02-17 10:25:25', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 64, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 65, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 66, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 67, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 68, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 69, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 70, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 71, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (6, 72, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:24:48', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 73, 1, '07-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 74, 2, '08-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 75, 3, '09-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 76, 4, '10-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 77, 5, '11-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 78, 6, '12-2022', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 79, 7, '01-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 80, 8, '02-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 81, 9, '03-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 82, 10, '04-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 83, 11, '05-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_details` VALUES (7, 84, 12, '06-2023', NULL, 250000.00, 0.00, '', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_trans_uang_masuk_spp_headers
@@ -1427,17 +1643,18 @@ CREATE TABLE `tbl_trans_uang_masuk_spp_headers`  (
   `edited_on` datetime NULL DEFAULT NULL,
   `edited_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kd_trans_masuk`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_trans_uang_masuk_spp_headers
 -- ----------------------------
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022/2023', '5897', 'X IIS', 3120000.00, 780000.00, 2340000.00, 'SPP PEMBAYARAN ATAS ABDILLAH', 0, '2023-02-16 03:25:10', 'teguh', '2023-02-16 09:27:54', 'teguh');
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 2, '2022/2023', '5909', 'X MIA', 3180000.00, 0.00, 3180000.00, 'SPP PEMBAYARAN ATAS ARYA TRI RAMADANI', 0, '2023-02-16 03:28:59', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 3, '2022/2023', '5762', 'XI IIS', 4200000.00, 0.00, 4200000.00, 'SPP PEMBAYARAN ATAS Achmad Romi', 0, '2023-02-16 03:30:39', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 4, '2022/2023', '5765', 'XI MIA', 4200000.00, 0.00, 4200000.00, 'SPP PEMBAYARAN ATAS AHMAD RAMADHANI', 0, '2023-02-16 03:31:35', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 5, '2022/2023', '5650', 'XII IIS', 4800000.00, 0.00, 4800000.00, 'SPP PEMBAYARAN ATAS ADINDA ZALFAA KAMILA', 0, '2023-02-16 03:32:24', 'teguh', NULL, NULL);
-INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 6, '2022/2023', '5654', 'XII MIA', 4800000.00, 0.00, 4800000.00, 'SPP PEMBAYARAN ATAS AKMAL RAFI TAMIR', 0, '2023-02-16 03:33:05', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 1, '2022/2023', '5897', 'X', 3000000.00, 500000.00, 2500000.00, 'Tidak Wajib Isi ini', 0, '2023-01-27 17:09:10', 'teguh', '2023-02-12 11:15:03', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 2, '2022/2023', '5901', 'X', 3000000.00, 250000.00, 2750000.00, 'Tidak Wajib Isi ini', 0, '2023-01-28 11:03:11', 'teguh', '2023-01-28 11:03:47', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 3, '2022/2023', '5898', 'X', 3000000.00, 0.00, 3000000.00, 'Tidak Wajib Isi ini', 0, '2023-01-28 11:57:33', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 4, '2022/2023', '5899', 'X', 3000000.00, 0.00, 3000000.00, 'Tidak Wajib Isi ini', 0, '2023-01-28 12:00:37', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 5, '2022/2023', '6004', 'X', 3000000.00, 0.00, 3000000.00, 'Tidak Wajib Isi ini', 0, '2023-02-12 11:44:39', 'teguh', NULL, NULL);
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 6, '2022/2023', '5897', 'X IIS', 3000000.00, 750000.00, 2250000.00, 'Tidak Wajib Isi ini', 0, '2023-02-17 10:24:48', 'teguh', '2023-02-17 10:25:25', 'teguh');
+INSERT INTO `tbl_trans_uang_masuk_spp_headers` VALUES (3, 3, 7, '2022/2023', '5898', 'X IIS', 3000000.00, 0.00, 3000000.00, 'Tidak Wajib Isi ini', 0, '2023-02-17 10:27:32', 'teguh', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_user_ppdb
@@ -1512,7 +1729,6 @@ CREATE TABLE `tbl_user_ppdb`  (
 -- ----------------------------
 -- Records of tbl_user_ppdb
 -- ----------------------------
-INSERT INTO `tbl_user_ppdb` VALUES (13, 'Shulhan', 'Laki-laki', 'jakarta', '2004-04-01', 'Islam', 'Jl. Lontar VI', 'cuangshulhan@gmail.com', '083871467022', '2021/cuangshulhan@gmail_com.jpg', NULL, 'Cuang Shulhan', '7cb166f29ff452c6eab1a27bbeceb88e', 'Mts Al-Khairiyah', NULL, '', '', '', '', 'Nuryati', '', '', '', '08887779988', '-', NULL, 'sudah diverifikasi', 0, NULL, '2022-04-17 13:16:26', '2022-04-17 13:16:26', 'Cuang Shulhan_cuangshulhan@gmail.com_21-04-2021', '2021', 0, '', '', '', '', '2021/cuangshulhan@gmail.com_Qrcode.png', 1, 1, 1, '', '2021-04-01', 0, '', 'Jl. Lontar VI No.30 Rt003 Rw010', '', '', '0000-00-00', '', '0000-00-00', '0', '1', 'DiCabut', 3, 3, '', '0', 0, '7891011', '123456');
 INSERT INTO `tbl_user_ppdb` VALUES (19, '', '', '', '1970-01-01', '', '', 'a.pamuji@gmail.com', '', '2021/a_pamuji@gmail_com.jpg', NULL, 'Agung Pamuji', 'a19ea7dff6ced87d8cb9c62cc7922497', '', NULL, '', '', '', '', '', '', '', '', '', '', NULL, 'sudah diverifikasi', 0, 'wmos10YLyg', '2021-07-01 09:59:20', '2021-07-01 09:59:20', NULL, '2021', 0, '', '', '', '', '2021/a.pamuji@gmail.com_Qrcode.png', 0, 1, 0, '', '2021-04-26', 0, '', '', '', '', '0000-00-00', '', '0000-00-00', '0', '0', 'DiCabut', 0, 0, '', '0', 0, NULL, NULL);
 INSERT INTO `tbl_user_ppdb` VALUES (20, '', '', '', '1970-01-01', '', '', 'abywawan1974@gmail.com', '', '', NULL, 'Aby Wawan', '81dc9bdb52d04dc20036dbd8313ed055', '', NULL, '', '', '', '', '', '', '', '', '', '', NULL, 'sudah diverifikasi', 0, 'BZA8WwyFsn', '2021-04-26 17:27:07', '2021-04-26 17:27:07', NULL, '2021', 0, '', '', '', '', '2021/abywawan1974@gmail.com_Qrcode.png', 1, 1, 0, '', '2021-04-26', 0, '', '', '', '', '0000-00-00', '', '0000-00-00', '0', '0', 'DiCabut', 0, 0, '', '0', 0, NULL, NULL);
 INSERT INTO `tbl_user_ppdb` VALUES (22, 'Srikandi Mahesa putri', 'Perempuan', 'Jakarta', '2005-12-18', 'Islam', 'Jalan Jampea lorong 20 no.17 RT.009 RW.006 kelurahan Koja kecamatan Koja Jakarta utara', 'septiyan.ian20@gmail.com', '081294266277', '', NULL, 'Srikandi Mahesa putri', '629ab14fab772d78a58eea752bdfc0dc', 'SMP-alkhairiyah 2', NULL, 'Setiyono', 'Sma', '-', 'Jalan Jampea lorong 20 no.17 rt009 rw06 kelurahan Koja kecamatan Koja Jakarta utara', 'Indah pertamawati', 'Sma', 'Ibu rumah tangga', 'Jalan Jampea lorong 20 RT.009 RW.06 kelurahan Koja kecamatan Koja Jakarta utara', '081294266277', '', NULL, 'sudah diverifikasi', 0, NULL, '2021-07-10 09:49:59', '2021-07-10 09:49:59', NULL, '2021', 1, '', '', '', '', '2021/septiyan.ian20@gmail.com_Qrcode.png', 1, 1, 3, 'BELUM LUNAS', '2021-04-26', 1, '112', 'Jalan Jampea lorong 20 no.17 RT.009 RW.06 kelurahan Koja kecamatan Koja Jakarta utara', '', 'Rifa', '2021-07-06', 'dianti', '2021-07-06', '1', '0', '', 2, 2, 'Seragam \r\nBaju : 3L\r\nRok : 3L\r\nBatik : 3L\r\nOlah raga : 3L', '1', 0, NULL, NULL);
@@ -2074,16 +2290,16 @@ CREATE TABLE `tbl_users`  (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `password` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `full_name` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `created_on` datetime NULL DEFAULT NULL,
   `edited_on` datetime NULL DEFAULT NULL,
+  `full_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tbl_users
 -- ----------------------------
-INSERT INTO `tbl_users` VALUES (1, 'teguh', '$2a$04$W3xS4kmWsPRGutn8Zf4AE.XBYTNnuh8.iPtjS8aC1BTwgC7Xj4oMq', 'Teguh Sugiono', '2022-10-24 21:37:11', NULL);
+INSERT INTO `tbl_users` VALUES (2, 'teguh', '$2a$04$vvt5YpJk5ynUtY.cALT82.9hzcbEL7kdO4t02b1SeFCE9/IBer8Hy', '2022-11-05 14:40:27', NULL, 'Teguh Sugiono');
 
 -- ----------------------------
 -- View structure for vw_group_uang_keluar
@@ -2100,8 +2316,7 @@ SELECT sum(b.jml_bayar) 'total_bayar',b.kd_post_uang_masuk 'kd_group',c.nm_group
 from tbl_trans_uang_keluar_act_headers a
 INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar = b.kd_trans_keluar
 INNER JOIN tbl_group_kategoris c on a.kd_group= c.kd_group
-where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and b.kd_post_uang_masuk is not null 
-GROUP BY b.kd_post_uang_masuk ;
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and b.kd_post_uang_masuk is not null ; ;
 
 -- ----------------------------
 -- View structure for vw_group_uang_masuk
@@ -2125,7 +2340,7 @@ union all
 SELECT a.total_bayar,a.kd_group,c.nm_group from tbl_trans_uang_masuk_lain_headers a
 INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
-where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group,a.kd_trans_masuk_lain ;
+where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 GROUP BY a.kd_group,a.kd_trans_masuk_lain ; ;
 
 -- ----------------------------
 -- View structure for vw_kelas_trans
@@ -2136,7 +2351,7 @@ union all
 SELECT  nm_kelas as 'id_kelas', 
 nm_kelas as 'nm_kelas' FROM tbl_kelas 
 where flag_kelas = 0  
-ORDER BY id_kelas ;
+ORDER BY id_kelas ; ;
 
 -- ----------------------------
 -- View structure for vw_report_act
@@ -2146,7 +2361,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_act` AS SELECT
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 e.nm_group 'pos_uang_masuk',
 b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
-a.kd_trans_keluar
+a.kd_trans_keluar,a.kd_kategori
 from tbl_trans_uang_keluar_act_headers a 
 INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
@@ -2161,7 +2376,7 @@ ORDER BY a.tgl_document,a.no_document,b.seqno ;
 DROP VIEW IF EXISTS `vw_report_ppdb`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_ppdb` AS SELECT c.nm_group,d.nm_kategori , a.nik,e.nm_siswa , a.tgldaftar ,a.tahun_daftar,a.tahun_akademik,
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
-b.tgl_bayar,b.jml_bayar,b.kategori_biaya_ppdb 'keterangan_detail',a.kd_trans_masuk_ppdb
+b.kategori_biaya_ppdb,b.tgl_bayar,b.jml_bayar,b.keterangan 'keterangan_detail',a.kd_trans_masuk_ppdb,a.kd_kategori
 FROM tbl_trans_uang_masuk_ppdb_headers a
 INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
@@ -2169,8 +2384,7 @@ INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 LEFT JOIN tbl_user_ppdb e on a.nik = e.nik
 where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
 and e.status = 'sudah diverifikasi' and e.flag_verifikasidata='1' and e.flag_wawancara='1' 
-and e.flag_pembayaran='1' and e.flag=0 and e.flag_import<>'9' and e.status_berkas <> 'DiCabut'
-ORDER BY a.tahun_akademik,a.tgldaftar,e.nm_siswa,b.seqno ;
+and e.flag_pembayaran='1' and e.flag=0 and e.flag_import<>'9' and e.status_berkas <> 'DiCabut' ;
 
 -- ----------------------------
 -- View structure for vw_report_pra
@@ -2185,7 +2399,7 @@ INNER JOIN tbl_trans_uang_keluar_pra_details b on a.kd_trans_keluar=b.kd_trans_k
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
 INNER JOIN tbl_kategori_uangs d on a.kd_kategori=d.kd_kategori
 where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 and d.flag_aktif=0
-ORDER BY a.tgl_document,a.no_document,b.seqno ;
+ORDER BY a.tgl_document,a.no_document,b.seqno ; ;
 
 -- ----------------------------
 -- View structure for vw_report_pra_act
@@ -2195,7 +2409,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_pra_act` AS SE
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 e.nm_group 'pos_uang_masuk',
 b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
-a.kd_trans_keluar
+a.kd_trans_keluar,a.kd_kategori
 from tbl_trans_uang_keluar_pra_act_headers a 
 INNER JOIN tbl_trans_uang_keluar_pra_act_details b on a.kd_trans_keluar=b.kd_trans_keluar
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
@@ -2213,7 +2427,7 @@ a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 date_format(STR_TO_DATE(concat('01','-',b.periode_bayar),'%d-%m-%Y'),'%M-%Y') 'periode_bayar',
 b.tgl_bayar,b.jml_tagihan, b.jml_bayar,b.keterangan 'keterangan_detail',
 date_format(STR_TO_DATE(concat('01','-',b.periode_bayar),'%d-%m-%Y'),'%Y-%m') 'date_periode_bayar'
-,a.kd_trans_masuk
+,a.kd_trans_masuk,a.kd_kategori
 from tbl_trans_uang_masuk_spp_headers a 
 INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk
 INNER JOIN tbl_kelas f on a.nm_kelas = f.nm_kelas
@@ -2225,13 +2439,21 @@ GROUP BY b.kd_trans_masuk_detail
 ORDER BY a.tahun_akademik,a.nm_kelas,e.nm_siswa,b.seqno ;
 
 -- ----------------------------
+-- View structure for vw_report_uksiswa_dll
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_report_uksiswa_dll`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_uksiswa_dll` AS SELECT nm_group,nm_kategori,tgl_bayar,total_bayar,kd_kategori from vw_report_act where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_keluar
+union all
+SELECT nm_group,nm_kategori,tgl_bayar,total_bayar,kd_kategori from vw_report_pra_act where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_keluar ;
+
+-- ----------------------------
 -- View structure for vw_report_umlain
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_report_umlain`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umlain` AS SELECT c.nm_group,d.nm_kategori, a.no_document,a.tgl_document,
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
-a.kd_trans_masuk_lain
+a.kd_trans_masuk_lain,a.kd_kategori
 from tbl_trans_uang_masuk_lain_headers a 
 INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain
 INNER JOIN tbl_group_kategoris c on a.kd_group=c.kd_group
@@ -2246,7 +2468,7 @@ DROP VIEW IF EXISTS `vw_report_umsiswa`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umsiswa` AS SELECT c.nm_group,d.nm_kategori,a.tahun_akademik,a.nis_siswa,e.nm_siswa,f.nm_kelas,
 a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan,
 b.tgl_bayar, b.jml_bayar,b.keterangan 'keterangan_detail',
-a.kd_trans_masuk_siswa
+a.kd_trans_masuk_siswa,a.kd_kategori
 from tbl_trans_uang_masuk_siswa_headers a 
 INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa
 INNER JOIN tbl_kelas f on a.nm_kelas = f.nm_kelas
@@ -2261,12 +2483,12 @@ ORDER BY a.tahun_akademik,a.nm_kelas,e.nm_siswa,b.seqno ;
 -- View structure for vw_report_umsiswa_dll
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_report_umsiswa_dll`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umsiswa_dll` AS SELECT nm_group,nm_kategori,total_bayar from vw_report_ppdb where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk_ppdb
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_report_umsiswa_dll` AS SELECT nm_group,nm_kategori,tgl_bayar,total_bayar,kd_kategori from vw_report_ppdb where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk_ppdb
 union all
-SELECT nm_group,nm_kategori,total_bayar from vw_report_spp where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk
+SELECT nm_group,nm_kategori,tgl_bayar,total_bayar,kd_kategori from vw_report_spp where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk
 union all
-SELECT nm_group,nm_kategori,total_bayar from vw_report_umsiswa where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk_siswa
+SELECT nm_group,nm_kategori,tgl_bayar,total_bayar,kd_kategori from vw_report_umsiswa where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk_siswa
 union all
-SELECT nm_group,nm_kategori,total_bayar from vw_report_umlain where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk_lain ;
+SELECT nm_group,nm_kategori,tgl_bayar,total_bayar,kd_kategori from vw_report_umlain where tgl_bayar is not null and jml_bayar is not null GROUP BY kd_trans_masuk_lain ;
 
 SET FOREIGN_KEY_CHECKS = 1;
