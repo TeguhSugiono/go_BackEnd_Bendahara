@@ -55,6 +55,7 @@ func ReportHistori(c *gin.Context) {
 	var total_bayar float64
 	var sisa_biaya float64
 	var keterangan string
+	var kd_trans_masuk_siswa int
 	get_data_ppdb, _ := db.Raw(" SELECT nm_group,nm_kategori,tgldaftar,tahun_daftar,tahun_akademik,total_biaya,total_bayar,sisa_biaya,keterangan "+
 		" FROM vw_report_ppdb where nik=? group by kd_trans_masuk_ppdb ", paramSearch.Nik).Rows()
 	defer get_data_ppdb.Close()
@@ -129,12 +130,12 @@ func ReportHistori(c *gin.Context) {
 
 		SetArrayHeaderSPP := []HeaderSPP{}
 		get_data_siswa_header, _ := db.Raw(" SELECT nm_group,nm_kategori, "+
-			" total_biaya,total_bayar,sisa_biaya,keterangan "+
+			" total_biaya,total_bayar,sisa_biaya,keterangan,kd_trans_masuk_siswa "+
 			" FROM vw_report_umsiswa where nis_siswa=? and tahun_akademik=?  "+
 			" and nm_kelas=? GROUP BY kd_trans_masuk_siswa  ", paramSearch.Nis, tahun_akademik, nm_kelas).Rows()
 		defer get_data_siswa_header.Close()
 		for get_data_siswa_header.Next() {
-			get_data_siswa_header.Scan(&nm_group, &nm_kategori, &total_biaya, &total_bayar, &sisa_biaya, &keterangan)
+			get_data_siswa_header.Scan(&nm_group, &nm_kategori, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk_siswa)
 			arraySPPHeader := HeaderSPP{}
 			arraySPPHeader.Nm_group = nm_group
 			arraySPPHeader.Nm_kategori = nm_kategori
@@ -145,7 +146,8 @@ func ReportHistori(c *gin.Context) {
 
 			var detailUmSiswa []DetailUmSiswa
 			db.Raw(" SELECT  tgl_bayar,jml_bayar,keterangan_detail "+
-				" FROM vw_report_umsiswa where nis_siswa=? and tahun_akademik=? and nm_kelas=? ", paramSearch.Nis, tahun_akademik, nm_kelas).Scan(&detailUmSiswa)
+				" FROM vw_report_umsiswa where nis_siswa=? and tahun_akademik=? and nm_kelas=? "+
+				" and kd_trans_masuk_siswa=? ", paramSearch.Nis, tahun_akademik, nm_kelas, kd_trans_masuk_siswa).Scan(&detailUmSiswa)
 			arraySPPHeader.DetailData = detailUmSiswa
 
 			SetArrayHeaderSPP = append(SetArrayHeaderSPP, arraySPPHeader)

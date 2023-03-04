@@ -4998,7 +4998,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/datalistppdb",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/datalistppdb?page=1&perpage=10&sort=desc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -5013,6 +5013,25 @@
 								"transaksi",
 								"uangmasukppdb",
 								"datalistppdb"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perpage",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "0004",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								}
 							]
 						}
 					},
@@ -5305,7 +5324,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MiwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3Njk4NjcwOX0.d90aLGb4H6mFJhRPs_-fTmpZKXps2RHaiP_3xrZ7kqU",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MiwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3NzkxNTIzNH0.Hqrx97NKemoi28IS_jEpgb-lFcbd9Wv3t2C6MfYMre0",
 				"type": "string"
 			}
 		]

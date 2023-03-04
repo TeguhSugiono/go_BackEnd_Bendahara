@@ -3,6 +3,7 @@ package transaksi_uang_masuk_ppdb
 import (
 	"errors"
 	"fmt"
+	"math"
 	"net/http"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_group_kategori"
@@ -503,7 +504,7 @@ func ImportAll(c *gin.Context) {
 		" (SELECT REPLACE(jumlah_pembayaran,'.','') from tbl_biayadaftar where id=id_biaya) 'total_biaya',0 as 'total_bayar' " +
 		" FROM tbl_user_ppdb WHERE (nik <> '' or nik is not null)  " +
 		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
-		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' and nik in(" + Strnik + ")  ").Rows()
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' and nik in(" + Strnik + ") limit 3 ").Rows()
 	defer rows.Close()
 	for rows.Next() {
 		rows.Scan(&nik, &tgldaftar, &tahun_daftar, &total_biaya, &total_bayar)
@@ -576,50 +577,54 @@ func ImportAll(c *gin.Context) {
 
 	}
 
-	var totalDataPendaftar int
-	var jmlDataSudahImport int
-	var jmlDataBelumImport int
+	pesan := gin.H{"success": "Simpan Data Detail Berhasil ..."}
+	response := helper.APIResponse("Import Data Sukses ...", http.StatusOK, "success", pesan)
+	c.JSON(http.StatusBadRequest, response)
 
-	db.Raw("SELECT count(*) jmldata "+
-		" FROM tbl_user_ppdb WHERE tahun_daftar=? "+
-		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' "+
-		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9'", paramDataPPDB.Tahun_daftar).Scan(&totalDataPendaftar)
-	// if totalDataPendaftar == 0 {
-	// 	errorMessage := gin.H{"errors": "Pencarian Data Pendaftar PPDB Error ..."}
-	// 	response := helper.APIResponse("Data Siswa Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
-	// 	c.JSON(http.StatusUnprocessableEntity, response)
-	// 	return
-	// }
+	// var totalDataPendaftar int
+	// var jmlDataSudahImport int
+	// var jmlDataBelumImport int
 
-	db.Raw(" SELECT COUNT(jmldata) as 'jmldata' from (SELECT count(*) jmldata FROM tbl_trans_uang_masuk_ppdb_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
-		" where a.tahun_daftar=?  and a.flag_aktif=0 and b.flag_aktif=0 GROUP BY a.nik) as jmldata ", paramDataPPDB.Tahun_daftar).Scan(&jmlDataSudahImport)
+	// db.Raw("SELECT count(*) jmldata "+
+	// 	" FROM tbl_user_ppdb WHERE tahun_daftar=? "+
+	// 	" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' "+
+	// 	" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9'", paramDataPPDB.Tahun_daftar).Scan(&totalDataPendaftar)
+	// // if totalDataPendaftar == 0 {
+	// 	// errorMessage := gin.H{"errors": "Pencarian Data Pendaftar PPDB Error ..."}
+	// 	// response := helper.APIResponse("Data Siswa Tidak DiTemukan ...", http.StatusUnprocessableEntity, "error", errorMessage)
+	// 	// c.JSON(http.StatusUnprocessableEntity, response)
+	// // 	return
+	// // }
 
-	jmlDataBelumImport = totalDataPendaftar - jmlDataSudahImport
+	// db.Raw(" SELECT COUNT(jmldata) as 'jmldata' from (SELECT count(*) jmldata FROM tbl_trans_uang_masuk_ppdb_headers a "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+	// 	" where a.tahun_daftar=?  and a.flag_aktif=0 and b.flag_aktif=0 GROUP BY a.nik) as jmldata ", paramDataPPDB.Tahun_daftar).Scan(&jmlDataSudahImport)
 
-	SetArrayData := []ListDataPPDB{}
-	arraydata := ListDataPPDB{}
-	arraydata.TotalDataPendaftar = totalDataPendaftar
-	arraydata.JmlDataSudahImport = jmlDataSudahImport
-	arraydata.JmlDataBelumImport = jmlDataBelumImport
+	// jmlDataBelumImport = totalDataPendaftar - jmlDataSudahImport
 
-	var listDataPPDBDetail []ListDataPPDBDetail
-	db.Raw(" SELECT c.nik,c.nm_siswa,CONVERT(DATE_FORMAT(c.tgldaftar,'%d-%m-%Y'),CHAR) 'tgldaftar', "+
-		" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' "+
-		" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   "+
-		" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  "+
-		" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9' and c.tahun_daftar=? "+
-		" ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
-		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) desc, c.nm_siswa ", paramDataPPDB.Tahun_daftar).Scan(&listDataPPDBDetail)
+	// SetArrayData := []ListDataPPDB{}
+	// arraydata := ListDataPPDB{}
+	// arraydata.TotalDataPendaftar = totalDataPendaftar
+	// arraydata.JmlDataSudahImport = jmlDataSudahImport
+	// arraydata.JmlDataBelumImport = jmlDataBelumImport
 
-	arraydata.Detail = listDataPPDBDetail
-	SetArrayData = append(SetArrayData, arraydata)
+	// var listDataPPDBDetail []ListDataPPDBDetail
+	// db.Raw(" SELECT c.nik,c.nm_siswa,CONVERT(DATE_FORMAT(c.tgldaftar,'%d-%m-%Y'),CHAR) 'tgldaftar', "+
+	// 	" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' "+
+	// 	" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   "+
+	// 	" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  "+
+	// 	" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9' and c.tahun_daftar=? "+
+	// 	" ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
+	// 	" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+	// 	" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) desc, c.nm_siswa ", paramDataPPDB.Tahun_daftar).Scan(&listDataPPDBDetail)
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
-	c.JSON(http.StatusOK, response)
+	// arraydata.Detail = listDataPPDBDetail
+	// SetArrayData = append(SetArrayData, arraydata)
+
+	// response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	// c.JSON(http.StatusOK, response)
 }
 
 func DataListPPDB(c *gin.Context) {
@@ -655,28 +660,68 @@ func DataListPPDB(c *gin.Context) {
 
 	jmlDataBelumImport = totalDataPendaftar - jmlDataSudahImport
 
-	SetArrayData := []ListDataPPDB{}
-	arraydata := ListDataPPDB{}
-	arraydata.TotalDataPendaftar = totalDataPendaftar
-	arraydata.JmlDataSudahImport = jmlDataSudahImport
-	arraydata.JmlDataBelumImport = jmlDataBelumImport
-
 	var listDataPPDBDetail []ListDataPPDBDetail
-	db.Raw(" SELECT c.nik,c.nm_siswa,CONVERT(DATE_FORMAT(c.tgldaftar,'%d-%m-%Y'),CHAR) 'tgldaftar', "+
-		" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a "+
-		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' "+
-		" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   "+
-		" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  "+
-		" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9' and c.tahun_daftar=? "+
-		" ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
-		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
-		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) desc, c.nm_siswa ", paramDataPPDB.Tahun_daftar).Scan(&listDataPPDBDetail)
+	sql := " SELECT c.nik,c.nm_siswa,CONVERT(DATE_FORMAT(c.tgldaftar,'%d-%m-%Y'),CHAR) 'tgldaftar', " +
+		" (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a " +
+		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) 'StatusImport' " +
+		" FROM tbl_user_ppdb c WHERE (c.nik <> '' or c.nik is not null)   " +
+		" and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1'  " +
+		" and c.flag_pembayaran='1' and c.flag=0 and c.status_berkas <> 'DiCabut' and c.flag_import<>'9'  "
 
-	arraydata.Detail = listDataPPDBDetail
-	SetArrayData = append(SetArrayData, arraydata)
+	sql = fmt.Sprintf("%s and c.tahun_daftar='%s'", sql, paramDataPPDB.Tahun_daftar)
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	if s := c.Query("search"); s != "" {
+		if len(c.Query("search")) >= 3 {
+			sql = fmt.Sprintf("%s and (c.nm_siswa LIKE '%%%s%%' ", sql, s)
+			sql = fmt.Sprintf("%s or c.nik LIKE '%%%s%%') ", sql, s)
+		}
+	}
+
+	if sort := c.Query("sort"); sort != "" {
+		sql = fmt.Sprintf("%s ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
+			" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+			" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) %s,c.nm_siswa asc", sql, "desc")
+	} else {
+		sql = fmt.Sprintf("%s ORDER BY (SELECT if(count(*) > 0,'Sukses','') FROM tbl_trans_uang_masuk_ppdb_headers a  "+
+			" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
+			" where a.flag_aktif=0 and b.flag_aktif=0 and a.nik=c.nik  GROUP BY a.nik) %s,c.nm_siswa asc", sql, "asc")
+	}
+
+	page := c.Query("page")
+	perPage := c.Query("perpage")
+
+	intpage, err := strconv.Atoi(page)
+	if err != nil {
+		response := helper.APIResponse("Format Page Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	intperPage, err := strconv.Atoi(perPage)
+	if err != nil {
+		response := helper.APIResponse("Format Perpage Salah ...", http.StatusUnprocessableEntity, "error", err.Error())
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var total int64
+
+	db.Raw(sql).Count(&total)
+
+	sql = fmt.Sprintf("%s LIMIT %d OFFSET %d", sql, intperPage, (intpage-1)*intperPage)
+	db.Raw(sql).Scan(&listDataPPDBDetail)
+
+	CompTableData := TableDataList{
+		TotalDataPendaftar: totalDataPendaftar,
+		JmlDataSudahImport: jmlDataSudahImport,
+		JmlDataBelumImport: jmlDataBelumImport,
+		Total:              total,
+		Page:               intpage,
+		Last_page:          int(math.Ceil(float64(total) / float64(intperPage))),
+	}
+
+	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, listDataPPDBDetail)
 	c.JSON(http.StatusOK, response)
 }
 
