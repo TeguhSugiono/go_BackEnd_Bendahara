@@ -16,9 +16,11 @@ import (
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
 	"rest_api_bendahara/master_tahun_akademik"
+	"rest_api_bendahara/master_tipe_pembayaran"
 	"rest_api_bendahara/report_group"
 	"rest_api_bendahara/report_histori"
 	"rest_api_bendahara/report_uangkeluar"
+	"rest_api_bendahara/setting_edit_histori"
 	"rest_api_bendahara/transaksi_uang_keluar_act"
 	"rest_api_bendahara/transaksi_uang_keluar_pra"
 	"rest_api_bendahara/transaksi_uang_keluar_pra_act"
@@ -210,6 +212,7 @@ func main() {
 
 	api.POST("/report/reporthistori/listniknis", authMiddleware(), report_histori.ListNikNis)
 	api.POST("/report/reporthistori/reporthistori", authMiddleware(), report_histori.ReportHistori)
+	api.POST("/report/reporthistori/hideshowbutton", authMiddleware(), report_histori.HideShowButton)
 
 	api.POST("/report/reportgroup/reportgroupmasuk", authMiddleware(), report_group.Report_Group_Masuk)
 	api.POST("/report/reportgroup/reportgroupkeluar", authMiddleware(), report_group.Report_Group_Keluar)
@@ -217,6 +220,11 @@ func main() {
 
 	//Dashboard
 	api.GET("/dashboard", authMiddleware(), dashboard.DataDashboard)
+
+	api.GET("/mastertipepembayaran/listtipepembayaran", authMiddleware(), master_tipe_pembayaran.ListTipePembayaran)
+
+	//setting open lock historis
+	api.POST("/setting/transaksi/getakses", authMiddleware(), setting_edit_histori.Get_Akses)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

@@ -288,6 +288,9 @@ func ReportPRAACT(c *gin.Context) {
 	if paramReport.Tgl_bayar2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglBayar2)
 	}
+	if paramReport.Kd_pembayaran != "" {
+		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
+	}
 
 	ssql = fmt.Sprintf("%s group by kd_trans_keluar ", ssql)
 
@@ -305,7 +308,7 @@ func ReportPRAACT(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT pos_uang_masuk,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail FROM vw_report_pra_act "
+		ssqldetail := " SELECT pos_uang_masuk,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_pra_act "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_keluar = %d", ssqldetail, kd_trans_keluar)
 		if paramReport.No_document != "" {
 			ssqldetail = fmt.Sprintf("%s and no_document = '%s'", ssqldetail, paramReport.No_document)
@@ -321,6 +324,9 @@ func ReportPRAACT(c *gin.Context) {
 		}
 		if paramReport.Tgl_bayar2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglBayar2)
+		}
+		if paramReport.Kd_pembayaran != "" {
+			ssqldetail = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssqldetail, paramReport.Kd_pembayaran)
 		}
 
 		var getDataDetail []GetDataDetailPRAACT
@@ -481,6 +487,9 @@ func ReportACT(c *gin.Context) {
 	if paramReport.Tgl_bayar2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglBayar2)
 	}
+	if paramReport.Kd_pembayaran != "" {
+		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
+	}
 
 	ssql = fmt.Sprintf("%s group by kd_trans_keluar ", ssql)
 
@@ -498,7 +507,7 @@ func ReportACT(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT pos_uang_masuk,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail FROM vw_report_act "
+		ssqldetail := " SELECT pos_uang_masuk,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_act "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_keluar = %d", ssqldetail, kd_trans_keluar)
 		if paramReport.No_document != "" {
 			ssqldetail = fmt.Sprintf("%s and no_document = '%s'", ssqldetail, paramReport.No_document)
@@ -514,6 +523,9 @@ func ReportACT(c *gin.Context) {
 		}
 		if paramReport.Tgl_bayar2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglBayar2)
+		}
+		if paramReport.Kd_pembayaran != "" {
+			ssqldetail = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssqldetail, paramReport.Kd_pembayaran)
 		}
 
 		var getDataDetail []GetDataDetailPRAACT

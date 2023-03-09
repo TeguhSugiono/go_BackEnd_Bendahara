@@ -123,6 +123,7 @@ type Tbl_trans_uang_masuk_spp_details struct {
 	Created_by            string
 	Edited_on             time.Time
 	Edited_by             string
+	Kd_pembayaran         int
 }
 
 type Tbl_trans_uang_masuk_ppdb_headers struct {
@@ -157,6 +158,7 @@ type Tbl_trans_uang_masuk_ppdb_details struct {
 	Created_by                 string
 	Edited_on                  time.Time
 	Edited_by                  string
+	Kd_pembayaran              int
 }
 
 type Tbl_trans_uang_masuk_siswa_headers struct {
@@ -189,6 +191,7 @@ type Tbl_trans_uang_masuk_siswa_details struct {
 	Created_by                  string
 	Edited_on                   time.Time
 	Edited_by                   string
+	Kd_pembayaran               int
 }
 
 type Tbl_biaya_masuk_keluars struct {
@@ -226,6 +229,7 @@ type Tbl_trans_uang_masuk_lain_details struct {
 	Created_by                 string
 	Edited_on                  time.Time
 	Edited_by                  string
+	Kd_pembayaran              int
 }
 
 type Tbl_trans_uang_keluar_pra_headers struct {
@@ -289,6 +293,7 @@ type Tbl_trans_uang_keluar_pra_act_details struct {
 	Created_by             string
 	Edited_on              time.Time
 	Edited_by              string
+	Kd_pembayaran          int
 }
 
 type Tbl_trans_uang_keluar_act_headers struct {
@@ -321,4 +326,11 @@ type Tbl_trans_uang_keluar_act_details struct {
 	Created_by             string
 	Edited_on              time.Time
 	Edited_by              string
+	Kd_pembayaran          int
+}
+
+type Tbl_open_lock_historis struct {
+	Open       string
+	Request_by string
+	Request_on time.Time
 }

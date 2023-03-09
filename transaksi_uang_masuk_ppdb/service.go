@@ -156,10 +156,11 @@ func ListData(c *gin.Context) {
 
 	var getDataPPDB []GetDataPPDB
 	db.Raw("SELECT distinct b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik = c.nik "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.status = 'sudah diverifikasi' and c.flag_verifikasidata='1' and c.flag_wawancara='1' "+
 		" and c.flag_pembayaran='1' and c.flag=0 and flag_import<>'9' and status_berkas <> 'DiCabut' and a.nik=? "+
 		" order by b.seqno ", paramChangeNik.Nik).Scan(&getDataPPDB)
@@ -223,7 +224,13 @@ func ListData(c *gin.Context) {
 			arraydata.Total_biaya = total_biaya
 			arraydata.Total_bayar = 0
 			arraydata.Sisa_biaya = total_biaya
-			arraydata.Detail = getDataPPDB
+
+			//arraydata.Detail = getDataPPDB
+
+			//var getDataPPDB_Null []GetDataPPDB
+			SetNullArray := []GetDataPPDB{}
+			arraydata.Detail = SetNullArray
+
 			SetArrayData = append(SetArrayData, arraydata)
 		}
 
@@ -386,7 +393,7 @@ func CreateUangMasukPPdb(c *gin.Context) {
 			Flag_aktif:                 0,
 		}
 
-		err = db.Omit("Edited_on", "Edited_by", "Keterangan").Create(&datadetail).Error
+		err = db.Omit("Edited_on", "Edited_by", "Keterangan", "Kd_pembayaran").Create(&datadetail).Error
 		if err != nil {
 			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 			c.JSON(http.StatusBadRequest, response)
@@ -402,10 +409,11 @@ func CreateUangMasukPPdb(c *gin.Context) {
 
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.nik=? and a.tahun_daftar=? and a.tgldaftar=? "+
 		" ORDER BY seqno ", paramInputPPdb.Nik, paramInputPPdb.Tahun_daftar, dateStrTglDaftar).Scan(&getDataPPDB)
 
@@ -504,7 +512,7 @@ func ImportAll(c *gin.Context) {
 		" (SELECT REPLACE(jumlah_pembayaran,'.','') from tbl_biayadaftar where id=id_biaya) 'total_biaya',0 as 'total_bayar' " +
 		" FROM tbl_user_ppdb WHERE (nik <> '' or nik is not null)  " +
 		" and status = 'sudah diverifikasi' and flag_verifikasidata='1' and flag_wawancara='1' " +
-		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' and nik in(" + Strnik + ") limit 3 ").Rows()
+		" and flag_pembayaran='1' and flag=0 and status_berkas <> 'DiCabut' and flag_import<>'9' and nik in(" + Strnik + ")  ").Rows()
 	defer rows.Close()
 	for rows.Next() {
 		rows.Scan(&nik, &tgldaftar, &tahun_daftar, &total_biaya, &total_bayar)
@@ -568,7 +576,7 @@ func ImportAll(c *gin.Context) {
 			Flag_aktif:                 0,
 		}
 
-		err = db.Omit("Edited_on", "Edited_by", "Keterangan").Create(&datadetail).Error
+		err = db.Omit("Edited_on", "Edited_by", "Keterangan", "Kd_pembayaran").Create(&datadetail).Error
 		if err != nil {
 			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 			c.JSON(http.StatusBadRequest, response)
@@ -778,8 +786,10 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	dateStr := tTglBayar.Format("2006-01-02")
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_ppdb_details
-	err = db.Raw("update tbl_trans_uang_masuk_ppdb_details set tgl_bayar=?,jml_bayar=?,kategori_biaya_ppdb=?,edited_by=?,edited_on=? "+
-		" where kd_trans_masuk_detail_ppdb=? and flag_aktif=0 ", dateStr, paramEditPPdbDetail.Jml_bayar, paramEditPPdbDetail.Kategori_biaya_ppdb, currentUser.(string), datenowx, c.Param("iddetail")).Scan(&dataDetail).Error
+	err = db.Raw("update tbl_trans_uang_masuk_ppdb_details set tgl_bayar=?,jml_bayar=?,kategori_biaya_ppdb=?,edited_by=?,edited_on=?,kd_pembayaran=? "+
+		" where kd_trans_masuk_detail_ppdb=? and flag_aktif=0 ", dateStr, paramEditPPdbDetail.Jml_bayar,
+		paramEditPPdbDetail.Kategori_biaya_ppdb, currentUser.(string), datenowx, paramEditPPdbDetail.Kd_pembayaran,
+		c.Param("iddetail")).Scan(&dataDetail).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_ppdb_details Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -807,10 +817,11 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	//setting tampilan habis update ppdb
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.kd_trans_masuk_ppdb=? "+
 		" ORDER BY seqno ", c.Param("idhead")).Scan(&getDataPPDB)
 
@@ -906,10 +917,11 @@ func DeleteAllUangMasuk(c *gin.Context) {
 	//setting tampilan habis update ppdb
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.kd_trans_masuk_ppdb=? "+
 		" ORDER BY seqno ", idhead).Scan(&getDataPPDB)
 
@@ -1029,10 +1041,11 @@ func CreateUangMasukDetail(c *gin.Context) {
 	//setting tampilan habis save siswa
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.kd_trans_masuk_ppdb=? "+
 		" ORDER BY seqno ", paramAddDetail.Kd_trans_masuk_ppdb).Scan(&getDataPPDB)
 
@@ -1155,10 +1168,11 @@ func DeleteUangMasukDetail(c *gin.Context) {
 	//setting tampilan habis save siswa
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.kd_trans_masuk_ppdb=? "+
 		" ORDER BY seqno ", paramDeleteDetail.Kd_trans_masuk_ppdb).Scan(&getDataPPDB)
 
@@ -1273,10 +1287,11 @@ func EditUangMasuk(c *gin.Context) {
 
 	var getDataPPDB []GetDataPPDB
 	db.Raw(" SELECT DISTINCT b.kd_trans_masuk_detail_ppdb,b.seqno,b.kategori_biaya_ppdb, "+
-		" b.tgl_bayar,b.jml_bayar "+
+		" b.tgl_bayar,b.jml_bayar,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_ppdb_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_ppdb_details b on a.kd_trans_masuk_ppdb=b.kd_trans_masuk_ppdb "+
 		" INNER JOIN tbl_user_ppdb c on a.nik=c.nik and a.tgldaftar=c.tgldaftar and a.tahun_daftar=c.tahun_daftar "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and flag_import<>'9' and a.kd_trans_masuk_ppdb=? "+
 		" ORDER BY seqno ", kd_trans_masuk_ppdb).Scan(&getDataPPDB)
 

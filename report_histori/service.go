@@ -42,7 +42,7 @@ func ReportHistori(c *gin.Context) {
 
 	// AMBIL DATA PPDB
 	var detailPPDB []DetailPPDB
-	db.Raw(" SELECT  tgl_bayar,jml_bayar,keterangan_detail "+
+	db.Raw(" SELECT  tgl_bayar,jml_bayar,keterangan_detail,kd_pembayaran,tipe_pembayaran,kd_trans_masuk_ppdb,kd_trans_masuk_detail_ppdb "+
 		" FROM vw_report_ppdb where nik=? ", paramSearch.Nik).Scan(&detailPPDB)
 
 	SetArrayHeaderPPDB := []HeaderPPDB{}
@@ -105,7 +105,7 @@ func ReportHistori(c *gin.Context) {
 			arraySPPHeader.Keterangan = keterangan
 
 			var detailSPP []DetailSPP
-			db.Raw(" SELECT  periode_bayar,tgl_bayar,jml_tagihan,jml_bayar,keterangan_detail "+
+			db.Raw(" SELECT  periode_bayar,tgl_bayar,jml_tagihan,jml_bayar,keterangan_detail,kd_pembayaran,tipe_pembayaran,kd_trans_masuk,kd_trans_masuk_detail "+
 				" FROM vw_report_spp where nis_siswa=? and tahun_akademik=? and nm_kelas=? ", paramSearch.Nis, tahun_akademik, nm_kelas).Scan(&detailSPP)
 			arraySPPHeader.DetailData = detailSPP
 
@@ -145,7 +145,7 @@ func ReportHistori(c *gin.Context) {
 			arraySPPHeader.Keterangan = keterangan
 
 			var detailUmSiswa []DetailUmSiswa
-			db.Raw(" SELECT  tgl_bayar,jml_bayar,keterangan_detail "+
+			db.Raw(" SELECT  tgl_bayar,jml_bayar,keterangan_detail,kd_pembayaran,tipe_pembayaran,kd_trans_masuk_siswa,kd_trans_masuk_detail_siswa "+
 				" FROM vw_report_umsiswa where nis_siswa=? and tahun_akademik=? and nm_kelas=? "+
 				" and kd_trans_masuk_siswa=? ", paramSearch.Nis, tahun_akademik, nm_kelas, kd_trans_masuk_siswa).Scan(&detailUmSiswa)
 			arraySPPHeader.DetailData = detailUmSiswa
@@ -163,5 +163,9 @@ func ReportHistori(c *gin.Context) {
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
+
+}
+
+func HideShowButton(c *gin.Context) {
 
 }

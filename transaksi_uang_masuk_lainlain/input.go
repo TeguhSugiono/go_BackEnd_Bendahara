@@ -43,6 +43,8 @@ type GetDataUmSiswa struct {
 	Tgl_bayar                  string
 	Jml_bayar                  float64
 	Keterangan                 string
+	Kd_pembayaran              int
+	Tipe_pembayaran            string
 }
 
 type GetBiayaAndSisa struct {
@@ -61,11 +63,12 @@ type GetBiayaAndSisa struct {
 }
 
 type ParamEditUmSiswaDetail struct {
-	Tgl_bayar  string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
-	Jml_bayar  float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
-	Keterangan string  `form:"keterangan" json:"keterangan" binding:"required"`
-	Edited_on  string  `form:"edited_on" json:"edited_on"`
-	Edited_by  string  `form:"edited_by" json:"edited_by"`
+	Tgl_bayar     string  `form:"tgl_bayar" json:"tgl_bayar" binding:"required"`
+	Jml_bayar     float64 `form:"jml_bayar" json:"jml_bayar" binding:"number"`
+	Keterangan    string  `form:"keterangan" json:"keterangan" binding:"required"`
+	Edited_on     string  `form:"edited_on" json:"edited_on"`
+	Edited_by     string  `form:"edited_by" json:"edited_by"`
+	Kd_pembayaran int     `form:"kd_pembayaran" json:"kd_pembayaran" binding:"required,number"`
 }
 
 type ParamAddDetail struct {

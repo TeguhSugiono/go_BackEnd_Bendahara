@@ -213,10 +213,11 @@ func ListDataAddSiswa(c *gin.Context) {
 			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+				" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 				" FROM tbl_trans_uang_masuk_siswa_headers a " +
 				" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 				" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+				" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 				" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 			sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)
@@ -239,7 +240,7 @@ func ListDataAddSiswa(c *gin.Context) {
 		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 		c.JSON(http.StatusOK, response)
 	} else {
-		response := helper.APIResponse("List Data ..."+ssql, http.StatusOK, "success", SetArrayData)
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
 		c.JSON(http.StatusOK, response)
 	}
 
@@ -365,7 +366,7 @@ func CreateUangMasukSiswa(c *gin.Context) {
 			Flag_aktif:                  0,
 		}
 
-		err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+		err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar", "Kd_pembayaran").Create(&datadetail).Error
 		if err != nil {
 			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 			c.JSON(http.StatusBadRequest, response)
@@ -421,10 +422,11 @@ func CreateUangMasukSiswa(c *gin.Context) {
 			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+				" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 				" FROM tbl_trans_uang_masuk_siswa_headers a " +
 				" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 				" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+				" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 				" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 			sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, intKd_trans_masuk)
@@ -519,6 +521,7 @@ func EditUangMasukSiswa(c *gin.Context) {
 	var tahun_akademik_old string
 	var nis_siswa_old string
 	var nm_kelas_old string
+
 
 	rowA, _ := db.Raw("SELECT a.kd_group,a.kd_kategori,a.tahun_akademik,a.nis_siswa,a.nm_kelas FROM tbl_trans_uang_masuk_siswa_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
@@ -661,10 +664,11 @@ func EditUangMasukSiswa(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = '%s'", sql, kd_trans_masuk_siswa)
@@ -869,10 +873,11 @@ func DeleteUangMasukSiswaDetail(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = '%s'", sql, kd_trans_masuk_siswa)
@@ -962,9 +967,11 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	dateStr := tTglBayar.Format("2006-01-02")
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_siswa_details
-	err = db.Raw("update tbl_trans_uang_masuk_siswa_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=? "+
+	err = db.Raw("update tbl_trans_uang_masuk_siswa_details set tgl_bayar=?,jml_bayar=?,keterangan=?,"+
+		" edited_by=?,edited_on=?,kd_pembayaran=? "+
 		" where kd_trans_masuk_detail_siswa=? and kd_trans_masuk_siswa=? and flag_aktif=0 ", dateStr,
-		paramEditUmSiswaDetail.Jml_bayar, paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx, kd_trans_masuk_detail_siswa, kd_trans_masuk_siswa).Scan(&dataDetail).Error
+		paramEditUmSiswaDetail.Jml_bayar, paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx,
+		paramEditUmSiswaDetail.Kd_pembayaran, kd_trans_masuk_detail_siswa, kd_trans_masuk_siswa).Scan(&dataDetail).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_siswa_details Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -1040,10 +1047,11 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = '%s'", sql, kd_trans_masuk_siswa)
@@ -1185,7 +1193,7 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 		Flag_aktif:                  0,
 	}
 
-	err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+	err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar", "Kd_pembayaran").Create(&datadetail).Error
 	if err != nil {
 		response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -1242,10 +1250,11 @@ func CreateUangMasukSiswaDetail(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)
@@ -1407,10 +1416,11 @@ func ListData(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)
@@ -1538,10 +1548,11 @@ func DeleteAllUangMasuk(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_siswa,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_siswa_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa " +
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_siswa = %d", sql, kd_trans_masuk_siswa)

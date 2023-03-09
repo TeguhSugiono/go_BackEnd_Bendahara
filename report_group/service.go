@@ -120,6 +120,35 @@ func Report_Group_Masuk(c *gin.Context) {
 			arraydetail.Total_bayar = total_bayar
 			//end cari uang masuk
 
+			//cari detail pembayaran
+			var tgl_bayar string
+			var jml_bayar float64
+			var tipe_pembayaran string
+
+			arrayDetailBayar := []DetailBayar{}
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran  FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
+			if paramData.Tgl_bayar1 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
+			}
+			if paramData.Tgl_bayar2 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar <= '%s'", sql_nominal_detail, TglBayar2)
+			}
+			execute_sql_nominal_detail, _ := db.Raw(sql_nominal_detail).Rows()
+			defer execute_sql_nominal_detail.Close()
+			for execute_sql_nominal_detail.Next() {
+				execute_sql_nominal_detail.Scan(&tgl_bayar, &jml_bayar, &tipe_pembayaran)
+
+				arrayDetailBayarTemp := DetailBayar{}
+				arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+				arrayDetailBayarTemp.Jml_bayar = jml_bayar
+				arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+
+				arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+			}
+			arraydetail.DetailBayar = arrayDetailBayar
+			//end cari detail pembayaran
+
 			SetArrayDetail = append(SetArrayDetail, arraydetail)
 		}
 
@@ -242,6 +271,37 @@ func Report_Group_Keluar(c *gin.Context) {
 			}
 			arraydetail.Total_bayar = total_bayar
 			//end cari uang masuk
+
+			//cari detail pembayaran
+			var tgl_bayar string
+			var jml_bayar float64
+			var tipe_pembayaran string
+			var pos_uang_masuk string
+
+			arrayDetailBayar := []DetailBayarOut{}
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk  FROM vw_report_uksiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
+			if paramData.Tgl_bayar1 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
+			}
+			if paramData.Tgl_bayar2 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar <= '%s'", sql_nominal_detail, TglBayar2)
+			}
+			execute_sql_nominal_detail, _ := db.Raw(sql_nominal_detail).Rows()
+			defer execute_sql_nominal_detail.Close()
+			for execute_sql_nominal_detail.Next() {
+				execute_sql_nominal_detail.Scan(&tgl_bayar, &jml_bayar, &tipe_pembayaran, &pos_uang_masuk)
+
+				arrayDetailBayarTemp := DetailBayarOut{}
+				arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+				arrayDetailBayarTemp.Jml_bayar = jml_bayar
+				arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+				arrayDetailBayarTemp.Pos_uang_masuk = pos_uang_masuk
+
+				arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+			}
+			arraydetail.DetailBayar = arrayDetailBayar
+			//end cari detail pembayaran
 
 			SetArrayDetail = append(SetArrayDetail, arraydetail)
 		}
@@ -369,6 +429,35 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 			arraydetail.Total_bayar = total_bayar
 			//end cari uang masuk
 
+			//cari detail pembayaran
+			var tgl_bayar string
+			var jml_bayar float64
+			var tipe_pembayaran string
+
+			arrayDetailBayar := []DetailBayar{}
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran  FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
+			if paramData.Tgl_bayar1 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
+			}
+			if paramData.Tgl_bayar2 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar <= '%s'", sql_nominal_detail, TglBayar2)
+			}
+			execute_sql_nominal_detail, _ := db.Raw(sql_nominal_detail).Rows()
+			defer execute_sql_nominal_detail.Close()
+			for execute_sql_nominal_detail.Next() {
+				execute_sql_nominal_detail.Scan(&tgl_bayar, &jml_bayar, &tipe_pembayaran)
+
+				arrayDetailBayarTemp := DetailBayar{}
+				arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+				arrayDetailBayarTemp.Jml_bayar = jml_bayar
+				arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+
+				arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+			}
+			arraydetail.DetailBayar = arrayDetailBayar
+			//end cari detail pembayaran
+
 			SetArrayDetail = append(SetArrayDetail, arraydetail)
 		}
 
@@ -424,6 +513,37 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 			}
 			arraydetail.Total_bayar = total_bayar
 			//end cari uang masuk
+
+			//cari detail pembayaran
+			var tgl_bayar string
+			var jml_bayar float64
+			var tipe_pembayaran string
+			var pos_uang_masuk string
+
+			arrayDetailBayar := []DetailBayarOut{}
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk  FROM vw_report_uksiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
+			if paramData.Tgl_bayar1 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
+			}
+			if paramData.Tgl_bayar2 != "" {
+				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar <= '%s'", sql_nominal_detail, TglBayar2)
+			}
+			execute_sql_nominal_detail, _ := db.Raw(sql_nominal_detail).Rows()
+			defer execute_sql_nominal_detail.Close()
+			for execute_sql_nominal_detail.Next() {
+				execute_sql_nominal_detail.Scan(&tgl_bayar, &jml_bayar, &tipe_pembayaran, &pos_uang_masuk)
+
+				arrayDetailBayarTemp := DetailBayarOut{}
+				arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+				arrayDetailBayarTemp.Jml_bayar = jml_bayar
+				arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+				arrayDetailBayarTemp.Pos_uang_masuk = pos_uang_masuk
+
+				arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+			}
+			arraydetail.DetailBayar = arrayDetailBayar
+			//end cari detail pembayaran
 
 			SetArrayDetail = append(SetArrayDetail, arraydetail)
 		}

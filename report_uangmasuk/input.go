@@ -7,6 +7,7 @@ type ParamReportSPP struct {
 	Periode_bayar2 string `form:"periode_bayar2" json:"periode_bayar2"`
 	Tgl_bayar1     string `form:"tgl_bayar1" json:"tgl_bayar1"`
 	Tgl_bayar2     string `form:"tgl_bayar2" json:"tgl_bayar2"`
+	Kd_pembayaran  string `form:"kd_pembayaran" json:"kd_pembayaran"`
 }
 
 type GetDataHeaderSPP struct {
@@ -29,6 +30,7 @@ type GetDataDetailSPP struct {
 	Jml_tagihan       float64
 	Jml_bayar         float64
 	Keterangan_detail string
+	Tipe_pembayaran   string
 }
 
 type ParamReportPPDB struct {
@@ -38,6 +40,7 @@ type ParamReportPPDB struct {
 	Tgldaftar2     string `form:"tgldaftar2" json:"tgldaftar2"`
 	Tgl_bayar1     string `form:"tgl_bayar1" json:"tgl_bayar1"`
 	Tgl_bayar2     string `form:"tgl_bayar2" json:"tgl_bayar2"`
+	Kd_pembayaran  string `form:"kd_pembayaran" json:"kd_pembayaran"`
 }
 
 type GetDataHeaderPPDB struct {
@@ -59,6 +62,7 @@ type GetDataDetailPPDB struct {
 	Tgl_bayar         string
 	Jml_bayar         float64
 	Keterangan_detail string
+	Tipe_pembayaran   string
 }
 
 type ParamReportUmSiswa struct {
@@ -67,6 +71,7 @@ type ParamReportUmSiswa struct {
 	Nm_kelas       string `form:"nm_kelas" json:"nm_kelas"`
 	Tgl_bayar1     string `form:"tgl_bayar1" json:"tgl_bayar1"`
 	Tgl_bayar2     string `form:"tgl_bayar2" json:"tgl_bayar2"`
+	Kd_pembayaran  string `form:"kd_pembayaran" json:"kd_pembayaran"`
 }
 
 type GetDataHeaderUmSiswa struct {
@@ -87,6 +92,7 @@ type GetDataDetailUmSiswa struct {
 	Tgl_bayar         string
 	Jml_bayar         float64
 	Keterangan_detail string
+	Tipe_pembayaran   string
 }
 
 type ParamReportUmLain struct {
@@ -95,6 +101,7 @@ type ParamReportUmLain struct {
 	No_document   string `form:"no_document" json:"no_document"`
 	Tgl_bayar1    string `form:"tgl_bayar1" json:"tgl_bayar1"`
 	Tgl_bayar2    string `form:"tgl_bayar2" json:"tgl_bayar2"`
+	Kd_pembayaran string `form:"kd_pembayaran" json:"kd_pembayaran"`
 }
 
 type GetDataHeaderUmLain struct {
@@ -113,4 +120,5 @@ type GetDataDetailUmLain struct {
 	Tgl_bayar         string
 	Jml_bayar         float64
 	Keterangan_detail string
+	Tipe_pembayaran   string
 }

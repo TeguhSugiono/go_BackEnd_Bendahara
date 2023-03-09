@@ -157,6 +157,9 @@ func ReportSPP(c *gin.Context) {
 	if paramReport.Tgl_bayar2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglBayar2)
 	}
+	if paramReport.Kd_pembayaran != "" {
+		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
+	}
 
 	ssql = fmt.Sprintf("%s group by kd_trans_masuk ", ssql)
 
@@ -178,7 +181,7 @@ func ReportSPP(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail = " SELECT periode_bayar,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_tagihan,jml_bayar,keterangan_detail FROM vw_report_spp "
+		ssqldetail = " SELECT periode_bayar,date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_tagihan,jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_spp "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk = %d", ssqldetail, kd_trans_masuk)
 		if paramReport.Tahun_akademik != "" {
 			ssqldetail = fmt.Sprintf("%s and tahun_akademik = '%s'", ssqldetail, paramReport.Tahun_akademik)
@@ -197,6 +200,9 @@ func ReportSPP(c *gin.Context) {
 		}
 		if paramReport.Tgl_bayar2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglBayar2)
+		}
+		if paramReport.Kd_pembayaran != "" {
+			ssqldetail = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssqldetail, paramReport.Kd_pembayaran)
 		}
 
 		var getDataDetail []GetDataDetailSPP
@@ -363,6 +369,9 @@ func ReportPPDB(c *gin.Context) {
 	if paramReport.Tgl_bayar2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglBayar2)
 	}
+	if paramReport.Kd_pembayaran != "" {
+		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
+	}
 
 	ssql = fmt.Sprintf("%s group by kd_trans_masuk_ppdb ", ssql)
 
@@ -383,7 +392,7 @@ func ReportPPDB(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,kd_trans_masuk_ppdb FROM vw_report_ppdb "
+		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_ppdb "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_ppdb = %d", ssqldetail, kd_trans_masuk_ppdb)
 		if paramReport.Tahun_akademik != "" {
 			ssqldetail = fmt.Sprintf("%s and tahun_akademik = '%s'", ssqldetail, paramReport.Tahun_akademik)
@@ -402,6 +411,9 @@ func ReportPPDB(c *gin.Context) {
 		}
 		if paramReport.Tgl_bayar2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglBayar2)
+		}
+		if paramReport.Kd_pembayaran != "" {
+			ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
 		}
 
 		var getDataDetail []GetDataDetailPPDB
@@ -519,6 +531,9 @@ func ReportUmSiswa(c *gin.Context) {
 	if paramReport.Tgl_bayar2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglBayar2)
 	}
+	if paramReport.Kd_pembayaran != "" {
+		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
+	}
 
 	ssql = fmt.Sprintf("%s group by kd_trans_masuk_siswa ", ssql)
 
@@ -538,7 +553,7 @@ func ReportUmSiswa(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail FROM vw_report_umsiswa "
+		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_umsiswa "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_siswa = %d", ssqldetail, kd_trans_masuk_siswa)
 		if paramReport.Tahun_akademik != "" {
 			ssqldetail = fmt.Sprintf("%s and tahun_akademik = '%s'", ssqldetail, paramReport.Tahun_akademik)
@@ -554,6 +569,9 @@ func ReportUmSiswa(c *gin.Context) {
 		}
 		if paramReport.Tgl_bayar2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglBayar2)
+		}
+		if paramReport.Kd_pembayaran != "" {
+			ssqldetail = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssqldetail, paramReport.Kd_pembayaran)
 		}
 
 		var getDataDetail []GetDataDetailUmSiswa
@@ -714,6 +732,9 @@ func ReportUmLain(c *gin.Context) {
 	if paramReport.Tgl_document2 != "" {
 		ssql = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssql, TglDocument2)
 	}
+	if paramReport.Kd_pembayaran != "" {
+		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
+	}
 
 	ssql = fmt.Sprintf("%s group by kd_trans_masuk_lain ", ssql)
 
@@ -731,7 +752,7 @@ func ReportUmLain(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail FROM vw_report_umlain "
+		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_umlain "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_lain = %d", ssqldetail, kd_trans_masuk_lain)
 		if paramReport.No_document != "" {
 			ssqldetail = fmt.Sprintf("%s and no_document = '%s'", ssqldetail, paramReport.No_document)
@@ -747,6 +768,9 @@ func ReportUmLain(c *gin.Context) {
 		}
 		if paramReport.Tgl_document2 != "" {
 			ssqldetail = fmt.Sprintf("%s and tgl_bayar <= '%s'", ssqldetail, TglDocument2)
+		}
+		if paramReport.Kd_pembayaran != "" {
+			ssqldetail = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssqldetail, paramReport.Kd_pembayaran)
 		}
 
 		var getDataDetail []GetDataDetailUmLain

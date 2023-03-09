@@ -35,9 +35,13 @@ type HeaderPPDB struct {
 }
 
 type DetailPPDB struct {
-	Tgl_bayar         string
-	Jml_bayar         float64
-	Keterangan_detail string
+	Tgl_bayar                  string
+	Jml_bayar                  float64
+	Keterangan_detail          string
+	Kd_pembayaran              int
+	Tipe_pembayaran            string
+	Kd_trans_masuk_ppdb        int
+	Kd_trans_masuk_detail_ppdb int
 }
 
 type GroupTahunKelas struct {
@@ -57,15 +61,23 @@ type HeaderSPP struct {
 }
 
 type DetailSPP struct {
-	Periode_bayar     string
-	Tgl_bayar         string
-	Jml_tagihan       float64
-	Jml_bayar         float64
-	Keterangan_detail string
+	Periode_bayar         string
+	Tgl_bayar             string
+	Jml_tagihan           float64
+	Jml_bayar             float64
+	Keterangan_detail     string
+	Kd_pembayaran         int
+	Tipe_pembayaran       string
+	Kd_trans_masuk        int
+	Kd_trans_masuk_detail int
 }
 
 type DetailUmSiswa struct {
-	Tgl_bayar         string
-	Jml_bayar         float64
-	Keterangan_detail string
+	Tgl_bayar                   string
+	Jml_bayar                   float64
+	Keterangan_detail           string
+	Kd_pembayaran               int
+	Tipe_pembayaran             string
+	Kd_trans_masuk_siswa        int
+	Kd_trans_masuk_detail_siswa int
 }

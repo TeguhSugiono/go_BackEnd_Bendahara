@@ -115,10 +115,11 @@ func ListData(c *gin.Context) {
 
 	var getDataUmSpp []GetDataUmSpp
 	db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
 		" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? "+
 		" order by b.seqno ", paramChangeSiswa.Tahun_akademik, paramChangeSiswa.Nm_kelas, paramChangeSiswa.Nis_siswa).Scan(&getDataUmSpp)
@@ -296,7 +297,7 @@ func CreateUangMasukSpp(c *gin.Context) {
 				Flag_aktif:            0,
 			}
 
-			err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+			err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar", "Kd_pembayaran").Create(&datadetail).Error
 			if err != nil {
 				response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 				c.JSON(http.StatusBadRequest, response)
@@ -310,10 +311,11 @@ func CreateUangMasukSpp(c *gin.Context) {
 
 		var getDataUmSpp []GetDataUmSpp
 		db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-			" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
+			" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran "+
 			" FROM tbl_trans_uang_masuk_spp_headers a "+
 			" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 			" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 			" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
 			" and a.tahun_akademik=? and a.nm_kelas=? and a.nis_siswa = ? "+
 			" order by b.seqno ", paramInputSPP.Tahun_akademik, paramInputSPP.Nm_kelas, paramInputSPP.Nis_siswa).Scan(&getDataUmSpp)
@@ -414,8 +416,9 @@ func UpdateUangMasukSpp(c *gin.Context) {
 	dateStr := tTglBayar.Format("2006-01-02")
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_spp_details
-	err = db.Raw("update tbl_trans_uang_masuk_spp_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=? "+
-		" where kd_trans_masuk_detail=? and flag_aktif=0 ", dateStr, paramEditSPPDetail.Jml_bayar, paramEditSPPDetail.Keterangan, currentUser.(string), datenowx, c.Param("iddetail")).Scan(&dataDetail).Error
+	err = db.Raw("update tbl_trans_uang_masuk_spp_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=?,kd_pembayaran=? "+
+		" where kd_trans_masuk_detail=? and flag_aktif=0 ", dateStr, paramEditSPPDetail.Jml_bayar,
+		paramEditSPPDetail.Keterangan, currentUser.(string), datenowx, paramEditSPPDetail.Kd_pembayaran, c.Param("iddetail")).Scan(&dataDetail).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_spp_details Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -444,10 +447,11 @@ func UpdateUangMasukSpp(c *gin.Context) {
 
 	var getDataUmSpp []GetDataUmSpp
 	db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
 		" and a.kd_trans_masuk=? "+
 		" order by b.seqno ", c.Param("idhead")).Scan(&getDataUmSpp)
@@ -543,10 +547,11 @@ func DeleteAllUangMasuk(c *gin.Context) {
 
 	var getDataUmSpp []GetDataUmSpp
 	db.Raw("SELECT b.kd_trans_masuk_detail,b.seqno,b.periode_bayar, "+
-		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan "+
+		" b.tgl_bayar,b.jml_tagihan,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran "+
 		" FROM tbl_trans_uang_masuk_spp_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_spp_details b on a.kd_trans_masuk=b.kd_trans_masuk "+
 		" INNER JOIN tbl_siswa c on a.nis_siswa = c.nis "+
+		" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_siswa = 0 and status_siswa not in('Tidak Aktif') "+
 		" and a.kd_trans_masuk=? "+
 		" order by b.seqno ", idhead).Scan(&getDataUmSpp)

@@ -29,6 +29,7 @@ type ParamReportPRAACT struct {
 	No_document   string `form:"no_document" json:"no_document"`
 	Tgl_bayar1    string `form:"tgl_bayar1" json:"tgl_bayar1"`
 	Tgl_bayar2    string `form:"tgl_bayar2" json:"tgl_bayar2"`
+	Kd_pembayaran string `form:"kd_pembayaran" json:"kd_pembayaran"`
 }
 
 type GetDataHeaderPRAACT struct {
@@ -48,6 +49,7 @@ type GetDataDetailPRAACT struct {
 	Tgl_bayar         string
 	Jml_bayar         float64
 	Keterangan_detail string
+	Tipe_pembayaran   string
 }
 
 type ParamReportACT struct {
@@ -56,6 +58,7 @@ type ParamReportACT struct {
 	No_document   string `form:"no_document" json:"no_document"`
 	Tgl_bayar1    string `form:"tgl_bayar1" json:"tgl_bayar1"`
 	Tgl_bayar2    string `form:"tgl_bayar2" json:"tgl_bayar2"`
+	Kd_pembayaran string `form:"kd_pembayaran" json:"kd_pembayaran"`
 }
 
 type GetDataHeaderACT struct {
@@ -75,4 +78,5 @@ type GetDataDetailACT struct {
 	Tgl_bayar         string
 	Jml_bayar         float64
 	Keterangan_detail string
+	Tipe_pembayaran   string
 }

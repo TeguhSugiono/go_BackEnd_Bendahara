@@ -201,7 +201,7 @@ func CreateUangMasukLain(c *gin.Context) {
 			Flag_aktif:                 0,
 		}
 
-		err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+		err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar", "Kd_pembayaran").Create(&datadetail).Error
 		if err != nil {
 			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 			c.JSON(http.StatusBadRequest, response)
@@ -251,9 +251,10 @@ func CreateUangMasukLain(c *gin.Context) {
 			arraydata.Keterangan = ket
 
 			sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-				" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+				" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 				" FROM tbl_trans_uang_masuk_lain_headers a " +
 				" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
+				" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 				" where a.flag_aktif=0 and b.flag_aktif=0 "
 
 			sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, Kd_trans_masuk_lain)
@@ -475,9 +476,10 @@ func EditUangMasukLain(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.kd_trans_masuk_lain = '%s'", sql, Kd_trans_masuk_lain)
@@ -567,9 +569,10 @@ func UpdateUangMasukLainetail(c *gin.Context) {
 	dateStr := tTglBayar.Format("2006-01-02")
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_lain_details
-	err = db.Raw("update tbl_trans_uang_masuk_lain_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=? "+
+	err = db.Raw("update tbl_trans_uang_masuk_lain_details set tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=?,kd_pembayaran=? "+
 		" where kd_trans_masuk_detail_lain=? and Kd_trans_masuk_lain=? and flag_aktif=0 ", dateStr,
-		paramEditUmSiswaDetail.Jml_bayar, paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx, kd_trans_masuk_detail_lain, Kd_trans_masuk_lain).Scan(&dataDetail).Error
+		paramEditUmSiswaDetail.Jml_bayar, paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx,
+		paramEditUmSiswaDetail.Kd_pembayaran, kd_trans_masuk_detail_lain, Kd_trans_masuk_lain).Scan(&dataDetail).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke tbl_trans_uang_masuk_lain_details Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -639,9 +642,10 @@ func UpdateUangMasukLainetail(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = '%s'", sql, Kd_trans_masuk_lain)
@@ -730,7 +734,7 @@ func CreateUangMasukLainDetail(c *gin.Context) {
 		Flag_aktif:                 0,
 	}
 
-	err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar").Create(&datadetail).Error
+	err = db.Omit("Edited_on", "Edited_by", "Tgl_bayar", "Kd_pembayaran").Create(&datadetail).Error
 	if err != nil {
 		response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -782,9 +786,10 @@ func CreateUangMasukLainDetail(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, Kd_trans_masuk_lain)
@@ -906,9 +911,10 @@ func ListData(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, kd_trans_masuk_lain)
@@ -1049,9 +1055,10 @@ func DeleteUangMasukLainDetail(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, int_kd_trans_masuk_siswa)
@@ -1176,9 +1183,10 @@ func DeleteAllUangMasuk(c *gin.Context) {
 		arraydata.Keterangan = ket
 
 		sql := " SELECT b.kd_trans_masuk_detail_lain,b.seqno, " +
-			" b.tgl_bayar,b.jml_bayar,b.keterangan " +
+			" b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
 			" FROM tbl_trans_uang_masuk_lain_headers a " +
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.kd_trans_masuk_lain=b.kd_trans_masuk_lain " +
+			" LEFT JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
 
 		sql = fmt.Sprintf("%s and a.Kd_trans_masuk_lain = %d", sql, kd_trans_masuk_lain)
