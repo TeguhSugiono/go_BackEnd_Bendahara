@@ -42,7 +42,7 @@ func ReportHistori(c *gin.Context) {
 
 	// AMBIL DATA PPDB
 	var detailPPDB []DetailPPDB
-	db.Raw(" SELECT  tgl_bayar,jml_bayar,keterangan_detail,kd_pembayaran,tipe_pembayaran,kd_trans_masuk_ppdb,kd_trans_masuk_detail_ppdb "+
+	db.Raw(" SELECT  tgl_bayar,jml_bayar,kategori_biaya_ppdb as 'keterangan_detail',kd_pembayaran,tipe_pembayaran,kd_trans_masuk_ppdb,kd_trans_masuk_detail_ppdb "+
 		" FROM vw_report_ppdb where nik=? ", paramSearch.Nik).Scan(&detailPPDB)
 
 	SetArrayHeaderPPDB := []HeaderPPDB{}
@@ -166,6 +166,4 @@ func ReportHistori(c *gin.Context) {
 
 }
 
-func HideShowButton(c *gin.Context) {
 
-}

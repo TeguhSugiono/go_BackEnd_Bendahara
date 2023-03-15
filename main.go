@@ -212,7 +212,8 @@ func main() {
 
 	api.POST("/report/reporthistori/listniknis", authMiddleware(), report_histori.ListNikNis)
 	api.POST("/report/reporthistori/reporthistori", authMiddleware(), report_histori.ReportHistori)
-	api.POST("/report/reporthistori/hideshowbutton", authMiddleware(), report_histori.HideShowButton)
+
+
 
 	api.POST("/report/reportgroup/reportgroupmasuk", authMiddleware(), report_group.Report_Group_Masuk)
 	api.POST("/report/reportgroup/reportgroupkeluar", authMiddleware(), report_group.Report_Group_Keluar)
@@ -225,6 +226,7 @@ func main() {
 
 	//setting open lock historis
 	api.POST("/setting/transaksi/getakses", authMiddleware(), setting_edit_histori.Get_Akses)
+	api.GET("/setting/transaksi/getaksespermission", authMiddleware(), setting_edit_histori.Get_Akses_Permission)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

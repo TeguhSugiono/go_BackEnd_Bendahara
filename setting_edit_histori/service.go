@@ -69,3 +69,24 @@ func Get_Akses(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+func Get_Akses_Permission(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	currentUser := c.MustGet("currentUser").(string)
+
+	var statusOpen StatusOpen
+	db.Raw("SELECT `open` FROM tbl_open_lock_historis where request_by=?", currentUser).Scan(&statusOpen)
+
+	if statusOpen.Open == "Y" {
+		response := helper.APIResponse("Akses Buka Ditemukan ...", http.StatusOK, "success", statusOpen)
+		c.JSON(http.StatusOK, response)
+		return
+	}else{
+		response := helper.APIResponse("Akses Buka Tidak Ditemukan ...", http.StatusOK, "success", statusOpen)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+
+}
