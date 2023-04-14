@@ -57,6 +57,26 @@ func main() {
 		c.JSON(http.StatusOK, response)
 	})
 
+	//Setting Koneksi Kedatabase SIA
+	// apiSIA := r.Group("api/v1/akademiksiswa")
+
+	// dbSIA := connection.SetupConnectionSIA()
+
+	// apiSIA.Use(func(c *gin.Context) {
+	// 	c.Set("dbSIA", dbSIA)
+	// 	c.Next()
+	// })
+
+	// apiSIA.GET("/", func(c *gin.Context) {
+	// 	response := helper.APIResponse("Aplikasi AKADEMIK Sekolah SMA AL-KHAIRIYAH...", http.StatusOK, "success", nil)
+	// 	c.JSON(http.StatusOK, response)
+	// })
+
+	//DATABASE SIA
+	api.POST("/akademik/siswalulus", authMiddleware(), master_siswa_akademik.ListSiswaLulus)
+
+	//End Setting Koneksi Kedatabase SIA
+
 	// userInput := models.GroupKategoriInput{}
 	// userInput.Kd_jenis = ""
 	// userInput.Nm_group = "Biaya Pembayaran PPDB"
@@ -213,8 +233,6 @@ func main() {
 	api.POST("/report/reporthistori/listniknis", authMiddleware(), report_histori.ListNikNis)
 	api.POST("/report/reporthistori/reporthistori", authMiddleware(), report_histori.ReportHistori)
 
-
-
 	api.POST("/report/reportgroup/reportgroupmasuk", authMiddleware(), report_group.Report_Group_Masuk)
 	api.POST("/report/reportgroup/reportgroupkeluar", authMiddleware(), report_group.Report_Group_Keluar)
 	api.POST("/report/reportgroup/reportgroupmasukkeluar", authMiddleware(), report_group.Report_Group_Masuk_Keluar)
@@ -241,6 +259,7 @@ func main() {
 	api.GET("/akademik/listsiswaakademik", authMiddleware(), master_siswa_akademik.ListSiswaAkademik)
 
 	r.Run(":2022")
+	//r.RunTLS(":2022", "server.pem", "server.key")
 }
 
 func authMiddleware() gin.HandlerFunc {

@@ -24,7 +24,15 @@ func ListBiayaKategori(c *gin.Context) {
 		" INNER JOIN tbl_kategori_uangs b on a.kd_kategori=b.kd_kategori "
 
 	db.Raw(sql).Scan(&master)
-
+	
+	
+	if len(master) == 0 {
+		SetArrayDataMasuk := []ListData{}
+		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayDataMasuk)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+	
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", master)
 	c.JSON(http.StatusOK, response)
 }
@@ -78,6 +86,14 @@ func ShowBiayaKategori(c *gin.Context) {
 		Total:     total,
 		Page:      intpage,
 		Last_page: int(math.Ceil(float64(total) / float64(intperPage))),
+	}
+
+
+	if len(master) == 0 {
+		SetArrayDataMasuk := []ListData{}
+		response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, SetArrayDataMasuk)
+		c.JSON(http.StatusOK, response)
+		return
 	}
 
 	response := helper.APIResponseTable("List Data ...", http.StatusOK, "success", "", CompTableData, master)

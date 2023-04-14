@@ -1,0 +1,28 @@
+Build / Compile Golang
+SET GOOS=linux
+go build -o nama_output main.go
+
+
+Change permission pakai putty
+chmod -R 777 rest_api_bendahara
+
+
+cara running golang on hosting
+jalanin kaya di windows
+./nama_file
+
+jalanin proses dibelakang
+nohup ./rest_api_bendahara > golang.log &
+
+check proses
+ps aux | grep nama_file
+
+stop proses
+kill -9 process_id
+
+
+
+
+
+
+

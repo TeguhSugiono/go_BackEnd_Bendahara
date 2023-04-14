@@ -1138,7 +1138,7 @@ func DeleteUangMasukDetail(c *gin.Context) {
 	}
 
 	var dataDetail table_data.Tbl_trans_uang_masuk_ppdb_details
-	err = db.Raw("update Tbl_trans_uang_masuk_ppdb_details set flag_aktif=9,edited_by=?,edited_on=? "+
+	err = db.Raw("update tbl_trans_uang_masuk_ppdb_details set flag_aktif=9,edited_by=?,edited_on=? "+
 		" where kd_trans_masuk_detail_ppdb=? and kd_trans_masuk_ppdb=? and flag_aktif=0 ",
 		currentUser.(string), datenowx, kd_trans_masuk_detail_ppdb, kd_trans_masuk_ppdb).Scan(&dataDetail).Error
 	if err != nil {
@@ -1148,7 +1148,7 @@ func DeleteUangMasukDetail(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM Tbl_trans_uang_masuk_ppdb_details "+
+	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_masuk_ppdb_details "+
 		" where flag_aktif=0 and tgl_bayar is not null and kd_trans_masuk_ppdb=?", kd_trans_masuk_ppdb).Scan(&sumJmlBayar)
 
 	var total_biaya float64

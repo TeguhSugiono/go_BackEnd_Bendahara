@@ -49,7 +49,7 @@ func DataDashboard(c *gin.Context) {
 	arrayTotal_Detail_Transaksi.Keterangan = keterangan_tgl_1_sd_tgl_kemarin
 
 	var saldo_tgl_1_sd_tgl_kemarin float64
-	sql = " SELECT sum(total_bayar) FROM vw_report_umsiswa_dll " +
+	sql = " SELECT sum(jml_bayar) FROM vw_report_umsiswa_dll " +
 		" where tgl_bayar >= DATE(concat(date_format(CURRENT_DATE,'%Y-%m'),'-','01')) " +
 		" and tgl_bayar <= (CURRENT_DATE - INTERVAL 1 DAY)  "
 	db.Raw(sql).Scan(&saldo_tgl_1_sd_tgl_kemarin)
@@ -68,7 +68,7 @@ func DataDashboard(c *gin.Context) {
 	arrayTotal_Detail_Transaksi.Keterangan = keterangan_tgl_1_sd_tgl_kemarin
 
 	saldo_tgl_1_sd_tgl_kemarin = 0
-	sql = " SELECT sum(total_bayar) FROM vw_report_uksiswa_dll " +
+	sql = " SELECT sum(jml_bayar) FROM vw_report_uksiswa_dll " +
 		" where tgl_bayar >= DATE(concat(date_format(CURRENT_DATE,'%Y-%m'),'-','01')) " +
 		" and tgl_bayar <= (CURRENT_DATE - INTERVAL 1 DAY)  "
 	db.Raw(sql).Scan(&saldo_tgl_1_sd_tgl_kemarin)
@@ -87,7 +87,7 @@ func DataDashboard(c *gin.Context) {
 	arrayTotal_Detail_Transaksi.Keterangan = keterangan_tgl_1_sd_tgl_kemarin
 
 	saldo_tgl_1_sd_tgl_kemarin = 0
-	sql = " SELECT sum(total_bayar) FROM vw_report_umsiswa_dll " +
+	sql = " SELECT sum(jml_bayar) FROM vw_report_umsiswa_dll " +
 		" where tgl_bayar >= CURRENT_DATE " +
 		" and tgl_bayar <= CURRENT_DATE  "
 	db.Raw(sql).Scan(&saldo_tgl_1_sd_tgl_kemarin)
@@ -106,7 +106,7 @@ func DataDashboard(c *gin.Context) {
 	arrayTotal_Detail_Transaksi.Keterangan = keterangan_tgl_1_sd_tgl_kemarin
 
 	saldo_tgl_1_sd_tgl_kemarin = 0
-	sql = " SELECT sum(total_bayar) FROM vw_report_uksiswa_dll " +
+	sql = " SELECT sum(jml_bayar) FROM vw_report_uksiswa_dll " +
 		" where tgl_bayar >= CURRENT_DATE " +
 		" and tgl_bayar <= CURRENT_DATE  "
 	db.Raw(sql).Scan(&saldo_tgl_1_sd_tgl_kemarin)

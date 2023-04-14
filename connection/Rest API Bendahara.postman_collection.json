@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"teguh\",\r\n    \"password\" : \"12345\",\r\n    \"full_name\" : \"Teguh Sugiono\"\r\n}\r\n",
+							"raw": "{\r\n    \"username\" : \"uzil\",\r\n    \"password\" : \"Uzil@2023\",\r\n    \"full_name\" : \"Achmad Uzzil Abid,SE\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,15 +24,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/users/signup",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/users/signup",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -58,14 +56,45 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.01:2022/api/v1/users/login",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/users/login",
+							"protocol": "https",
+							"host": [
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/users/login",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"01"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -556,15 +585,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=100",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=100",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -624,15 +651,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/listkategoriuang",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/masterkategoriuang/listkategoriuang",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -785,15 +810,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showsubkategoriuang?page=1&perpage=10",
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/masterkategoriuang/showsubkategoriuang?page=1&perpage=10",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -5383,15 +5406,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/dashboard",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/dashboard",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -5450,6 +5471,49 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "26. Siswa Lulus",
+			"item": [
+				{
+					"name": "List Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"no_peserta\" : \"test123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/akademik/siswalulus",
+							"protocol": "http",
+							"host": [
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"akademik",
+								"siswalulus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -5457,7 +5521,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MiwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY3ODkzNTMxMH0.HXnPy_6v_w36NRDnk05EXov6DSSZzbf7o3esis1dUUs",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY4MTU1MDg0OH0.pCQb50TAJqypOCaPqj8MXJvqfqsTl0WTtoJVUYSrMkM",
 				"type": "string"
 			}
 		]

@@ -1,0 +1,7 @@
+Options +FollowSymLinks -Indexes
+IndexIgnore * 
+DirectoryIndex
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule ^(.)$ http://bendahara.sma-alkhairiyah.com:8080/api/$1 [P]
+</IfModule>

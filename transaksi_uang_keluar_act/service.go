@@ -111,8 +111,8 @@ func CreateUangKeluar(c *gin.Context) {
 		return
 	}
 
-	db.Raw(" SELECT count(*) jmldata from Tbl_trans_uang_keluar_act_headers a "+
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
+	db.Raw(" SELECT count(*) jmldata from tbl_trans_uang_keluar_act_headers a "+
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 		" where a.flag_aktif=0 and b.flag_aktif=0 and kd_group=?  "+
 		" and kd_kategori=? and no_document=? and tgl_document=?  ",
 		paramInputTransaksi.Kd_group, paramInputTransaksi.Kd_kategori, paramInputTransaksi.No_document, dateStr).Scan(&intJmldata)
@@ -138,7 +138,7 @@ func CreateUangKeluar(c *gin.Context) {
 		}
 
 		var intKd_trans_keluar int
-		db.Raw("SELECT ifnull(max(kd_trans_keluar),0) + 1 as 'run_number' FROM Tbl_trans_uang_keluar_act_headers ").Scan(&intKd_trans_keluar)
+		db.Raw("SELECT ifnull(max(kd_trans_keluar),0) + 1 as 'run_number' FROM tbl_trans_uang_keluar_act_headers ").Scan(&intKd_trans_keluar)
 
 		var float_biaya_spp float64
 		db.Raw("SELECT jml_biaya FROM tbl_biaya_masuk_keluars where kd_kategori=?", paramInputTransaksi.Kd_kategori).Scan(&float_biaya_spp)
@@ -171,7 +171,7 @@ func CreateUangKeluar(c *gin.Context) {
 		}
 
 		var intKd_trans_keluar_detail int
-		db.Raw("SELECT ifnull(max(kd_trans_keluar_detail),0) + 1 as 'run_number' FROM Tbl_trans_uang_keluar_act_details ").Scan(&intKd_trans_keluar_detail)
+		db.Raw("SELECT ifnull(max(kd_trans_keluar_detail),0) + 1 as 'run_number' FROM tbl_trans_uang_keluar_act_details ").Scan(&intKd_trans_keluar_detail)
 
 		datadetail := table_data.Tbl_trans_uang_keluar_act_details{
 			Kd_trans_keluar:        intKd_trans_keluar,
@@ -207,8 +207,8 @@ func CreateUangKeluar(c *gin.Context) {
 
 		ssql := " SELECT distinct a.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 			" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 			" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -235,8 +235,8 @@ func CreateUangKeluar(c *gin.Context) {
 
 			sql := " SELECT b.kd_trans_keluar_detail,b.seqno, " +
 				" b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar,b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-				" FROM Tbl_trans_uang_keluar_act_headers a " +
-				" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+				" FROM tbl_trans_uang_keluar_act_headers a " +
+				" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 				" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 				" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 				" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -323,8 +323,8 @@ func EditUangKeluar(c *gin.Context) {
 	dateStr := tTglTransaksi.Format("2006-01-02")
 
 	//cek data Document pembayaran mengada-ngada
-	db.Raw(" SELECT count(*) jmldata FROM Tbl_trans_uang_keluar_act_headers a "+
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
+	db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_keluar_act_headers a "+
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 		" where a.kd_trans_keluar=? and a.flag_aktif=0 and b.flag_aktif=0  ", Kd_trans_keluar).Scan(&intJmldata)
 	if intJmldata == 0 {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
@@ -339,8 +339,8 @@ func EditUangKeluar(c *gin.Context) {
 	var no_document_old string
 	var tgl_document_old string
 
-	rowA, _ := db.Raw("SELECT a.kd_group,a.kd_kategori,a.no_document,date_format(a.tgl_document,'%Y-%m-%d') FROM Tbl_trans_uang_keluar_act_headers a "+
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
+	rowA, _ := db.Raw("SELECT a.kd_group,a.kd_kategori,a.no_document,date_format(a.tgl_document,'%Y-%m-%d') FROM tbl_trans_uang_keluar_act_headers a "+
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 		" where a.kd_trans_keluar=?  and a.flag_aktif=0 and b.flag_aktif=0 limit 1", Kd_trans_keluar).Rows()
 
 	defer rowA.Close()
@@ -362,7 +362,7 @@ func EditUangKeluar(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM Tbl_trans_uang_keluar_act_details "+
+	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_keluar_act_details "+
 		" where flag_aktif=0 and kd_trans_keluar=?", Kd_trans_keluar).Scan(&sumJmlBayar)
 
 	var sisa_biaya float64 = paramInputTransaksiEdit.Total_biaya - sumJmlBayar
@@ -371,8 +371,8 @@ func EditUangKeluar(c *gin.Context) {
 
 	//cek data jika ada perubahan di nodocument akan tetapi perubahan tersebut sama dengan data yang sudah ada
 	if (paramInputTransaksiEdit.Kd_group != kd_group_old) || (paramInputTransaksiEdit.Kd_kategori != kd_kategori_old) || (paramInputTransaksiEdit.No_document != no_document_old) || (dateStr != tgl_document_old) {
-		db.Raw(" SELECT count(*) jmldata FROM Tbl_trans_uang_keluar_act_headers a "+
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
+		db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_keluar_act_headers a "+
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 			" where a.flag_aktif=0 and b.flag_aktif=0  and a.kd_group=? and a.kd_kategori=? "+
 			" and a.no_document=? and a.tgl_document=? ", paramInputTransaksiEdit.Kd_group,
 			paramInputTransaksiEdit.Kd_kategori, paramInputTransaksiEdit.No_document, dateStr).Scan(&intJmldata)
@@ -383,7 +383,7 @@ func EditUangKeluar(c *gin.Context) {
 			return
 		}
 
-		err = db.Raw("UPDATE Tbl_trans_uang_keluar_act_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?,keterangan=?, "+
+		err = db.Raw("UPDATE tbl_trans_uang_keluar_act_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?,keterangan=?, "+
 			" edited_on = ? , edited_by = ? ,kd_group=?,kd_kategori=?,tgl_document=?,no_document=?  "+
 			" WHERE kd_trans_keluar = ? "+
 			" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya, paramInputTransaksiEdit.Keterangan, datenowx, currentUser.(string),
@@ -397,7 +397,7 @@ func EditUangKeluar(c *gin.Context) {
 
 	} else {
 
-		err = db.Raw("UPDATE Tbl_trans_uang_keluar_act_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?,keterangan=?, "+
+		err = db.Raw("UPDATE tbl_trans_uang_keluar_act_headers SET total_biaya=? ,total_bayar = ?, sisa_biaya = ?,keterangan=?, "+
 			" edited_on = ? , edited_by = ?   "+
 			" WHERE kd_trans_keluar = ? "+
 			" and flag_aktif=0 ", paramInputTransaksiEdit.Total_biaya, sumJmlBayar, sisa_biaya, paramInputTransaksiEdit.Keterangan, datenowx, currentUser.(string),
@@ -426,8 +426,8 @@ func EditUangKeluar(c *gin.Context) {
 
 	ssql := " SELECT distinct b.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-		" FROM Tbl_trans_uang_keluar_act_headers a " +
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+		" FROM tbl_trans_uang_keluar_act_headers a " +
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -456,8 +456,8 @@ func EditUangKeluar(c *gin.Context) {
 
 		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0   "
@@ -576,7 +576,7 @@ func UpdateUangKeluarDetail(c *gin.Context) {
 	dateStr := tTglBayar.Format("2006-01-02")
 
 	var dataDetail table_data.Tbl_trans_uang_keluar_act_details
-	err = db.Raw("update Tbl_trans_uang_keluar_act_details set kd_post_uang_masuk=?, tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=?,kd_pembayaran=? "+
+	err = db.Raw("update tbl_trans_uang_keluar_act_details set kd_post_uang_masuk=?, tgl_bayar=?,jml_bayar=?,keterangan=?,edited_by=?,edited_on=?,kd_pembayaran=? "+
 		" where kd_trans_keluar_detail=? and kd_trans_keluar=? and flag_aktif=0 ",
 		paramEditUmSiswaDetail.Kd_post_uang_masuk, dateStr, paramEditUmSiswaDetail.Jml_bayar,
 		paramEditUmSiswaDetail.Keterangan, currentUser.(string), datenowx, paramEditUmSiswaDetail.Kd_pembayaran, kd_trans_keluar_detail, kd_trans_keluar).Scan(&dataDetail).Error
@@ -587,15 +587,15 @@ func UpdateUangKeluarDetail(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM Tbl_trans_uang_keluar_act_details "+
+	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_keluar_act_details "+
 		" where flag_aktif=0 and kd_trans_keluar=?", kd_trans_keluar).Scan(&sumJmlBayar)
 
 	var total_biaya float64
-	db.Raw("SELECT total_biaya FROM Tbl_trans_uang_keluar_act_headers where flag_aktif=0 and kd_trans_keluar=?", kd_trans_keluar).Scan(&total_biaya)
+	db.Raw("SELECT total_biaya FROM tbl_trans_uang_keluar_act_headers where flag_aktif=0 and kd_trans_keluar=?", kd_trans_keluar).Scan(&total_biaya)
 	var sisa_biaya float64 = total_biaya - sumJmlBayar
 
 	var dataHeader table_data.Tbl_trans_uang_keluar_act_headers
-	err = db.Raw("UPDATE Tbl_trans_uang_keluar_act_headers SET total_bayar = ?, sisa_biaya = ?, "+
+	err = db.Raw("UPDATE tbl_trans_uang_keluar_act_headers SET total_bayar = ?, sisa_biaya = ?, "+
 		" edited_on = ? , edited_by = ? "+
 		" WHERE kd_trans_keluar = ? and flag_aktif=0 ", sumJmlBayar, sisa_biaya, datenowx, currentUser.(string), kd_trans_keluar).Scan(&dataHeader).Error
 	if err != nil {
@@ -618,8 +618,8 @@ func UpdateUangKeluarDetail(c *gin.Context) {
 
 	ssql := " SELECT distinct b.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-		" FROM Tbl_trans_uang_keluar_act_headers a " +
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+		" FROM tbl_trans_uang_keluar_act_headers a " +
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -648,8 +648,8 @@ func UpdateUangKeluarDetail(c *gin.Context) {
 
 		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -699,8 +699,8 @@ func CreateUangKeluarDetail(c *gin.Context) {
 
 	var intJmldata int
 	//cek data transaksi
-	db.Raw(" SELECT count(*) jmldata FROM Tbl_trans_uang_keluar_act_headers a "+
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
+	db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_keluar_act_headers a "+
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 		" where a.kd_trans_keluar=? and a.flag_aktif=0 and b.flag_aktif=0 ", paramAddDetail.Kd_trans_keluar).Scan(&intJmldata)
 	if intJmldata == 0 {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
@@ -723,11 +723,11 @@ func CreateUangKeluarDetail(c *gin.Context) {
 	}
 
 	var intkd_trans_keluar_detail int
-	db.Raw("SELECT ifnull(max(kd_trans_keluar_detail),0) + 1 as 'run_number' FROM Tbl_trans_uang_keluar_act_details ").Scan(&intkd_trans_keluar_detail)
+	db.Raw("SELECT ifnull(max(kd_trans_keluar_detail),0) + 1 as 'run_number' FROM tbl_trans_uang_keluar_act_details ").Scan(&intkd_trans_keluar_detail)
 
 	var int_seqno int
 	db.Raw("SELECT (seqno + 1) as 'run_number' "+
-		" FROM Tbl_trans_uang_keluar_act_details where flag_aktif=0 and kd_trans_keluar=?", paramAddDetail.Kd_trans_keluar).Scan(&int_seqno)
+		" FROM tbl_trans_uang_keluar_act_details where flag_aktif=0 and kd_trans_keluar=?", paramAddDetail.Kd_trans_keluar).Scan(&int_seqno)
 
 	datadetail := table_data.Tbl_trans_uang_keluar_act_details{
 		Kd_trans_keluar:        paramAddDetail.Kd_trans_keluar,
@@ -763,8 +763,8 @@ func CreateUangKeluarDetail(c *gin.Context) {
 
 	ssql := " SELECT distinct b.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-		" FROM Tbl_trans_uang_keluar_act_headers a " +
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+		" FROM tbl_trans_uang_keluar_act_headers a " +
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0   "
@@ -793,8 +793,8 @@ func CreateUangKeluarDetail(c *gin.Context) {
 
 		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -885,8 +885,8 @@ func ListData(c *gin.Context) {
 
 	ssql := " SELECT distinct b.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-		" FROM Tbl_trans_uang_keluar_act_headers a " +
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+		" FROM tbl_trans_uang_keluar_act_headers a " +
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0   "
@@ -918,8 +918,8 @@ func ListData(c *gin.Context) {
 
 		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -992,7 +992,7 @@ func DeleteUangKeluarDetail(c *gin.Context) {
 	}
 
 	var dataDetail table_data.Tbl_trans_uang_keluar_act_details
-	err = db.Raw("update Tbl_trans_uang_keluar_act_details set flag_aktif=9,edited_by=?,edited_on=? "+
+	err = db.Raw("update tbl_trans_uang_keluar_act_details set flag_aktif=9,edited_by=?,edited_on=? "+
 		" where kd_trans_keluar_detail=? and kd_trans_keluar=? and flag_aktif=0 ",
 		currentUser.(string), datenowx, kd_trans_keluar_detail, kd_trans_keluar).Scan(&dataDetail).Error
 	if err != nil {
@@ -1002,15 +1002,15 @@ func DeleteUangKeluarDetail(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM Tbl_trans_uang_keluar_act_details "+
+	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_keluar_act_details "+
 		" where flag_aktif=0 and kd_trans_keluar=?", kd_trans_keluar).Scan(&sumJmlBayar)
 
 	var total_biaya float64
-	db.Raw("SELECT total_biaya FROM Tbl_trans_uang_keluar_act_headers where flag_aktif=0 and kd_trans_keluar=?", kd_trans_keluar).Scan(&total_biaya)
+	db.Raw("SELECT total_biaya FROM tbl_trans_uang_keluar_act_headers where flag_aktif=0 and kd_trans_keluar=?", kd_trans_keluar).Scan(&total_biaya)
 	var sisa_biaya float64 = total_biaya - sumJmlBayar
 
 	var dataHeader table_data.Tbl_trans_uang_keluar_act_headers
-	err = db.Raw("UPDATE Tbl_trans_uang_keluar_act_headers SET total_bayar = ?, sisa_biaya = ?, "+
+	err = db.Raw("UPDATE tbl_trans_uang_keluar_act_headers SET total_bayar = ?, sisa_biaya = ?, "+
 		" edited_on = ? , edited_by = ? "+
 		" WHERE kd_trans_keluar = ? and flag_aktif=0 ", sumJmlBayar, sisa_biaya, datenowx, currentUser.(string), kd_trans_keluar).Scan(&dataHeader).Error
 	if err != nil {
@@ -1033,8 +1033,8 @@ func DeleteUangKeluarDetail(c *gin.Context) {
 
 	ssql := " SELECT distinct b.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-		" FROM Tbl_trans_uang_keluar_act_headers a " +
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+		" FROM tbl_trans_uang_keluar_act_headers a " +
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0   "
@@ -1063,8 +1063,8 @@ func DeleteUangKeluarDetail(c *gin.Context) {
 
 		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group,b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
@@ -1125,7 +1125,7 @@ func DeleteAllUangKeluar(c *gin.Context) {
 	}
 
 	var dataDetail table_data.Tbl_trans_uang_keluar_act_details
-	err = db.Raw("update Tbl_trans_uang_keluar_act_details set flag_aktif=9,edited_by=?,edited_on=? "+
+	err = db.Raw("update tbl_trans_uang_keluar_act_details set flag_aktif=9,edited_by=?,edited_on=? "+
 		" where kd_trans_keluar=? and flag_aktif=0 ",
 		currentUser.(string), datenowx, kd_trans_keluar).Scan(&dataDetail).Error
 	if err != nil {
@@ -1135,7 +1135,7 @@ func DeleteAllUangKeluar(c *gin.Context) {
 	}
 
 	var dataHead table_data.Tbl_trans_uang_keluar_act_headers
-	err = db.Raw("update Tbl_trans_uang_keluar_act_headers set flag_aktif=9,edited_by=?,edited_on=? "+
+	err = db.Raw("update tbl_trans_uang_keluar_act_headers set flag_aktif=9,edited_by=?,edited_on=? "+
 		" where kd_trans_keluar=? and flag_aktif=0 ",
 		currentUser.(string), datenowx, kd_trans_keluar).Scan(&dataHead).Error
 	if err != nil {
@@ -1161,8 +1161,8 @@ func DeleteAllUangKeluar(c *gin.Context) {
 
 	ssql := " SELECT distinct b.kd_trans_keluar,a.kd_group,d.nm_group,a.kd_kategori,e.nm_kategori,a.no_document,a.tgl_document, " +
 		" a.total_biaya,a.total_bayar,a.sisa_biaya,a.keterangan " +
-		" FROM Tbl_trans_uang_keluar_act_headers a " +
-		" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+		" FROM tbl_trans_uang_keluar_act_headers a " +
+		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 		" INNER JOIN tbl_group_kategoris d on a.kd_group = d.kd_group " +
 		" INNER JOIN tbl_kategori_uangs e on a.kd_kategori = e.kd_kategori " +
 		" where a.flag_aktif=0 and b.flag_aktif=0   "
@@ -1190,8 +1190,8 @@ func DeleteAllUangKeluar(c *gin.Context) {
 
 		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_group, b.tgl_bayar," +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran " +
-			" FROM Tbl_trans_uang_keluar_act_headers a " +
-			" INNER JOIN Tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
+			" FROM tbl_trans_uang_keluar_act_headers a " +
+			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
 			" left join tbl_group_kategoris c on b.kd_post_uang_masuk = c.kd_group " +
 			" left JOIN tbl_tipe_pembayarans d on b.kd_pembayaran=d.kd_pembayaran " +
 			" where a.flag_aktif=0 and b.flag_aktif=0  "
