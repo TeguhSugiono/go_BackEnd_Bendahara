@@ -39,7 +39,10 @@ func ListSiswaLulus(c *gin.Context) {
 	}
 
 	var master []ListDataSiswa
-	sql := " SELECT id_siswa,nm_siswa,tahun_lulus,no_peserta FROM tbl_lulus where flag_lulus=0 "
+	sql := " SELECT a.id_siswa,a.nm_siswa,a.tahun_lulus,a.no_peserta,b.nis " +
+		   "	FROM tbl_lulus a  "+ 
+		"	INNER JOIN tbl_siswa b on a.id_siswa=b.id_siswa "+
+		"	where a.flag_lulus=0 and b.flag_siswa=0 and b.status_siswa <> 'Tidak Aktif' "
 
 	// if paramSearch.Id_siswa != "" {
 	// 	sql = fmt.Sprintf("%s and id_siswa = '%s'", sql, paramSearch.Id_siswa)
@@ -50,7 +53,7 @@ func ListSiswaLulus(c *gin.Context) {
 	// }
 
 	if paramSearch.No_peserta != "" {
-		sql = fmt.Sprintf("%s and no_peserta = '%s'", sql, paramSearch.No_peserta)
+		sql = fmt.Sprintf("%s and a.no_peserta = '%s'", sql, paramSearch.No_peserta)
 	}
 
 	dbSIA.Raw(sql).Scan(&master)

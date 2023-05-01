@@ -587,7 +587,7 @@ func ImportAll(c *gin.Context) {
 
 	pesan := gin.H{"success": "Simpan Data Detail Berhasil ..."}
 	response := helper.APIResponse("Import Data Sukses ...", http.StatusOK, "success", pesan)
-	c.JSON(http.StatusBadRequest, response)
+	c.JSON(http.StatusOK, response)
 
 	// var totalDataPendaftar int
 	// var jmlDataSudahImport int
@@ -801,13 +801,20 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 		" where flag_aktif=0 and tgl_bayar is not null and kd_trans_masuk_ppdb=?", c.Param("idhead")).Scan(&sumJmlBayar)
 
 	var total_biaya float64
-	db.Raw("SELECT total_biaya FROM tbl_trans_uang_masuk_ppdb_headers where flag_aktif=0 and kd_trans_masuk_ppdb=?", c.Param("idhead")).Scan(&total_biaya)
-	var sisa_biaya float64 = total_biaya - sumJmlBayar
+	// db.Raw("SELECT total_biaya FROM tbl_trans_uang_masuk_ppdb_headers where flag_aktif=0 and kd_trans_masuk_ppdb=?", c.Param("idhead")).Scan(&total_biaya)
+	// total_biaya = total_biaya + sumJmlBayar
+
+	var total_bayar float64
+	// db.Raw("SELECT total_bayar FROM tbl_trans_uang_masuk_ppdb_headers where flag_aktif=0 and kd_trans_masuk_ppdb=?", c.Param("idhead")).Scan(&total_bayar)
+	// total_bayar = total_bayar + sumJmlBayar
+
+
+	var sisa_biaya float64 
 
 	var dataHeader table_data.Tbl_trans_uang_masuk_ppdb_headers
-	err = db.Raw("UPDATE tbl_trans_uang_masuk_ppdb_headers SET total_bayar = ?, sisa_biaya = ?, "+
+	err = db.Raw("UPDATE tbl_trans_uang_masuk_ppdb_headers SET total_bayar = ?,total_biaya = ?, sisa_biaya = ?, "+
 		" edited_on = ? , edited_by = ? "+
-		" WHERE kd_trans_masuk_ppdb = ? and flag_aktif=0 ", sumJmlBayar, sisa_biaya, datenowx, currentUser.(string), c.Param("idhead")).Scan(&dataHeader).Error
+		" WHERE kd_trans_masuk_ppdb = ? and flag_aktif=0 ", sumJmlBayar,sumJmlBayar, 0, datenowx, currentUser.(string), c.Param("idhead")).Scan(&dataHeader).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_ppdb_headers Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)
@@ -827,7 +834,7 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 
 	SetArrayData := []GetBiayaAndSisa{}
 	var kd_trans_masuk_ppdb int
-	var total_bayar float64
+	//var total_bayar float64
 	var tgldaftar string
 	var tahun_daftar string
 	var tahun_akademik string

@@ -73,7 +73,7 @@ func main() {
 	// })
 
 	//DATABASE SIA
-	api.POST("/akademik/siswalulus", authMiddleware(), master_siswa_akademik.ListSiswaLulus)
+	api.POST("/akademik/siswalulus", master_siswa_akademik.ListSiswaLulus)
 
 	//End Setting Koneksi Kedatabase SIA
 

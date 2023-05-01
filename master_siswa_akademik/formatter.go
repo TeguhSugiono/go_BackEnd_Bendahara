@@ -32,6 +32,7 @@ type ListDataSiswa struct {
 	Nm_siswa    string
 	Tahun_lulus string
 	No_peserta  string
+	Nis string
 }
 
 type SearchSiswaLulus struct {
