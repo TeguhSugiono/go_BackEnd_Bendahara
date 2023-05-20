@@ -170,16 +170,15 @@ func CreateUangKeluar(c *gin.Context) {
 		datadetail := table_data.Tbl_trans_uang_keluar_pra_act_details{
 			Kd_trans_keluar:        intKd_trans_keluar,
 			Kd_trans_keluar_detail: intKd_trans_keluar_detail,
-			Seqno:                  int_seqno,
-			Tgl_bayar:              tgl_document,
+			Seqno:                  int_seqno,			
 			Jml_bayar:              jml_bayar,
 			Keterangan:             keterangan,
 			Created_by:             currentUser.(string),
 			Created_on:             datenowx,
 			Flag_aktif:             0,
-		}
+		}//Tgl_bayar:              tgl_document,
 
-		err = db.Omit("Edited_on", "Edited_by", "Kd_post_uang_masuk").Create(&datadetail).Error
+		err = db.Omit("Edited_on", "Edited_by", "Kd_post_uang_masuk","Tgl_bayar").Create(&datadetail).Error
 		if err != nil {
 			response := helper.APIResponse("Simpan Data Detail Gagal ...", http.StatusBadRequest, "error", err)
 			c.JSON(http.StatusBadRequest, response)

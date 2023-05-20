@@ -20,6 +20,7 @@ import (
 	"rest_api_bendahara/report_group"
 	"rest_api_bendahara/report_histori"
 	"rest_api_bendahara/report_uangkeluar"
+	"rest_api_bendahara/setting_code_document"
 	"rest_api_bendahara/setting_edit_histori"
 	"rest_api_bendahara/transaksi_uang_keluar_act"
 	"rest_api_bendahara/transaksi_uang_keluar_pra"
@@ -86,6 +87,7 @@ func main() {
 	// }
 
 	api.POST("/users/signup", user.SignUp)
+	api.POST("/users/changepassword", user.GantiPassword)
 	api.POST("/users/login", user.Login)
 	api.GET("/users/getuser", authMiddleware(), user.FetchUser)
 
@@ -245,6 +247,9 @@ func main() {
 	//setting open lock historis
 	api.POST("/setting/transaksi/getakses", authMiddleware(), setting_edit_histori.Get_Akses)
 	api.GET("/setting/transaksi/getaksespermission", authMiddleware(), setting_edit_histori.Get_Akses_Permission)
+
+	//Buat Code Dokument Pembayaran
+	api.POST("/setting/createdok", authMiddleware(), setting_code_document.CreateCodeDocument)
 
 	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
 	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)

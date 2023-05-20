@@ -11,6 +11,53 @@ import (
 	"gorm.io/gorm"
 )
 
+func GantiPassword(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	var paramGantiPassword ParamGantiPassword
+	if err := c.ShouldBindJSON(&paramGantiPassword); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var datauser Tbl_user
+	checkUser := db.Select("*").Where("username = ?", paramGantiPassword.Username).Find(&datauser)
+	if checkUser.RowsAffected == 0 {
+		errorMessage := gin.H{"errors": "Username Tidak Tersedia ..."}
+		response := helper.APIResponse("Cek Username ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var result DataTokenInput
+	db.Raw("SELECT Id_user,Password,Username,Full_name FROM tbl_users WHERE Username = ?", paramGantiPassword.Username).Scan(&result)
+	err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(paramGantiPassword.Password_Old))
+	if err != nil {
+		errorMessage := gin.H{"errors": "Input Password Lama Salah ..."}
+		response := helper.APIResponse("Ganti Password Gagal ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	passwordHash, _ := bcrypt.GenerateFromPassword([]byte(paramGantiPassword.Password_New), bcrypt.MinCost)
+	data := Tbl_user{
+		Username: paramGantiPassword.Username,
+		Password: string(passwordHash),
+	}
+
+	err = db.Model(&datauser).Updates(data).Error
+	if err != nil {
+		response := helper.APIResponse("Update Data Gagal ...", http.StatusBadRequest, "error", err)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Update Password Sukses ...", http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
+}
+
 func SignUp(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var dataInput SignUpInput

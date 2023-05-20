@@ -17,6 +17,8 @@ func DataDashboard(c *gin.Context) {
 	SetTotal_Detail_Transaksi := []Total_Detail_Transaksi{}
 	arrayTotal_Detail_Transaksi := Total_Detail_Transaksi{}
 
+	sisa_saldo := 0.0
+
 	// Sisa Uang Bulan Lalu
 	var keterangan_uang_bulan_lalu string
 	sql := " SELECT concat('Sisa Saldo',' ',date_format(LAST_DAY((CURRENT_DATE - INTERVAL 1 MONTH)),'%d %M %Y')) 'keterangan_uang_bulan_lalu'  "
@@ -38,6 +40,8 @@ func DataDashboard(c *gin.Context) {
 	SetTotal_Detail_Transaksi = append(SetTotal_Detail_Transaksi, arrayTotal_Detail_Transaksi)
 	arrayData_Transaksi.DetailData = SetTotal_Detail_Transaksi
 
+	sisa_saldo = uang_masuk_bulan_lalu - uang_keluar_bulan_lalu
+
 	// End Sisa Uang Bulan Lalu
 
 	// dapetin saldo masuk per tanggal 1 s/d tanggal kemarin
@@ -58,6 +62,8 @@ func DataDashboard(c *gin.Context) {
 	SetTotal_Detail_Transaksi = append(SetTotal_Detail_Transaksi, arrayTotal_Detail_Transaksi)
 	arrayData_Transaksi.DetailData = SetTotal_Detail_Transaksi
 
+	sisa_saldo = sisa_saldo + saldo_tgl_1_sd_tgl_kemarin
+
 	// end dapetin saldo masuk per tanggal 1 s/d tanggal kemarin
 
 	// dapetin saldo keluar per tanggal 1 s/d tanggal kemarin
@@ -77,6 +83,7 @@ func DataDashboard(c *gin.Context) {
 	SetTotal_Detail_Transaksi = append(SetTotal_Detail_Transaksi, arrayTotal_Detail_Transaksi)
 	arrayData_Transaksi.DetailData = SetTotal_Detail_Transaksi
 
+	sisa_saldo = sisa_saldo - saldo_tgl_1_sd_tgl_kemarin
 	// end dapetin saldo keluar per tanggal 1 s/d tanggal kemarin
 
 	// dapetin saldo masuk hari ini
@@ -95,6 +102,8 @@ func DataDashboard(c *gin.Context) {
 	arrayTotal_Detail_Transaksi.Total = saldo_tgl_1_sd_tgl_kemarin
 	SetTotal_Detail_Transaksi = append(SetTotal_Detail_Transaksi, arrayTotal_Detail_Transaksi)
 	arrayData_Transaksi.DetailData = SetTotal_Detail_Transaksi
+
+	sisa_saldo = sisa_saldo + saldo_tgl_1_sd_tgl_kemarin
 
 	// end dapetin saldo masuk hari ini
 
@@ -115,7 +124,17 @@ func DataDashboard(c *gin.Context) {
 	SetTotal_Detail_Transaksi = append(SetTotal_Detail_Transaksi, arrayTotal_Detail_Transaksi)
 	arrayData_Transaksi.DetailData = SetTotal_Detail_Transaksi
 
+	sisa_saldo = sisa_saldo - saldo_tgl_1_sd_tgl_kemarin
 	// end dapetin saldo keluar hari ini
+
+	//sisa saldo saat ini
+
+	arrayTotal_Detail_Transaksi.Keterangan = "Sisa Saldo Saat Ini"
+	arrayTotal_Detail_Transaksi.Total = sisa_saldo
+	SetTotal_Detail_Transaksi = append(SetTotal_Detail_Transaksi, arrayTotal_Detail_Transaksi)
+	arrayData_Transaksi.DetailData = SetTotal_Detail_Transaksi
+
+	//end sisa saldo saat ini
 
 	SetData_Transaksi = append(SetData_Transaksi, arrayData_Transaksi)
 

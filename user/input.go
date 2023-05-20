@@ -17,3 +17,9 @@ type LoginInput struct {
 	Username string `form:"username" binding:"required"`
 	Password string `form:"password" binding:"required"`
 }
+
+type ParamGantiPassword struct {
+	Username     string `form:"username" binding:"required"`
+	Password_Old string `form:"password_Old,password_old" binding:"required"`
+	Password_New string `form:"password_New,password_new" binding:"required"`
+}

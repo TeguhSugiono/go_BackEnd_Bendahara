@@ -1,3 +1,26 @@
+//21-05-2023
+
+tambahan di api no 1 ganti password
+
+tambahan di api no 24 dashboard
+list saldo saat ini
+
+tambahan di api no 27 Generate Kode Document
+untuk kode atur dari FE ajah
+contoh format : 202305-AT0001 => 202305-(Kodenya)0001
+
+//End 21-05-2023
+
+
+
+
+
+
+
+
+
+
+
 Tambahan table
 tbl_tipe_pembayarans
 tbl_open_lock_historis

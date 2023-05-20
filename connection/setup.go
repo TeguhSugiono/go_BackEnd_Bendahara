@@ -19,8 +19,8 @@ import (
 // }
 
 func SetupConnection() *gorm.DB {
-	//dsn := "roots:roots@tcp(127.0.0.1:3306)/cuangshu_db_bendahara?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "smaalkha_db_bendahara:Db_Bendahara_Alkhairiyah@JKT2023@tcp(127.0.0.1:3306)/smaalkha_db_bendahara?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "roots:roots@tcp(127.0.0.1:3306)/cuangshu_db_bendahara?charset=utf8mb4&parseTime=True&loc=Local"
+	//dsn := "smaalkha_db_bendahara:Db_Bendahara_Alkhairiyah@JKT2023@tcp(127.0.0.1:3306)/smaalkha_db_bendahara?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -31,8 +31,8 @@ func SetupConnection() *gorm.DB {
 }
 
 func SetupConnectionSIA() *gorm.DB {
-	//dsn := "roots:roots@tcp(127.0.0.1:3306)/smaalkha_akademik?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "smaalkha_montong:smaAlkhairiyah@12345@tcp(127.0.0.1:3306)/smaalkha_akademik?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "roots:roots@tcp(127.0.0.1:3306)/smaalkha_akademik?charset=utf8mb4&parseTime=True&loc=Local"
+	//dsn := "smaalkha_montong:smaAlkhairiyah@12345@tcp(127.0.0.1:3306)/smaalkha_akademik?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {

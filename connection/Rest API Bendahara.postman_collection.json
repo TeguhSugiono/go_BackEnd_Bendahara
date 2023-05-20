@@ -16,6 +16,74 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"teguh\",\r\n    \"password\" : \"123\",\r\n    \"full_name\" : \"Teguhsugiono\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/users/signup",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ganti Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"teguh\",\r\n    \"password_old\" : \"123\",\r\n    \"password_new\" : \"1234567\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/users/changepassword",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"changepassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
 							"raw": "{\r\n    \"username\" : \"uzil\",\r\n    \"password\" : \"Uzil@2023\",\r\n    \"full_name\" : \"Achmad Uzzil Abid,SE\"\r\n}\r\n",
 							"options": {
 								"raw": {
@@ -24,7 +92,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/users/signup",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/",
 							"protocol": "https",
 							"host": [
 								"backend-bendahara",
@@ -32,10 +100,7 @@
 								"com"
 							],
 							"path": [
-								"api",
-								"v1",
-								"users",
-								"signup"
+								""
 							]
 						}
 					},
@@ -48,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"12345\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"1234567\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -56,13 +121,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/users/login",
-							"protocol": "https",
+							"raw": "http://127.0.0.1:2022/api/v1/users/login",
+							"protocol": "http",
 							"host": [
-								"backend-bendahara",
-								"sma-alkhairiyah",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -134,15 +201,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterjenistrans/showjenistrans?page=1&perpage=10&search=na&sort=asc",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/masterjenistrans/showjenistrans?page=1&perpage=10&search=na&sort=asc",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -2588,7 +2653,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_group\" : 2,\r\n    \"kd_kategori\" : 2,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5767\",\r\n    \"nm_kelas\" : \"XI MIA\",    \r\n    \"keterangan\" : \"Bayar Makan Bareng\",\r\n    \"total_biaya\" : 30000\r\n}",
+							"raw": "{\r\n    \"kd_group\" : 4,\r\n    \"kd_kategori\" : 7,\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"5897\",\r\n    \"nm_kelas\" : \"X IIS\",    \r\n    \"keterangan\" : \"Bayar Semseter Ganjil\",\r\n    \"total_biaya\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2596,15 +2661,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/createuangmasuksiswa/",
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/transaksi/uangmasuksiswa/createuangmasuksiswa/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -2666,7 +2729,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar\" : \"02-12-2022\",\r\n    \"jml_bayar\" : 10000,\r\n    \"keterangan\" : \"bayar makan bareng\",\r\n    \"kd_pembayaran\" : 1\r\n}",
+							"raw": "{\r\n    \"tgl_bayar\" : \"06-02-2023\",\r\n    \"jml_bayar\" : 500000,\r\n    \"keterangan\" : \"Lunasin Bayar 500.000\",\r\n    \"kd_pembayaran\" : 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2674,15 +2737,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:kd_trans_masuk_siswa/:kd_trans_masuk_detail_siswa",
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/transaksi/uangmasuksiswa/updateuangmasuksiswadetail/:kd_trans_masuk_siswa/:kd_trans_masuk_detail_siswa",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -2695,11 +2756,11 @@
 							"variable": [
 								{
 									"key": "kd_trans_masuk_siswa",
-									"value": "15"
+									"value": "1"
 								},
 								{
 									"key": "kd_trans_masuk_detail_siswa",
-									"value": "23"
+									"value": "2"
 								}
 							]
 						}
@@ -4023,7 +4084,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kd_trans_keluar\" : 9,\r\n    \"no_document\" : \"nodoc9\"\r\n}",
+							"raw": "{\r\n    \"kd_trans_keluar\" : 2,\r\n    \"no_document\" : \"bukber2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4031,15 +4092,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangkeluarpraact/createuangkeluar",
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/transaksi/uangkeluarpraact/createuangkeluar",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -4722,7 +4781,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"\",\r\n    \"periode_bayar1\" : \"07-2022\" ,\r\n    \"periode_bayar2\" : \"06-2023\" ,\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\",\r\n    \"kd_pembayaran\" : \"\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"\",\r\n    \"periode_bayar1\" : \"\" ,\r\n    \"periode_bayar2\" : \"\" ,\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\",\r\n    \"kd_pembayaran\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4730,15 +4789,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/report/uangmasuk/reportspp",
+							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/report/uangmasuk/reportspp",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -5287,15 +5344,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupmasuk",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/report/reportgroup/reportgroupmasuk",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -5406,13 +5461,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/dashboard",
-							"protocol": "https",
+							"raw": "http://127.0.0.1:2022/api/v1/dashboard",
+							"protocol": "http",
 							"host": [
-								"backend-bendahara",
-								"sma-alkhairiyah",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -5483,7 +5540,8 @@
 							{
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjYyNzU2NTA1fQ.LWQuFuoT-accZZK0iDgoCy2Jx8NI_URnFsDNofk1dFM",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -5514,6 +5572,45 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "27. Generate Code Document In/Out",
+			"item": [
+				{
+					"name": "Generate Code Document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kode\" : \"AT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/setting/createdok",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"setting",
+								"createdok"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -5521,7 +5618,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY4MTU1MDg0OH0.pCQb50TAJqypOCaPqj8MXJvqfqsTl0WTtoJVUYSrMkM",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY4NDY4ODMxNX0.jBL0GcGDtcfYr5Uj-uyLnPOOX75XN2qoXzm_myVXWms",
 				"type": "string"
 			}
 		]

@@ -537,8 +537,8 @@ func ImportAll(c *gin.Context) {
 
 		currentUser := c.MustGet("currentUser")
 		data := table_data.Tbl_trans_uang_masuk_ppdb_headers{
-			Kd_group:            1,
-			Kd_kategori:         1,
+			Kd_group:            2,
+			Kd_kategori:         2,
 			Kd_trans_masuk_ppdb: intKd_trans_masuk,
 			Nik:                 nik,
 			Tgldaftar:           tgldaftar,

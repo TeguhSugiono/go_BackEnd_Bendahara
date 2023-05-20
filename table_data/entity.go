@@ -334,3 +334,11 @@ type Tbl_open_lock_historis struct {
 	Request_by string
 	Request_on time.Time
 }
+
+type Tbl_runcode_documents struct {
+	Id    int
+	Kode  string
+	Tahun string
+	Bulan string
+	Nomor int
+}
