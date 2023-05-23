@@ -1,3 +1,24 @@
+//24-05-2023
+
+perubahan pada generate no document ketetapan parameter dibuat dari backend
+
+https://bendahara.sma-alkhairiyah.com/biaya-eksternal 
+(kirim post namahalaman=biaya-eksternal kode=BE)
+
+https://bendahara.sma-alkhairiyah.com/biaya-operasional 
+(kirim post namahalaman=biaya-operasional kode=BO)
+
+https://bendahara.sma-alkhairiyah.com/perencanaan-biaya 
+(kirim post namahalaman=perencanaan-biaya kode=PB)
+
+Tujuan Jika Habis Generate no dokument terus blum dipakai nomornya
+ketika klik generate kembali maka pakai nomor yang sudah ada
+
+//End 24-05-2023
+
+
+
+
 //21-05-2023
 
 tambahan di api no 1 ganti password

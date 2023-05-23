@@ -574,6 +574,7 @@ func ImportAll(c *gin.Context) {
 			Created_by:                 currentUser.(string),
 			Created_on:                 datenowx,
 			Flag_aktif:                 0,
+			Kd_pembayaran:              1,
 		}
 
 		err = db.Omit("Edited_on", "Edited_by", "Keterangan", "Kd_pembayaran").Create(&datadetail).Error
@@ -808,13 +809,12 @@ func UpdateUangMasukPPdb(c *gin.Context) {
 	// db.Raw("SELECT total_bayar FROM tbl_trans_uang_masuk_ppdb_headers where flag_aktif=0 and kd_trans_masuk_ppdb=?", c.Param("idhead")).Scan(&total_bayar)
 	// total_bayar = total_bayar + sumJmlBayar
 
-
-	var sisa_biaya float64 
+	var sisa_biaya float64
 
 	var dataHeader table_data.Tbl_trans_uang_masuk_ppdb_headers
 	err = db.Raw("UPDATE tbl_trans_uang_masuk_ppdb_headers SET total_bayar = ?,total_biaya = ?, sisa_biaya = ?, "+
 		" edited_on = ? , edited_by = ? "+
-		" WHERE kd_trans_masuk_ppdb = ? and flag_aktif=0 ", sumJmlBayar,sumJmlBayar, 0, datenowx, currentUser.(string), c.Param("idhead")).Scan(&dataHeader).Error
+		" WHERE kd_trans_masuk_ppdb = ? and flag_aktif=0 ", sumJmlBayar, sumJmlBayar, 0, datenowx, currentUser.(string), c.Param("idhead")).Scan(&dataHeader).Error
 	if err != nil {
 		response := helper.APIResponse("Update Data Ke Tbl_trans_uang_masuk_ppdb_headers Gagal ...", http.StatusBadRequest, "error", err)
 		c.JSON(http.StatusBadRequest, response)

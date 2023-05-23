@@ -336,9 +336,11 @@ type Tbl_open_lock_historis struct {
 }
 
 type Tbl_runcode_documents struct {
-	Id    int
-	Kode  string
-	Tahun string
-	Bulan string
-	Nomor int
+	Id             int
+	Kode           string
+	Tahun          string
+	Bulan          string
+	Nomor          int
+	Generate_nomor string
+	Namahalaman    string
 }

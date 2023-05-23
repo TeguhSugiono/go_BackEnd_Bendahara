@@ -5583,7 +5583,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"kode\" : \"AT\"\r\n}",
+							"raw": "{\r\n    \"kode\" : \"BO\",\r\n    \"namahalaman\" : \"biaya-operasional\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5618,7 +5618,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY4NDY4ODMxNX0.jBL0GcGDtcfYr5Uj-uyLnPOOX75XN2qoXzm_myVXWms",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aHN1Z2lvbm8iLCJJZF91c2VyIjo1LCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjg1NjQxMjA3fQ.SgFkRSpwUt8O4N10e2moBKWs6iTROd_kcGtDgc7WBrc",
 				"type": "string"
 			}
 		]
