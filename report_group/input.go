@@ -16,14 +16,16 @@ type JenisGroupUang struct {
 }
 
 type GroupUangMasuk struct {
+	Kd_group int
 	Nm_group string
 	Kategori interface{}
 }
 
 type GroupUangMasukDetail struct {
+	Kd_kategori int
 	Nm_kategori string
 	Total_bayar float64
-	DetailBayar interface{}
+	//DetailBayar interface{}
 }
 
 type DetailBayar struct {

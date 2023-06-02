@@ -113,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"1234567\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5336,7 +5336,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-01-2020\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-04-2023\",\r\n    \"tgl_bayar2\" : \"31-05-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5344,13 +5344,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/report/reportgroup/reportgroupmasuk",
-							"protocol": "https",
+							"raw": "http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupmasuk",
+							"protocol": "http",
 							"host": [
-								"backend-bendahara",
-								"sma-alkhairiyah",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -5369,7 +5371,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"28-01-2020\",\r\n    \"tgl_bayar2\" : \"28-01-2023\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-04-2023\",\r\n    \"tgl_bayar2\" : \"31-05-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5404,7 +5406,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-12-2020\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-04-2023\",\r\n    \"tgl_bayar2\" : \"31-05-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5618,7 +5620,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aHN1Z2lvbm8iLCJJZF91c2VyIjo1LCJVc2VybmFtZSI6InRlZ3VoIiwiZXhwIjoxNjg1NjQxMjA3fQ.SgFkRSpwUt8O4N10e2moBKWs6iTROd_kcGtDgc7WBrc",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY4NTczMzk3MX0.ZVgkqHrErOEXN5rlZKAfBBK-cnRjzSfa-WSMdRjz-Jg",
 				"type": "string"
 			}
 		]
