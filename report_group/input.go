@@ -25,7 +25,7 @@ type GroupUangMasukDetail struct {
 	Kd_kategori int
 	Nm_kategori string
 	Total_bayar float64
-	//DetailBayar interface{}
+	DetailBayar interface{}
 }
 
 type DetailBayar struct {
