@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"rest_api_bendahara/conf_kode_group"
 	"rest_api_bendahara/connection"
 	"rest_api_bendahara/dashboard"
 	"rest_api_bendahara/helper"
@@ -262,6 +263,9 @@ func main() {
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
 	api.GET("/akademik/listkelasakademik", authMiddleware(), master_kelas_akademik.ListKelasAkademik)
 	api.GET("/akademik/listsiswaakademik", authMiddleware(), master_siswa_akademik.ListSiswaAkademik)
+
+	api.POST("/conf/master/kodegroup", authMiddleware(), conf_kode_group.ListGroup)
+	api.POST("/conf/master/kodekategori", authMiddleware(), conf_kode_group.ListKategori)
 
 	r.Run(":2022")
 	//r.RunTLS(":2022", "server.pem", "server.key")
