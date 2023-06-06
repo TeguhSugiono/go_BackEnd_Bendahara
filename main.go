@@ -242,6 +242,7 @@ func main() {
 
 	//Dashboard
 	api.GET("/dashboard", authMiddleware(), dashboard.DataDashboard)
+	api.GET("/dashboard_posh_uang_masuk", authMiddleware(), dashboard.DataDashboardPost)
 
 	api.GET("/mastertipepembayaran/listtipepembayaran", authMiddleware(), master_tipe_pembayaran.ListTipePembayaran)
 

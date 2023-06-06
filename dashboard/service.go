@@ -26,12 +26,12 @@ func DataDashboard(c *gin.Context) {
 	arrayTotal_Detail_Transaksi.Keterangan = keterangan_uang_bulan_lalu
 
 	var uang_masuk_bulan_lalu float64
-	sql = " SELECT sum(total_bayar) FROM vw_report_umsiswa_dll " +
+	sql = " SELECT sum(jml_bayar) FROM vw_report_umsiswa_dll " +
 		" where DATE_FORMAT(tgl_bayar,'%Y-%m') <= DATE_FORMAT((CURRENT_DATE() - INTERVAL 1 MONTH),'%Y-%m')  "
 	db.Raw(sql).Scan(&uang_masuk_bulan_lalu)
 
 	var uang_keluar_bulan_lalu float64
-	sql = " SELECT sum(total_bayar) FROM vw_report_uksiswa_dll " +
+	sql = " SELECT sum(jml_bayar) FROM vw_report_uksiswa_dll " +
 		" where DATE_FORMAT(tgl_bayar,'%Y-%m') <= DATE_FORMAT((CURRENT_DATE() - INTERVAL 1 MONTH),'%Y-%m')  "
 	db.Raw(sql).Scan(&uang_keluar_bulan_lalu)
 
@@ -139,5 +139,36 @@ func DataDashboard(c *gin.Context) {
 	SetData_Transaksi = append(SetData_Transaksi, arrayData_Transaksi)
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetData_Transaksi)
+	c.JSON(http.StatusOK, response)
+}
+
+func DataDashboardPost(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var kd_group string
+	var nm_group string
+	var sisa_uang float64
+
+	Setpostuang := []returnpostuang{}
+
+	query := " SELECT kd_group,nm_group,sum(jml_bayar) 'sisa_uang' FROM vw_report_umsiswa_dll " +
+		" GROUP BY kd_group "
+	execute_query, _ := db.Raw(query).Rows()
+	defer execute_query.Close()
+	for execute_query.Next() {
+		execute_query.Scan(&kd_group, &nm_group, &sisa_uang)
+		arraydetail := returnpostuang{}
+		arraydetail.Kd_group = kd_group
+		arraydetail.Nm_group = nm_group
+
+		var uangkeluar float64 = 0.0
+		db.Raw("SELECT sum(jml_bayar) 'uangkeluar' FROM vw_report_uksiswa_dll where kd_post_uang_masuk=?  GROUP BY kd_post_uang_masuk ", kd_group).Scan(&uangkeluar)
+
+		arraydetail.Sisa_uang = sisa_uang - uangkeluar
+
+		Setpostuang = append(Setpostuang, arraydetail)
+	}
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", Setpostuang)
 	c.JSON(http.StatusOK, response)
 }
