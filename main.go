@@ -36,14 +36,36 @@ import (
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 func main() {
 
-	r := gin.Default()
-	r.Use(CORSMiddleware())
+	//r := gin.Default()
+	//r.Use(CORSMiddleware())
+
+	r := gin.New()
+	// handler.Use(middleware.TimeoutMiddleware(timeout))
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTION"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+		ExposeHeaders:    []string{"X-Total-Count"},
+	}))
+
+	// if r.Request.Method == "OPTIONS" {
+	// 	// c.AbortWithStatus(204)
+	// 	// return
+
+	// 	response := helper.APIResponse("Un Identified Error ..", http.StatusUnauthorized, "error", "Un Identified Error ..")
+	// 	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+
+	// 	return
+	// }
 
 	api := r.Group("api/v1/")
 
@@ -76,6 +98,7 @@ func main() {
 
 	//DATABASE SIA
 	api.POST("/akademik/siswalulus", master_siswa_akademik.ListSiswaLulus)
+	api.POST("/akademik/ListDataSiswaAll", master_siswa_akademik.ListDataSiswaAll)
 
 	//End Setting Koneksi Kedatabase SIA
 
@@ -331,7 +354,12 @@ func CORSMiddleware() gin.HandlerFunc {
 		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT, DELETE")
 
 		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
+			// c.AbortWithStatus(204)
+			// return
+
+			response := helper.APIResponse("Un Identified Error ..", http.StatusUnauthorized, "error", "Un Identified Error ..")
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+
 			return
 		}
 

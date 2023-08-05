@@ -32,11 +32,21 @@ type ListDataSiswa struct {
 	Nm_siswa    string
 	Tahun_lulus string
 	No_peserta  string
-	Nis string
+	Nis         string
 }
 
 type SearchSiswaLulus struct {
 	// Id_siswa    string `form:"id_siswa" json:"id_siswa"`
 	// Tahun_lulus string `form:"tahun_lulus" json:"tahun_lulus"`
 	No_peserta string `form:"no_peserta" json:"no_peserta"`
+}
+
+type ParamSiswaAll struct {
+	Nis string `form:"nis" json:"nis"`
+}
+
+type ListSiswaAll struct {
+	Id_siswa string
+	Nis      string
+	Nm_siswa string
 }
