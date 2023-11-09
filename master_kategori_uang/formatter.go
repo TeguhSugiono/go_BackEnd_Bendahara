@@ -6,6 +6,7 @@ type ReturnData struct {
 	Kd_kategori int    `json:"kd_kategori"`
 	Nm_kategori string `json:"nm_kategori"`
 	Nm_detail   string `json:"nm_detail"`
+	Proses_uang   string `json:"proses_uang"`
 }
 
 func FormatJenisTranss(table ListData) ReturnData {
@@ -16,6 +17,7 @@ func FormatJenisTranss(table ListData) ReturnData {
 	arraydata.Kd_kategori = table.Kd_kategori
 	arraydata.Nm_kategori = table.Nm_kategori
 	arraydata.Nm_detail = table.Nm_detail
+	arraydata.Proses_uang = table.Proses_uang
 	return arraydata
 }
 
@@ -35,4 +37,5 @@ type ListData struct {
 	Kd_kategori int
 	Nm_kategori string
 	Nm_detail   string
+	Proses_uang string
 }

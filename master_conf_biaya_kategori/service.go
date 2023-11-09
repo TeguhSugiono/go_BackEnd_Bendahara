@@ -44,11 +44,11 @@ func ShowBiayaKategori(c *gin.Context) {
 
 	sql := " SELECT a.kd_biaya_kategori,a.kd_kategori,b.nm_kategori,a.jml_biaya " +
 		" FROM tbl_biaya_masuk_keluars a " +
-		" INNER JOIN tbl_kategori_uangs b on a.kd_kategori=b.kd_kategori "
+		" INNER JOIN tbl_kategori_uangs b on a.kd_kategori=b.kd_kategori where a.kd_biaya_kategori <> '' "
 
 	if s := c.Query("search"); s != "" {
 		if len(c.Query("search")) >= 3 {
-			sql = fmt.Sprintf("%s and a.nm_kategori LIKE '%%%s%%' ", sql, s)
+			sql = fmt.Sprintf("%s and b.nm_kategori LIKE '%%%s%%' ", sql, s)
 		}
 	}
 

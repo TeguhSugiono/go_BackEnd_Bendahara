@@ -3,6 +3,7 @@ package transaksi_uang_masuk_spp
 import (
 	"errors"
 	"net/http"
+	"rest_api_bendahara/connection"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/master_group_kategori"
 	"rest_api_bendahara/master_kategori_uang"
@@ -58,15 +59,66 @@ func ListKategoriUang(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// func ListKelas(c *gin.Context) {
+// 	dbSIA := connection.SetupConnectionSIA()
+
+// 	var getIdAndNameKelas []GetIdAndNameKelas
+// 	dbSIA.Raw("SELECT DISTINCT * FROM vw_kelas_trans").Scan(&getIdAndNameKelas)
+
+// 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", getIdAndNameKelas)
+// 	c.JSON(http.StatusOK, response)
+// }
+
 func ListKelas(c *gin.Context) {
+	dbSIA := connection.SetupConnectionSIA()
 	db := c.MustGet("db").(*gorm.DB)
 
-	var getIdAndNameKelas []GetIdAndNameKelas
-	db.Raw("SELECT DISTINCT * FROM vw_kelas_trans").Scan(&getIdAndNameKelas)
+	SetArrayMerge := []GetIdAndNameKelas{}
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", getIdAndNameKelas)
+	var str_id_kelas string
+	var str_nm_kelas string
+	rows, _ := dbSIA.Raw(" select tbl_kelas.nm_kelas AS id_kelas,tbl_kelas.nm_kelas AS nm_kelas " +
+		" from tbl_kelas where (tbl_kelas.flag_kelas = 0) order by id_kelas").Rows()
+
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&str_id_kelas, &str_nm_kelas)
+		arraydata := GetIdAndNameKelas{}
+		arraydata.Id_kelas = str_id_kelas
+		arraydata.Nm_kelas = str_nm_kelas
+		SetArrayMerge = append(SetArrayMerge, arraydata)
+	}
+
+	rowBendahara, _ := db.Raw(" select distinct tbl_trans_uang_masuk_spp_headers.nm_kelas AS id_kelas, " +
+		" tbl_trans_uang_masuk_spp_headers.nm_kelas AS nm_kelas " +
+		" from tbl_trans_uang_masuk_spp_headers ").Rows()
+
+	defer rowBendahara.Close()
+	for rowBendahara.Next() {
+		rowBendahara.Scan(&str_id_kelas, &str_nm_kelas)
+		arraydataBendahara := GetIdAndNameKelas{}
+		arraydataBendahara.Id_kelas = str_id_kelas
+		arraydataBendahara.Nm_kelas = str_nm_kelas
+		SetArrayMerge = append(SetArrayMerge, arraydataBendahara)
+	}
+
+	//SetArrayMerge = removeDuplicate(SetArrayMerge)
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayMerge)
 	c.JSON(http.StatusOK, response)
 }
+
+// func removeDuplicate[T string | int](sliceList []T) []T {
+//     allKeys := make(map[T]bool)
+//     list := []T{}
+//     for _, item := range sliceList {
+//         if _, value := allKeys[item]; !value {
+//             allKeys[item] = true
+//             list = append(list, item)
+//         }
+//     }
+//     return list
+// }
 
 func ListSiswa(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)

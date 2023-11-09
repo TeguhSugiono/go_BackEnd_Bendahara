@@ -22,9 +22,10 @@ func ListKategoriUang(c *gin.Context) {
 	var master []ListData
 	//db.Find(&master)
 	//db.Where("flag_aktif = ?", 0).Find(&master)
-	sql := " SELECT a.*,b.nm_group FROM tbl_kategori_uangs as a  " +
+	sql := " SELECT a.*,b.nm_group,c.proses_uang FROM tbl_kategori_uangs as a  " +
 		" INNER JOIN tbl_group_kategoris b on a.kd_group=b.kd_group " +
-		" where a.flag_aktif=0 and b.flag_aktif=0 "
+		" INNER JOIN tbl_jenis_trans c on c.kd_jenis=b.kd_jenis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 "
 
 	db.Raw(sql).Scan(&master)
 
@@ -44,9 +45,10 @@ func ShowKategoriUang(c *gin.Context) {
 
 	var master []ListData
 
-	sql := " SELECT a.*,b.nm_group FROM tbl_kategori_uangs as a  " +
+	sql := " SELECT a.*,b.nm_group,c.proses_uang FROM tbl_kategori_uangs as a  " +
 		" INNER JOIN tbl_group_kategoris b on a.kd_group=b.kd_group " +
-		" where a.flag_aktif=0 and b.flag_aktif=0 "
+		" INNER JOIN tbl_jenis_trans c on c.kd_jenis=b.kd_jenis " +
+		" where a.flag_aktif=0 and b.flag_aktif=0 and c.flag_aktif=0 "
 
 	if s := c.Query("search"); s != "" {
 

@@ -6,6 +6,7 @@ import (
 	"math"
 	"net/http"
 	"regexp"
+	"rest_api_bendahara/connection"
 	"rest_api_bendahara/helper"
 	"rest_api_bendahara/table_data"
 	"strconv"
@@ -98,6 +99,7 @@ func ShowConfPeriode(c *gin.Context) {
 
 func InsertConfPeriode(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
+	dbSIA := connection.SetupConnectionSIA()
 
 	var dataInput InputTahunAkademik
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
@@ -127,7 +129,7 @@ func InsertConfPeriode(c *gin.Context) {
 	}
 
 	var tahun_akademik_s string
-	row := db.Table("tbl_tahun_akademik").Where("flag_tahun = ? and tahun_akademik=?", 0, dataInput.Tahun_akademik).Select("tahun_akademik").Row()
+	row := dbSIA.Table("tbl_tahun_akademik").Where("flag_tahun = ? and tahun_akademik=?", 0, dataInput.Tahun_akademik).Select("tahun_akademik").Row()
 	row.Scan(&tahun_akademik_s)
 	if tahun_akademik_s == "" {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
@@ -142,7 +144,7 @@ func InsertConfPeriode(c *gin.Context) {
 	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and nm_kelas = '%s'", sqlkelas, dataInput.Nm_kelas)
 	//sqlkelas = fmt.Sprintf("%s GROUP BY REPLACE(REPLACE(nm_kelas,'MIA',''),'IIS','') ", sqlkelas)
 
-	rowskelas, _ := db.Raw(sqlkelas).Rows()
+	rowskelas, _ := dbSIA.Raw(sqlkelas).Rows()
 	defer rowskelas.Close()
 	for rowskelas.Next() {
 		rowskelas.Scan(&nm_kelas_s)
@@ -332,6 +334,7 @@ type Return_Down struct {
 
 func UpdateConfPeriodeAll(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
+	dbSIA := connection.SetupConnectionSIA()
 
 	var dataInput table_data.Tbl_conf_periode_spps
 	if err := c.ShouldBindJSON(&dataInput); err != nil {
@@ -360,7 +363,7 @@ func UpdateConfPeriodeAll(c *gin.Context) {
 	}
 
 	var tahun_akademik_s string
-	row := db.Table("tbl_tahun_akademik").Where("flag_tahun = ? and tahun_akademik=?", 0, dataInput.Tahun_akademik).Select("tahun_akademik").Row()
+	row := dbSIA.Table("tbl_tahun_akademik").Where("flag_tahun = ? and tahun_akademik=?", 0, dataInput.Tahun_akademik).Select("tahun_akademik").Row()
 	row.Scan(&tahun_akademik_s)
 	if tahun_akademik_s == "" {
 		errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
@@ -374,7 +377,7 @@ func UpdateConfPeriodeAll(c *gin.Context) {
 	sqlkelas := " SELECT nm_kelas FROM tbl_kelas "
 	sqlkelas = fmt.Sprintf("%s where flag_kelas = 0  and nm_kelas = '%s'", sqlkelas, dataInput.Nm_kelas)
 
-	rowskelas, _ := db.Raw(sqlkelas).Rows()
+	rowskelas, _ := dbSIA.Raw(sqlkelas).Rows()
 	defer rowskelas.Close()
 	for rowskelas.Next() {
 		rowskelas.Scan(&nm_kelas_s)

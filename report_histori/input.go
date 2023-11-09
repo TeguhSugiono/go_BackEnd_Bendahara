@@ -8,7 +8,7 @@ type ListData struct {
 
 type ParamSearch struct {
 	Nis      string `form:"nis" json:"nis" binding:"required"`
-	Nik      string `form:"nik" json:"nik" binding:"required"`
+	Nik      string `form:"nik" json:"nik"`
 	Nm_siswa string `form:"nm_siswa" json:"nm_siswa" binding:"required"`
 }
 

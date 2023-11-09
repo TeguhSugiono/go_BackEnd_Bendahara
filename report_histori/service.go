@@ -3,19 +3,20 @@ package report_histori
 import (
 	"net/http"
 	"rest_api_bendahara/helper"
-
+	"rest_api_bendahara/connection"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 func ListNikNis(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
+	//db := c.MustGet("db").(*gorm.DB)
+	dbSIA := connection.SetupConnectionSIA()
 
 	var listdata []ListData
 	sql := "  SELECT nis,nik,nm_siswa from tbl_siswa " +
 		" where status_siswa NOT IN ('Tidak Aktif') and flag_siswa=0 "
 
-	db.Raw(sql).Scan(&listdata)
+	dbSIA.Raw(sql).Scan(&listdata)
 
 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", listdata)
 	c.JSON(http.StatusOK, response)

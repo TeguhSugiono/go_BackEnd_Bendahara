@@ -198,6 +198,13 @@ func ListData(c *gin.Context) {
 		SetArrayData = append(SetArrayData, arraydata)
 	}
 
+	// if kd_trans_masuk_ppdb == 0 {
+	// 	SetArrayKosong := []GetBiayaAndSisa{}
+	// 	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayKosong)
+	// 	c.JSON(http.StatusOK, response)
+	// 	return
+	// }
+
 	if len(getDataPPDB) == 0 {
 
 		rows1, _ := db.Raw(" SELECT CONVERT(tgldaftar,CHAR) 'tgldaftar',tahun_daftar, "+
