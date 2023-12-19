@@ -40,3 +40,29 @@ type DetailBayarOut struct {
 	Tipe_pembayaran string
 	Pos_uang_masuk  string
 }
+
+type NewLoop1 struct {
+	Kd_kategori int
+	Nm_kategori string
+	Kd_group    int
+}
+
+type NewLoop2 struct {
+	Total_bayar float64
+	Kd_kategori int
+}
+
+type NewLoop3 struct {
+	Tgl_bayar       string
+	Jml_bayar       float64
+	Tipe_pembayaran string
+	Kd_kategori     int
+}
+
+type NewLoop3a struct {
+	Tgl_bayar       string
+	Jml_bayar       float64
+	Tipe_pembayaran string
+	Pos_uang_masuk  string
+	Kd_kategori     int
+}

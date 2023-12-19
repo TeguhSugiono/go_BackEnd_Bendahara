@@ -522,7 +522,6 @@ func EditUangMasukSiswa(c *gin.Context) {
 	var nis_siswa_old string
 	var nm_kelas_old string
 
-
 	rowA, _ := db.Raw("SELECT a.kd_group,a.kd_kategori,a.tahun_akademik,a.nis_siswa,a.nm_kelas FROM tbl_trans_uang_masuk_siswa_headers a "+
 		" INNER JOIN tbl_trans_uang_masuk_siswa_details b on a.kd_trans_masuk_siswa=b.kd_trans_masuk_siswa "+
 		" where a.kd_trans_masuk_siswa=?  and a.flag_aktif=0 and b.flag_aktif=0  limit 1", kd_trans_masuk_siswa).Rows()
@@ -547,7 +546,7 @@ func EditUangMasukSiswa(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_masuk_siswa_details "+
+	db.Raw("SELECT ifnull(sum(jml_bayar),0.00) 'jml_bayar' FROM tbl_trans_uang_masuk_siswa_details "+
 		" where flag_aktif=0 and tgl_bayar is not null and kd_trans_masuk_siswa=?", kd_trans_masuk_siswa).Scan(&sumJmlBayar)
 
 	var sisa_biaya float64 = paramInputSiswa.Total_biaya - sumJmlBayar
@@ -805,7 +804,7 @@ func DeleteUangMasukSiswaDetail(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_masuk_siswa_details "+
+	db.Raw("SELECT ifnull(sum(jml_bayar),0.00) 'jml_bayar' FROM tbl_trans_uang_masuk_siswa_details "+
 		" where flag_aktif=0 and tgl_bayar is not null and kd_trans_masuk_siswa=?", kd_trans_masuk_siswa).Scan(&sumJmlBayar)
 
 	var total_biaya float64
@@ -979,7 +978,7 @@ func UpdateUangMasukSiswaDetail(c *gin.Context) {
 	}
 
 	var sumJmlBayar float64
-	db.Raw("SELECT sum(jml_bayar) 'jml_bayar' FROM tbl_trans_uang_masuk_siswa_details "+
+	db.Raw("SELECT ifnull(sum(jml_bayar),0.00) 'jml_bayar' FROM tbl_trans_uang_masuk_siswa_details "+
 		" where flag_aktif=0 and tgl_bayar is not null and kd_trans_masuk_siswa=?", kd_trans_masuk_siswa).Scan(&sumJmlBayar)
 
 	var total_biaya float64

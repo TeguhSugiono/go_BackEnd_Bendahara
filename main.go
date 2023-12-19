@@ -43,11 +43,9 @@ import (
 
 func main() {
 
-	//r := gin.Default()
-	//r.Use(CORSMiddleware())
-
 	r := gin.New()
-	// handler.Use(middleware.TimeoutMiddleware(timeout))
+
+	r.Use(gin.Recovery())
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
@@ -56,16 +54,6 @@ func main() {
 		AllowCredentials: true,
 		ExposeHeaders:    []string{"X-Total-Count"},
 	}))
-
-	// if r.Request.Method == "OPTIONS" {
-	// 	// c.AbortWithStatus(204)
-	// 	// return
-
-	// 	response := helper.APIResponse("Un Identified Error ..", http.StatusUnauthorized, "error", "Un Identified Error ..")
-	// 	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-
-	// 	return
-	// }
 
 	api := r.Group("api/v1/")
 
@@ -81,34 +69,8 @@ func main() {
 		c.JSON(http.StatusOK, response)
 	})
 
-	//Setting Koneksi Kedatabase SIA
-	// apiSIA := r.Group("api/v1/akademiksiswa")
-
-	// dbSIA := connection.SetupConnectionSIA()
-
-	// apiSIA.Use(func(c *gin.Context) {
-	// 	c.Set("dbSIA", dbSIA)
-	// 	c.Next()
-	// })
-
-	// apiSIA.GET("/", func(c *gin.Context) {
-	// 	response := helper.APIResponse("Aplikasi AKADEMIK Sekolah SMA AL-KHAIRIYAH...", http.StatusOK, "success", nil)
-	// 	c.JSON(http.StatusOK, response)
-	// })
-
-	//DATABASE SIA
 	api.POST("/akademik/siswalulus", master_siswa_akademik.ListSiswaLulus)
 	api.POST("/akademik/ListDataSiswaAll", master_siswa_akademik.ListDataSiswaAll)
-
-	//End Setting Koneksi Kedatabase SIA
-
-	// userInput := models.GroupKategoriInput{}
-	// userInput.Kd_jenis = ""
-	// userInput.Nm_group = "Biaya Pembayaran PPDB"
-	// if err := ctx.ShouldBindJSON(&dataInput); err != nil {
-	// 	ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
 
 	api.POST("/users/signup", user.SignUp)
 	api.POST("/users/changepassword", user.GantiPassword)
@@ -142,7 +104,6 @@ func main() {
 	api.GET("/settingperiode/listconfperiode", authMiddleware(), master_sett_periode.ListConfPeriode)
 	api.GET("/settingperiode/showconfperiode", authMiddleware(), master_sett_periode.ShowConfPeriode)
 	api.POST("/settingperiode/insertconfperiode", authMiddleware(), master_sett_periode.InsertConfPeriode)
-	//api.PUT("/settingperiode/updateconfperiode/:idconf", authMiddleware(), master_sett_periode.UpdateConfPeriode)
 	api.PUT("/settingperiode/updateconfperiodeall", authMiddleware(), master_sett_periode.UpdateConfPeriodeAll)
 	api.POST("/settingperiode/deleteconfperiode", authMiddleware(), master_sett_periode.DeleteConfPeriode)
 
@@ -155,13 +116,6 @@ func main() {
 	api.PUT("/masterbiayakategori/updatebiayakategori/:kdbiayakategori", authMiddleware(), master_conf_biaya_kategori.UpdateBiayaKategori)
 	api.DELETE("/masterbiayakategori/deletebiayakategori/:kdbiayakategori", authMiddleware(), master_conf_biaya_kategori.DeleteBiayaKategori)
 
-	// api.GET("/settingperiode/listsettperiode", authMiddleware(), master_sett_spp.ListSettPeriode)
-	// api.GET("/settingperiode/showsettperiode", authMiddleware(), master_sett_spp.ShowSettPeriode)
-	// api.POST("/settingperiode/insertsettperiode", authMiddleware(), master_sett_spp.InsertSettPeriode)
-	// api.PUT("/settingperiode/updatesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.UpdateSettPeriode)
-	// api.PUT("/settingperiode/deletesettperiode/:kdsettspp", authMiddleware(), master_sett_spp.DeleteSettPeriode)
-
-	//UANG MASUK SPP
 	api.GET("/transaksi/uangmasukspp/listgroupkategori", authMiddleware(), transaksi_uang_masuk_spp.ListGroupKategori)
 	api.GET("/transaksi/uangmasukspp/listkategoriuang", authMiddleware(), transaksi_uang_masuk_spp.ListKategoriUang)
 	api.GET("/transaksi/uangmasukspp/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
@@ -171,7 +125,6 @@ func main() {
 	api.PUT("/transaksi/uangmasukspp/updateuangmasukspp/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_spp.UpdateUangMasukSpp)
 	api.PUT("/transaksi/uangmasukspp/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_spp.DeleteAllUangMasuk)
 
-	//UANG MASUK PPDB
 	api.GET("/transaksi/uangmasukppdb/listgroupkategori", authMiddleware(), transaksi_uang_masuk_ppdb.ListGroupKategori)
 	api.GET("/transaksi/uangmasukppdb/listkategoriuang", authMiddleware(), transaksi_uang_masuk_ppdb.ListKategoriUang)
 	api.GET("/transaksi/uangmasukppdb/listkelas", authMiddleware(), transaksi_uang_masuk_ppdb.ListKelas)
@@ -188,7 +141,6 @@ func main() {
 	api.POST("/transaksi/uangmasukppdb/datalistppdb", authMiddleware(), transaksi_uang_masuk_ppdb.DataListPPDB)
 	api.POST("/transaksi/uangmasukppdb/importallppdb", authMiddleware(), transaksi_uang_masuk_ppdb.ImportAll)
 
-	//UANG MASUK SISWA
 	api.GET("/transaksi/uangmasuksiswa/listgroupkategori", authMiddleware(), transaksi_uang_masuk_siswa.ListGroupKategori)
 	api.POST("/transaksi/uangmasuksiswa/listkategoriuang", authMiddleware(), transaksi_uang_masuk_siswa.ListKategoriUang)
 	api.POST("/transaksi/uangmasuksiswa/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListDataAddSiswa)
@@ -200,10 +152,8 @@ func main() {
 	api.PUT("/transaksi/uangmasuksiswa/deleteuangmasuksiswadetail", authMiddleware(), transaksi_uang_masuk_siswa.DeleteUangMasukSiswaDetail)
 	api.PUT("/transaksi/uangmasuksiswa/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_siswa.DeleteAllUangMasuk)
 
-	//UANG MASUK LAIN
 	api.GET("/transaksi/uangmasuklainlain/listgroupkategori", authMiddleware(), transaksi_uang_masuk_lainlain.ListGroupKategori)
 	api.POST("/transaksi/uangmasuklainlain/listkategoriuang", authMiddleware(), transaksi_uang_masuk_lainlain.ListKategoriUang)
-	//api.POST("/transaksi/uangmasuklainlain/listdataaddsiswa", authMiddleware(), transaksi_uang_masuk_lainlain.ListDataAddSiswa)
 	api.POST("/transaksi/uangmasuklainlain/createuangmasuklain", authMiddleware(), transaksi_uang_masuk_lainlain.CreateUangMasukLain)
 	api.PUT("/transaksi/uangmasuklainlain/edituangmasuklain/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.EditUangMasukLain)
 	api.PUT("/transaksi/uangmasuklainlain/updateuangmasuklaindetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_lainlain.UpdateUangMasukLainetail)
@@ -212,7 +162,6 @@ func main() {
 	api.PUT("/transaksi/uangmasuklainlain/deleteuangmasuklaindetail", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteUangMasukLainDetail)
 	api.PUT("/transaksi/uangmasuklainlain/deletealluangmasuk/:idhead", authMiddleware(), transaksi_uang_masuk_lainlain.DeleteAllUangMasuk)
 
-	//UANG Keluar PRA
 	api.GET("/transaksi/uangkeluarpra/listgroupkategori", authMiddleware(), transaksi_uang_keluar_pra.ListGroupKategori)
 	api.POST("/transaksi/uangkeluarpra/listkategoriuang", authMiddleware(), transaksi_uang_keluar_pra.ListKategoriUang)
 	api.POST("/transaksi/uangkeluarpra/createuangkeluar", authMiddleware(), transaksi_uang_keluar_pra.CreateUangKeluar)
@@ -223,7 +172,6 @@ func main() {
 	api.PUT("/transaksi/uangkeluarpra/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar_pra.DeleteUangKeluarDetail)
 	api.PUT("/transaksi/uangkeluarpra/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra.DeleteAllUangKeluar)
 
-	//UANG Keluar PRA ACT
 	api.GET("/transaksi/uangkeluarpraact/listdokument", authMiddleware(), transaksi_uang_keluar_pra_act.ListDokument)
 	api.GET("/transaksi/uangkeluarpraact/listgroupkategori", authMiddleware(), transaksi_uang_keluar_pra_act.ListGroupKategori)
 	api.POST("/transaksi/uangkeluarpraact/createuangkeluar", authMiddleware(), transaksi_uang_keluar_pra_act.CreateUangKeluar)
@@ -235,7 +183,6 @@ func main() {
 	api.PUT("/transaksi/uangkeluarpraact/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_pra_act.DeleteAllUangKeluar)
 	api.GET("/transaksi/uangkeluarpraact/postuangmasuk", authMiddleware(), transaksi_uang_keluar_pra_act.PostUangMasuk)
 
-	//UANG Keluar ACT
 	api.GET("/transaksi/uangkeluaract/listgroupkategori", authMiddleware(), transaksi_uang_keluar_act.ListGroupKategori)
 	api.POST("/transaksi/uangkeluaract/listkategoriuang", authMiddleware(), transaksi_uang_keluar_act.ListKategoriUang)
 	api.POST("/transaksi/uangkeluaract/createuangkeluar", authMiddleware(), transaksi_uang_keluar_act.CreateUangKeluar)
@@ -246,7 +193,6 @@ func main() {
 	api.PUT("/transaksi/uangkeluaract/deleteuangkeluardetail", authMiddleware(), transaksi_uang_keluar_act.DeleteUangKeluarDetail)
 	api.PUT("/transaksi/uangkeluaract/deletealluangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_act.DeleteAllUangKeluar)
 
-	//REPORT EXCEL
 	api.POST("/report/uangmasuk/reportspp", authMiddleware(), report_uangmasuk.ReportSPP)
 	api.POST("/report/uangmasuk/reportppdb", authMiddleware(), report_uangmasuk.ReportPPDB)
 	api.POST("/report/uangmasuk/reportumsiswa", authMiddleware(), report_uangmasuk.ReportUmSiswa)
@@ -263,27 +209,16 @@ func main() {
 	api.POST("/report/reportgroup/reportgroupkeluar", authMiddleware(), report_group.Report_Group_Keluar)
 	api.POST("/report/reportgroup/reportgroupmasukkeluar", authMiddleware(), report_group.Report_Group_Masuk_Keluar)
 
-	//Dashboard
 	api.GET("/dashboard", authMiddleware(), dashboard.DataDashboard)
 	api.GET("/dashboard_posh_uang_masuk", authMiddleware(), dashboard.DataDashboardPost)
 
 	api.GET("/mastertipepembayaran/listtipepembayaran", authMiddleware(), master_tipe_pembayaran.ListTipePembayaran)
 
-	//setting open lock historis
 	api.POST("/setting/transaksi/getakses", authMiddleware(), setting_edit_histori.Get_Akses)
 	api.GET("/setting/transaksi/getaksespermission", authMiddleware(), setting_edit_histori.Get_Akses_Permission)
 
-	//Buat Code Dokument Pembayaran
 	api.POST("/setting/createdok", authMiddleware(), setting_code_document.CreateCodeDocument)
 
-	//api.POST("/transaksi/uangmasuksiswa/listsiswa", authMiddleware(), transaksi_uang_masuk_siswa.ListSiswa)
-	//api.GET("/transaksi/uangmasuksiswa/listkelas", authMiddleware(), transaksi_uang_masuk_spp.ListKelas)
-
-	// api.POST("/transaksi/uangmasukspp/listdata", authMiddleware(), transaksi_uang_masuk_spp.ListData)
-	// api.POST("/transaksi/uangmasukspp/createuangmasukspp", authMiddleware(), transaksi_uang_masuk_spp.CreateUangMasukSpp)
-	// api.PUT("/transaksi/uangmasukspp/updateuangmasukspp/:idhead/:iddetail", authMiddleware(), transaksi_uang_masuk_spp.UpdateUangMasukSpp)
-
-	//AKADEMIK SIA
 	api.GET("/akademik/listtahunakademik", authMiddleware(), master_tahun_akademik.ListTahunAkademik)
 	api.GET("/akademik/listkelasakademik", authMiddleware(), master_kelas_akademik.ListKelasAkademik)
 	api.GET("/akademik/listsiswaakademik", authMiddleware(), master_siswa_akademik.ListSiswaAkademik)
@@ -292,7 +227,7 @@ func main() {
 	api.POST("/conf/master/kodekategori", authMiddleware(), conf_kode_group.ListKategori)
 
 	r.Run(":2022")
-	//r.RunTLS(":2022", "server.pem", "server.key")
+
 }
 
 func authMiddleware() gin.HandlerFunc {
