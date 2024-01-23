@@ -32,13 +32,17 @@ type DetailBayar struct {
 	Tgl_bayar       string
 	Jml_bayar       float64
 	Tipe_pembayaran string
+	Data_ID         string
+	Data_Name       string
 }
 
 type DetailBayarOut struct {
-	Tgl_bayar       string
-	Jml_bayar       float64
-	Tipe_pembayaran string
-	Pos_uang_masuk  string
+	Tgl_bayar         string
+	Jml_bayar         float64
+	Tipe_pembayaran   string
+	Pos_uang_masuk    string
+	Data_no_document  string
+	Data_tgl_document string
 }
 
 type NewLoop1 struct {
@@ -57,12 +61,16 @@ type NewLoop3 struct {
 	Jml_bayar       float64
 	Tipe_pembayaran string
 	Kd_kategori     int
+	Data_ID         string
+	Data_Name       string
 }
 
 type NewLoop3a struct {
-	Tgl_bayar       string
-	Jml_bayar       float64
-	Tipe_pembayaran string
-	Pos_uang_masuk  string
-	Kd_kategori     int
+	Tgl_bayar         string
+	Jml_bayar         float64
+	Tipe_pembayaran   string
+	Pos_uang_masuk    string
+	Kd_kategori       int
+	Data_no_document  string
+	Data_tgl_document string
 }

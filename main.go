@@ -16,6 +16,7 @@ import (
 	"rest_api_bendahara/master_sett_periode"
 	"rest_api_bendahara/master_siswa_akademik"
 	"rest_api_bendahara/master_sub_kategori_uang"
+	"rest_api_bendahara/master_sumber_dana"
 	"rest_api_bendahara/master_tahun_akademik"
 	"rest_api_bendahara/master_tipe_pembayaran"
 	"rest_api_bendahara/report_group"
@@ -225,6 +226,8 @@ func main() {
 
 	api.POST("/conf/master/kodegroup", authMiddleware(), conf_kode_group.ListGroup)
 	api.POST("/conf/master/kodekategori", authMiddleware(), conf_kode_group.ListKategori)
+
+	api.POST("/transaksi/sumber/dana", authMiddleware(), master_sumber_dana.SumberDana)
 
 	r.Run(":2022")
 

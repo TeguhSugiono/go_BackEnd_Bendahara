@@ -50,7 +50,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"teguh\",\r\n    \"password_old\" : \"123\",\r\n    \"password_new\" : \"1234567\"\r\n}\r\n",
+							"raw": "{\r\n    \"username\" : \"teguh\",\r\n    \"password_old\" : \"12345\",\r\n    \"password_new\" : \"1234569\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,15 +58,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/users/changepassword",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/users/changepassword",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -113,7 +111,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"12345\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"teguh\" ,\r\n    \"password\" : \"1234569\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,8 +153,8 @@
 							}
 						},
 						"url": {
-							"raw": "http://backend-bendahara.sma-alkhairiyah.com/api/v1/users/login",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/users/login",
+							"protocol": "https",
 							"host": [
 								"backend-bendahara",
 								"sma-alkhairiyah",
@@ -650,13 +648,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=100",
-							"protocol": "https",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/showkategoriuang?page=1&perpage=100",
+							"protocol": "http",
 							"host": [
-								"backend-bendahara",
-								"sma-alkhairiyah",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -716,13 +716,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/masterkategoriuang/listkategoriuang",
-							"protocol": "https",
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/listkategoriuang",
+							"protocol": "http",
 							"host": [
-								"backend-bendahara",
-								"sma-alkhairiyah",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -2162,7 +2164,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_daftar\" : \"2022\"\r\n}",
+							"raw": "{\r\n    \"tahun_daftar\" : \"2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2170,15 +2172,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/listsiswa",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/transaksi/uangmasukppdb/listsiswa",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -2203,7 +2203,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nik\" : \"3172032402070005\"\r\n}",
+							"raw": "{\r\n    \"nik\" : \"3311034201080001\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2211,15 +2211,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/listdata",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/transaksi/uangmasukppdb/listdata",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -3058,15 +3056,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/masterbiayakategori/showbiayakategori?page=1&perpage=10",
-							"protocol": "http",
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/masterbiayakategori/showbiayakategori?page=1&perpage=5&search=koja",
+							"protocol": "https",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
 							],
-							"port": "2022",
 							"path": [
 								"api",
 								"v1",
@@ -3080,12 +3076,11 @@
 								},
 								{
 									"key": "perpage",
-									"value": "10"
+									"value": "5"
 								},
 								{
 									"key": "search",
-									"value": "na",
-									"disabled": true
+									"value": "koja"
 								},
 								{
 									"key": "sort",
@@ -4781,7 +4776,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_akademik\" : \"2022/2023\",\r\n    \"nis_siswa\" : \"\",\r\n    \"periode_bayar1\" : \"\" ,\r\n    \"periode_bayar2\" : \"\" ,\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\",\r\n    \"kd_pembayaran\" : \"\"\r\n}",
+							"raw": "{\r\n    \"tahun_akademik\" : \"2023/2024\",\r\n    \"nis_siswa\" : \"\",\r\n    \"periode_bayar1\" : \"\" ,\r\n    \"periode_bayar2\" : \"\" ,\r\n    \"tgl_bayar1\" : \"07-10-2023\",\r\n    \"tgl_bayar2\" : \"08-10-2023\",\r\n    \"kd_pembayaran\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5070,7 +5065,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_daftar\" : \"2022\"\r\n}",
+							"raw": "{\r\n    \"tahun_daftar\" : \"2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5078,7 +5073,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/datalistppdb?page=1&perpage=10&sort=desc",
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/uangmasukppdb/datalistppdb?page=1&perpage=200&sort=desc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -5101,7 +5096,7 @@
 								},
 								{
 									"key": "perpage",
-									"value": "10"
+									"value": "200"
 								},
 								{
 									"key": "search",
@@ -5124,7 +5119,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tahun_daftar\" : \"2022\"\r\n}",
+							"raw": "{\r\n    \"tahun_daftar\" : \"2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5211,7 +5206,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nis\" : \"5897\",\r\n    \"nik\" : \"3172031711060006\",\r\n    \"nm_siswa\" : \"ABDILLAH\"\r\n}",
+							"raw": "{\r\n    \"nis\" : \"5784\",\r\n    \"nik\" : \"\",\r\n    \"nm_siswa\" : \"DAFFA APRILIYAN ANWAR\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5336,7 +5331,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-04-2023\",\r\n    \"tgl_bayar2\" : \"31-05-2023\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-09-2023\",\r\n    \"tgl_bayar2\" : \"05-11-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5365,13 +5360,46 @@
 					"response": []
 				},
 				{
+					"name": "Report Uang Masuk Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-11-2023\",\r\n    \"tgl_bayar2\" : \"05-11-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-bendahara.sma-alkhairiyah.com/api/v1/report/reportgroup/reportgroupmasuk",
+							"protocol": "https",
+							"host": [
+								"backend-bendahara",
+								"sma-alkhairiyah",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reportgroup",
+								"reportgroupmasuk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Report Uang Keluar",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-04-2023\",\r\n    \"tgl_bayar2\" : \"31-05-2023\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-09-2023\",\r\n    \"tgl_bayar2\" : \"30-09-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5406,7 +5434,42 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-04-2023\",\r\n    \"tgl_bayar2\" : \"31-05-2023\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-11-2023\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupmasukkeluar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"report",
+								"reportgroup",
+								"reportgroupmasukkeluar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report Uang Masuk Keluar Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-11-2023\",\r\n    \"tgl_bayar2\" : \"31-12-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5728,6 +5791,80 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "List Siswa Akademik",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nis\" : \"5892\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/akademik/ListDataSiswaAll",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"akademik",
+								"ListDataSiswaAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "29. sumber dana",
+			"item": [
+				{
+					"name": "List Sumber Dana",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_group\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/transaksi/sumber/dana",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"sumber",
+								"dana"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -5737,7 +5874,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTY4NjEwMzc1NH0.WuDI0i2ipBLrCYKxLtC7kRrHIV6c1D-_8TNb8ZBphGk",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTcwNjAxMjMzNH0.h1VDRdmFcL5jahdVJwK3fLZd6u2OzcqiOUOL9lE0rAo",
 				"type": "string"
 			}
 		]

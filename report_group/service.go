@@ -77,35 +77,21 @@ func Report_Group_Masuk(c *gin.Context) {
 	//=============================================
 	var NewLoopOne []NewLoop1
 	sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_report_umsiswa_dll as b on a.nm_kategori=b.nm_kategori  " +
+		" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  " +
 		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
 		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
 	db.Raw(sqlOne).Scan(&NewLoopOne)
 
 	var NewLoopTwo []NewLoop2
-	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_report_umsiswa_dll  where total_bayar <> 0  " +
+	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_masuk  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
 		" GROUP BY kd_kategori "
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThree []NewLoop3
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori  FROM vw_report_umsiswa_dll  where total_bayar <> 0  " +
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name'  FROM vw_s_masuk  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThree)
-
-	// targetKdGroup := 5
-	// var resultOne NewLoop1
-	// for _, data := range NewLoopOne {
-	// 	if data.Kd_kategori == targetKdGroup {
-	// 		resultOne = data
-	// 		break
-	// 	}
-	// }
-
-	// response := helper.APIResponse("List Data ...", http.StatusOK, "success", NewLoopThree)
-	// c.JSON(http.StatusOK, response)
-
-	//end ambil kd_kategori,nm_kategori secara seluruh dari query
 
 	SetJenisUang := []JenisGroupUang{}
 	arrayJenisUang := JenisGroupUang{}
@@ -116,7 +102,7 @@ func Report_Group_Masuk(c *gin.Context) {
 	var nm_group string
 	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_umsiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	if paramData.Tgl_bayar1 != "" {
 		sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
@@ -170,6 +156,8 @@ func Report_Group_Masuk(c *gin.Context) {
 						arrayDetailBayarTemp.Tgl_bayar = resultThree.Tgl_bayar
 						arrayDetailBayarTemp.Jml_bayar = resultThree.Jml_bayar
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
+						arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
+						arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -259,19 +247,19 @@ func Report_Group_Keluar(c *gin.Context) {
 
 	var NewLoopOne []NewLoop1
 	sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_report_uksiswa_dll as b on a.nm_kategori=b.nm_kategori  " +
+		" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  " +
 		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
 		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
 	db.Raw(sqlOne).Scan(&NewLoopOne)
 
 	var NewLoopTwo []NewLoop2
-	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_report_uksiswa_dll  where total_bayar <> 0  " +
+	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
 		" GROUP BY kd_kategori "
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThreeA []NewLoop3a
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori  FROM vw_report_uksiswa_dll  where total_bayar <> 0  " +
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document'  FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThreeA)
 
@@ -285,7 +273,7 @@ func Report_Group_Keluar(c *gin.Context) {
 
 	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_uksiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	if paramData.Tgl_bayar1 != "" {
 		sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
@@ -341,6 +329,8 @@ func Report_Group_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Jml_bayar = resultThreeA.Jml_bayar
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThreeA.Tipe_pembayaran
 						arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
+						arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
+						arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -433,19 +423,19 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 	//================= Uang Masuk ====================================//
 	var NewLoopOne []NewLoop1
 	sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_report_umsiswa_dll as b on a.nm_kategori=b.nm_kategori  " +
+		" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  " +
 		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
 		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
 	db.Raw(sqlOne).Scan(&NewLoopOne)
 
 	var NewLoopTwo []NewLoop2
-	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_report_umsiswa_dll  where total_bayar <> 0  " +
+	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_masuk  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
 		" GROUP BY kd_kategori "
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThree []NewLoop3
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori  FROM vw_report_umsiswa_dll  where total_bayar <> 0  " +
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name'  FROM vw_s_masuk  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThree)
 	//================= End Uang Masuk ====================================//
@@ -462,7 +452,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 
 	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_umsiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	//groupnya biar pertanggal
 	if paramData.Tgl_bayar1 != "" {
@@ -518,6 +508,8 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Tgl_bayar = resultThree.Tgl_bayar
 						arrayDetailBayarTemp.Jml_bayar = resultThree.Jml_bayar
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
+						arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
+						arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -543,19 +535,19 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 	//======================= Uang Keluar ========================//
 	//var NewLoopOne []NewLoop1
 	sqlOne = " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_report_uksiswa_dll as b on a.nm_kategori=b.nm_kategori  " +
+		" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  " +
 		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
 		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
 	db.Raw(sqlOne).Scan(&NewLoopOne)
 
 	//var NewLoopTwo []NewLoop2
-	sqlTwo = " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_report_uksiswa_dll  where total_bayar <> 0  " +
+	sqlTwo = " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
 		" GROUP BY kd_kategori "
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThreeA []NewLoop3a
-	sqlThree = " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori  FROM vw_report_uksiswa_dll  where total_bayar <> 0  " +
+	sqlThree = " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document'  FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThreeA)
 	//======================= End Uang Keluar ========================//
@@ -566,7 +558,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 	SetArrayData = []GroupUangMasuk{}
 	sql_group = " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_uksiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	//groupnya biar pertanggal
 	if paramData.Tgl_bayar1 != "" {
@@ -623,6 +615,8 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Jml_bayar = resultThreeA.Jml_bayar
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThreeA.Tipe_pembayaran
 						arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
+						arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
+						arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -728,7 +722,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 
 	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_umsiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	//groupnya biar pertanggal
 	if paramData.Tgl_bayar1 != "" {
@@ -766,7 +760,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 		// //end groupnya biar pertanggal
 		// sql_kategori = fmt.Sprintf("%s  order by kd_kategori ", sql_kategori)
 		sql_kategori := " SELECT a.kd_kategori,a.nm_kategori FROM tbl_kategori_uangs as a   " +
-			" left join vw_report_umsiswa_dll as b on a.nm_kategori=b.nm_kategori  "
+			" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  "
 
 		//groupnya biar pertanggal
 		if paramData.Tgl_bayar1 != "" {
@@ -790,7 +784,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 
 			//cari uang masuk
 			var total_bayar float64
-			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_s_masuk  where total_bayar <> 0 "
 			sql_nominal = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal, TglBayar1)
@@ -814,7 +808,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 			var tipe_pembayaran string
 
 			arrayDetailBayar := []DetailBayar{}
-			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran  FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran  FROM vw_s_masuk  where total_bayar <> 0 "
 			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
@@ -861,7 +855,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 	//sql_group = " SELECT kd_group,nm_group FROM tbl_group_kategoris where flag_aktif=0 and kd_jenis=2 and nm_header <> '' order by kd_group "
 	sql_group = " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_uksiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	//groupnya biar pertanggal
 	if paramData.Tgl_bayar1 != "" {
@@ -899,7 +893,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 		// sql_kategori = fmt.Sprintf("%s  order by kd_kategori ", sql_kategori)
 
 		sql_kategori := " SELECT a.kd_kategori,a.nm_kategori FROM tbl_kategori_uangs as a   " +
-			" left join vw_report_uksiswa_dll as b on a.nm_kategori=b.nm_kategori  "
+			" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  "
 
 		//groupnya biar pertanggal
 		if paramData.Tgl_bayar1 != "" {
@@ -923,7 +917,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 
 			//cari uang masuk
 			var total_bayar float64
-			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_report_uksiswa_dll  where total_bayar <> 0 "
+			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_s_keluar  where total_bayar <> 0 "
 			sql_nominal = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal, TglBayar1)
@@ -948,7 +942,7 @@ func Report_Group_Masuk_Keluar_Old(c *gin.Context) {
 			var pos_uang_masuk string
 
 			arrayDetailBayar := []DetailBayarOut{}
-			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk  FROM vw_report_uksiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk  FROM vw_s_keluar  where total_bayar <> 0 "
 			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
@@ -1068,7 +1062,7 @@ func Report_Group_Masuk_Old(c *gin.Context) {
 	var nm_group string
 	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_umsiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	//groupnya biar pertanggal
 	if paramData.Tgl_bayar1 != "" {
@@ -1097,7 +1091,7 @@ func Report_Group_Masuk_Old(c *gin.Context) {
 		var kd_kategori int
 		var nm_kategori string
 		sql_kategori := " SELECT a.kd_kategori,a.nm_kategori FROM tbl_kategori_uangs as a   " +
-			" left join vw_report_umsiswa_dll as b on a.nm_kategori=b.nm_kategori  "
+			" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  "
 
 		//groupnya biar pertanggal
 		if paramData.Tgl_bayar1 != "" {
@@ -1124,7 +1118,7 @@ func Report_Group_Masuk_Old(c *gin.Context) {
 
 			//cari uang masuk
 			var total_bayar float64
-			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_s_masuk  where total_bayar <> 0 "
 			sql_nominal = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal, TglBayar1)
@@ -1148,7 +1142,7 @@ func Report_Group_Masuk_Old(c *gin.Context) {
 			var tipe_pembayaran string
 
 			arrayDetailBayar := []DetailBayar{}
-			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran  FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran  FROM vw_s_masuk  where total_bayar <> 0 "
 			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
@@ -1262,7 +1256,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 	//var iseng string
 	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
 		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_report_uksiswa_dll as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+		" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
 	//groupnya biar pertanggal
 	if paramData.Tgl_bayar1 != "" {
@@ -1301,7 +1295,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 		// //end groupnya biar pertanggal
 		// sql_kategori = fmt.Sprintf("%s  order by kd_kategori ", sql_kategori)
 		sql_kategori := " SELECT a.kd_kategori,a.nm_kategori FROM tbl_kategori_uangs as a   " +
-			" left join vw_report_uksiswa_dll as b on a.nm_kategori=b.nm_kategori  "
+			" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  "
 
 		//groupnya biar pertanggal
 		if paramData.Tgl_bayar1 != "" {
@@ -1328,7 +1322,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 
 			//cari uang masuk
 			var total_bayar float64
-			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_report_uksiswa_dll  where total_bayar <> 0 "
+			sql_nominal := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar' FROM vw_s_keluar  where total_bayar <> 0 "
 			sql_nominal = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal, TglBayar1)
@@ -1353,7 +1347,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 			var pos_uang_masuk string
 
 			arrayDetailBayar := []DetailBayarOut{}
-			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk  FROM vw_report_uksiswa_dll  where total_bayar <> 0 "
+			sql_nominal_detail := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk  FROM vw_s_keluar  where total_bayar <> 0 "
 			sql_nominal_detail = fmt.Sprintf("%s and kd_kategori = %d", sql_nominal_detail, kd_kategori)
 			if paramData.Tgl_bayar1 != "" {
 				sql_nominal_detail = fmt.Sprintf("%s and tgl_bayar >= '%s'", sql_nominal_detail, TglBayar1)
@@ -1399,7 +1393,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 }
 
 // //cari grand total uang masuk
-// ssql_total := " SELECT sum(jml_bayar) 'grand_total' FROM vw_report_umsiswa_dll  where total_bayar <> 0 "
+// ssql_total := " SELECT sum(jml_bayar) 'grand_total' FROM vw_s_masuk  where total_bayar <> 0 "
 // if paramData.Tgl_bayar1 != "" {
 // 	ssql_total = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssql_total, TglBayar1)
 // }
@@ -1422,7 +1416,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 
 // var nm_group string
 // SetArrayData := []GroupUangMasuk{}
-// ssql := " SELECT nm_group FROM vw_report_umsiswa_dll where nm_group <> ''  "
+// ssql := " SELECT nm_group FROM vw_s_masuk where nm_group <> ''  "
 // if paramData.Tgl_bayar1 != "" {
 // 	ssql = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssql, TglBayar1)
 // }
@@ -1440,7 +1434,7 @@ func Report_Group_Keluar_Old(c *gin.Context) {
 // 	arraydata := GroupUangMasuk{}
 // 	arraydata.Nm_group = nm_group
 
-// 	ssqldetail := " SELECT nm_kategori,sum(jml_bayar) 'total_bayar' FROM vw_report_umsiswa_dll where nm_group='" + nm_group + "'  "
+// 	ssqldetail := " SELECT nm_kategori,sum(jml_bayar) 'total_bayar' FROM vw_s_masuk where nm_group='" + nm_group + "'  "
 // if paramData.Tgl_bayar1 != "" {
 // 	ssqldetail = fmt.Sprintf("%s and tgl_bayar >= '%s'", ssqldetail, TglBayar1)
 // }
