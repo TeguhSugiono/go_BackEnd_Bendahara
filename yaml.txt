@@ -1,0 +1,17 @@
+
+set GOOS=linux
+set GOARCH=amd64
+go build -o rest_api_bendahara
+
+immortal -c /home/smaalkha/backend-bendahara.sma-alkhairiyah.com/appku.yaml
+
+Cek status semua service yang dijalankan oleh Immortal
+immortalctl status
+
+Hentikan service:
+immortalctl stop rest_api_bendahara
+
+
+
+
+

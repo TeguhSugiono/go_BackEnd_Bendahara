@@ -1,0 +1,130 @@
+-- update 13-08-2025
+
+-- tambah field kd_jenis di tbl_kategori_uangs
+ALTER TABLE tbl_kategori_uangs
+ADD COLUMN kd_jenis int;
+
+-- update kd_jenis di table tbl_kategori_uangs
+-- berdasarkan kd_group di tbl_group_kategoris
+UPDATE tbl_kategori_uangs 
+INNER JOIN tbl_group_kategoris
+ON tbl_kategori_uangs.kd_group = tbl_group_kategoris.kd_group
+SET tbl_kategori_uangs.kd_jenis = tbl_group_kategoris.kd_jenis;
+
+
+-- tambah field kd_kategori di tbl_trans_uang_keluar_act_details
+ALTER TABLE tbl_trans_uang_keluar_act_details
+ADD COLUMN kd_kategori int;
+
+
+-- update kd_kategori di table tbl_trans_uang_keluar_act_details
+-- berdasarkan kd_trans_keluar di tbl_trans_uang_keluar_act_headers
+UPDATE tbl_trans_uang_keluar_act_details 
+INNER JOIN tbl_trans_uang_keluar_act_headers
+ON tbl_trans_uang_keluar_act_details.kd_trans_keluar = tbl_trans_uang_keluar_act_headers.kd_trans_keluar
+SET tbl_trans_uang_keluar_act_details.kd_kategori = tbl_trans_uang_keluar_act_headers.kd_kategori;
+
+-- Hapus kolom kd_kategori di table tbl_trans_uang_keluar_act_headers
+ALTER TABLE tbl_trans_uang_keluar_act_headers
+DROP COLUMN kd_kategori;
+
+//============
+drop view vw_report_act ;
+
+create view vw_report_act as 
+SELECT
+  `c`.`nm_group` AS `nm_group`,
+  `d`.`nm_kategori` AS `nm_kategori`,
+  `a`.`no_document` AS `no_document`,
+  `a`.`tgl_document` AS `tgl_document`,
+  `a`.`total_biaya` AS `total_biaya`,
+  `a`.`total_bayar` AS `total_bayar`,
+  `a`.`sisa_biaya` AS `sisa_biaya`,
+  `a`.`keterangan` AS `keterangan`,
+  `e`.`nm_group` AS `pos_uang_masuk`,
+  `b`.`tgl_bayar` AS `tgl_bayar`,
+  `b`.`jml_bayar` AS `jml_bayar`,
+  `b`.`keterangan` AS `keterangan_detail`,
+  `a`.`kd_trans_keluar` AS `kd_trans_keluar`,
+  `g`.`kd_pembayaran` AS `kd_pembayaran`,
+  `g`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `b`.`kd_trans_keluar_detail` AS `kd_trans_keluar_detail`,
+  `b`.`kd_kategori` AS `kd_kategori`,
+  `b`.`kd_post_uang_masuk` AS `kd_post_uang_masuk` 
+FROM
+  (
+    (
+      (
+        (
+          (`tbl_trans_uang_keluar_act_headers` `a` JOIN `tbl_trans_uang_keluar_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+        JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`))
+      JOIN `tbl_kategori_uangs` `d` ON (`b`.`kd_kategori` = `d`.`kd_kategori`))
+    LEFT JOIN `tbl_group_kategoris` `e` ON (`b`.`kd_post_uang_masuk` = `e`.`kd_group`))
+  LEFT JOIN `tbl_tipe_pembayarans` `g` ON (`b`.`kd_pembayaran` = `g`.`kd_pembayaran`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `d`.`flag_aktif` = 0 
+ORDER BY
+  `a`.`tgl_document`,
+  `a`.`no_document`,
+  `b`.`seqno` ;
+
+  //===================
+
+daftar nomor api direvisi
+4
+18
+
+
+//==============================================================================================
+
+-- update 14-08-2025
+
+-- tambah field kd_kategori di tbl_trans_uang_masuk_lain_details
+ALTER TABLE tbl_trans_uang_masuk_lain_details
+ADD COLUMN kd_kategori int;
+
+
+-- update kd_kategori di table tbl_trans_uang_masuk_lain_details
+-- berdasarkan kd_trans_masuk_lain di tbl_trans_uang_masuk_lain_headers
+UPDATE tbl_trans_uang_masuk_lain_details 
+INNER JOIN tbl_trans_uang_masuk_lain_headers
+ON tbl_trans_uang_masuk_lain_details.kd_trans_masuk_lain = tbl_trans_uang_masuk_lain_headers.kd_trans_masuk_lain
+SET tbl_trans_uang_masuk_lain_details.kd_kategori = tbl_trans_uang_masuk_lain_headers.kd_kategori;
+
+-- Hapus kolom kd_kategori di table tbl_trans_uang_masuk_lain_headers
+ALTER TABLE tbl_trans_uang_masuk_lain_headers
+DROP COLUMN kd_kategori;
+
+daftar nomor api direvisi
+15
+
+
+//===============================
+api no 4
+tambahan List Data New untuk keluarin jenis keluar/jenis masuk 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

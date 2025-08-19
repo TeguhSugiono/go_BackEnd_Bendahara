@@ -1,0 +1,54 @@
+# Cara Buat File Konfigurasi YAML untuk Immortal
+# Simpan Dengan ekstensi .yaml
+
+# ================================================ dari sini =====================#
+# Perintah untuk menjalankan aplikasinya
+cmd: ./rest_api_bendahara
+
+# Direktori kerja saat menjalankan
+cwd: /home/smaalkha/backend-bendahara.sma-alkhairiyah.com
+
+# Konfigurasi log
+log:
+  file: /home/smaalkha/backend-bendahara.sma-alkhairiyah.com/logs/rest_api_bendahara.log
+  # Waktu rotasi log (dalam detik), 86400 = 1 hari
+  age: 86400
+  # Jumlah file log yang disimpan
+  num: 3
+  # Ukuran maksimal log (dalam MB)
+  size: 10
+  # Tambahkan timestamp di log
+  timestamp: true
+# Tunggu 60 detik sebelum restart kalau mati
+wait: 60
+# Ulangi sampai 3 kali kalau gagal start
+retries: 3
+
+# ================================================ end disini =====================#
+
+# jangan lupa buat folder logs nya /home/smaalkha/backend-bendahara.sma-alkhairiyah.com/logs 
+
+# cara compile nya aplikasi golangnya di windows 10
+# ================================================ dari sini =====================#
+set GOOS=linux
+set GOARCH=amd64
+go build -o new_rest_api_bendahara
+# ================================================ end disini =====================#
+
+
+# jalankan pakai putty nya
+# ================================================ dari sini =====================#
+# Cara Jalankan Servicenya
+immortal -c /home/smaalkha/backend-bendahara.sma-alkhairiyah.com/new_rest_api_bendahara.yaml
+# ================================================ end disini =====================#
+
+# Cara Cek status semua service yang dijalankan oleh Immortal
+immortalctl status
+
+# Cara Hentikan service:
+immortalctl stop rest_api_bendahara
+
+
+
+
+

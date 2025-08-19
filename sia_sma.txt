@@ -1,0 +1,13 @@
+table yang di ambil dari data sia
+- tbl_kelas
+- tbl_naik_kelas
+- tbl_siswa
+- tbl_tahun_akademik
+
+table yang di ambil dari data ppdb
+- tbl_user_ppdb di ppdb tbl_user
+- tbl_biayadaftar
+
+jika nnti sudah beli vps
+update tbl_user ppd flag_import jadi 9
+flag_import = 9

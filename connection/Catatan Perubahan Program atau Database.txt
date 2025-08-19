@@ -1,0 +1,150 @@
+//24-05-2023
+
+perubahan pada generate no document ketetapan parameter dibuat dari backend
+
+https://bendahara.sma-alkhairiyah.com/biaya-eksternal 
+(kirim post namahalaman=biaya-eksternal kode=BE)
+
+https://bendahara.sma-alkhairiyah.com/biaya-operasional 
+(kirim post namahalaman=biaya-operasional kode=BO)
+
+https://bendahara.sma-alkhairiyah.com/perencanaan-biaya 
+(kirim post namahalaman=perencanaan-biaya kode=PB)
+
+Tujuan Jika Habis Generate no dokument terus blum dipakai nomornya
+ketika klik generate kembali maka pakai nomor yang sudah ada
+
+//End 24-05-2023
+
+
+
+
+//21-05-2023
+
+tambahan di api no 1 ganti password
+
+tambahan di api no 24 dashboard
+list saldo saat ini
+
+tambahan di api no 27 Generate Kode Document
+untuk kode atur dari FE ajah
+contoh format : 202305-AT0001 => 202305-(Kodenya)0001
+
+//End 21-05-2023
+
+
+
+
+
+
+
+
+
+
+
+Tambahan table
+tbl_tipe_pembayarans
+tbl_open_lock_historis
+
+modif table
+tbl_trans_uang_keluar_act_details
+tbl_trans_uang_keluar_details
+tbl_trans_uang_keluar_pra_act_details
+tbl_trans_uang_masuk_lain_details
+tbl_trans_uang_masuk_ppdb_details
+tbl_trans_uang_masuk_siswa_details
+tbl_trans_uang_masuk_spp_details
+
+modif view
+vw_report_spp
+vw_report_ppdb
+vw_report_umsiswa
+vw_report_umlain
+vw_report_pra_act
+vw_report_act
+vw_report_umsiswa_dll
+vw_report_uksiswa_dll
+
+========= Post Man =============
+
+25. Master Tipe Pembayaran (point baru)
+
+9.Transaksi UM SPP
+	- List Data => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Create SPP Uang Masuk => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit SPP Uang Masuk Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan parameter kd_pembayaran
+
+11.Transaksi UM PPDB
+	- List Data => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Create PPdb Uang Masuk => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit PPdb Uang Masuk Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan parameter kd_pembayaran
+	- Add Uang Masuk Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete Uang Masuk Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Masuk PPDB => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+
+12.Transaksi UM Siswa
+	- Create Siswa Uang Masuk => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Masuk Siswa => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Masuk Siswa Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan parameter kd_pembayaran
+	- Add Siswa Uang Masuk Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- List Data (Dahsboard) => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete Uang Masuk Siswa Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete All Um Siswa => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	
+15.Transaksi UM Lain-Lain
+	- Create Uang Masuk Lain => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Masuk Lain => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Lain Siswa Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan parameter kd_pembayaran
+	- Add Lain Uang Masuk Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- List Data (Dahsboard) => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete Uang Masuk Lain Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete All UM Lain => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	
+17.Transaksi Uang Keluar PRA-ACT
+	- Create Uang Keluar => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Keluar => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Keluar Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan parameter kd_pembayaran
+	- Add Uang Keluar Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- List Data (Dahsboard) => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete Uang Keluar Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+
+
+18. Transaksi Uang Keluar ACT
+	- Create Uang Keluar => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Keluar => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Edit Uang Keluar Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan Parameter Kd_pembayaran
+	- Add Uang Keluar Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- List Data (Dahsboard) => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+	- Delete Uang Keluar Detail => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran
+
+
+19. Report Uang Masuk
+	- Report SPP => Tambahan Output Di Detail Untuk Data Tipe_pembayaran dan Parameter Kd_pembayaran
+	- Report PPDB => Tambahan Output Di Detail Untuk Data Tipe_pembayaran dan Parameter Kd_pembayaran
+	- Report UM Siswa => Tambahan Output Di Detail Untuk Data Tipe_pembayaran dan Parameter Kd_pembayaran
+	- Report UM Lain => Tambahan Output Di Detail Untuk Data Tipe_pembayaran dan Parameter Kd_pembayaran
+	
+	
+20. Report Uang Keluar
+	- Report PRA ACT => Tambahan Output Di Detail Untuk Data Tipe_pembayaran dan Parameter Kd_pembayaran
+	- Report ACT => Tambahan Output Di Detail Untuk Data Tipe_pembayaran dan Parameter Kd_pembayaran
+	
+	
+22. Report Histori
+	- Report Histori => Tambahan Output Di Detail Untuk Data Kd_pembayaran dan Tipe_pembayaran dan 
+					 => Tambahan Output id header dan id detail nama field per masing masing table
+					 
+	- Request Button Hidden/Show Edit => Parameter open = Y atau open = "N" (point baru)
+
+
+23. Report Group Uang Masuk & Keluar
+	- Report Uang Masuk => tambahan tag DetailBayar dan detail outputnya Tgl_bayar,Jml_bayar,Tipe_pembayaran
+	- Report Uang Keluar => tambahan tag DetailBayarOut dan detail outputnya Tgl_bayar,Jml_bayar,Tipe_pembayaran,Pos_uang_masuk
+	- Report Uang Masuk Keluar => tambahan tag DetailBayar dan detail outputnya Tgl_bayar,Jml_bayar,Tipe_pembayaran
+							   => tambahan tag DetailBayarOut dan detail outputnya Tgl_bayar,Jml_bayar,Tipe_pembayaran,Pos_uang_masuk
+
+
+
+
+	
+
