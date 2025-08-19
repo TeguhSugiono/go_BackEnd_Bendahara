@@ -736,6 +736,46 @@
 					"response": []
 				},
 				{
+					"name": "List Data New",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZF91c2VyIjoxLCJVc2VybmFtZSI6InRlZ3VoIn0.LBBjy6Ofdt6e-4RjgR9EiwDkxJRnHpU7XcO6DH7T2M0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kd_jenis\" : \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2022/api/v1/masterkategoriuang/listkategoriuangid",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2022",
+							"path": [
+								"api",
+								"v1",
+								"masterkategoriuang",
+								"listkategoriuangid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Data",
 					"request": {
 						"method": "POST",
@@ -5027,7 +5067,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"no_document\" : \"\",\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2023\",\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\",\r\n    \"kd_pembayaran\" : \"\"\r\n}",
+							"raw": "{\r\n    \"no_document\" : \"\",\r\n    \"tgl_document1\" : \"01-01-2022\",\r\n    \"tgl_document2\" : \"31-12-2025\",\r\n    \"tgl_bayar1\" : \"\",\r\n    \"tgl_bayar2\" : \"\",\r\n    \"kd_pembayaran\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5872,7 +5912,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTc1NTQxMTU0Nn0.7iClJrAdnRS58N_WhDZFKnV6XJigkzIhiXYzx3f9jWc",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTc1NTg2ODM4M30.wPh6cWz6Bl2Nl2kjCpxREzxtqdYJjKxBVMj-gK6nJyE",
 				"type": "string"
 			}
 		]

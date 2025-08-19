@@ -491,7 +491,7 @@ func ReportACT(c *gin.Context) {
 		ssql = fmt.Sprintf("%s and kd_pembayaran = '%s'", ssql, paramReport.Kd_pembayaran)
 	}
 
-	ssql = fmt.Sprintf("%s group by kd_trans_keluar ", ssql)
+	ssql = fmt.Sprintf("%s group by kd_trans_keluar ORDER BY tgl_document ", ssql)
 
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
@@ -537,11 +537,11 @@ func ReportACT(c *gin.Context) {
 	}
 
 	if len(SetArrayData) == 0 {
-		response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+		response := helper.APIResponse("List Data ..."+ssql, http.StatusOK, "success", SetArrayData)
 		c.JSON(http.StatusOK, response)
 		return
 	}
 
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetArrayData)
+	response := helper.APIResponse("List Data ..."+ssql, http.StatusOK, "success", SetArrayData)
 	c.JSON(http.StatusOK, response)
 }
