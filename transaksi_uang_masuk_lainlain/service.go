@@ -374,8 +374,8 @@ func EditUangMasukLain(c *gin.Context) {
 		db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_masuk_lain_headers a "+
 			" INNER JOIN tbl_trans_uang_masuk_lain_details b on a.Kd_trans_masuk_lain=b.Kd_trans_masuk_lain "+
 			" where a.flag_aktif=0 and b.flag_aktif=0  and a.kd_group=? "+
-			" and a.no_document=? and a.tgl_document=? ", paramInputTransaksiEdit.Kd_group,
-			paramInputTransaksiEdit.No_document, dateStr).Scan(&intJmldata)
+			" and a.no_document=? and a.tgl_document=? and a.keterangan=? ", paramInputTransaksiEdit.Kd_group,
+			paramInputTransaksiEdit.No_document, dateStr, paramInputTransaksiEdit.Keterangan).Scan(&intJmldata)
 		if intJmldata > 0 {
 			errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
 			response := helper.APIResponse("Data Document Pembayaran Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)

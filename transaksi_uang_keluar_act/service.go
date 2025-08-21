@@ -323,14 +323,15 @@ func EditUangKeluar(c *gin.Context) {
 	var kd_kategori_old int
 	var no_document_old string
 	var tgl_document_old string
+	var keterangan_old string
 
-	rowA, _ := db.Raw("SELECT a.kd_group,b.kd_kategori,a.no_document,date_format(a.tgl_document,'%Y-%m-%d') FROM tbl_trans_uang_keluar_act_headers a "+
+	rowA, _ := db.Raw("SELECT a.kd_group,b.kd_kategori,a.no_document,date_format(a.tgl_document,'%Y-%m-%d'),a.keterangan  FROM tbl_trans_uang_keluar_act_headers a "+
 		" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 		" where a.kd_trans_keluar=?  and a.flag_aktif=0 and b.flag_aktif=0 limit 1", Kd_trans_keluar).Rows()
 
 	defer rowA.Close()
 	for rowA.Next() {
-		rowA.Scan(&kd_group_old, &kd_kategori_old, &no_document_old, &tgl_document_old)
+		rowA.Scan(&kd_group_old, &kd_kategori_old, &no_document_old, &tgl_document_old, &keterangan_old)
 	}
 
 	currentUser := c.MustGet("currentUser")
@@ -355,12 +356,12 @@ func EditUangKeluar(c *gin.Context) {
 	var dataHeader table_data.Tbl_trans_uang_keluar_act_headers
 
 	//cek data jika ada perubahan di nodocument akan tetapi perubahan tersebut sama dengan data yang sudah ada
-	if (paramInputTransaksiEdit.Kd_group != kd_group_old) || (paramInputTransaksiEdit.No_document != no_document_old) || (dateStr != tgl_document_old) {
+	if (paramInputTransaksiEdit.Kd_group != kd_group_old) || (paramInputTransaksiEdit.No_document != no_document_old) || (dateStr != tgl_document_old) || (keterangan_old != paramInputTransaksiEdit.Keterangan) {
 		db.Raw(" SELECT count(*) jmldata FROM tbl_trans_uang_keluar_act_headers a "+
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar "+
 			" where a.flag_aktif=0 and b.flag_aktif=0  and a.kd_group=? "+
-			" and a.no_document=? and a.tgl_document=? ", paramInputTransaksiEdit.Kd_group,
-			paramInputTransaksiEdit.No_document, dateStr).Scan(&intJmldata)
+			" and a.no_document=? and a.tgl_document=? and a.keterangan=? ", paramInputTransaksiEdit.Kd_group,
+			paramInputTransaksiEdit.No_document, dateStr, paramInputTransaksiEdit.Keterangan).Scan(&intJmldata)
 		if intJmldata > 0 {
 			errorMessage := gin.H{"errors": "Simpan Data Gagal ..."}
 			response := helper.APIResponse("Data Document Pembayaran Sudah Ada ...", http.StatusUnprocessableEntity, "error", errorMessage)
