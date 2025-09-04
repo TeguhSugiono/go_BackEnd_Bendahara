@@ -35,6 +35,7 @@ type DetailBayar struct {
 	Tipe_pembayaran string
 	Data_ID         string
 	Data_Name       string
+	Keterangan      string
 }
 
 type DetailBayarOut struct {
@@ -44,6 +45,7 @@ type DetailBayarOut struct {
 	Pos_uang_masuk    string
 	Data_no_document  string
 	Data_tgl_document string
+	Keterangan        string
 }
 
 type NewLoop1 struct {
@@ -64,6 +66,7 @@ type NewLoop3 struct {
 	Kd_kategori     int
 	Data_ID         string
 	Data_Name       string
+	Keterangan      string
 }
 
 type NewLoop3a struct {
@@ -74,4 +77,5 @@ type NewLoop3a struct {
 	Kd_kategori       int
 	Data_no_document  string
 	Data_tgl_document string
+	Keterangan        string
 }

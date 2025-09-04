@@ -89,7 +89,7 @@ func Report_Group_Masuk(c *gin.Context) {
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThree []NewLoop3
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name'  FROM vw_s_masuk  where total_bayar <> 0  " +
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name',keterangan  FROM vw_s_masuk  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThree)
 
@@ -158,6 +158,7 @@ func Report_Group_Masuk(c *gin.Context) {
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
 						arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
 						arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
+						arrayDetailBayarTemp.Keterangan = resultThree.Keterangan
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -269,7 +270,7 @@ func Report_Group_Keluar(c *gin.Context) {
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThreeA []NewLoop3a
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document'  FROM vw_s_keluar  where total_bayar <> 0  " +
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document',keterangan  FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	if paramData.Kd_post_uang_masuk != "" {
 		sqlThree = fmt.Sprintf("%s and kd_post_uang_masuk = '%s'", sqlThree, paramData.Kd_post_uang_masuk)
@@ -348,6 +349,7 @@ func Report_Group_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
 						arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
 						arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
+						arrayDetailBayarTemp.Keterangan = resultThreeA.Keterangan
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -452,7 +454,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThree []NewLoop3
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name'  FROM vw_s_masuk  where total_bayar <> 0  " +
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name',keterangan  FROM vw_s_masuk  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThree)
 	//================= End Uang Masuk ====================================//
@@ -527,6 +529,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
 						arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
 						arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
+						arrayDetailBayarTemp.Keterangan = resultThree.Keterangan
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 
@@ -564,7 +567,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
 	var NewLoopThreeA []NewLoop3a
-	sqlThree = " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document'  FROM vw_s_keluar  where total_bayar <> 0  " +
+	sqlThree = " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document',keterangan  FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
 	db.Raw(sqlThree).Scan(&NewLoopThreeA)
 	//======================= End Uang Keluar ========================//
@@ -634,6 +637,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
 						arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
 						arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
+						arrayDetailBayarTemp.Keterangan = resultThreeA.Keterangan
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 

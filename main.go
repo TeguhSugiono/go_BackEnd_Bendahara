@@ -195,7 +195,7 @@ func main() {
 	api.GET("/transaksi/uangkeluarpraact/postuangmasuk", authMiddleware(), transaksi_uang_keluar_pra_act.PostUangMasuk)
 
 	api.GET("/transaksi/uangkeluaract/listgroupkategori", authMiddleware(), transaksi_uang_keluar_act.ListGroupKategori)
-	//api.POST("/transaksi/uangkeluaract/listkategoriuang", authMiddleware(), transaksi_uang_keluar_act.ListKategoriUang)
+	// api.POST("/transaksi/uangkeluaract/listkategoriuang", authMiddleware(), transaksi_uang_keluar_act.ListKategoriUang)
 	api.POST("/transaksi/uangkeluaract/createuangkeluar", authMiddleware(), transaksi_uang_keluar_act.CreateUangKeluar)
 	api.PUT("/transaksi/uangkeluaract/edituangkeluar/:idhead", authMiddleware(), transaksi_uang_keluar_act.EditUangKeluar)
 	api.PUT("/transaksi/uangkeluaract/updateuangkeluardetail/:idhead/:iddetail", authMiddleware(), transaksi_uang_keluar_act.UpdateUangKeluarDetail)
