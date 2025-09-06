@@ -336,6 +336,45 @@ ORDER BY
 
 
 
+jadi kemarin yg bikin lama w mikirin ini
+ada peralihan kd_group ke kd_kategori
+yang lama soalnya w simpannya kd_group bukan kd_kategori
+di field kd_post_uang_masuk , 
+jadi w ngakalin buat update semua kd_post_uang_masuk yg save kd_group
+jadi ke kd_kategori , makanya w buat dua table test buat patokan misahin untuk update data
+
+1. table tbl_one_group_kategori adalah kd_group yang mempunyai 1 kd_group = 1 kd_kategori
+2. table tbl_moreone_group_kategori adalah kd_group yang mempunai 1 kd_group > 1 kd_kategori
+
+contoh 1
+kd_group kd_kategori
+1			1
+
+contoh 2
+kd_group kd_kategori
+4			8
+4			12
+4			313
+4			314
+4			373
+
+untuk point 1 gampang penanganannya karena tinggal pakai kd_kategori 1
+untuk point 2 w update dengan yang kd_kategori yang paling atas 8
+
+kalau dari table yang w cek kd_post_uang_masuk = 4 itu gak ada
+kd_kategori 4 itu tagihan air uang keluar .
+
+http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/listdata
+udah w update nm_group didetail itu sebenernya nm_kategori ,
+kalo namain nm_kategori double soalnya , ada kd_post_uang_masuk dan kd_kategori
+
+http://127.0.0.1:2022/api/v1/report/uangkeluar/reportact
+udah w update nm_kategori di header w udah pindahin kedetail
+
+
+
+
+
 
 
 
