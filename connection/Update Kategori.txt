@@ -291,6 +291,49 @@ WHERE
 
 
 
+//perbaikan pos_uang_masuk kosong ""
+drop view vw_report_act;
+CREATE view vw_report_act as 
+SELECT
+  `c`.`nm_group` AS `nm_group`,
+  `d`.`nm_kategori` AS `nm_kategori`,
+  `a`.`no_document` AS `no_document`,
+  `a`.`tgl_document` AS `tgl_document`,
+  `a`.`total_biaya` AS `total_biaya`,
+  `a`.`total_bayar` AS `total_bayar`,
+  `a`.`sisa_biaya` AS `sisa_biaya`,
+  `a`.`keterangan` AS `keterangan`,
+  `e`.`nm_kategori` AS `pos_uang_masuk`,
+  `b`.`tgl_bayar` AS `tgl_bayar`,
+  `b`.`jml_bayar` AS `jml_bayar`,
+  `b`.`keterangan` AS `keterangan_detail`,
+  `a`.`kd_trans_keluar` AS `kd_trans_keluar`,
+  `g`.`kd_pembayaran` AS `kd_pembayaran`,
+  `g`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `b`.`kd_trans_keluar_detail` AS `kd_trans_keluar_detail`,
+  `b`.`kd_kategori` AS `kd_kategori`,
+  `b`.`kd_post_uang_masuk` AS `kd_post_uang_masuk` 
+FROM
+  (
+    (
+      (
+        (
+          (`tbl_trans_uang_keluar_act_headers` `a` JOIN `tbl_trans_uang_keluar_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+        JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`))
+      JOIN `tbl_kategori_uangs` `d` ON (`b`.`kd_kategori` = `d`.`kd_kategori`))
+    LEFT JOIN `tbl_kategori_uangs` `e` ON (`b`.`kd_post_uang_masuk` = `e`.`kd_kategori`))
+  LEFT JOIN `tbl_tipe_pembayarans` `g` ON (`b`.`kd_pembayaran` = `g`.`kd_pembayaran`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `d`.`flag_aktif` = 0 
+ORDER BY
+  `a`.`tgl_document`,
+  `a`.`no_document`,
+  `b`.`seqno`  ;
+
+
 
 
 

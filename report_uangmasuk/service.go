@@ -704,7 +704,6 @@ func ReportUmLain(c *gin.Context) {
 	}
 
 	var nm_group string
-	var nm_kategori string
 	var no_document string
 	var tgl_document string
 	var total_biaya float64
@@ -714,7 +713,7 @@ func ReportUmLain(c *gin.Context) {
 	var kd_trans_masuk_lain int
 
 	SetArrayData := []GetDataHeaderUmLain{}
-	ssql := " SELECT nm_group,nm_kategori,no_document,tgl_document, " +
+	ssql := " SELECT nm_group,no_document,tgl_document, " +
 		" total_biaya,total_bayar,sisa_biaya,keterangan,kd_trans_masuk_lain " +
 		" FROM vw_report_umlain where nm_group<>'' "
 	if paramReport.No_document != "" {
@@ -741,10 +740,9 @@ func ReportUmLain(c *gin.Context) {
 	rows, _ := db.Raw(ssql).Rows()
 	defer rows.Close()
 	for rows.Next() {
-		rows.Scan(&nm_group, &nm_kategori, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk_lain)
+		rows.Scan(&nm_group, &no_document, &tgl_document, &total_biaya, &total_bayar, &sisa_biaya, &keterangan, &kd_trans_masuk_lain)
 		arraydata := GetDataHeaderUmLain{}
 		arraydata.Nm_group = nm_group
-		arraydata.Nm_kategori = nm_kategori
 		arraydata.No_document = no_document
 		arraydata.Tgl_document = tgl_document
 		arraydata.Total_biaya = total_biaya
@@ -752,7 +750,7 @@ func ReportUmLain(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = keterangan
 
-		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran FROM vw_report_umlain "
+		ssqldetail := " SELECT date_format(tgl_bayar,'%d-%m-%Y') 'tgl_bayar',jml_bayar,keterangan_detail,tipe_pembayaran,nm_kategori FROM vw_report_umlain "
 		ssqldetail = fmt.Sprintf("%s where kd_trans_masuk_lain = %d", ssqldetail, kd_trans_masuk_lain)
 		if paramReport.No_document != "" {
 			ssqldetail = fmt.Sprintf("%s and no_document = '%s'", ssqldetail, paramReport.No_document)

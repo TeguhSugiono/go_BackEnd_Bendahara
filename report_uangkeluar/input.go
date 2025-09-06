@@ -34,7 +34,6 @@ type ParamReportPRAACT struct {
 
 type GetDataHeaderPRAACT struct {
 	Nm_group     string
-	Nm_kategori  string
 	No_document  string
 	Tgl_document string
 	Total_biaya  float64
@@ -50,6 +49,7 @@ type GetDataDetailPRAACT struct {
 	Jml_bayar         float64
 	Keterangan_detail string
 	Tipe_pembayaran   string
+	Nm_kategori       string
 }
 
 type ParamReportACT struct {
