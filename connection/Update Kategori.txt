@@ -1,3 +1,201 @@
+-- update 07-09-2025
+
+http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/listdata
+update nm_group di detail menjadi sumber_dana
+
+
+drop view vw_group_uang_masuk ;
+create view vw_group_uang_masuk as 
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `a`.`kd_group` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_spp_headers` `a` JOIN `tbl_trans_uang_masuk_spp_details` `b` ON (`a`.`kd_trans_masuk` = `b`.`kd_trans_masuk`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `c`.`kd_group`,
+  `b`.`kd_trans_masuk_detail` 
+  UNION ALL
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `a`.`kd_group` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_ppdb_headers` `a` JOIN `tbl_trans_uang_masuk_ppdb_details` `b` ON (`a`.`kd_trans_masuk_ppdb` = `b`.`kd_trans_masuk_ppdb`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `a`.`kd_group`,
+  `b`.`kd_trans_masuk_detail_ppdb` UNION ALL
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `a`.`kd_group` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_siswa_headers` `a` JOIN `tbl_trans_uang_masuk_siswa_details` `b` ON (`a`.`kd_trans_masuk_siswa` = `b`.`kd_trans_masuk_siswa`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `a`.`kd_group`,
+  `b`.`kd_trans_masuk_detail_siswa` UNION ALL
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `b`.`kd_kategori` AS `kd_group`,
+  `c`.`nm_kategori` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_lain_headers` `a` JOIN `tbl_trans_uang_masuk_lain_details` `b` ON (`a`.`kd_trans_masuk_lain` = `b`.`kd_trans_masuk_lain`))
+  JOIN `tbl_kategori_uangs` `c` ON (`b`.`kd_kategori` = `c`.`kd_kategori`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `b`.`kd_kategori`,
+  `b`.`kd_trans_masuk_detail_lain` ;
+
+
+drop view vw_group_uang_keluar ;
+create view vw_group_uang_keluar as 
+SELECT
+  sum(`b`.`jml_bayar`) AS `total_bayar`,
+  `b`.`kd_post_uang_masuk` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_keluar_pra_act_headers` `a` JOIN `tbl_trans_uang_keluar_pra_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `b`.`kd_post_uang_masuk` IS NOT NULL 
+GROUP BY
+  `b`.`kd_post_uang_masuk`,
+  `b`.`kd_trans_keluar_detail` 
+  UNION ALL
+SELECT
+  sum(`b`.`jml_bayar`) AS `total_bayar`,
+  `b`.`kd_post_uang_masuk` AS `kd_group`,
+  `c`.`nm_kategori` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_keluar_act_headers` `a` JOIN `tbl_trans_uang_keluar_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+  JOIN `tbl_kategori_uangs` `c` ON (`b`.`kd_kategori` = `c`.`kd_kategori`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `b`.`kd_post_uang_masuk` IS NOT NULL 
+GROUP BY
+  `b`.`kd_post_uang_masuk`,
+  `b`.`kd_trans_keluar_detail` ;
+
+
+
+http://127.0.0.1:2022/api/v1/transaksi/uangkeluaract/updateuangkeluardetail/2345/2428
+perbaikan cek jumlah by kategori 
+
+
+
+http://127.0.0.1:2022/api/v1/report/reportgroup/reportgroupkeluar
+kayanya ini error view diatas udah w benerin w udah input di biaya operasional dengan 2 kategori berbeda 
+dan di report laporan akhir sudah sesuai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//========================================================================================================================================//
+
+
+
+
+
+
 -- update 13-08-2025
 
 -- tambah field kd_jenis di tbl_kategori_uangs

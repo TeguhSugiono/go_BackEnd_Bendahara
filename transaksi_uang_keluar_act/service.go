@@ -440,7 +440,7 @@ func EditUangKeluar(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'nm_group', " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'sumber_dana', " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran,b.kd_kategori,e.nm_kategori " +
 			" FROM tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
@@ -635,7 +635,7 @@ func UpdateUangKeluarDetail(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'nm_group',b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'sumber_dana',b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran,b.kd_kategori,e.nm_kategori " +
 			" FROM tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
@@ -777,7 +777,7 @@ func CreateUangKeluarDetail(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'nm_group',b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'sumber_dana',b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran,b.kd_kategori,e.nm_kategori " +
 			" FROM tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
@@ -899,7 +899,7 @@ func ListData(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'nm_group',b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'sumber_dana',b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran,b.kd_kategori,e.nm_kategori " +
 			" FROM tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
@@ -1045,7 +1045,7 @@ func DeleteUangKeluarDetail(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'nm_group',b.tgl_bayar, " +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'sumber_dana',b.tgl_bayar, " +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran,b.kd_kategori,e.nm_kategori " +
 			" FROM tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
@@ -1169,7 +1169,7 @@ func DeleteAllUangKeluar(c *gin.Context) {
 		arraydata.Sisa_biaya = sisa_biaya
 		arraydata.Keterangan = ket
 
-		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'nm_group', b.tgl_bayar," +
+		sql := " SELECT b.kd_trans_keluar_detail,b.seqno,b.kd_post_uang_masuk,c.nm_kategori 'sumber_dana', b.tgl_bayar," +
 			" b.jml_bayar,b.keterangan,d.kd_pembayaran,d.tipe_pembayaran,b.kd_kategori,e.nm_kategori " +
 			" FROM tbl_trans_uang_keluar_act_headers a " +
 			" INNER JOIN tbl_trans_uang_keluar_act_details b on a.kd_trans_keluar=b.kd_trans_keluar " +
