@@ -12,369 +12,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func Report_Group_Masuk(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
-
-	var paramData ParamData
-	if err := c.ShouldBindJSON(&paramData); err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-
-	var TglBayar1 string
-	var TglBayar2 string
-
-	if paramData.Tgl_bayar1 != "" {
-		tTgl_bayar1, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar1)
-		if err2 != nil {
-			var ve validator.ValidationErrors
-			if errors.As(err2, &ve) {
-				errors := helper.FormatValidationError(err2)
-				errorMessage := gin.H{"errors": errors}
-				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-				c.JSON(http.StatusUnprocessableEntity, response)
-				return
-			}
-			var error_binding []string
-			error_binding = append(error_binding, err2.Error())
-			errorMessage := gin.H{"errors": error_binding}
-			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-			c.JSON(http.StatusUnprocessableEntity, response)
-			return
-		}
-		TglBayar1 = tTgl_bayar1.Format("2006-01-02")
-	} else {
-		TglBayar1 = ""
-	}
-
-	if paramData.Tgl_bayar1 != "" {
-		tTglBayar2, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar2)
-		if err2 != nil {
-			var ve validator.ValidationErrors
-			if errors.As(err2, &ve) {
-				errors := helper.FormatValidationError(err2)
-				errorMessage := gin.H{"errors": errors}
-				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-				c.JSON(http.StatusUnprocessableEntity, response)
-				return
-			}
-			var error_binding []string
-			error_binding = append(error_binding, err2.Error())
-			errorMessage := gin.H{"errors": error_binding}
-			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-			c.JSON(http.StatusUnprocessableEntity, response)
-			return
-		}
-		TglBayar2 = tTglBayar2.Format("2006-01-02")
-	} else {
-		TglBayar2 = ""
-	}
-
-	// Query untuk mendapatkan data kategori
-	//=============================================
-	var NewLoopOne []NewLoop1
-	sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  " +
-		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
-		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
-	db.Raw(sqlOne).Scan(&NewLoopOne)
-
-	var NewLoopTwo []NewLoop2
-	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_masuk  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
-		" GROUP BY kd_kategori "
-	db.Raw(sqlTwo).Scan(&NewLoopTwo)
-
-	var NewLoopThree []NewLoop3
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name',keterangan  FROM vw_s_masuk  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
-	db.Raw(sqlThree).Scan(&NewLoopThree)
-
-	SetJenisUang := []JenisGroupUang{}
-	arrayJenisUang := JenisGroupUang{}
-	arrayJenisUang.JenisUang = "Uang Masuk"
-
-	SetArrayData := []GroupUangMasuk{}
-	var kd_group int
-	var nm_group string
-	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
-		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
-
-	if paramData.Tgl_bayar1 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
-	}
-	if paramData.Tgl_bayar2 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
-	}
-
-	sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=1 and a.nm_header <> '' and c.flag_aktif=0  ", sql_group)
-
-	sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
-
-	execute_sql_group, _ := db.Raw(sql_group).Rows()
-	defer execute_sql_group.Close()
-	for execute_sql_group.Next() {
-		execute_sql_group.Scan(&kd_group, &nm_group)
-		arraydata := GroupUangMasuk{}
-		arraydata.Kd_group = kd_group
-		arraydata.Nm_group = nm_group
-
-		SetArrayDetail := []GroupUangMasukDetail{}
-		targetKdGroup := kd_group
-		var resultOne NewLoop1
-		for _, data := range NewLoopOne {
-			if data.Kd_group == targetKdGroup {
-				resultOne = data
-
-				arraydetail := GroupUangMasukDetail{}
-				arraydetail.Kd_kategori = resultOne.Kd_kategori
-				arraydetail.Nm_kategori = resultOne.Nm_kategori
-
-				targetKdKategori := resultOne.Kd_kategori
-				var resultTwo NewLoop2
-				for _, data := range NewLoopTwo {
-					if data.Kd_kategori == targetKdKategori {
-						resultTwo = data
-						break
-					}
-				}
-
-				arraydetail.Total_bayar = resultTwo.Total_bayar
-
-				arrayDetailBayar := []DetailBayar{}
-				targetKdKategoriX := resultOne.Kd_kategori
-				var resultThree NewLoop3
-				for _, data := range NewLoopThree {
-					if data.Kd_kategori == targetKdKategoriX {
-						resultThree = data
-
-						arrayDetailBayarTemp := DetailBayar{}
-						arrayDetailBayarTemp.Tgl_bayar = resultThree.Tgl_bayar
-						arrayDetailBayarTemp.Jml_bayar = resultThree.Jml_bayar
-						arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
-						arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
-						arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
-						arrayDetailBayarTemp.Keterangan = resultThree.Keterangan
-
-						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
-
-					}
-				}
-				arraydetail.DetailBayar = arrayDetailBayar
-
-				SetArrayDetail = append(SetArrayDetail, arraydetail)
-
-			}
-
-		}
-
-		arraydata.Kategori = SetArrayDetail
-		SetArrayData = append(SetArrayData, arraydata)
-
-	}
-
-	arrayJenisUang.DetailData = SetArrayData
-	SetJenisUang = append(SetJenisUang, arrayJenisUang)
-
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetJenisUang)
-	c.JSON(http.StatusOK, response)
-
-}
-
-func Report_Group_Keluar(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
-
-	var paramData ParamData
-	if err := c.ShouldBindJSON(&paramData); err != nil {
-		errors := helper.FormatValidationError(err)
-		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-
-	var TglBayar1 string
-	var TglBayar2 string
-
-	if paramData.Tgl_bayar1 != "" {
-		tTgl_bayar1, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar1)
-		if err2 != nil {
-			var ve validator.ValidationErrors
-			if errors.As(err2, &ve) {
-				errors := helper.FormatValidationError(err2)
-				errorMessage := gin.H{"errors": errors}
-				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-				c.JSON(http.StatusUnprocessableEntity, response)
-				return
-			}
-			var error_binding []string
-			error_binding = append(error_binding, err2.Error())
-			errorMessage := gin.H{"errors": error_binding}
-			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-			c.JSON(http.StatusUnprocessableEntity, response)
-			return
-		}
-		TglBayar1 = tTgl_bayar1.Format("2006-01-02")
-	} else {
-		TglBayar1 = ""
-	}
-
-	if paramData.Tgl_bayar1 != "" {
-		tTglBayar2, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar2)
-		if err2 != nil {
-			var ve validator.ValidationErrors
-			if errors.As(err2, &ve) {
-				errors := helper.FormatValidationError(err2)
-				errorMessage := gin.H{"errors": errors}
-				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-				c.JSON(http.StatusUnprocessableEntity, response)
-				return
-			}
-			var error_binding []string
-			error_binding = append(error_binding, err2.Error())
-			errorMessage := gin.H{"errors": error_binding}
-			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
-			c.JSON(http.StatusUnprocessableEntity, response)
-			return
-		}
-		TglBayar2 = tTglBayar2.Format("2006-01-02")
-	} else {
-		TglBayar2 = ""
-	}
-
-	var NewLoopOne []NewLoop1
-	sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  " +
-		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' "
-	if paramData.Kd_post_uang_masuk != "" {
-		sqlOne = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sqlOne, paramData.Kd_post_uang_masuk)
-	}
-	sqlOne = fmt.Sprintf("%s  where a.flag_aktif=0 ", sqlOne)
-	if paramData.Kd_post_uang_masuk != "" {
-		sqlOne = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sqlOne, paramData.Kd_post_uang_masuk)
-	}
-	sqlOne = fmt.Sprintf("%s  GROUP BY a.kd_kategori  order by a.kd_kategori ", sqlOne)
-	db.Raw(sqlOne).Scan(&NewLoopOne)
-
-	var NewLoopTwo []NewLoop2
-	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_keluar  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
-	if paramData.Kd_post_uang_masuk != "" {
-		sqlTwo = fmt.Sprintf("%s and kd_post_uang_masuk = '%s'", sqlTwo, paramData.Kd_post_uang_masuk)
-	}
-	sqlTwo = fmt.Sprintf("%s  GROUP BY kd_kategori ", sqlTwo)
-	db.Raw(sqlTwo).Scan(&NewLoopTwo)
-
-	var NewLoopThreeA []NewLoop3a
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document',keterangan  FROM vw_s_keluar  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
-	if paramData.Kd_post_uang_masuk != "" {
-		sqlThree = fmt.Sprintf("%s and kd_post_uang_masuk = '%s'", sqlThree, paramData.Kd_post_uang_masuk)
-	}
-	db.Raw(sqlThree).Scan(&NewLoopThreeA)
-
-	SetJenisUang := []JenisGroupUang{}
-	arrayJenisUang := JenisGroupUang{}
-	arrayJenisUang.JenisUang = "Uang Keluar"
-
-	SetArrayData := []GroupUangMasuk{}
-	var kd_group int
-	var nm_group string
-
-	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
-		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
-
-	if paramData.Tgl_bayar1 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
-	}
-	if paramData.Tgl_bayar2 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
-	}
-	if paramData.Kd_post_uang_masuk != "" {
-		sql_group = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sql_group, paramData.Kd_post_uang_masuk)
-	}
-	sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=2 and a.nm_header <> '' and c.flag_aktif=0  ", sql_group)
-	if paramData.Kd_post_uang_masuk != "" {
-		sql_group = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sql_group, paramData.Kd_post_uang_masuk)
-	}
-	sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
-
-	execute_sql_group, _ := db.Raw(sql_group).Rows()
-	defer execute_sql_group.Close()
-	for execute_sql_group.Next() {
-
-		execute_sql_group.Scan(&kd_group, &nm_group)
-		arraydata := GroupUangMasuk{}
-		arraydata.Kd_group = kd_group
-		arraydata.Nm_group = nm_group
-
-		SetArrayDetail := []GroupUangMasukDetail{}
-		targetKdGroup := kd_group
-		var resultOne NewLoop1
-		for _, data := range NewLoopOne {
-			if data.Kd_group == targetKdGroup {
-				resultOne = data
-
-				arraydetail := GroupUangMasukDetail{}
-				arraydetail.Kd_kategori = resultOne.Kd_kategori
-				arraydetail.Nm_kategori = resultOne.Nm_kategori
-
-				targetKdKategori := resultOne.Kd_kategori
-				var resultTwo NewLoop2
-				for _, data := range NewLoopTwo {
-					if data.Kd_kategori == targetKdKategori {
-						resultTwo = data
-						break
-					}
-				}
-
-				arraydetail.Total_bayar = resultTwo.Total_bayar
-
-				arrayDetailBayar := []DetailBayarOut{}
-				targetKdKategoriX := resultOne.Kd_kategori
-				var resultThreeA NewLoop3a
-				for _, data := range NewLoopThreeA {
-					if data.Kd_kategori == targetKdKategoriX {
-						resultThreeA = data
-
-						arrayDetailBayarTemp := DetailBayarOut{}
-						arrayDetailBayarTemp.Tgl_bayar = resultThreeA.Tgl_bayar
-						arrayDetailBayarTemp.Jml_bayar = resultThreeA.Jml_bayar
-						arrayDetailBayarTemp.Tipe_pembayaran = resultThreeA.Tipe_pembayaran
-						arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
-						arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
-						arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
-						arrayDetailBayarTemp.Keterangan = resultThreeA.Keterangan
-
-						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
-
-					}
-				}
-				arraydetail.DetailBayar = arrayDetailBayar
-
-				SetArrayDetail = append(SetArrayDetail, arraydetail)
-
-			}
-
-		}
-
-		arraydata.Kategori = SetArrayDetail
-		SetArrayData = append(SetArrayData, arraydata)
-
-	}
-
-	arrayJenisUang.DetailData = SetArrayData
-	SetJenisUang = append(SetJenisUang, arrayJenisUang)
-
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetJenisUang)
-	c.JSON(http.StatusOK, response)
-}
-
 func Report_Group_Masuk_Keluar(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
@@ -439,163 +76,831 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 	SetGroupUang := []GroupUang{}
 	arrayGroupUang := GroupUang{}
 
-	//================= Uang Masuk ====================================//
+	//uang masuk
+
+	SetJenisUang := []JenisGroupUang{}
+	arrayJenisUang := JenisGroupUang{}
+	arrayJenisUang.JenisUang = "Uang Masuk"
+
+	arrayDetailBayar := []DetailBayarIn{}
+
+	var nm_group string
+	var nm_kategori string
+	var jml_bayar float64
+	var tipe_pembayaran string
+	var nik string
+	var nm_siswa string
+	var tgl_bayar string
+	var keterangan string
+
+	query := " SELECT a.nm_group,a.nm_kategori,a.jml_bayar,a.tipe_pembayaran,a.tgl_bayar, a.nik,a.nm_siswa,a.keterangan " +
+		"FROM vw_s_masuk a   " +
+		"INNER JOIN tbl_group_kategoris b on a.nm_group=b.nm_group and b.flag_aktif=0  " +
+		"where a.tgl_bayar>='" + TglBayar1 + "' and a.tgl_bayar<='" + TglBayar2 + "' "
+
+	if paramData.Kd_group != "" {
+		query = fmt.Sprintf("%s and b.kd_group = '%s'", query, paramData.Kd_group)
+	}
+	if paramData.Kd_kategori != "" {
+		query = fmt.Sprintf("%s and a.kd_kategori = '%s'", query, paramData.Kd_kategori)
+	}
+
+	query = fmt.Sprintf("%s  order by a.nm_kategori,a.tgl_bayar ", query)
+
+	execute_query, _ := db.Raw(query).Rows()
+	defer execute_query.Close()
+	for execute_query.Next() {
+		execute_query.Scan(&nm_group, &nm_kategori, &jml_bayar, &tipe_pembayaran, &tgl_bayar, &nik, &nm_siswa, &keterangan)
+
+		arrayDetailBayarTemp := DetailBayarIn{}
+		arrayDetailBayarTemp.Nm_group = nm_group
+		arrayDetailBayarTemp.Nm_kategori = nm_kategori
+		arrayDetailBayarTemp.Jml_bayar = jml_bayar
+		arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+		arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+		arrayDetailBayarTemp.Nik = nik
+		arrayDetailBayarTemp.Nm_siswa = nm_siswa
+		arrayDetailBayarTemp.Keterangan = keterangan
+
+		arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+	}
+
+	arrayJenisUang.DetailData = arrayDetailBayar
+	SetJenisUang = append(SetJenisUang, arrayJenisUang)
+
+	//end uang masuk
+
+	//uang keluar
+
+	//SetJenisUangOut := []JenisGroupUang{}
+	arrayJenisUangOut := JenisGroupUang{}
+	arrayJenisUangOut.JenisUang = "Uang Keluar"
+
+	arrayDetailBayarOut := []DetailBayarOut{}
+
+	var pos_uang_masuk string
+	var no_document string
+	var tgl_document string
+
+	queryOut := " SELECT a.nm_group,a.nm_kategori,a.jml_bayar,a.tipe_pembayaran,a.pos_uang_masuk, " +
+		"a.no_document,a.tgl_document,a.tgl_bayar,a.keterangan  " +
+		"FROM vw_s_keluar a  " +
+		"INNER JOIN tbl_group_kategoris b on a.nm_group=b.nm_group and b.flag_aktif=0 " +
+		"where a.tgl_bayar>='" + TglBayar1 + "' and a.tgl_bayar<='" + TglBayar2 + "' "
+
+	if paramData.Kd_group != "" {
+		queryOut = fmt.Sprintf("%s and b.kd_group = '%s'", queryOut, paramData.Kd_group)
+	}
+	if paramData.Kd_kategori != "" {
+		queryOut = fmt.Sprintf("%s and a.kd_kategori = '%s'", queryOut, paramData.Kd_kategori)
+	}
+	if paramData.Kd_post_uang_masuk != "" {
+		queryOut = fmt.Sprintf("%s and a.kd_post_uang_masuk = '%s'", queryOut, paramData.Kd_post_uang_masuk)
+	}
+	queryOut = fmt.Sprintf("%s  order by a.tgl_document,a.no_document ", queryOut)
+
+	execute_query_Out, _ := db.Raw(queryOut).Rows()
+	defer execute_query_Out.Close()
+	for execute_query_Out.Next() {
+		execute_query_Out.Scan(&nm_group, &nm_kategori, &jml_bayar, &tipe_pembayaran, &pos_uang_masuk, &no_document, &tgl_document, &tgl_bayar, &keterangan)
+
+		arrayDetailBayarOutTemp := DetailBayarOut{}
+		arrayDetailBayarOutTemp.Nm_group = nm_group
+		arrayDetailBayarOutTemp.Nm_kategori = nm_kategori
+		arrayDetailBayarOutTemp.Jml_bayar = jml_bayar
+		arrayDetailBayarOutTemp.Tipe_pembayaran = tipe_pembayaran
+		arrayDetailBayarOutTemp.Pos_uang_masuk = pos_uang_masuk
+		arrayDetailBayarOutTemp.No_document = no_document
+		arrayDetailBayarOutTemp.Tgl_document = tgl_document
+		arrayDetailBayarOutTemp.Tgl_bayar = tgl_bayar
+
+		arrayDetailBayarOut = append(arrayDetailBayarOut, arrayDetailBayarOutTemp)
+	}
+
+	arrayJenisUangOut.DetailData = arrayDetailBayarOut
+
+	SetJenisUang = append(SetJenisUang, arrayJenisUangOut)
+
+	arrayGroupUang.DataUang = SetJenisUang
+	SetGroupUang = append(SetGroupUang, arrayGroupUang)
+
+	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetGroupUang)
+	c.JSON(http.StatusOK, response)
+
+	// SetGroupUang := []GroupUang{}
+	// arrayGroupUang := GroupUang{}
+
+	// //================= Uang Masuk ====================================//
+	// var NewLoopOne []NewLoop1
+	// sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
+	// 	" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  " +
+	// 	" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
+	// 	" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
+	// db.Raw(sqlOne).Scan(&NewLoopOne)
+
+	// var NewLoopTwo []NewLoop2
+	// sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_masuk  where total_bayar <> 0  " +
+	// 	" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
+	// 	" GROUP BY kd_kategori "
+	// db.Raw(sqlTwo).Scan(&NewLoopTwo)
+
+	// var NewLoopThree []NewLoop3
+	// sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name',keterangan  FROM vw_s_masuk  where total_bayar <> 0  " +
+	// 	" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
+	// db.Raw(sqlThree).Scan(&NewLoopThree)
+	// //================= End Uang Masuk ====================================//
+
+	// SetJenisGroupUang := []JenisGroupUang{}
+	// arrayJenisGroupUang := JenisGroupUang{}
+	// arrayJenisGroupUang.JenisUang = "Uang Masuk"
+
+	// //uang masuk
+	// SetArrayData := []GroupUangMasuk{}
+	// var kd_group int
+	// var nm_group string
+	// //sql_group := " SELECT kd_group,nm_group FROM tbl_group_kategoris where flag_aktif=0 and kd_jenis=1 and nm_header <> '' order by kd_group "
+
+	// sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
+	// 	" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
+	// 	" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+
+	// //groupnya biar pertanggal
+	// if paramData.Tgl_bayar1 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
+	// }
+	// if paramData.Tgl_bayar2 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
+	// }
+	// //end groupnya biar pertanggal
+
+	// sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=1 and a.nm_header <> '' and c.flag_aktif=0 ", sql_group)
+
+	// sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
+
+	// execute_sql_group, _ := db.Raw(sql_group).Rows()
+	// defer execute_sql_group.Close()
+	// for execute_sql_group.Next() {
+	// 	execute_sql_group.Scan(&kd_group, &nm_group)
+	// 	arraydata := GroupUangMasuk{}
+	// 	arraydata.Kd_group = kd_group
+	// 	arraydata.Nm_group = nm_group
+
+	// 	SetArrayDetail := []GroupUangMasukDetail{}
+	// 	targetKdGroup := kd_group
+	// 	var resultOne NewLoop1
+	// 	for _, data := range NewLoopOne {
+	// 		if data.Kd_group == targetKdGroup {
+	// 			resultOne = data
+
+	// 			arraydetail := GroupUangMasukDetail{}
+	// 			arraydetail.Kd_kategori = resultOne.Kd_kategori
+	// 			arraydetail.Nm_kategori = resultOne.Nm_kategori
+
+	// 			targetKdKategori := resultOne.Kd_kategori
+	// 			var resultTwo NewLoop2
+	// 			for _, data := range NewLoopTwo {
+	// 				if data.Kd_kategori == targetKdKategori {
+	// 					resultTwo = data
+	// 					break
+	// 				}
+	// 			}
+
+	// 			arraydetail.Total_bayar = resultTwo.Total_bayar
+
+	// 			arrayDetailBayar := []DetailBayar{}
+	// 			targetKdKategoriX := resultOne.Kd_kategori
+	// 			var resultThree NewLoop3
+	// 			for _, data := range NewLoopThree {
+	// 				if data.Kd_kategori == targetKdKategoriX {
+	// 					resultThree = data
+
+	// 					arrayDetailBayarTemp := DetailBayar{}
+	// 					arrayDetailBayarTemp.Tgl_bayar = resultThree.Tgl_bayar
+	// 					arrayDetailBayarTemp.Jml_bayar = resultThree.Jml_bayar
+	// 					arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
+	// 					arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
+	// 					arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
+	// 					arrayDetailBayarTemp.Keterangan = resultThree.Keterangan
+
+	// 					arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+
+	// 				}
+	// 			}
+	// 			arraydetail.DetailBayar = arrayDetailBayar
+
+	// 			SetArrayDetail = append(SetArrayDetail, arraydetail)
+
+	// 		}
+
+	// 	}
+
+	// 	arraydata.Kategori = SetArrayDetail
+	// 	SetArrayData = append(SetArrayData, arraydata)
+
+	// }
+	// arrayJenisGroupUang.DetailData = SetArrayData
+	// SetJenisGroupUang = append(SetJenisGroupUang, arrayJenisGroupUang)
+	// //end uang masuk
+
+	// //=========================================================================================================
+	// //======================= Uang Keluar ========================//
+	// //var NewLoopOne []NewLoop1
+	// sqlOne = " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
+	// 	" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  " +
+	// 	" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
+	// 	" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
+	// db.Raw(sqlOne).Scan(&NewLoopOne)
+
+	// //var NewLoopTwo []NewLoop2
+	// sqlTwo = " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_keluar  where total_bayar <> 0  " +
+	// 	" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
+	// 	" GROUP BY kd_kategori "
+	// db.Raw(sqlTwo).Scan(&NewLoopTwo)
+
+	// var NewLoopThreeA []NewLoop3a
+	// sqlThree = " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document',keterangan  FROM vw_s_keluar  where total_bayar <> 0  " +
+	// 	" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
+	// db.Raw(sqlThree).Scan(&NewLoopThreeA)
+	// //======================= End Uang Keluar ========================//
+
+	// arrayJenisGroupUangKeluar := JenisGroupUang{}
+	// arrayJenisGroupUangKeluar.JenisUang = "Uang Keluar"
+
+	// SetArrayData = []GroupUangMasuk{}
+	// sql_group = " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
+	// 	" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
+	// 	" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+
+	// //groupnya biar pertanggal
+	// if paramData.Tgl_bayar1 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
+	// }
+	// if paramData.Tgl_bayar2 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
+	// }
+	// //end groupnya biar pertanggal
+
+	// sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=2 and a.nm_header <> '' and c.flag_aktif=0 ", sql_group)
+
+	// sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
+
+	// execute_sql_group, _ = db.Raw(sql_group).Rows()
+	// defer execute_sql_group.Close()
+	// for execute_sql_group.Next() {
+	// 	execute_sql_group.Scan(&kd_group, &nm_group)
+	// 	arraydata := GroupUangMasuk{}
+	// 	arraydata.Kd_group = kd_group
+	// 	arraydata.Nm_group = nm_group
+
+	// 	SetArrayDetail := []GroupUangMasukDetail{}
+	// 	targetKdGroup := kd_group
+	// 	var resultOne NewLoop1
+	// 	for _, data := range NewLoopOne {
+	// 		if data.Kd_group == targetKdGroup {
+	// 			resultOne = data
+
+	// 			arraydetail := GroupUangMasukDetail{}
+	// 			arraydetail.Kd_kategori = resultOne.Kd_kategori
+	// 			arraydetail.Nm_kategori = resultOne.Nm_kategori
+
+	// 			targetKdKategori := resultOne.Kd_kategori
+	// 			var resultTwo NewLoop2
+	// 			for _, data := range NewLoopTwo {
+	// 				if data.Kd_kategori == targetKdKategori {
+	// 					resultTwo = data
+	// 					break
+	// 				}
+	// 			}
+
+	// 			arraydetail.Total_bayar = resultTwo.Total_bayar
+
+	// 			arrayDetailBayar := []DetailBayarOut{}
+	// 			targetKdKategoriX := resultOne.Kd_kategori
+	// 			var resultThreeA NewLoop3a
+	// 			for _, data := range NewLoopThreeA {
+	// 				if data.Kd_kategori == targetKdKategoriX {
+	// 					resultThreeA = data
+
+	// 					arrayDetailBayarTemp := DetailBayarOut{}
+	// 					arrayDetailBayarTemp.Tgl_bayar = resultThreeA.Tgl_bayar
+	// 					arrayDetailBayarTemp.Jml_bayar = resultThreeA.Jml_bayar
+	// 					arrayDetailBayarTemp.Tipe_pembayaran = resultThreeA.Tipe_pembayaran
+	// 					arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
+	// 					// arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
+	// 					// arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
+	// 					arrayDetailBayarTemp.Keterangan = resultThreeA.Keterangan
+
+	// 					arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+
+	// 				}
+	// 			}
+	// 			arraydetail.DetailBayar = arrayDetailBayar
+
+	// 			SetArrayDetail = append(SetArrayDetail, arraydetail)
+
+	// 		}
+
+	// 	}
+
+	// 	arraydata.Kategori = SetArrayDetail
+	// 	SetArrayData = append(SetArrayData, arraydata)
+
+	// }
+	// arrayJenisGroupUangKeluar.DetailData = SetArrayData
+	// //=========================================================================================================
+
+	// SetJenisGroupUang = append(SetJenisGroupUang, arrayJenisGroupUangKeluar)
+
+	// arrayGroupUang.DataUang = SetJenisGroupUang
+	// SetGroupUang = append(SetGroupUang, arrayGroupUang)
+
+	// response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetGroupUang)
+	// c.JSON(http.StatusOK, response)
+}
+
+func Report_Group_Masuk(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var paramData ParamData
+	if err := c.ShouldBindJSON(&paramData); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var TglBayar1 string
+	var TglBayar2 string
+
+	if paramData.Tgl_bayar1 != "" {
+		tTgl_bayar1, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar1)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglBayar1 = tTgl_bayar1.Format("2006-01-02")
+	} else {
+		TglBayar1 = ""
+	}
+
+	if paramData.Tgl_bayar1 != "" {
+		tTglBayar2, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar2)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglBayar2 = tTglBayar2.Format("2006-01-02")
+	} else {
+		TglBayar2 = ""
+	}
+
+	SetJenisUang := []JenisGroupUang{}
+	arrayJenisUang := JenisGroupUang{}
+	arrayJenisUang.JenisUang = "Uang Masuk"
+
+	arrayDetailBayar := []DetailBayarIn{}
+
+	var nm_group string
+	var nm_kategori string
+	var jml_bayar float64
+	var tipe_pembayaran string
+	var nik string
+	var nm_siswa string
+	var tgl_bayar string
+	var keterangan string
+
+	query := " SELECT a.nm_group,a.nm_kategori,a.jml_bayar,a.tipe_pembayaran,a.tgl_bayar, a.nik,a.nm_siswa,a.keterangan " +
+		"FROM vw_s_masuk a   " +
+		"INNER JOIN tbl_group_kategoris b on a.nm_group=b.nm_group and b.flag_aktif=0  " +
+		"where a.tgl_bayar>='" + TglBayar1 + "' and a.tgl_bayar<='" + TglBayar2 + "' "
+
+	if paramData.Kd_group != "" {
+		query = fmt.Sprintf("%s and b.kd_group = '%s'", query, paramData.Kd_group)
+	}
+	if paramData.Kd_kategori != "" {
+		query = fmt.Sprintf("%s and a.kd_kategori = '%s'", query, paramData.Kd_kategori)
+	}
+
+	query = fmt.Sprintf("%s  order by a.nm_kategori,a.tgl_bayar ", query)
+
+	execute_query, _ := db.Raw(query).Rows()
+	defer execute_query.Close()
+	for execute_query.Next() {
+		execute_query.Scan(&nm_group, &nm_kategori, &jml_bayar, &tipe_pembayaran, &tgl_bayar, &nik, &nm_siswa, &keterangan)
+
+		arrayDetailBayarTemp := DetailBayarIn{}
+		arrayDetailBayarTemp.Nm_group = nm_group
+		arrayDetailBayarTemp.Nm_kategori = nm_kategori
+		arrayDetailBayarTemp.Jml_bayar = jml_bayar
+		arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+		arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+		arrayDetailBayarTemp.Nik = nik
+		arrayDetailBayarTemp.Nm_siswa = nm_siswa
+		arrayDetailBayarTemp.Keterangan = keterangan
+
+		arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+	}
+
+	arrayJenisUang.DetailData = arrayDetailBayar
+	SetJenisUang = append(SetJenisUang, arrayJenisUang)
+
+	response := helper.APIResponse("List Data ... ", http.StatusOK, "success", SetJenisUang)
+	c.JSON(http.StatusOK, response)
+
+	// // Query untuk mendapatkan data kategori
+	// //=============================================
+	// var NewLoopOne []NewLoop1
+	// sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
+	// 	" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  " +
+	// 	" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
+	// 	" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
+	// db.Raw(sqlOne).Scan(&NewLoopOne)
+
+	// var NewLoopTwo []NewLoop2
+	// sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_masuk  where total_bayar <> 0  " +
+	// 	" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
+	// 	" GROUP BY kd_kategori "
+	// db.Raw(sqlTwo).Scan(&NewLoopTwo)
+
+	// var NewLoopThree []NewLoop3
+	// sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name',keterangan  FROM vw_s_masuk  where total_bayar <> 0  " +
+	// 	" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
+	// db.Raw(sqlThree).Scan(&NewLoopThree)
+
+	// SetJenisUang := []JenisGroupUang{}
+	// arrayJenisUang := JenisGroupUang{}
+	// arrayJenisUang.JenisUang = "Uang Masuk"
+
+	// SetArrayData := []GroupUangMasuk{}
+	// var kd_group int
+	// var nm_group string
+	// sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
+	// 	" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
+	// 	" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+
+	// if paramData.Tgl_bayar1 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
+	// }
+	// if paramData.Tgl_bayar2 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
+	// }
+
+	// sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=1 and a.nm_header <> '' and c.flag_aktif=0  ", sql_group)
+
+	// sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
+
+	// execute_sql_group, _ := db.Raw(sql_group).Rows()
+	// defer execute_sql_group.Close()
+	// for execute_sql_group.Next() {
+	// 	execute_sql_group.Scan(&kd_group, &nm_group)
+	// 	arraydata := GroupUangMasuk{}
+	// 	arraydata.Kd_group = kd_group
+	// 	arraydata.Nm_group = nm_group
+
+	// 	SetArrayDetail := []GroupUangMasukDetail{}
+	// 	targetKdGroup := kd_group
+	// 	var resultOne NewLoop1
+	// 	for _, data := range NewLoopOne {
+	// 		if data.Kd_group == targetKdGroup {
+	// 			resultOne = data
+
+	// 			arraydetail := GroupUangMasukDetail{}
+	// 			arraydetail.Kd_kategori = resultOne.Kd_kategori
+	// 			arraydetail.Nm_kategori = resultOne.Nm_kategori
+
+	// 			targetKdKategori := resultOne.Kd_kategori
+	// 			var resultTwo NewLoop2
+	// 			for _, data := range NewLoopTwo {
+	// 				if data.Kd_kategori == targetKdKategori {
+	// 					resultTwo = data
+	// 					break
+	// 				}
+	// 			}
+
+	// 			arraydetail.Total_bayar = resultTwo.Total_bayar
+
+	// 			arrayDetailBayar := []DetailBayar{}
+	// 			targetKdKategoriX := resultOne.Kd_kategori
+	// 			var resultThree NewLoop3
+	// 			for _, data := range NewLoopThree {
+	// 				if data.Kd_kategori == targetKdKategoriX {
+	// 					resultThree = data
+
+	// 					arrayDetailBayarTemp := DetailBayar{}
+	// 					arrayDetailBayarTemp.Tgl_bayar = resultThree.Tgl_bayar
+	// 					arrayDetailBayarTemp.Jml_bayar = resultThree.Jml_bayar
+	// 					arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
+	// 					arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
+	// 					arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
+	// 					arrayDetailBayarTemp.Keterangan = resultThree.Keterangan
+
+	// 					arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+
+	// 				}
+	// 			}
+	// 			arraydetail.DetailBayar = arrayDetailBayar
+
+	// 			SetArrayDetail = append(SetArrayDetail, arraydetail)
+
+	// 		}
+
+	// 	}
+
+	// 	arraydata.Kategori = SetArrayDetail
+	// 	SetArrayData = append(SetArrayData, arraydata)
+
+	// }
+
+	// arrayJenisUang.DetailData = SetArrayData
+	// SetJenisUang = append(SetJenisUang, arrayJenisUang)
+
+	// response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetJenisUang)
+	// c.JSON(http.StatusOK, response)
+
+}
+
+func Report_Group_Keluar(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var paramData ParamData
+	if err := c.ShouldBindJSON(&paramData); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var TglBayar1 string
+	var TglBayar2 string
+
+	if paramData.Tgl_bayar1 != "" {
+		tTgl_bayar1, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar1)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglBayar1 = tTgl_bayar1.Format("2006-01-02")
+	} else {
+		TglBayar1 = ""
+	}
+
+	if paramData.Tgl_bayar2 != "" {
+		tTglBayar2, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar2)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglBayar2 = tTglBayar2.Format("2006-01-02")
+	} else {
+		TglBayar2 = ""
+	}
+
+	SetJenisUang := []JenisGroupUang{}
+	arrayJenisUang := JenisGroupUang{}
+	arrayJenisUang.JenisUang = "Uang Keluar"
+
+	arrayDetailBayar := []DetailBayarOut{}
+
+	var nm_group string
+	var nm_kategori string
+	var jml_bayar float64
+	var tipe_pembayaran string
+	var pos_uang_masuk string
+	var no_document string
+	var tgl_document string
+	var tgl_bayar string
+	var keterangan string
+
+	query := " SELECT a.nm_group,a.nm_kategori,a.jml_bayar,a.tipe_pembayaran,a.pos_uang_masuk, " +
+		"a.no_document,a.tgl_document,a.tgl_bayar,a.keterangan  " +
+		"FROM vw_s_keluar a  " +
+		"INNER JOIN tbl_group_kategoris b on a.nm_group=b.nm_group and b.flag_aktif=0 " +
+		"where a.tgl_bayar>='" + TglBayar1 + "' and a.tgl_bayar<='" + TglBayar2 + "' "
+
+	if paramData.Kd_group != "" {
+		query = fmt.Sprintf("%s and b.kd_group = '%s'", query, paramData.Kd_group)
+	}
+	if paramData.Kd_kategori != "" {
+		query = fmt.Sprintf("%s and a.kd_kategori = '%s'", query, paramData.Kd_kategori)
+	}
+	if paramData.Kd_post_uang_masuk != "" {
+		query = fmt.Sprintf("%s and a.kd_post_uang_masuk = '%s'", query, paramData.Kd_post_uang_masuk)
+	}
+	query = fmt.Sprintf("%s  order by a.tgl_document,a.no_document ", query)
+
+	execute_query, _ := db.Raw(query).Rows()
+	defer execute_query.Close()
+	for execute_query.Next() {
+		execute_query.Scan(&nm_group, &nm_kategori, &jml_bayar, &tipe_pembayaran, &pos_uang_masuk, &no_document, &tgl_document, &tgl_bayar, &keterangan)
+
+		arrayDetailBayarTemp := DetailBayarOut{}
+		arrayDetailBayarTemp.Nm_group = nm_group
+		arrayDetailBayarTemp.Nm_kategori = nm_kategori
+		arrayDetailBayarTemp.Jml_bayar = jml_bayar
+		arrayDetailBayarTemp.Tipe_pembayaran = tipe_pembayaran
+		arrayDetailBayarTemp.Pos_uang_masuk = pos_uang_masuk
+		arrayDetailBayarTemp.No_document = no_document
+		arrayDetailBayarTemp.Tgl_document = tgl_document
+		arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+
+		arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
+	}
+
+	arrayJenisUang.DetailData = arrayDetailBayar
+	SetJenisUang = append(SetJenisUang, arrayJenisUang)
+
+	response := helper.APIResponse("List Data ... ", http.StatusOK, "success", SetJenisUang)
+	c.JSON(http.StatusOK, response)
+
+}
+
+func Report_Group_KeluarOld(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	var paramData ParamData
+	if err := c.ShouldBindJSON(&paramData); err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var TglBayar1 string
+	var TglBayar2 string
+
+	if paramData.Tgl_bayar1 != "" {
+		tTgl_bayar1, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar1)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglBayar1 = tTgl_bayar1.Format("2006-01-02")
+	} else {
+		TglBayar1 = ""
+	}
+
+	if paramData.Tgl_bayar1 != "" {
+		tTglBayar2, err2 := time.Parse("02-01-2006", paramData.Tgl_bayar2)
+		if err2 != nil {
+			var ve validator.ValidationErrors
+			if errors.As(err2, &ve) {
+				errors := helper.FormatValidationError(err2)
+				errorMessage := gin.H{"errors": errors}
+				response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+				c.JSON(http.StatusUnprocessableEntity, response)
+				return
+			}
+			var error_binding []string
+			error_binding = append(error_binding, err2.Error())
+			errorMessage := gin.H{"errors": error_binding}
+			response := helper.APIResponse("Error Validasi ...", http.StatusUnprocessableEntity, "error", errorMessage)
+			c.JSON(http.StatusUnprocessableEntity, response)
+			return
+		}
+		TglBayar2 = tTglBayar2.Format("2006-01-02")
+	} else {
+		TglBayar2 = ""
+	}
+
 	var NewLoopOne []NewLoop1
 	sqlOne := " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_s_masuk as b on a.nm_kategori=b.nm_kategori  " +
-		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
-		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
+		" inner join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  " +
+		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' "
+	if paramData.Kd_post_uang_masuk != "" {
+		sqlOne = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sqlOne, paramData.Kd_post_uang_masuk)
+	}
+	sqlOne = fmt.Sprintf("%s  where a.flag_aktif=0 ", sqlOne)
+	if paramData.Kd_post_uang_masuk != "" {
+		sqlOne = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sqlOne, paramData.Kd_post_uang_masuk)
+	}
+	sqlOne = fmt.Sprintf("%s  GROUP BY a.kd_kategori  order by a.kd_kategori ", sqlOne)
 	db.Raw(sqlOne).Scan(&NewLoopOne)
 
 	var NewLoopTwo []NewLoop2
-	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_masuk  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
-		" GROUP BY kd_kategori "
+	sqlTwo := " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_keluar  where total_bayar <> 0  " +
+		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
+	if paramData.Kd_post_uang_masuk != "" {
+		sqlTwo = fmt.Sprintf("%s and kd_post_uang_masuk = '%s'", sqlTwo, paramData.Kd_post_uang_masuk)
+	}
+	sqlTwo = fmt.Sprintf("%s  GROUP BY kd_kategori ", sqlTwo)
 	db.Raw(sqlTwo).Scan(&NewLoopTwo)
 
-	var NewLoopThree []NewLoop3
-	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,kd_kategori,CAST(nik as CHAR(50)) 'Data_ID',nm_siswa 'Data_Name',keterangan  FROM vw_s_masuk  where total_bayar <> 0  " +
+	var NewLoopThreeA []NewLoop3a
+	sqlThree := " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document',keterangan  FROM vw_s_keluar  where total_bayar <> 0  " +
 		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
-	db.Raw(sqlThree).Scan(&NewLoopThree)
-	//================= End Uang Masuk ====================================//
+	if paramData.Kd_post_uang_masuk != "" {
+		sqlThree = fmt.Sprintf("%s and kd_post_uang_masuk = '%s'", sqlThree, paramData.Kd_post_uang_masuk)
+	}
+	db.Raw(sqlThree).Scan(&NewLoopThreeA)
 
-	SetJenisGroupUang := []JenisGroupUang{}
-	arrayJenisGroupUang := JenisGroupUang{}
-	arrayJenisGroupUang.JenisUang = "Uang Masuk"
+	SetJenisUang := []JenisGroupUang{}
+	arrayJenisUang := JenisGroupUang{}
+	arrayJenisUang.JenisUang = "Uang Keluar"
 
-	//uang masuk
 	SetArrayData := []GroupUangMasuk{}
 	var kd_group int
 	var nm_group string
-	//sql_group := " SELECT kd_group,nm_group FROM tbl_group_kategoris where flag_aktif=0 and kd_jenis=1 and nm_header <> '' order by kd_group "
 
-	sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
-		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_s_masuk as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
+	// sql_group := " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
+	// 	" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
+	// 	" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
 
-	//groupnya biar pertanggal
+	// if paramData.Tgl_bayar1 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
+	// }
+	// if paramData.Tgl_bayar2 != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
+	// }
+	// if paramData.Kd_post_uang_masuk != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sql_group, paramData.Kd_post_uang_masuk)
+	// }
+	// sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=2 and a.nm_header <> '' and c.flag_aktif=0  ", sql_group)
+	// if paramData.Kd_post_uang_masuk != "" {
+	// 	sql_group = fmt.Sprintf("%s and b.kd_post_uang_masuk = '%s'", sql_group, paramData.Kd_post_uang_masuk)
+	// }
+	// sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
+
+	sql_group := " SELECT b.kd_group,b.nm_group FROM vw_s_keluar a  " +
+		" inner join tbl_group_kategoris as b on a.nm_group = b.nm_group " +
+		" where nm_kategori <> '' "
 	if paramData.Tgl_bayar1 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
+		sql_group = fmt.Sprintf("%s and a.tgl_bayar >= '%s'", sql_group, TglBayar1)
 	}
 	if paramData.Tgl_bayar2 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
+		sql_group = fmt.Sprintf("%s and a.tgl_bayar <= '%s'", sql_group, TglBayar2)
 	}
-	//end groupnya biar pertanggal
-
-	sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=1 and a.nm_header <> '' and c.flag_aktif=0 ", sql_group)
-
-	sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
+	if paramData.Kd_post_uang_masuk != "" {
+		sql_group = fmt.Sprintf("%s and a.kd_post_uang_masuk = '%s'", sql_group, paramData.Kd_post_uang_masuk)
+	}
+	sql_group = fmt.Sprintf("%s  GROUP BY b.kd_group order by b.kd_group ", sql_group)
 
 	execute_sql_group, _ := db.Raw(sql_group).Rows()
 	defer execute_sql_group.Close()
 	for execute_sql_group.Next() {
-		execute_sql_group.Scan(&kd_group, &nm_group)
-		arraydata := GroupUangMasuk{}
-		arraydata.Kd_group = kd_group
-		arraydata.Nm_group = nm_group
 
-		SetArrayDetail := []GroupUangMasukDetail{}
-		targetKdGroup := kd_group
-		var resultOne NewLoop1
-		for _, data := range NewLoopOne {
-			if data.Kd_group == targetKdGroup {
-				resultOne = data
-
-				arraydetail := GroupUangMasukDetail{}
-				arraydetail.Kd_kategori = resultOne.Kd_kategori
-				arraydetail.Nm_kategori = resultOne.Nm_kategori
-
-				targetKdKategori := resultOne.Kd_kategori
-				var resultTwo NewLoop2
-				for _, data := range NewLoopTwo {
-					if data.Kd_kategori == targetKdKategori {
-						resultTwo = data
-						break
-					}
-				}
-
-				arraydetail.Total_bayar = resultTwo.Total_bayar
-
-				arrayDetailBayar := []DetailBayar{}
-				targetKdKategoriX := resultOne.Kd_kategori
-				var resultThree NewLoop3
-				for _, data := range NewLoopThree {
-					if data.Kd_kategori == targetKdKategoriX {
-						resultThree = data
-
-						arrayDetailBayarTemp := DetailBayar{}
-						arrayDetailBayarTemp.Tgl_bayar = resultThree.Tgl_bayar
-						arrayDetailBayarTemp.Jml_bayar = resultThree.Jml_bayar
-						arrayDetailBayarTemp.Tipe_pembayaran = resultThree.Tipe_pembayaran
-						arrayDetailBayarTemp.Data_ID = resultThree.Data_ID
-						arrayDetailBayarTemp.Data_Name = resultThree.Data_Name
-						arrayDetailBayarTemp.Keterangan = resultThree.Keterangan
-
-						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
-
-					}
-				}
-				arraydetail.DetailBayar = arrayDetailBayar
-
-				SetArrayDetail = append(SetArrayDetail, arraydetail)
-
-			}
-
-		}
-
-		arraydata.Kategori = SetArrayDetail
-		SetArrayData = append(SetArrayData, arraydata)
-
-	}
-	arrayJenisGroupUang.DetailData = SetArrayData
-	SetJenisGroupUang = append(SetJenisGroupUang, arrayJenisGroupUang)
-	//end uang masuk
-
-	//=========================================================================================================
-	//======================= Uang Keluar ========================//
-	//var NewLoopOne []NewLoop1
-	sqlOne = " SELECT a.kd_kategori,a.nm_kategori,a.kd_group FROM tbl_kategori_uangs as a " +
-		" left join vw_s_keluar as b on a.nm_kategori=b.nm_kategori  " +
-		" and b.tgl_bayar>='" + TglBayar1 + "' and b.tgl_bayar<='" + TglBayar2 + "' " +
-		" where a.flag_aktif=0 GROUP BY a.kd_kategori  order by a.kd_kategori  "
-	db.Raw(sqlOne).Scan(&NewLoopOne)
-
-	//var NewLoopTwo []NewLoop2
-	sqlTwo = " SELECT ifnull(sum(jml_bayar),0.00) 'total_bayar',kd_kategori FROM vw_s_keluar  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' " +
-		" GROUP BY kd_kategori "
-	db.Raw(sqlTwo).Scan(&NewLoopTwo)
-
-	var NewLoopThreeA []NewLoop3a
-	sqlThree = " SELECT tgl_bayar,jml_bayar,tipe_pembayaran,pos_uang_masuk,kd_kategori,no_document 'Data_no_document',tgl_document 'Data_tgl_document',keterangan  FROM vw_s_keluar  where total_bayar <> 0  " +
-		" and tgl_bayar>='" + TglBayar1 + "' and tgl_bayar<='" + TglBayar2 + "' "
-	db.Raw(sqlThree).Scan(&NewLoopThreeA)
-	//======================= End Uang Keluar ========================//
-
-	arrayJenisGroupUangKeluar := JenisGroupUang{}
-	arrayJenisGroupUangKeluar.JenisUang = "Uang Keluar"
-
-	SetArrayData = []GroupUangMasuk{}
-	sql_group = " SELECT a.kd_group,a.nm_group FROM tbl_group_kategoris as a  " +
-		" inner join tbl_kategori_uangs as c on a.kd_group = c.kd_group " +
-		" Left join vw_s_keluar as b  on a.nm_group=b.nm_group and c.nm_kategori=b.nm_kategori "
-
-	//groupnya biar pertanggal
-	if paramData.Tgl_bayar1 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar >= '%s'", sql_group, TglBayar1)
-	}
-	if paramData.Tgl_bayar2 != "" {
-		sql_group = fmt.Sprintf("%s and b.tgl_bayar <= '%s'", sql_group, TglBayar2)
-	}
-	//end groupnya biar pertanggal
-
-	sql_group = fmt.Sprintf("%s where a.flag_aktif=0 and a.kd_jenis=2 and a.nm_header <> '' and c.flag_aktif=0 ", sql_group)
-
-	sql_group = fmt.Sprintf("%s  GROUP BY a.kd_group order by a.kd_group ", sql_group)
-
-	execute_sql_group, _ = db.Raw(sql_group).Rows()
-	defer execute_sql_group.Close()
-	for execute_sql_group.Next() {
 		execute_sql_group.Scan(&kd_group, &nm_group)
 		arraydata := GroupUangMasuk{}
 		arraydata.Kd_group = kd_group
@@ -635,8 +940,8 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 						arrayDetailBayarTemp.Jml_bayar = resultThreeA.Jml_bayar
 						arrayDetailBayarTemp.Tipe_pembayaran = resultThreeA.Tipe_pembayaran
 						arrayDetailBayarTemp.Pos_uang_masuk = resultThreeA.Pos_uang_masuk
-						arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
-						arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
+						// arrayDetailBayarTemp.Data_no_document = resultThreeA.Data_no_document
+						// arrayDetailBayarTemp.Data_tgl_document = resultThreeA.Data_tgl_document
 						arrayDetailBayarTemp.Keterangan = resultThreeA.Keterangan
 
 						arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
@@ -655,15 +960,11 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 		SetArrayData = append(SetArrayData, arraydata)
 
 	}
-	arrayJenisGroupUangKeluar.DetailData = SetArrayData
-	//=========================================================================================================
 
-	SetJenisGroupUang = append(SetJenisGroupUang, arrayJenisGroupUangKeluar)
+	arrayJenisUang.DetailData = SetArrayData
+	SetJenisUang = append(SetJenisUang, arrayJenisUang)
 
-	arrayGroupUang.DataUang = SetJenisGroupUang
-	SetGroupUang = append(SetGroupUang, arrayGroupUang)
-
-	response := helper.APIResponse("List Data ...", http.StatusOK, "success", SetGroupUang)
+	response := helper.APIResponse("List Data ... "+sql_group, http.StatusOK, "success", SetJenisUang)
 	c.JSON(http.StatusOK, response)
 }
 

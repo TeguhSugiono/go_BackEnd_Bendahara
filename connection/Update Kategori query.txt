@@ -1,0 +1,395 @@
+ALTER TABLE tbl_kategori_uangs
+ADD COLUMN kd_jenis int;
+
+
+UPDATE tbl_kategori_uangs 
+INNER JOIN tbl_group_kategoris
+ON tbl_kategori_uangs.kd_group = tbl_group_kategoris.kd_group
+SET tbl_kategori_uangs.kd_jenis = tbl_group_kategoris.kd_jenis;
+
+ALTER TABLE tbl_trans_uang_keluar_act_details
+ADD COLUMN kd_kategori int;
+
+UPDATE tbl_trans_uang_keluar_act_details 
+INNER JOIN tbl_trans_uang_keluar_act_headers
+ON tbl_trans_uang_keluar_act_details.kd_trans_keluar = tbl_trans_uang_keluar_act_headers.kd_trans_keluar
+SET tbl_trans_uang_keluar_act_details.kd_kategori = tbl_trans_uang_keluar_act_headers.kd_kategori;
+
+ALTER TABLE tbl_trans_uang_keluar_act_headers
+DROP COLUMN kd_kategori;
+
+drop view vw_report_act ;
+
+create view vw_report_act as 
+SELECT
+  `c`.`nm_group` AS `nm_group`,
+  `d`.`nm_kategori` AS `nm_kategori`,
+  `a`.`no_document` AS `no_document`,
+  `a`.`tgl_document` AS `tgl_document`,
+  `a`.`total_biaya` AS `total_biaya`,
+  `a`.`total_bayar` AS `total_bayar`,
+  `a`.`sisa_biaya` AS `sisa_biaya`,
+  `a`.`keterangan` AS `keterangan`,
+  `e`.`nm_group` AS `pos_uang_masuk`,
+  `b`.`tgl_bayar` AS `tgl_bayar`,
+  `b`.`jml_bayar` AS `jml_bayar`,
+  `b`.`keterangan` AS `keterangan_detail`,
+  `a`.`kd_trans_keluar` AS `kd_trans_keluar`,
+  `g`.`kd_pembayaran` AS `kd_pembayaran`,
+  `g`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `b`.`kd_trans_keluar_detail` AS `kd_trans_keluar_detail`,
+  `b`.`kd_kategori` AS `kd_kategori`,
+  `b`.`kd_post_uang_masuk` AS `kd_post_uang_masuk` 
+FROM
+  (
+    (
+      (
+        (
+          (`tbl_trans_uang_keluar_act_headers` `a` JOIN `tbl_trans_uang_keluar_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+        JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`))
+      JOIN `tbl_kategori_uangs` `d` ON (`b`.`kd_kategori` = `d`.`kd_kategori`))
+    LEFT JOIN `tbl_group_kategoris` `e` ON (`b`.`kd_post_uang_masuk` = `e`.`kd_group`))
+  LEFT JOIN `tbl_tipe_pembayarans` `g` ON (`b`.`kd_pembayaran` = `g`.`kd_pembayaran`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `d`.`flag_aktif` = 0 
+ORDER BY
+  `a`.`tgl_document`,
+  `a`.`no_document`,
+  `b`.`seqno` ;
+
+ALTER TABLE tbl_trans_uang_masuk_lain_details
+ADD COLUMN kd_kategori int;
+
+UPDATE tbl_trans_uang_masuk_lain_details 
+INNER JOIN tbl_trans_uang_masuk_lain_headers
+ON tbl_trans_uang_masuk_lain_details.kd_trans_masuk_lain = tbl_trans_uang_masuk_lain_headers.kd_trans_masuk_lain
+SET tbl_trans_uang_masuk_lain_details.kd_kategori = tbl_trans_uang_masuk_lain_headers.kd_kategori;
+
+ALTER TABLE tbl_trans_uang_masuk_lain_headers
+DROP COLUMN kd_kategori;
+
+drop table if exists test.tbl_one_group_kategori ;
+create TABLE test.tbl_one_group_kategori as 
+SELECT kd_group, COUNT(kd_kategori) AS jml_kategori
+FROM smaalkha_db_bendahara.tbl_kategori_uangs
+GROUP BY kd_group
+HAVING COUNT(kd_kategori) = 1
+ORDER BY jml_kategori ASC, kd_group;
+
+drop table if exists test.tbl_moreone_group_kategori ;
+create TABLE test.tbl_moreone_group_kategori as 
+SELECT kd_group, COUNT(kd_kategori) AS jml_kategori
+FROM smaalkha_db_bendahara.tbl_kategori_uangs
+GROUP BY kd_group
+HAVING COUNT(kd_kategori) > 1
+ORDER BY jml_kategori ASC, kd_group;
+
+
+UPDATE smaalkha_db_bendahara.tbl_trans_uang_keluar_act_details d
+JOIN smaalkha_db_bendahara.tbl_kategori_uangs k 
+  ON d.kd_post_uang_masuk = k.kd_group
+SET d.kd_post_uang_masuk = k.kd_kategori
+WHERE k.kd_group IN (
+    SELECT kd_group 
+    FROM test.tbl_one_group_kategori
+);
+
+UPDATE smaalkha_db_bendahara.tbl_trans_uang_keluar_pra_act_details d
+JOIN smaalkha_db_bendahara.tbl_kategori_uangs k 
+  ON d.kd_post_uang_masuk = k.kd_group
+SET d.kd_post_uang_masuk = k.kd_kategori
+WHERE k.kd_group IN (
+    SELECT kd_group 
+    FROM test.tbl_one_group_kategori
+);
+
+
+UPDATE smaalkha_db_bendahara.tbl_trans_uang_keluar_act_details d
+JOIN (
+    SELECT k.kd_group, MIN(k.kd_kategori) AS kd_kategori
+    FROM smaalkha_db_bendahara.tbl_kategori_uangs k
+    WHERE k.kd_group IN (
+        SELECT kd_group 
+        FROM test.tbl_moreone_group_kategori
+    )
+    GROUP BY k.kd_group
+) m ON d.kd_post_uang_masuk = m.kd_group
+SET d.kd_post_uang_masuk = m.kd_kategori;
+
+
+UPDATE smaalkha_db_bendahara.tbl_trans_uang_keluar_pra_act_details d
+JOIN (
+    SELECT k.kd_group, MIN(k.kd_kategori) AS kd_kategori
+    FROM smaalkha_db_bendahara.tbl_kategori_uangs k
+    WHERE k.kd_group IN (
+        SELECT kd_group 
+        FROM test.tbl_moreone_group_kategori
+    )
+    GROUP BY k.kd_group
+) m ON d.kd_post_uang_masuk = m.kd_group
+SET d.kd_post_uang_masuk = m.kd_kategori;
+
+
+drop view vw_s_masuk ;
+create view vw_s_masuk as 
+SELECT
+  `vw_report_ppdb`.`nm_group` AS `nm_group`,
+  `vw_report_ppdb`.`nm_kategori` AS `nm_kategori`,
+  `vw_report_ppdb`.`tgl_bayar` AS `tgl_bayar`,
+  `vw_report_ppdb`.`total_bayar` AS `total_bayar`,
+  `vw_report_ppdb`.`kd_kategori` AS `kd_kategori`,
+  `vw_report_ppdb`.`jml_bayar` AS `jml_bayar`,
+  `vw_report_ppdb`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `vw_report_ppdb`.`kd_group` AS `kd_group`,
+  `vw_report_ppdb`.`nik` AS `nik`,
+  `vw_report_ppdb`.`nm_siswa` AS `nm_siswa`,
+  `vw_report_ppdb`.`kategori_biaya_ppdb` AS `keterangan` 
+FROM
+  `vw_report_ppdb` 
+WHERE
+  `vw_report_ppdb`.`tgl_bayar` IS NOT NULL 
+  AND `vw_report_ppdb`.`jml_bayar` IS NOT NULL 
+GROUP BY
+  `vw_report_ppdb`.`kd_trans_masuk_detail_ppdb` UNION ALL
+SELECT
+  `vw_report_spp`.`nm_group` AS `nm_group`,
+  `vw_report_spp`.`nm_kategori` AS `nm_kategori`,
+  `vw_report_spp`.`tgl_bayar` AS `tgl_bayar`,
+  `vw_report_spp`.`total_bayar` AS `total_bayar`,
+  `vw_report_spp`.`kd_kategori` AS `kd_kategori`,
+  `vw_report_spp`.`jml_bayar` AS `jml_bayar`,
+  `vw_report_spp`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `vw_report_spp`.`kd_group` AS `kd_group`,
+  `vw_report_spp`.`nis_siswa` AS `nis_siswa`,
+  `vw_report_spp`.`nm_siswa` AS `nm_siswa` ,
+   `vw_report_spp`.`keterangan_detail` AS `keterangan` 
+FROM
+  `vw_report_spp` 
+WHERE
+  `vw_report_spp`.`tgl_bayar` IS NOT NULL 
+  AND `vw_report_spp`.`jml_bayar` IS NOT NULL 
+GROUP BY
+  `vw_report_spp`.`kd_trans_masuk_detail` UNION ALL
+SELECT
+  `vw_report_umsiswa`.`nm_group` AS `nm_group`,
+  `vw_report_umsiswa`.`nm_kategori` AS `nm_kategori`,
+  `vw_report_umsiswa`.`tgl_bayar` AS `tgl_bayar`,
+  `vw_report_umsiswa`.`total_bayar` AS `total_bayar`,
+  `vw_report_umsiswa`.`kd_kategori` AS `kd_kategori`,
+  `vw_report_umsiswa`.`jml_bayar` AS `jml_bayar`,
+  `vw_report_umsiswa`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `vw_report_umsiswa`.`kd_group` AS `kd_group`,
+  `vw_report_umsiswa`.`nis_siswa` AS `nis_siswa`,
+  `vw_report_umsiswa`.`nm_siswa` AS `nm_siswa` ,
+   `vw_report_umsiswa`.`keterangan_detail` AS `keterangan`
+FROM
+  `vw_report_umsiswa` 
+WHERE
+  `vw_report_umsiswa`.`tgl_bayar` IS NOT NULL 
+  AND `vw_report_umsiswa`.`jml_bayar` IS NOT NULL 
+GROUP BY
+  `vw_report_umsiswa`.`kd_trans_masuk_detail_siswa` UNION ALL
+SELECT
+  `vw_report_umlain`.`nm_group` AS `nm_group`,
+  `vw_report_umlain`.`nm_kategori` AS `nm_kategori`,
+  `vw_report_umlain`.`tgl_bayar` AS `tgl_bayar`,
+  `vw_report_umlain`.`total_bayar` AS `total_bayar`,
+  `vw_report_umlain`.`kd_kategori` AS `kd_kategori`,
+  `vw_report_umlain`.`jml_bayar` AS `jml_bayar`,
+  `vw_report_umlain`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `vw_report_umlain`.`kd_group` AS `kd_group`,
+  `vw_report_umlain`.`no_document` AS `no_document`,
+  `vw_report_umlain`.`keterangan` AS `keterangan_header`,
+  `vw_report_umlain`.`keterangan_detail` AS `keterangan`  
+FROM
+  `vw_report_umlain` 
+WHERE
+  `vw_report_umlain`.`tgl_bayar` IS NOT NULL 
+  AND `vw_report_umlain`.`jml_bayar` IS NOT NULL 
+GROUP BY
+  `vw_report_umlain`.`kd_trans_masuk_detail_lain` ;
+
+
+drop view vw_s_keluar ;
+create view vw_s_keluar as 
+SELECT
+	`vw_report_act`.`nm_group` AS `nm_group`,
+	`vw_report_act`.`nm_kategori` AS `nm_kategori`,
+	`vw_report_act`.`tgl_bayar` AS `tgl_bayar`,
+	`vw_report_act`.`total_bayar` AS `total_bayar`,
+	`vw_report_act`.`kd_kategori` AS `kd_kategori`,
+	`vw_report_act`.`jml_bayar` AS `jml_bayar`,
+	`vw_report_act`.`tipe_pembayaran` AS `tipe_pembayaran`,
+	`vw_report_act`.`pos_uang_masuk` AS `pos_uang_masuk`,
+	`vw_report_act`.`kd_post_uang_masuk` AS `kd_post_uang_masuk`,
+	`vw_report_act`.`no_document` AS `no_document`,
+	`vw_report_act`.`tgl_document` AS `tgl_document`,
+  `vw_report_act`.`keterangan_detail` AS `keterangan`  
+FROM
+	`vw_report_act` 
+WHERE
+	`vw_report_act`.`tgl_bayar` IS NOT NULL 
+	AND `vw_report_act`.`jml_bayar` IS NOT NULL UNION ALL
+SELECT
+	`vw_report_pra_act`.`nm_group` AS `nm_group`,
+	`vw_report_pra_act`.`nm_kategori` AS `nm_kategori`,
+	`vw_report_pra_act`.`tgl_bayar` AS `tgl_bayar`,
+	`vw_report_pra_act`.`total_bayar` AS `total_bayar`,
+	`vw_report_pra_act`.`kd_kategori` AS `kd_kategori`,
+	`vw_report_pra_act`.`jml_bayar` AS `jml_bayar`,
+	`vw_report_pra_act`.`tipe_pembayaran` AS `tipe_pembayaran`,
+	`vw_report_pra_act`.`pos_uang_masuk` AS `pos_uang_masuk`,
+	`vw_report_pra_act`.`kd_post_uang_masuk` AS `kd_post_uang_masuk`,
+	`vw_report_pra_act`.`no_document` AS `no_document`,
+	`vw_report_pra_act`.`tgl_document` AS `tgl_document` ,
+  `vw_report_pra_act`.`keterangan_detail` AS `keterangan`  
+FROM
+	`vw_report_pra_act` 
+WHERE
+	`vw_report_pra_act`.`tgl_bayar` IS NOT NULL 
+	AND `vw_report_pra_act`.`jml_bayar` IS NOT NULL ;
+
+drop view vw_report_act;
+CREATE view vw_report_act as 
+SELECT
+  `c`.`nm_group` AS `nm_group`,
+  `d`.`nm_kategori` AS `nm_kategori`,
+  `a`.`no_document` AS `no_document`,
+  `a`.`tgl_document` AS `tgl_document`,
+  `a`.`total_biaya` AS `total_biaya`,
+  `a`.`total_bayar` AS `total_bayar`,
+  `a`.`sisa_biaya` AS `sisa_biaya`,
+  `a`.`keterangan` AS `keterangan`,
+  `e`.`nm_kategori` AS `pos_uang_masuk`,
+  `b`.`tgl_bayar` AS `tgl_bayar`,
+  `b`.`jml_bayar` AS `jml_bayar`,
+  `b`.`keterangan` AS `keterangan_detail`,
+  `a`.`kd_trans_keluar` AS `kd_trans_keluar`,
+  `g`.`kd_pembayaran` AS `kd_pembayaran`,
+  `g`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `b`.`kd_trans_keluar_detail` AS `kd_trans_keluar_detail`,
+  `b`.`kd_kategori` AS `kd_kategori`,
+  `b`.`kd_post_uang_masuk` AS `kd_post_uang_masuk` 
+FROM
+  (
+    (
+      (
+        (
+          (`tbl_trans_uang_keluar_act_headers` `a` JOIN `tbl_trans_uang_keluar_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+        JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`))
+      JOIN `tbl_kategori_uangs` `d` ON (`b`.`kd_kategori` = `d`.`kd_kategori`))
+    LEFT JOIN `tbl_kategori_uangs` `e` ON (`b`.`kd_post_uang_masuk` = `e`.`kd_kategori`))
+  LEFT JOIN `tbl_tipe_pembayarans` `g` ON (`b`.`kd_pembayaran` = `g`.`kd_pembayaran`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `d`.`flag_aktif` = 0 
+ORDER BY
+  `a`.`tgl_document`,
+  `a`.`no_document`,
+  `b`.`seqno`  ;
+
+drop view vw_group_uang_masuk ;
+create view vw_group_uang_masuk as 
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `a`.`kd_group` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_spp_headers` `a` JOIN `tbl_trans_uang_masuk_spp_details` `b` ON (`a`.`kd_trans_masuk` = `b`.`kd_trans_masuk`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `c`.`kd_group`,
+  `b`.`kd_trans_masuk_detail` 
+  UNION ALL
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `a`.`kd_group` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_ppdb_headers` `a` JOIN `tbl_trans_uang_masuk_ppdb_details` `b` ON (`a`.`kd_trans_masuk_ppdb` = `b`.`kd_trans_masuk_ppdb`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `a`.`kd_group`,
+  `b`.`kd_trans_masuk_detail_ppdb` UNION ALL
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `a`.`kd_group` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_siswa_headers` `a` JOIN `tbl_trans_uang_masuk_siswa_details` `b` ON (`a`.`kd_trans_masuk_siswa` = `b`.`kd_trans_masuk_siswa`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `a`.`kd_group`,
+  `b`.`kd_trans_masuk_detail_siswa` UNION ALL
+SELECT
+  `b`.`jml_bayar` AS `total_bayar`,
+  `b`.`kd_kategori` AS `kd_group`,
+  `c`.`nm_kategori` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_masuk_lain_headers` `a` JOIN `tbl_trans_uang_masuk_lain_details` `b` ON (`a`.`kd_trans_masuk_lain` = `b`.`kd_trans_masuk_lain`))
+  JOIN `tbl_kategori_uangs` `c` ON (`b`.`kd_kategori` = `c`.`kd_kategori`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+GROUP BY
+  `b`.`kd_kategori`,
+  `b`.`kd_trans_masuk_detail_lain` ;
+
+
+drop view vw_group_uang_keluar ;
+create view vw_group_uang_keluar as 
+SELECT
+  sum(`b`.`jml_bayar`) AS `total_bayar`,
+  `b`.`kd_post_uang_masuk` AS `kd_group`,
+  `c`.`nm_group` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_keluar_pra_act_headers` `a` JOIN `tbl_trans_uang_keluar_pra_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+  JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `b`.`kd_post_uang_masuk` IS NOT NULL 
+GROUP BY
+  `b`.`kd_post_uang_masuk`,
+  `b`.`kd_trans_keluar_detail` 
+  UNION ALL
+SELECT
+  sum(`b`.`jml_bayar`) AS `total_bayar`,
+  `b`.`kd_post_uang_masuk` AS `kd_group`,
+  `c`.`nm_kategori` AS `nm_group` 
+FROM
+  (
+    (`tbl_trans_uang_keluar_act_headers` `a` JOIN `tbl_trans_uang_keluar_act_details` `b` ON (`a`.`kd_trans_keluar` = `b`.`kd_trans_keluar`))
+  JOIN `tbl_kategori_uangs` `c` ON (`b`.`kd_kategori` = `c`.`kd_kategori`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `b`.`kd_post_uang_masuk` IS NOT NULL 
+GROUP BY
+  `b`.`kd_post_uang_masuk`,
+  `b`.`kd_trans_keluar_detail` ;
