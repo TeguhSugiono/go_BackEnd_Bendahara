@@ -15,7 +15,7 @@ func GenerateToken(input DataTokenInput) (string, error) {
 	claim["Username"] = input.Username
 	claim["Full_name"] = input.Full_name
 
-	ttl := 100 * time.Hour
+	ttl := 40 * time.Hour
 	claim["exp"] = time.Now().UTC().Add(ttl).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)

@@ -173,6 +173,7 @@ func Report_Group_Masuk_Keluar(c *gin.Context) {
 		arrayDetailBayarOutTemp.No_document = no_document
 		arrayDetailBayarOutTemp.Tgl_document = tgl_document
 		arrayDetailBayarOutTemp.Tgl_bayar = tgl_bayar
+		arrayDetailBayarOutTemp.Keterangan = keterangan
 
 		arrayDetailBayarOut = append(arrayDetailBayarOut, arrayDetailBayarOutTemp)
 	}
@@ -752,6 +753,7 @@ func Report_Group_Keluar(c *gin.Context) {
 		arrayDetailBayarTemp.No_document = no_document
 		arrayDetailBayarTemp.Tgl_document = tgl_document
 		arrayDetailBayarTemp.Tgl_bayar = tgl_bayar
+		arrayDetailBayarTemp.Keterangan = keterangan
 
 		arrayDetailBayar = append(arrayDetailBayar, arrayDetailBayarTemp)
 	}
