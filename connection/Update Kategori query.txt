@@ -18,7 +18,7 @@ SET tbl_trans_uang_keluar_act_details.kd_kategori = tbl_trans_uang_keluar_act_he
 ALTER TABLE tbl_trans_uang_keluar_act_headers
 DROP COLUMN kd_kategori;
 
-drop view vw_report_act ;
+drop view if exists vw_report_act ;
 
 create view vw_report_act as 
 SELECT
@@ -133,7 +133,47 @@ JOIN (
 SET d.kd_post_uang_masuk = m.kd_kategori;
 
 
-drop view vw_s_masuk ;
+drop view if exists vw_report_umlain ;
+create view vw_report_umlain as 
+SELECT
+  `c`.`nm_group` AS `nm_group`,
+  `d`.`nm_kategori` AS `nm_kategori`,
+  `a`.`no_document` AS `no_document`,
+  `a`.`tgl_document` AS `tgl_document`,
+  `a`.`total_biaya` AS `total_biaya`,
+  `a`.`total_bayar` AS `total_bayar`,
+  `a`.`sisa_biaya` AS `sisa_biaya`,
+  `a`.`keterangan` AS `keterangan`,
+  `b`.`tgl_bayar` AS `tgl_bayar`,
+  `b`.`jml_bayar` AS `jml_bayar`,
+  `b`.`keterangan` AS `keterangan_detail`,
+  `a`.`kd_trans_masuk_lain` AS `kd_trans_masuk_lain`,
+  `g`.`kd_pembayaran` AS `kd_pembayaran`,
+  `g`.`tipe_pembayaran` AS `tipe_pembayaran`,
+  `b`.`kd_kategori` AS `kd_kategori`,
+  `b`.`kd_trans_masuk_detail_lain` AS `kd_trans_masuk_detail_lain`,
+  `a`.`kd_group` AS `kd_group` 
+FROM
+  (
+    (
+      (
+        (`tbl_trans_uang_masuk_lain_headers` `a` JOIN `tbl_trans_uang_masuk_lain_details` `b` ON (`a`.`kd_trans_masuk_lain` = `b`.`kd_trans_masuk_lain`))
+      JOIN `tbl_group_kategoris` `c` ON (`a`.`kd_group` = `c`.`kd_group`))
+    JOIN `tbl_kategori_uangs` `d` ON (`b`.`kd_kategori` = `d`.`kd_kategori`))
+  LEFT JOIN `tbl_tipe_pembayarans` `g` ON (`b`.`kd_pembayaran` = `g`.`kd_pembayaran`)) 
+WHERE
+  `a`.`flag_aktif` = 0 
+  AND `b`.`flag_aktif` = 0 
+  AND `c`.`flag_aktif` = 0 
+  AND `d`.`flag_aktif` = 0 
+ORDER BY
+  `a`.`tgl_document`,
+  `a`.`no_document`,
+  `b`.`seqno` ;
+
+
+
+drop view if exists vw_s_masuk ;
 create view vw_s_masuk as 
 SELECT
   `vw_report_ppdb`.`nm_group` AS `nm_group`,
@@ -213,7 +253,7 @@ GROUP BY
   `vw_report_umlain`.`kd_trans_masuk_detail_lain` ;
 
 
-drop view vw_s_keluar ;
+drop view if exists vw_s_keluar ;
 create view vw_s_keluar as 
 SELECT
 	`vw_report_act`.`nm_group` AS `nm_group`,
@@ -252,7 +292,7 @@ WHERE
 	`vw_report_pra_act`.`tgl_bayar` IS NOT NULL 
 	AND `vw_report_pra_act`.`jml_bayar` IS NOT NULL ;
 
-drop view vw_report_act;
+drop view if exists vw_report_act;
 CREATE view vw_report_act as 
 SELECT
   `c`.`nm_group` AS `nm_group`,
@@ -293,7 +333,7 @@ ORDER BY
   `a`.`no_document`,
   `b`.`seqno`  ;
 
-drop view vw_group_uang_masuk ;
+drop view if exists vw_group_uang_masuk ;
 create view vw_group_uang_masuk as 
 SELECT
   `b`.`jml_bayar` AS `total_bayar`,
@@ -358,7 +398,7 @@ GROUP BY
   `b`.`kd_trans_masuk_detail_lain` ;
 
 
-drop view vw_group_uang_keluar ;
+drop view if exists vw_group_uang_keluar ;
 create view vw_group_uang_keluar as 
 SELECT
   sum(`b`.`jml_bayar`) AS `total_bayar`,

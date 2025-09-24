@@ -5373,7 +5373,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-09-2025\",\r\n    \"tgl_bayar2\" : \"09-09-2025\",\r\n    \"kd_kategori\" : \"\" ,\r\n    \"kd_group\" : \"\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"24-09-2025\",\r\n    \"tgl_bayar2\" : \"24-09-2025\",\r\n    \"kd_kategori\" : \"\" ,\r\n    \"kd_group\" : \"192\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5441,7 +5441,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-09-2025\",\r\n    \"tgl_bayar2\" : \"09-09-2025\",\r\n    \"kd_post_uang_masuk\" : \"\",\r\n    \"kd_kategori\" : \"\" ,\r\n    \"kd_group\" : \"\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-08-2025\",\r\n    \"tgl_bayar2\" : \"09-09-2025\",\r\n    \"kd_post_uang_masuk\" : \"\",\r\n    \"kd_kategori\" : \"\" ,\r\n    \"kd_group\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5476,7 +5476,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tgl_bayar1\" : \"01-09-2025\",\r\n    \"tgl_bayar2\" : \"12-09-2025\"\r\n}",
+							"raw": "{\r\n    \"tgl_bayar1\" : \"01-08-2025\",\r\n    \"tgl_bayar2\" : \"12-09-2025\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5914,7 +5914,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTc1Nzk2NjA0M30.nbMqhQRCjdDeNyRAbjxoPuiI6jmahI9Hfvzf45FfqJk",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsX25hbWUiOiJUZWd1aCBTdWdpb25vIiwiSWRfdXNlciI6MSwiVXNlcm5hbWUiOiJ0ZWd1aCIsImV4cCI6MTc1ODg3MjcwM30.Vg-Znw0qG2xNjZvK9VFN_X6sLRV8PTDJjrHSFKtsZCQ",
 				"type": "string"
 			}
 		]
